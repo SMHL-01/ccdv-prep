@@ -1,0 +1,14 @@
+# Cache de telechargement : 727 pages brutes, ~30 Mo. Regenerable.
+raw/
+
+# Corpus assemble : ~14 Mo de documentation Anthropic.
+# Non versionne (documentation tierce, et entierement reproductible
+# par "node aspirer-docs.js").
+docs-corpus/
+
+node_modules/
+dist/
+.env
+.env.*
+*.log
+.DS_Store

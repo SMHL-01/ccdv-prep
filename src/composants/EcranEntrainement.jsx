@@ -1,12 +1,17 @@
 import { useState, useMemo } from 'react'
-import { QUESTIONS, DOMAINES, SOUS_DOMAINES } from '../banque.js'
+import { METADONNEES, DOMAINES, SOUS_DOMAINES } from '../banque.js'
+import { filtrerMetas } from '../tirage.js'
 
 /* ============================================================
    ENTRAINEMENT — choix du perimetre avant de lancer une serie.
 
-   Les listes deroulantes ne montrent que ce qui existe reellement
-   dans la banque : proposer un sous-domaine vide donnerait un
-   ecran « aucune question » sans expliquer pourquoi.
+   Tout se decide sur les metadonnees : les compteurs et les listes
+   deroulantes n'ont besoin d'aucun enonce, donc aucun fichier de
+   questions n'est charge tant que la serie n'est pas lancee.
+
+   Les listes ne montrent que ce qui existe reellement : proposer un
+   sous-domaine vide donnerait un ecran « aucune question » sans dire
+   pourquoi.
    ============================================================ */
 
 export default function EcranEntrainement({ onLancer }) {
@@ -16,23 +21,17 @@ export default function EcranEntrainement({ onLancer }) {
   const [limite, setLimite] = useState(20)
 
   const domainesDispo = useMemo(() => {
-    const avec = new Set(QUESTIONS.map((q) => q.domain))
+    const avec = new Set(METADONNEES.map((m) => m.domain))
     return DOMAINES.filter((d) => avec.has(d.nom))
   }, [])
 
   const sousDomainesDispo = useMemo(() => {
-    const avec = new Set(QUESTIONS.map((q) => q.subdomain))
+    const avec = new Set(METADONNEES.map((m) => m.subdomain))
     return SOUS_DOMAINES.filter((sd) => avec.has(sd.nom)).filter((sd) => !domaine || sd.domaine === domaine)
   }, [domaine])
 
   const selection = useMemo(
-    () =>
-      QUESTIONS.filter(
-        (q) =>
-          (!domaine || q.domain === domaine) &&
-          (!sousDomaine || q.subdomain === sousDomaine) &&
-          (!difficulte || q.difficulty === difficulte)
-      ),
+    () => filtrerMetas({ domaine, sousDomaine, difficulte }),
     [domaine, sousDomaine, difficulte]
   )
 
@@ -105,7 +104,7 @@ export default function EcranEntrainement({ onLancer }) {
         <button
           className="bouton bouton-principal"
           disabled={!selection.length}
-          onClick={() => onLancer({ domaine, sousDomaine, difficulte, limite, questions: QUESTIONS })}
+          onClick={() => onLancer({ domaine, sousDomaine, difficulte, limite })}
         >
           Lancer la série
         </button>

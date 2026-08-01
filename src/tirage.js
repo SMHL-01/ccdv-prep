@@ -1,16 +1,20 @@
 /* ============================================================
    TIRAGE — composition d'un examen blanc pondere par le blueprint.
 
-   La banque se remplit sous-domaine par sous-domaine. Le tirage doit
-   donc rester juste quand une partie du blueprint n'a pas encore de
+   Le tirage travaille sur les METADONNEES seules : c'est ce qui
+   permet de composer un examen sans avoir charge une seule question
+   complete. Les payloads sont recuperes ensuite, pour la selection
+   retenue uniquement.
+
+   La banque se remplit sous-domaine par sous-domaine, donc le tirage
+   doit rester juste quand une partie du blueprint n'a pas encore de
    questions : on repartit sur ce qui EXISTE, en respectant les poids
-   relatifs, et l'application affiche a cote quelle part du blueprint
-   est reellement couverte ce jour-la.
+   relatifs, et l'application affiche a cote la part reellement couverte.
    ============================================================ */
 
-import { SOUS_DOMAINES, questionsDe, NB_QUESTIONS_EXAMEN } from './banque.js'
+import { SOUS_DOMAINES, metaDe, METADONNEES, NB_QUESTIONS_EXAMEN } from './banque.js'
 
-/** Melange de Fisher-Yates. Sur une copie : la banque ne doit pas bouger. */
+/** Melange de Fisher-Yates. Sur une copie : l'index ne doit pas bouger. */
 export function melanger(tableau) {
   const t = [...tableau]
   for (let i = t.length - 1; i > 0; i--) {
@@ -60,41 +64,46 @@ function repartir(disponibles, total) {
 }
 
 /**
- * Compose un examen blanc.
- * Renvoie { questions, repartition, poidsCouvert, complet } — `complet` est
- * faux si la banque n'a pas fourni le compte demande, ce que l'ecran signale
- * plutot que de le masquer.
+ * Compose un examen blanc et renvoie des METADONNEES.
+ * `complet` est faux si la banque n'a pas fourni le compte demande, ce que
+ * l'ecran signale plutot que de le masquer.
  */
 export function tirerExamen(total = NB_QUESTIONS_EXAMEN) {
-  const disponibles = SOUS_DOMAINES.map((sd) => ({ ...sd, nbDispo: questionsDe(sd.nom).length })).filter(
+  const disponibles = SOUS_DOMAINES.map((sd) => ({ ...sd, nbDispo: metaDe(sd.nom).length })).filter(
     (sd) => sd.nbDispo > 0
   )
 
   const quotas = repartir(disponibles, total)
 
-  const questions = []
+  const metas = []
   const repartition = []
   for (const sd of disponibles) {
     const n = quotas.get(sd.nom) || 0
     if (n === 0) continue
-    questions.push(...melanger(questionsDe(sd.nom)).slice(0, n))
+    metas.push(...melanger(metaDe(sd.nom)).slice(0, n))
     repartition.push({ nom: sd.nom, domaine: sd.domaine, poids: sd.poids, n })
   }
 
   const poidsCouvert = disponibles.reduce((s, d) => s + d.poids, 0)
   return {
-    questions: melanger(questions),
+    metas: melanger(metas),
     repartition: repartition.sort((a, b) => b.n - a.n),
     poidsCouvert,
-    complet: questions.length === total,
+    complet: metas.length === total,
   }
 }
 
-/** Tirage libre pour l'entrainement : filtres, puis melange. */
-export function tirerEntrainement({ domaine, sousDomaine, difficulte, questions, limite = 20 }) {
-  let lot = questions
-  if (domaine) lot = lot.filter((q) => q.domain === domaine)
-  if (sousDomaine) lot = lot.filter((q) => q.subdomain === sousDomaine)
-  if (difficulte) lot = lot.filter((q) => q.difficulty === difficulte)
-  return melanger(lot).slice(0, limite)
+/** Selection d'entrainement, sur les metadonnees. */
+export function filtrerMetas({ domaine, sousDomaine, difficulte }) {
+  return METADONNEES.filter(
+    (m) =>
+      (!domaine || m.domain === domaine) &&
+      (!sousDomaine || m.subdomain === sousDomaine) &&
+      (!difficulte || m.difficulty === difficulte)
+  )
+}
+
+/** Tirage libre pour l'entrainement : filtres, melange, puis coupe. */
+export function tirerEntrainement({ domaine, sousDomaine, difficulte, limite = 20 }) {
+  return melanger(filtrerMetas({ domaine, sousDomaine, difficulte })).slice(0, limite)
 }

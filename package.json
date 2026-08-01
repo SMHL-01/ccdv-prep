@@ -6,6 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "predev": "node generer-manifeste.js",
+    "prebuild": "node generer-manifeste.js",
+    "manifeste": "node generer-manifeste.js",
     "corpus": "node aspirer-docs.js",
     "couverture": "node verifier-couverture.js",
     "questions": "node verifier-questions.js"

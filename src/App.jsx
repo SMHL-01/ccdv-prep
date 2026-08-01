@@ -1,5 +1,10 @@
 import { useState, useMemo, useCallback } from 'react'
-import { couverture as calculerCouverture, questionParId, NB_QUESTIONS_EXAMEN } from './banque.js'
+import {
+  couverture as calculerCouverture,
+  metaParId,
+  chargerQuestions,
+  NB_QUESTIONS_EXAMEN,
+} from './banque.js'
 import { tirerExamen, tirerEntrainement, melanger } from './tirage.js'
 import { idsDus } from './stockage.js'
 import EcranAccueil from './composants/EcranAccueil.jsx'
@@ -11,8 +16,12 @@ import Serie from './composants/Serie.jsx'
    APP — navigation par onglets et lancement des series.
 
    Pas de routeur : trois onglets et un ecran de serie qui se
-   superpose. Une dependance de moins a maintenir, et le bouton
-   « retour » du telephone ne casse pas une serie en cours.
+   superpose. Une dependance de moins, et le bouton « retour » du
+   telephone ne casse pas une serie en cours.
+
+   Les series sont ASYNCHRONES : le tirage se fait sur les
+   metadonnees, puis les questions completes des seuls fichiers
+   concernes sont chargees avant d'afficher la premiere question.
    ============================================================ */
 
 const ONGLETS = [
@@ -24,12 +33,13 @@ const ONGLETS = [
 export default function App() {
   const [onglet, setOnglet] = useState('accueil')
   const [serie, setSerie] = useState(null)
+  const [chargement, setChargement] = useState(false)
   // Incremente apres chaque serie : force le recalcul des revisions dues et
   // des statistiques, qui vivent dans le localStorage et non dans l'etat React.
   const [revision, setRevision] = useState(0)
 
   const couverture = useMemo(() => calculerCouverture(), [])
-  const dues = useMemo(() => idsDus().map(questionParId).filter(Boolean), [revision])
+  const metasDues = useMemo(() => idsDus().map(metaParId).filter(Boolean), [revision])
 
   const rafraichir = useCallback(() => setRevision((r) => r + 1), [])
 
@@ -38,17 +48,39 @@ export default function App() {
     rafraichir()
   }
 
+  /** Charge les payloads des metadonnees tirees, puis ouvre la serie. */
+  async function ouvrirSerie({ metas, mode, titre, info }) {
+    if (!metas.length) return
+    setChargement(true)
+    try {
+      const questions = await chargerQuestions(metas)
+      setSerie({ mode, titre, questions, info })
+    } finally {
+      setChargement(false)
+    }
+  }
+
   function lancerExamen() {
     const tirage = tirerExamen(NB_QUESTIONS_EXAMEN)
-    setSerie({ mode: 'examen', titre: 'Examen blanc', questions: tirage.questions, info: tirage })
+    ouvrirSerie({ metas: tirage.metas, mode: 'examen', titre: 'Examen blanc', info: tirage })
   }
 
   function lancerRevision() {
-    setSerie({ mode: 'libre', titre: 'Révisions du jour', questions: melanger(dues) })
+    ouvrirSerie({ metas: melanger(metasDues), mode: 'libre', titre: 'Révisions du jour' })
   }
 
   function lancerEntrainement(filtres) {
-    setSerie({ mode: 'libre', titre: 'Entraînement', questions: tirerEntrainement(filtres) })
+    ouvrirSerie({ metas: tirerEntrainement(filtres), mode: 'libre', titre: 'Entraînement' })
+  }
+
+  if (chargement) {
+    return (
+      <div className="coque">
+        <div className="vide">
+          <p>Chargement des questions…</p>
+        </div>
+      </div>
+    )
   }
 
   if (serie) {
@@ -71,7 +103,7 @@ export default function App() {
         {onglet === 'accueil' && (
           <EcranAccueil
             couverture={couverture}
-            nbDues={dues.length}
+            nbDues={metasDues.length}
             onExamen={lancerExamen}
             onRevision={lancerRevision}
             onEntrainement={() => setOnglet('entrainement')}
@@ -93,7 +125,9 @@ export default function App() {
               {o.icone}
             </span>
             {o.libelle}
-            {o.cle === 'accueil' && dues.length > 0 && <span className="onglet-pastille">{dues.length}</span>}
+            {o.cle === 'accueil' && metasDues.length > 0 && (
+              <span className="onglet-pastille">{metasDues.length}</span>
+            )}
           </button>
         ))}
       </nav>

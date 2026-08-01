@@ -24,6 +24,15 @@ aucune liste de fichiers codée en dur : déposer un nouveau fichier de
 sous-domaine suffit, il apparaît au prochain `npm run build`. Les fichiers
 préfixés d'un souligné sont de la méta et sont exclus dès la compilation.
 
+**Le chargement est différé** (`eager: false`). Au démarrage, seul
+`questions/_manifeste.json` est chargé : les métadonnées de chaque question —
+identifiant, domaine, sous-domaine, difficulté, nature, fichier. Cela suffit à
+calculer la couverture, remplir les filtres et tirer un examen blanc. Les
+énoncés, options et explications ne sont récupérés qu'au lancement d'une série,
+et seulement pour les fichiers concernés, chacun une fois. Le manifeste est
+régénéré automatiquement avant chaque `dev` et chaque `build`
+(`node generer-manifeste.js`).
+
 Trois modes : examen blanc (53 questions tirées selon les poids du blueprint,
 chronomètre de 120 minutes, correction à la fin comme le jour J), entraînement
 filtré par domaine, sous-domaine et difficulté, et révisions du jour issues de

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "APP-MEC-001",
+    "domain": "Applications and Integration",
+    "subdomain": "Claude API Mechanics",
+    "weight": 6.8,
+    "type": "single",
+    "nature": "factual",
+    "question_en": "A document-processing service base64-encodes PDFs directly into the `messages` array. Files under roughly 20 MB succeed, but a 40 MB batch fails immediately with HTTP 413 `request_too_large` and no tokens are billed. The team wants to move the large payloads to an endpoint that accepts them. Which pair of documented request size limits is correct?",
+    "options": [
+      { "key": "A", "text_en": "The Messages API accepts up to 256 MB per request, while the Batch API is the stricter endpoint at 32 MB." },
+      { "key": "B", "text_en": "The Messages API accepts up to 100 MB per request, while the Files API is the most permissive at 512 MB." },
+      { "key": "C", "text_en": "The Messages API accepts up to 32 MB per request, while the Files API is the most permissive at 500 MB." },
+      { "key": "D", "text_en": "The Messages API accepts up to 32 MB per request, while the Batch API is the most permissive at 500 MB." }
+    ],
+    "correct": ["C"],
+    "explanation_fr": "La doc des erreurs donne quatre plafonds : Messages API 32 Mo, Token Counting 32 Mo, Batch API 256 Mo, Files API 500 Mo. Le dépassement produit un 413 `request_too_large` ; sur l'API directe, Cloudflare renvoie l'erreur avant même que la requête n'atteigne les serveurs, ce qui explique l'échec immédiat sans facturation. La bonne architecture est donc de téléverser le PDF via la Files API et de le référencer par son `file_id`.",
+    "distractors_fr": {
+      "A": "Inverse les deux plafonds : 256 Mo est la limite de la Batch API, pas celle de Messages, et la Batch API est justement plus permissive que Messages, pas plus stricte.",
+      "B": "100 Mo et 512 Mo sont des valeurs plausibles par analogie avec d'autres API, mais aucune des deux n'apparaît dans la doc : les chiffres réels sont 32 Mo et 500 Mo.",
+      "D": "La première moitié est juste (32 Mo pour Messages), mais c'est la Files API qui monte à 500 Mo ; la Batch API plafonne à 256 Mo."
+    },
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "AGT-CON-001",
+    "domain": "Agents and Workflows",
+    "subdomain": "Agent Construction with Claude",
+    "weight": 5.3,
+    "type": "single",
+    "nature": "judgment",
+    "question_en": "A European bank prototypes a refactoring agent on Claude Managed Agents using cloud sandboxes. Compliance then rules that proprietary source code must never be executed outside the bank's own VPC, though calling the Claude API itself remains approved. The team wants to keep the managed harness rather than rebuild an agent loop. What should they change?",
+    "options": [
+      { "key": "A", "text_en": "Keep cloud environments but set `networking.type` to `limited` with an empty `allowed_hosts` array, so the sandbox cannot reach any external host." },
+      { "key": "B", "text_en": "Keep the agent and session definitions, and create the environment with a `self_hosted` config so sessions run on the bank's own infrastructure." },
+      { "key": "C", "text_en": "Drop Managed Agents and rebuild the loop on the Messages API, because Managed Agents sessions can only ever run inside Anthropic-managed cloud sandboxes." },
+      { "key": "D", "text_en": "Keep cloud environments and enable Zero Data Retention on the workspace, so that no source code or sandbox state is persisted server-side once a session ends." }
+    ],
+    "correct": ["B"],
+    "explanation_fr": "L'environnement est justement le concept qui décide OÙ tourne une session : sandbox cloud gérée par Anthropic, ou sandbox auto-hébergée sur votre propre infrastructure. La doc cite explicitement les exigences de conformité et de résidence des données comme le cas d'usage du self-hosted. À la création de l'environnement, `config` accepte soit un objet `type: \"cloud\"`, soit un objet `type: \"self_hosted\"` : l'agent, les sessions et les événements ne changent pas, seul l'environnement est remplacé.",
+    "distractors_fr": {
+      "A": "Confond isolation réseau et lieu d'exécution. Une politique `limited` empêche le conteneur de joindre l'extérieur, mais le conteneur tourne toujours sur l'infrastructure d'Anthropic : le code y est bien sorti du VPC.",
+      "C": "La prémisse est fausse. Managed Agents prend en charge les sandboxes auto-hébergées ; reconstruire une boucle d'agent sur Messages est un coût inutile alors que le harness géré répond au besoin.",
+      "D": "Managed Agents est stateful par conception (historique, état du sandbox et sorties conservés côté serveur) et n'est de ce fait pas éligible au Zero Data Retention ni à la couverture HIPAA BAA. L'option décrit une garantie qui n'existe pas ici."
+    },
+    "doc_ref": "https://platform.claude.com/docs/en/managed-agents/overview"
+  },
+  {
+    "id": "MSO-CTM-001",
+    "domain": "Model Selection and Optimization",
+    "subdomain": "Cost and Token Management",
+    "weight": 2.8,
+    "type": "multi",
+    "nature": "factual",
+    "question_en": "A support assistant caches a large tool array and a long system prompt, and monitors `cache_read_input_tokens` per turn. Cache hits collapse on some deploys but survive on others. Given the cache hierarchy `tools` → `system` → `messages`, select the TWO changes that leave both the tools cache and the system cache valid and invalidate only the messages cache.",
+    "options": [
+      { "key": "A", "text_en": "Turning the web search tool on for requests that previously ran without it." },
+      { "key": "B", "text_en": "Switching `tool_choice` from `auto` to forcing one specific tool on a turn." },
+      { "key": "C", "text_en": "Renaming one parameter in the input schema of a single cached tool." },
+      { "key": "D", "text_en": "Attaching an image content block to the newest user turn of the conversation." }
+    ],
+    "correct": ["B", "D"],
+    "explanation_fr": "Le cache suit la hiérarchie `tools` → `system` → `messages` : un changement à un niveau invalide ce niveau ET tous les suivants. `tool_choice` et l'ajout ou le retrait d'images n'affectent que les blocs de messages ; les préfixes `tools` et `system` restent valides. Ce sont les deux seules lignes du tableau d'invalidation marquées ✓ ✓ ✘.",
+    "distractors_fr": {
+      "A": "Activer ou désactiver la recherche web modifie le prompt système : le cache `tools` survit, mais `system` et `messages` sont invalidés. Même effet pour les citations et le passage en `speed: \"fast\"`.",
+      "C": "Modifier une définition d'outil — nom, description ou paramètres — invalide la totalité du cache, y compris `system` et `messages`, puisque `tools` est le premier niveau de la hiérarchie."
+    },
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+  }
+]

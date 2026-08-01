@@ -45,7 +45,10 @@ function lireCorpus() {
   for (const fichier of fs.readdirSync(DIR_CORPUS).filter((f) => f.endsWith('.md')).sort()) {
     const contenu = fs.readFileSync(path.join(DIR_CORPUS, fichier), 'utf8');
     // Le corpus ecrit chaque page sous la forme :  # Titre / **Source :** URL / texte
-    const blocs = contenu.split(/\n(?=# )/);
+    // Le titre seul ne suffit pas a marquer un debut de page : beaucoup de pages
+    // repetent leur propre titre en « # » dans leur corps, et un decoupage sur
+    // « # » seul les tronquait a ce titre interne.
+    const blocs = contenu.split(/\n(?=# [^\n]+\n+\*\*Source :\*\* )/);
     for (const bloc of blocs) {
       const m = bloc.match(/^# (.+)\n+\*\*Source :\*\* (\S+)/);
       if (!m) continue; // en-tete de fichier ou sommaire : pas une page

@@ -20,7 +20,11 @@ const DIR = path.join(__dirname, 'docs-corpus');
 function indexer() {
   const pages = [];
   for (const f of fs.readdirSync(DIR).filter((x) => x.endsWith('.md')).sort()) {
-    for (const bloc of fs.readFileSync(path.join(DIR, f), 'utf8').split(/\n(?=# )/)) {
+    // Une page ne commence que la ou un titre est SUIVI de sa ligne Source.
+    // Beaucoup de pages repetent leur propre titre en « # » dans leur corps :
+    // decouper sur le seul « # » tronquait la page a ce titre interne, et
+    // faisait passer les 173 pages de code.claude.com pour des coquilles vides.
+    for (const bloc of fs.readFileSync(path.join(DIR, f), 'utf8').split(/\n(?=# [^\n]+\n+\*\*Source :\*\* )/)) {
       const m = bloc.match(/^# (.+)\n+\*\*Source :\*\* (\S+)/);
       if (m) pages.push({ fichier: f, titre: m[1].trim(), url: m[2].trim(), texte: bloc });
     }

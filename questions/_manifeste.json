@@ -1,8 +1,13 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-01",
-  "nbQuestions": 34,
+  "nbQuestions": 55,
   "fichiers": [
+    {
+      "fichier": "agents-workflows_agent-construction-with-claude.json",
+      "subdomain": "Agent Construction with Claude",
+      "nb": 21
+    },
     {
       "fichier": "applications-integration_claude-application-design.json",
       "subdomain": "Claude Application Design",
@@ -10,6 +15,195 @@
     }
   ],
   "questions": [
+    {
+      "id": "AGC-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-019",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-020",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGC-021",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
     {
       "id": "CAD-001",
       "domain": "Applications and Integration",

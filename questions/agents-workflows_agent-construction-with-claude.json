@@ -1,0 +1,844 @@
+{
+  "subdomain": "Agent Construction with Claude",
+  "domain": "Agents and Workflows",
+  "weight": 5.3,
+  "target_questions": 21,
+  "sources_read": [
+    "https://code.claude.com/docs/en/agent-sdk/overview",
+    "https://code.claude.com/docs/en/agent-sdk/quickstart",
+    "https://code.claude.com/docs/en/agent-sdk/sessions",
+    "https://code.claude.com/docs/en/agent-sdk/session-storage",
+    "https://code.claude.com/docs/en/agent-sdk/hosting",
+    "https://code.claude.com/docs/en/agent-sdk/migration-guide",
+    "https://code.claude.com/docs/en/agent-sdk/streaming-vs-single-mode",
+    "https://code.claude.com/docs/en/agent-sdk/cost-tracking",
+    "https://code.claude.com/docs/en/agent-sdk/structured-outputs",
+    "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts",
+    "https://platform.claude.com/docs/en/managed-agents/overview",
+    "https://platform.claude.com/docs/en/managed-agents/environments",
+    "https://platform.claude.com/docs/en/managed-agents/sessions",
+    "https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes",
+    "https://platform.claude.com/docs/en/managed-agents/scheduled-deployments"
+  ],
+  "questions": [
+    {
+      "id": "AGC-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Choisir entre Agent SDK, CLI, Client SDK et Managed Agents",
+      "question_en": "A team is building a research agent in TypeScript. They want the tool loop, context management and built-in file tools handled for them, but the agent must run inside their own Node service, on infrastructure they operate. Which building block fits?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The Claude Code CLI, driven as a terminal program, the supported way to embed an agent in a service."
+        },
+        {
+          "key": "B",
+          "text_en": "The Agent SDK, a library that runs the agent loop inside your own process in Python or TypeScript."
+        },
+        {
+          "key": "C",
+          "text_en": "The Client SDK, which exposes the Messages API and leaves you to implement the tool loop yourself."
+        },
+        {
+          "key": "D",
+          "text_en": "Managed Agents, the hosted REST API where Anthropic runs both the agent harness and its sandbox."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La page d'accueil du SDK donne un tableau de décision à quatre entrées. L'Agent SDK est la ligne « construire un agent sans écrire soi-même la boucle d'outils » : c'est une bibliothèque, elle tourne dans votre propre processus, en Python ou en TypeScript. Les deux exigences de l'équipe — ne pas réécrire la boucle, mais garder le processus chez soi — ne se recoupent que là.",
+      "distractors_fr": {
+        "A": "Le CLI est décrit comme l'interface terminal, faite pour le développement interactif et les tâches ponctuelles. On peut le piloter en sous-processus, mais c'est le recours des langages non supportés, pas le choix par défaut d'un service Node.",
+        "C": "Le Client SDK donne un accès direct à l'API Anthropic, pas à Claude Code : « You implement the tool loop yourself ». C'est exactement le travail que l'équipe veut éviter.",
+        "D": "Managed Agents est une API REST hébergée : Anthropic fait tourner l'agent et le bac à sable. L'équipe veut au contraire que l'exécution reste dans son propre service."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/overview"
+    },
+    {
+      "id": "AGC-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Piloter la meme boucle d agent depuis un langage non supporte par le SDK",
+      "question_en": "A Go team wants the same agent loop the Agent SDK provides, but the SDK ships as a library for Python and TypeScript only. What does the documentation tell them to do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Rewrite the orchestration in Go on the Messages API; no other supported path exists for them."
+        },
+        {
+          "key": "B",
+          "text_en": "Call the beta Agents endpoints from Go, which expose the Agent SDK loop as a plain REST service."
+        },
+        {
+          "key": "C",
+          "text_en": "Run the Claude Code CLI as a subprocess with `-p` and `--output-format json`, and parse its output."
+        },
+        {
+          "key": "D",
+          "text_en": "Wrap the Python SDK behind a small HTTP service, the documented bridge for other languages."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La page d'accueil du SDK le dit en une phrase : « To drive the same agent loop from another language, run the CLI as a subprocess with the `-p` flag and `--output-format json`. » Le binaire du CLI est d'ailleurs déjà embarqué dans les paquets Python et TypeScript, ce qui montre que c'est bien lui qui exécute la boucle.",
+      "distractors_fr": {
+        "A": "Réécrire la boucle sur la Messages API reste possible, mais c'est précisément ce que le SDK évite. La doc propose un chemin qui conserve la boucle, les outils et la gestion du contexte.",
+        "B": "Les endpoints Agents en beta relèvent de Managed Agents, un produit distinct où Anthropic héberge l'agent et le bac à sable. Ce n'est pas une exposition REST de l'Agent SDK.",
+        "D": "Un service HTTP maison autour du SDK Python peut marcher, mais la doc ne le présente pas ; elle nomme le sous-processus CLI comme la voie prévue."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/overview"
+    },
+    {
+      "id": "AGC-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Un sous-processus par session, et cwd a passer explicitement a chaque query",
+      "question_en": "An SDK service handles several user sessions at once inside one container. Each session should work on its own checkout, but the team sees sessions overwriting each other's files. What does the subprocess model say to do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Pass `cwd` on every `query()` call: subprocesses inherit the app's working directory by default."
+        },
+        {
+          "key": "B",
+          "text_en": "Serialise the sessions behind a queue: the SDK supports one subprocess per container process."
+        },
+        {
+          "key": "C",
+          "text_en": "Set a distinct `sessionId` per user; the SDK derives an isolated working directory from that ID."
+        },
+        {
+          "key": "D",
+          "text_en": "Mount one shared volume for all sessions and let file checkpointing revert conflicting edits."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page d'hébergement décrit le modèle : un appel à `query()` engendre un sous-processus `claude` qui possède un shell, un répertoire de travail et ses transcriptions sur disque. Une session égale un sous-processus, et « by default they all inherit your application's working directory ». D'où la consigne : passer `cwd` à chaque appel dès que les sessions ont besoin de systèmes de fichiers séparés.",
+      "distractors_fr": {
+        "B": "Rien ne limite le conteneur à un sous-processus : la concurrence sur un hôte est bornée par la RAM, la doc donne même une formule pour calculer le nombre d'agents par hôte.",
+        "C": "L'identifiant de session sert à retrouver la transcription, pas à fabriquer un répertoire de travail. Le `cwd` est l'entrée qui détermine où l'agent lit et écrit.",
+        "D": "Le file checkpointing sert à annuler des modifications de fichiers d'une session, pas à arbitrer entre sessions concurrentes qui écrivent au même endroit."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/hosting"
+    },
+    {
+      "id": "AGC-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Un SessionStore ne reproduit que les transcriptions, pas la memoire ni l espace de travail",
+      "question_en": "A hosted agent mirrors transcripts to S3 through a `SessionStore` adapter. After a redeploy, sessions resume with their history intact, but the project's CLAUDE.md conventions are gone and so are the files the agent had written. Why?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The adapter implements `append` but not `listSubkeys`, so everything outside the main key is lost."
+        },
+        {
+          "key": "B",
+          "text_en": "Mirroring is best effort, so a `mirror_error` quietly dropped the memory and workspace entries."
+        },
+        {
+          "key": "C",
+          "text_en": "Resuming replays the transcript from scratch, which drops every entry written after compaction."
+        },
+        {
+          "key": "D",
+          "text_en": "A `SessionStore` mirrors transcripts only; memory files and workspace artefacts need their own store."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Trois états vivent sur le disque du conteneur : les transcriptions de session, les fichiers mémoire CLAUDE.md et les artefacts du répertoire de travail. Aucun ne survit à un redémarrage. Le `SessionStore` n'en couvre qu'un : « `SessionStore` mirrors transcripts, not CLAUDE.md memory files or other working-directory artifacts. » Le reste demande un volume monté ou une synchronisation vers un stockage objet.",
+      "distractors_fr": {
+        "A": "`listSubkeys` ne concerne que les transcriptions de subagents pendant la reprise. Ni CLAUDE.md ni les fichiers produits par l'agent ne transitent par des sous-clés.",
+        "B": "Un `mirror_error` est justement bruyant : le SDK le journalise et l'émet comme message dans l'itérateur. Et il ne porterait de toute façon que sur des lots de transcription.",
+        "C": "La compaction change ce que renvoie `getSessionMessages`, pas la présence des fichiers du projet sur le disque. L'historique est ici précisément intact."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/hosting"
+    },
+    {
+      "id": "AGC-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "resume par identifiant plutot que continue des qu il y a plusieurs conversations",
+      "question_en": "A support product runs one long conversation per customer on a shared pool of containers, and sets `continue: true` on each turn. Customers start seeing answers that quote another customer's earlier thread. What is the fix?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Keep `continue: true` and give every customer its own `CLAUDE_CONFIG_DIR` inside the container."
+        },
+        {
+          "key": "B",
+          "text_en": "Capture each customer's session ID and pass it to `resume` instead of continuing the last session."
+        },
+        {
+          "key": "C",
+          "text_en": "Set `persistSession: false` so nothing reaches the disk and no foreign thread can be picked up."
+        },
+        {
+          "key": "D",
+          "text_en": "Fork the session on every turn, so each customer's turn starts from a copy of its own history."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "`continue` et `resume` reprennent tous deux une session existante ; ils diffèrent par la façon de la retrouver. `continue` prend la session la plus récente du répertoire courant — parfait quand l'application ne mène qu'une conversation à la fois. `resume` prend un identifiant précis, et la doc le dit obligatoire « when you have multiple sessions (for example, one per user in a multi-user app) ». Un pool partagé avec `continue` fait exactement ce que décrivent les clients.",
+      "distractors_fr": {
+        "A": "`CLAUDE_CONFIG_DIR` déplace la configuration globale et le dossier des projets, mais garder `continue` revient toujours à demander « la dernière session », ce qui reste le mauvais critère de sélection.",
+        "C": "`persistSession: false` supprime la persistance : la session n'existe que le temps de l'appel. Chaque tour repartirait de zéro, ce qui détruit la conversation au lieu de l'isoler.",
+        "D": "Un fork crée une nouvelle session à partir d'une copie de l'historique. Forker à chaque tour multiplie les identifiants sans jamais dire lequel appartient à quel client."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/sessions"
+    },
+    {
+      "id": "AGC-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Une reprise qui repart a zero vient d un repertoire de travail different",
+      "question_en": "A CI job resumes a session by ID and gets a brand-new conversation with no history, even though the ID is correct and the transcript file was restored onto the runner. What should the team check first?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "That the ID came from the init message; IDs read off the result message are not resumable."
+        },
+        {
+          "key": "B",
+          "text_en": "That the job runs under the same API key, since transcripts belong to the key that wrote them."
+        },
+        {
+          "key": "C",
+          "text_en": "That `cwd` matches the original run: transcripts live under an encoding of the working directory."
+        },
+        {
+          "key": "D",
+          "text_en": "That the file was restored before the SDK import, which reads the projects directory only once."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc nomme la cause la plus fréquente : « If a `resume` call returns a fresh session instead of the expected history, the most common cause is a mismatched `cwd`. » Les sessions sont rangées sous `~/.claude/projects/<encoded-cwd>/*.jsonl`, où `<encoded-cwd>` est le répertoire absolu dont chaque caractère non alphanumérique est remplacé par un tiret. Lancé depuis un autre répertoire, le SDK cherche au mauvais endroit.",
+      "distractors_fr": {
+        "A": "L'identifiant est lisible sur le message de résultat, présent quel que soit le succès de la requête, et en TypeScript aussi plus tôt sur le message système d'init. Les deux sont valables.",
+        "B": "Rien ne rattache une transcription à une clé d'API : c'est un fichier JSONL local, adressé par le répertoire de travail et l'identifiant de session.",
+        "D": "Le SDK lit le fichier au moment de la reprise, quand il lance le sous-processus, pas à l'import du module."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/sessions"
+    },
+    {
+      "id": "AGC-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Un fork branche la conversation, jamais le systeme de fichiers",
+      "question_en": "An agent forks a session to try a second refactoring strategy. The team expects the original run's files to stay untouched, but the working tree now holds the fork's edits. What does forking actually branch?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The conversation history only; file edits are real, and reverting them needs file checkpointing."
+        },
+        {
+          "key": "B",
+          "text_en": "The conversation and the working directory, so this behaviour points to a corrupted fork."
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing on its own: a fork takes effect only once it is paired with `resume` on the new ID."
+        },
+        {
+          "key": "D",
+          "text_en": "The working directory only; conversation history stays shared between fork and original."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le fork crée une session neuve qui démarre sur une copie de l'historique, l'original restant inchangé. Mais la doc encadre la portée : « Forking branches the conversation history, not the filesystem. If a forked agent edits files, those changes are real and visible to any session working in the same directory. » Pour brancher et annuler des fichiers, l'outil est le file checkpointing.",
+      "distractors_fr": {
+        "B": "Le comportement observé est le comportement documenté, pas une anomalie. Les sessions persistent la conversation, pas le système de fichiers.",
+        "C": "Le fork produit immédiatement une session avec son propre identifiant. `resume` sert ensuite à revenir sur l'une ou l'autre branche, il ne conditionne pas la création.",
+        "D": "C'est l'inverse exact : l'historique est copié et diverge, tandis que les fichiers restent communs à qui travaille dans le même répertoire."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/sessions"
+    },
+    {
+      "id": "AGC-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Ecriture double : le miroir est au mieux-effort, le disque local fait foi",
+      "question_en": "An agent runs with a Redis `SessionStore`. Redis becomes unreachable for two minutes while a long query is in flight. What does the SDK do with the transcript batches produced during the outage?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It buffers them in memory and holds the agent loop until the store accepts the pending batches."
+        },
+        {
+          "key": "B",
+          "text_en": "It ends the query with a store error, since a partial transcript would be inconsistent on resume."
+        },
+        {
+          "key": "C",
+          "text_en": "It stops mirroring that session and replays every dropped batch once the store answers again."
+        },
+        {
+          "key": "D",
+          "text_en": "It retries a batch three times at most, drops it, emits `mirror_error` and continues the query."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "L'architecture est en écriture double : le sous-processus écrit d'abord sur le disque local, puis le SDK recopie chaque lot vers le store. Le miroir est explicitement au mieux-effort — trois tentatives au total avec une courte attente, sauf pour un appel en timeout qui n'est pas rejoué ; ensuite le lot est abandonné, un message `{ type: \"system\", subtype: \"mirror_error\" }` est émis dans l'itérateur et la requête continue. La transcription locale reste durable, donc une panne du store n'interrompt pas l'agent.",
+      "distractors_fr": {
+        "A": "Rien ne bloque la boucle : le principe affiché est qu'une panne du store ne doit ni interrompre l'agent ni perdre de données localement.",
+        "B": "L'échec du miroir n'échoue pas la requête. C'est précisément parce que le disque local fait foi que le SDK peut se permettre de continuer.",
+        "C": "Il n'y a pas de rattrapage différé. Un lot qui échoue trois fois est abandonné, d'où la consigne de surveiller les `mirror_error` si la durabilité du store compte."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/session-storage"
+    },
+    {
+      "id": "AGC-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Isolation multi-locataire dans un conteneur partage",
+      "question_en": "One container serves several tenants with the Agent SDK. Select the THREE options that keep one tenant's project context out of another tenant's session.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Pass an empty `settingSources` array so no filesystem settings or CLAUDE.md files are loaded."
+        },
+        {
+          "key": "B",
+          "text_en": "Set `persistSession: false` so that no session transcript is written to the container's disk."
+        },
+        {
+          "key": "C",
+          "text_en": "Set `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, since auto memory loads whatever `settingSources` says."
+        },
+        {
+          "key": "D",
+          "text_en": "Point `CLAUDE_CONFIG_DIR` at a per-tenant directory and pass a per-tenant `cwd` on each query."
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "D"
+      ],
+      "explanation_fr": "Par défaut le SDK lit les réglages et les fichiers CLAUDE.md du système de fichiers, ce qui fait fuiter le contexte d'un locataire vers un autre dans un conteneur partagé. La doc liste les parades : `settingSources: []` pour ne charger aucun réglage, `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` parce que la mémoire automatique s'injecte dans le prompt système indépendamment de `settingSources`, `CLAUDE_CONFIG_DIR` par locataire pour ne pas partager `~/.claude.json`, et un répertoire de travail par locataire passé explicitement.",
+      "distractors_fr": {
+        "B": "`persistSession: false` empêche d'écrire la transcription, ce qui supprime la reprise sans rien isoler : les réglages, CLAUDE.md et la mémoire automatique continueraient de charger le contexte d'un autre locataire."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/hosting"
+    },
+    {
+      "id": "AGC-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Aucun delai maximum de session : borner par maxTurns",
+      "question_en": "A self-hosted agent has been working for six hours on a task nobody expected to run that long. The team wants an upper bound on how much work a single run can do. What does the SDK actually offer them?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A per-session wall-clock deadline, configured through `sessionTimeoutMs` in the hosting options."
+        },
+        {
+          "key": "B",
+          "text_en": "A dollar budget set on the container, past which the SDK terminates the running subprocess."
+        },
+        {
+          "key": "C",
+          "text_en": "`maxTurns` in `Options`: there is no top-level session timeout, so bound the tool round trips."
+        },
+        {
+          "key": "D",
+          "text_en": "An idle watchdog that ends any session whose subprocess stops producing output for a while."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le tableau des limitations connues de l'hébergement ouvre sur celle-ci : « No top-level session timeout — a session does not time out on its own. Set `maxTurns` in `Options` to bound how many tool-use round trips the agent takes before stopping. » L'unité de bornage est donc le nombre d'allers-retours d'outils, pas la durée.",
+      "distractors_fr": {
+        "A": "Aucun délai de session n'existe, et c'est justement ce que la doc signale comme limitation à contourner.",
+        "B": "Un résultat peut se terminer en `error_max_budget_usd`, mais ce budget se règle sur la requête ; ce n'est pas un plafond posé sur le conteneur qui tuerait le sous-processus.",
+        "D": "`CLAUDE_ASYNC_AGENT_STALL_TIMEOUT_MS` existe, mais uniquement pour les subagents lancés en arrière-plan, et la doc précise que ce n'est pas une échéance de durée totale."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/hosting"
+    },
+    {
+      "id": "AGC-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Migration du Claude Code SDK vers le Claude Agent SDK en Python",
+      "question_en": "A Python codebase still imports `claude_code_sdk` and builds `ClaudeCodeOptions`. Beyond installing the new distribution, select the TWO code changes moving to the Claude Agent SDK requires.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Keep the old imports, which the new package re-exports for one deprecation cycle."
+        },
+        {
+          "key": "B",
+          "text_en": "Rename the imported module from `claude_code_sdk` to `claude_agent_sdk` across the code."
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing else in code: the old distribution forwards to the new one when it is imported."
+        },
+        {
+          "key": "D",
+          "text_en": "Rename the options type from `ClaudeCodeOptions` to `ClaudeAgentOptions` at each call site."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Le guide de migration donne trois changements pour Python : le paquet `claude-code-sdk` devient `claude-agent-sdk`, l'import `claude_code_sdk` devient `claude_agent_sdk`, et le type `ClaudeCodeOptions` est renommé `ClaudeAgentOptions` pour coller à la nouvelle marque. Le renommage du SDK accompagne l'élargissement de son objet : des agents métier ou spécialisés, plus seulement du code.",
+      "distractors_fr": {
+        "A": "Aucun réexport de compatibilité n'est documenté ; la marche à suivre commence au contraire par désinstaller l'ancien paquet.",
+        "C": "L'ancien paquet n'est pas un alias vers le nouveau. La doc fait explicitement désinstaller `claude-code-sdk` avant d'installer `claude-agent-sdk`."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/migration-guide"
+    },
+    {
+      "id": "AGC-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le prompt systeme de Claude Code n est plus applique par defaut dans le SDK",
+      "question_en": "After moving a coding assistant from `claude -p` to the Agent SDK, the agent still answers correctly but ignores the code style rules and terminal-friendly tone it used to follow. Nothing else changed. What happened?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Setting sources now default to none, so `.claude/settings.json` no longer reaches the agent."
+        },
+        {
+          "key": "B",
+          "text_en": "The bundled CLI binary is pinned to the package version, which reverted the prompt to an older one."
+        },
+        {
+          "key": "C",
+          "text_en": "The SDK no longer sends Claude Code's system prompt by default; set the `claude_code` preset."
+        },
+        {
+          "key": "D",
+          "text_en": "CLAUDE.md is injected as project context, not into the system prompt, so it lost its priority."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "C'est une rupture annoncée du SDK : « The SDK no longer uses Claude Code's system prompt by default. » Sans `systemPrompt`, le SDK applique un prompt minimal qui couvre l'appel d'outils mais laisse de côté les consignes de style, de ton et de contexte du répertoire — alors que `claude -p` envoie le prompt complet. Pour retrouver le comportement du CLI, on demande le préréglage `claude_code`, éventuellement avec `append`.",
+      "distractors_fr": {
+        "A": "Ce défaut a été changé en v0.1.0 puis rétabli : omettre `settingSources` charge de nouveau les réglages utilisateur, projet et locaux, comme le CLI. Aucune action de migration n'est requise là-dessus.",
+        "B": "Le binaire embarqué est bien épinglé à la version du paquet, mais cela règle la version du CLI exécuté, pas le prompt système envoyé par le SDK.",
+        "D": "CLAUDE.md est effectivement injecté comme contexte de conversation, et non dans le prompt système, mais il se charge quand les sources de réglages sont actives et n'explique pas la perte des consignes de Claude Code."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/migration-guide"
+    },
+    {
+      "id": "AGC-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Ce que le mode message unique ne permet pas, face au mode entree en flux",
+      "question_en": "A lambda handler drives the agent with single message input rather than streaming input. Select the TWO capabilities that mode does not provide.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Attaching an image directly to a message for the agent to analyse during that same exchange."
+        },
+        {
+          "key": "B",
+          "text_en": "Returning a final result message carrying the session ID and the run's estimated total cost."
+        },
+        {
+          "key": "C",
+          "text_en": "Interrupting the agent in real time, or queueing further messages while a turn is in flight."
+        },
+        {
+          "key": "D",
+          "text_en": "Reaching an earlier conversation's context, which such a call obtains through the `resume` option."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La doc oppose deux modes d'entrée. Le mode flux, recommandé, fait de l'agent un processus long qui accepte les interruptions, les images et la file de messages. Le mode message unique est plus simple mais l'encadré d'avertissement liste ce qu'il ne supporte pas : pièces jointes image, mise en file dynamique, interruption temps réel et conversations multi-tours naturelles. Il reste le bon choix pour une réponse unique en environnement sans état, typiquement une lambda.",
+      "distractors_fr": {
+        "B": "Le message de résultat est émis dans les deux modes : c'est lui qui porte l'identifiant de session et l'estimation de coût, y compris lorsque la requête se termine en erreur.",
+        "D": "Le mode message unique est précisément décrit comme utilisant « session state and resuming » : il peut reprendre une session par son identifiant."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/streaming-vs-single-mode"
+    },
+    {
+      "id": "AGC-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "total_cost_usd est une estimation cliente, pas une donnee de facturation",
+      "question_en": "A billing team wants to charge customers for the agent runs they trigger, and plans to read `total_cost_usd` off each result message to compute the invoice. What should they be told?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is authoritative for the call but excludes subagents, so add `modelUsage` before invoicing."
+        },
+        {
+          "key": "B",
+          "text_en": "It is authoritative once a run ends successfully; only error results carry an estimate instead."
+        },
+        {
+          "key": "C",
+          "text_en": "It is exact but delayed, so hold the invoice until the nightly usage report has been published."
+        },
+        {
+          "key": "D",
+          "text_en": "It is a client-side estimate from a bundled price table; bill from the Usage and Cost API instead."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "L'avertissement est explicite : `total_cost_usd` et `costUSD` sont des estimations calculées localement à partir d'une table de prix embarquée à la compilation. Elles dérivent dès que les tarifs changent, que la version installée ne connaît pas un modèle, ou qu'une règle de facturation échappe au client. La doc conclut : « Do not bill end users or trigger financial decisions from these fields » et renvoie vers l'Usage and Cost API ou la page Usage de la Console.",
+      "distractors_fr": {
+        "A": "Le champ inclut au contraire les subagents. C'est `usage` qui les exclut ; l'objection porte sur la nature estimative du chiffre, pas sur son périmètre.",
+        "B": "Le champ est une estimation quel que soit l'issue, et il est présent aussi bien sur un résultat réussi que sur un résultat en erreur.",
+        "C": "Le chiffre n'est ni exact ni différé : il est disponible immédiatement sur le message de résultat, et c'est précisément une approximation."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/cost-tracking"
+    },
+    {
+      "id": "AGC-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "usage exclut les subagents, model_usage les compte",
+      "question_en": "An orchestrator spawns several subagents per run. The team sums the `usage` field of each result message and finds the total sits far below what the console reports. Which field should they read for whole-tree accounting?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`total_cost_usd`, the only field reporting token counts as well as the estimated dollar amount."
+        },
+        {
+          "key": "B",
+          "text_en": "The per-step `usage` on each assistant message, which alone carries the nested subagent turns."
+        },
+        {
+          "key": "C",
+          "text_en": "`usage` on the init system message, which is emitted once the whole agent tree has finished."
+        },
+        {
+          "key": "D",
+          "text_en": "`modelUsage` (`model_usage`), which counts subagent requests and breaks them down per model."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le tableau des champs du message de résultat distingue trois périmètres face aux subagents : `usage` les exclut, car il ne compte que la boucle de premier niveau ; `total_cost_usd` les inclut ; `modelUsage` (`model_usage` en Python) les inclut et les ventile par modèle. La doc tranche : utiliser `modelUsage` pour compter l'arbre entier, « the `usage` field undercounts as soon as nesting occurs ».",
+      "distractors_fr": {
+        "A": "`total_cost_usd` inclut bien les subagents, mais c'est un montant estimé en dollars, pas un décompte de jetons, et il ne détaille rien par modèle.",
+        "B": "L'usage par étape porte sur les messages assistant de la boucle principale ; il ne fait pas remonter les jetons consommés à l'intérieur des subagents.",
+        "C": "Le message système d'init ouvre la requête et ne porte pas de décompte cumulé ; c'est le message de résultat qui clôt la boucle."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/cost-tracking"
+    },
+    {
+      "id": "AGC-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Dedupliquer par identifiant de message quand les outils sont appeles en parallele",
+      "question_en": "A dashboard adds up the token counts on every assistant message. On runs where Claude calls several tools at once, it reports roughly double the tokens the result message shows. What explains the gap?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Parallel tool calls are billed once per branch, and the result message only reports one branch."
+        },
+        {
+          "key": "B",
+          "text_en": "Messages of one turn share the same nested message ID and usage; deduplicate on that ID."
+        },
+        {
+          "key": "C",
+          "text_en": "Tool results carry usage of their own, which the result message excludes but a dashboard adds."
+        },
+        {
+          "key": "D",
+          "text_en": "Cache reads are reported on every message, so one cached prefix gets counted many times over."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Un pas de la boucle produit un ou plusieurs messages assistant. Quand Claude appelle plusieurs outils dans le même tour, tous ces messages partagent le même identifiant imbriqué et portent des données d'usage identiques. La doc met en garde deux fois : « Always deduplicate by ID to get accurate per-step token counts. » Sans cela, on additionne le même pas autant de fois qu'il y avait d'outils.",
+      "distractors_fr": {
+        "A": "L'appel parallèle d'outils n'est pas facturé par branche : c'est un seul pas de requête, répété dans le flux de messages.",
+        "C": "Les résultats d'outils remontent dans des messages utilisateur et ne portent pas de compteur d'usage propre.",
+        "D": "Les jetons de cache sont bien exposés, mais l'écart décrit apparaît spécifiquement sur les tours à outils multiples, ce qui pointe la duplication par identifiant."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/cost-tracking"
+    },
+    {
+      "id": "AGC-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Sorties structurees d agent : outputFormat et validation par le SDK",
+      "question_en": "An agent must search a codebase and then hand a typed object to a downstream service. The team asks for JSON in the prompt and parses the reply, which fails now and then. What does the SDK offer for this?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`outputFormat` with a JSON Schema: the SDK validates the result and re-prompts on a mismatch."
+        },
+        {
+          "key": "B",
+          "text_en": "A `strict` flag on the query that forbids any output other than JSON at the model's own level."
+        },
+        {
+          "key": "C",
+          "text_en": "A parsing helper that repairs malformed JSON returned by the agent before your code reads it."
+        },
+        {
+          "key": "D",
+          "text_en": "A `stop_sequences` list that ends the turn on the closing brace and so guarantees valid objects."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Les sorties structurées laissent l'agent utiliser tous les outils dont il a besoin, puis rendent un JSON validé contre un schéma. On passe le schéma par `outputFormat` en TypeScript ou `output_format` en Python, avec `type: \"json_schema\"` ; le SDK valide et redemande en cas d'écart, et le champ `structured_output` du message de résultat porte les données. Zod ou Pydantic peuvent générer le schéma, à convertir en draft-07, la version que valide le SDK.",
+      "distractors_fr": {
+        "B": "Il n'y a pas de drapeau `strict` sur la requête de l'Agent SDK : la garantie passe par un schéma, validé côté SDK avec réessais.",
+        "C": "Aucun réparateur de JSON n'est fourni. Si la validation échoue dans la limite de réessais, le résultat est une erreur, à lire dans la liste `errors`.",
+        "D": "Une séquence d'arrêt coupe la génération à un motif de texte ; elle ne dit rien de la conformité de la structure produite."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/structured-outputs"
+    },
+    {
+      "id": "AGC-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Choisir un motif d hebergement selon le cycle de vie des sessions",
+      "question_en": "An agent handles support threads whose messages arrive days apart, and sits idle in between. The team wants containers to spin down while idle without losing the thread. Which hosting pattern is that?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Ephemeral sessions: one container per task, destroyed on completion and recreated on the next."
+        },
+        {
+          "key": "B",
+          "text_en": "Hybrid sessions: ephemeral containers that hydrate from a `SessionStore` and persist back to it."
+        },
+        {
+          "key": "C",
+          "text_en": "Long-running sessions: one persistent container holding every open thread in memory at once."
+        },
+        {
+          "key": "D",
+          "text_en": "Multi-agent container: several SDK subprocesses sharing a container and a working directory."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les quatre motifs d'hébergement se distinguent par la durée de vie du conteneur face à celle des sessions. Le motif hybride vise exactement ce cas : « sessions that span many interactions but sit idle between them ». Le conteneur s'éteint pendant l'inactivité et se réveille au retour de l'utilisateur, en réhydratant la transcription depuis un `SessionStore`. La doc insiste : sans store, éteindre le conteneur perd la transcription, donc le store est requis, pas optionnel.",
+      "distractors_fr": {
+        "A": "Le motif éphémère est fait pour les tâches ponctuelles : le conteneur meurt à la fin de la tâche et l'utilisateur ne revient pas dessus.",
+        "C": "Le motif à sessions longues garde des conteneurs allumés en permanence, ce qui est justement ce que l'équipe veut éviter pendant les périodes d'inactivité.",
+        "D": "Le conteneur multi-agents fait cohabiter plusieurs sous-processus qui collaborent ; il répond à un besoin de proximité entre agents, pas de mise en veille."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/hosting"
+    },
+    {
+      "id": "AGC-019",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Frontiere de donnees d un bac a sable auto-heberge de Managed Agents",
+      "question_en": "A bank runs Managed Agents sessions in self-hosted sandboxes to keep regulated data on its own network. Select the TWO statements about that boundary that are correct.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The model itself now runs on the bank's hardware, which is what keeps the data on its network."
+        },
+        {
+          "key": "B",
+          "text_en": "Tool inputs and outputs still reach Anthropic's control plane, so Claude can decide what follows."
+        },
+        {
+          "key": "C",
+          "text_en": "The filesystem the agent reads and writes, and its network egress, stay on the bank's own hosts."
+        },
+        {
+          "key": "D",
+          "text_en": "Self-hosting implies MCP tunnels, since such a session can no longer reach a public MCP server."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "L'auto-hébergement déplace l'exécution des outils, pas l'orchestration : « Self-hosted sandboxes keep the orchestration on Anthropic's side but move tool execution into infrastructure you control. » Le système de fichiers, les processus lancés et l'egress réseau restent chez le client. En revanche, les entrées et sorties d'outils continuent de remonter vers le plan de contrôle d'Anthropic, où tourne le modèle, pour qu'il puisse décider de la suite : c'est la limite exacte du périmètre, décrite dans le modèle de sécurité.",
+      "distractors_fr": {
+        "A": "Le modèle continue de tourner côté Anthropic. L'auto-hébergement ne rapatrie que l'exécution des outils.",
+        "D": "Les deux mécanismes sont indépendants : une session en bac à sable auto-hébergé peut utiliser des serveurs MCP publics ou tunnelisés, et une session en sandbox cloud peut atteindre un MCP privé via un tunnel."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes"
+    },
+    {
+      "id": "AGC-020",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Un environnement Managed Agents partage, un bac a sable isole par session",
+      "question_en": "A team creates one Managed Agents cloud environment and starts thirty sessions against it. They worry the sessions will read each other's files. What actually happens?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Each session gets an isolated sandbox, a fresh Linux container, though they share the environment."
+        },
+        {
+          "key": "B",
+          "text_en": "Sessions share the environment's filesystem, so isolation requires one environment per session."
+        },
+        {
+          "key": "C",
+          "text_en": "The first session locks the environment, and the others queue until the shared sandbox is free."
+        },
+        {
+          "key": "D",
+          "text_en": "Files are shared inside an agent version, so pinning distinct versions is what isolates them."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Un environnement décrit la configuration du bac à sable où tourne l'agent ; on le crée une fois et on référence son identifiant à chaque session. La doc lève l'ambiguïté : « Multiple sessions can share the same environment, but each session gets its own isolated sandbox (a fresh Linux container). » Le partage porte sur la configuration, pas sur le système de fichiers.",
+      "distractors_fr": {
+        "B": "Aucun système de fichiers n'est partagé entre sessions d'un même environnement, et rien n'oblige à multiplier les environnements pour isoler.",
+        "C": "Un environnement n'est pas une ressource exclusive : plusieurs sessions tournent en parallèle, chacune dans son conteneur.",
+        "D": "La version d'agent fixe le modèle, le prompt système, les outils et les skills. Elle ne joue aucun rôle dans l'isolation du système de fichiers."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/environments"
+    },
+    {
+      "id": "AGC-021",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "concept": "Plafond de deploiements planifies et gigue appliquee aux executions",
+      "question_en": "A platform team plans one scheduled Managed Agents deployment per customer. They need the documented ceiling, and an explanation for runs that do not fire exactly on the scheduled minute. Which pair of figures is right?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "100 deployments per organisation, and jitter of up to 5 % of the interval between two runs."
+        },
+        {
+          "key": "B",
+          "text_en": "1,000 deployments per organisation, and jitter of up to 50 % of that interval, capped at an hour."
+        },
+        {
+          "key": "C",
+          "text_en": "100 deployments per workspace, and a fixed jitter of 60 seconds applied to every scheduled run."
+        },
+        {
+          "key": "D",
+          "text_en": "1,000 deployments per organisation, and jitter of up to 15 % of that interval, capped at 9 minutes."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc donne les deux chiffres. Le plafond est de 1 000 déploiements planifiés par organisation, relevable en contactant le support. Et pour répartir la charge, l'exécution réelle applique une gigue allant jusqu'à 15 % de l'intervalle entre deux exécutions, avec un plancher de 5 secondes et un plafond de 9 minutes — ce qui explique l'écart avec les horaires annoncés dans `schedule.upcoming_runs_at`.",
+      "distractors_fr": {
+        "A": "Le plafond est dix fois plus haut, et 5 % confond le pourcentage de gigue avec le plancher de 5 secondes.",
+        "B": "Le plafond de déploiements est correct, mais la gigue est de 15 % au plus, bornée à 9 minutes et non à une heure.",
+        "C": "Le plafond se compte par organisation et non par espace de travail, et la gigue est proportionnelle à l'intervalle, non fixée à une minute."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/scheduled-deployments"
+    }
+  ]
+}

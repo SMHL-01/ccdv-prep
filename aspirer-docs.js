@@ -375,6 +375,25 @@ function decouperLlmsFull(texte) {
 // fait ~3,6 M de mots, soit 9 fois le plafond NotebookLM : il faut donc
 // filtrer, et pas seulement repartir.
 
+// Pages explicitement RETENUES, evaluees AVANT la liste noire.
+//
+// Le motif /docs/en/api/beta/ de la liste noire interceptait les endpoints
+// Managed Agents (agents, deployments, environments, sessions). Or le blueprint
+// cite nommement "managed agent deployment models (self-hosted vs.
+// Anthropic-hosted)" dans le domaine Agents, qui pese 14,7 %. Ces pages sont au
+// programme.
+//
+// Les motifs acceptent la page parente SANS barre finale : c'est justement
+// /api/beta/agents (et non /api/beta/agents/create) qui porte la presentation
+// du modele. Le garde-fou MAX_MOTS_PAR_PAGE reste applique : les dumps de
+// champs auto-generes s'ecartent d'eux-memes.
+const LISTE_BLANCHE = [
+  { motif: /\/api\/beta\/agents(\/|$)/, cle: '03-agents-sdk' },
+  { motif: /\/api\/beta\/deployments(\/|$)/, cle: '03-agents-sdk' },
+  { motif: /\/api\/beta\/environments(\/|$)/, cle: '03-agents-sdk' },
+  { motif: /\/api\/beta\/sessions(\/|$)/, cle: '03-agents-sdk' },
+];
+
 // Pages exclues d'office : reference d'API auto-generee, journaux de version,
 // gouvernance du projet MCP. Rien de tout cela n'est au programme de l'examen,
 // et cela represente a soi seul plus de la moitie du volume brut.
@@ -388,6 +407,19 @@ const LISTE_NOIRE = [
   { motif: /modelcontextprotocol\.io\/community\//, raison: 'gouvernance du projet MCP' },
   { motif: /modelcontextprotocol\.io\/specification\/[^/]+\/schema/, raison: 'dump TypeScript du schema' },
   { motif: /modelcontextprotocol\.io\/(blog|about|legacy)/, raison: 'hors documentation technique' },
+  // Administration d'entreprise. Le blueprint definit "Identity, Secrets and Key
+  // Management" (1,6 %) comme la gestion des secrets, identifiants et cles d'API
+  // ENTRE ENVIRONNEMENTS de developpement et de production. Gouverner une
+  // organisation Anthropic n'en fait pas partie. Motifs volontairement portes par
+  // /manage-claude/ : la page generale /api/rate-limits, elle, reste au programme.
+  { motif: /\/manage-claude\/cmek/, raison: 'CMEK (cles de chiffrement client) : administration entreprise' },
+  { motif: /\/manage-claude\/(wif-|workload-identity)/, raison: 'Workload Identity Federation : administration entreprise' },
+  { motif: /\/manage-claude\/compliance/, raison: 'Compliance API : administration entreprise' },
+  { motif: /\/manage-claude\/(api-and-)?data-retention/, raison: 'retention des donnees : administration entreprise' },
+  { motif: /\/manage-claude\/data-residency/, raison: 'residence des donnees : administration entreprise' },
+  { motif: /\/manage-claude\/(spend-limits|usage-cost|rate-limits|[\w-]*analytics)/, raison: 'facturation et telemetrie d organisation : administration entreprise' },
+  { motif: /\/manage-claude\/workspaces/, raison: 'gestion des workspaces : administration entreprise' },
+  { motif: /\/manage-claude\/(user-management|access-transparency)/, raison: 'administration des utilisateurs : administration entreprise' },
 ];
 
 const THEMES = [
@@ -480,7 +512,11 @@ const THEMES = [
       /\/network-config/,
       /\/sandboxing/,
       /\/permissions?/,
-      /\/manage-claude\//, // WIF, CMEK, cles d API, workspaces, retention : gestion des secrets
+      // "Identity, Secrets and Key Management" = cles d API et identifiants entre
+      // dev et prod. Motifs cibles, et non /manage-claude/ en entier, qui ramenait
+      // 70 000 mots d administration d entreprise hors blueprint.
+      /\/authentication/,
+      /\/service-accounts?/,
       /content-moderation/,
       /\/refusals-and-fallback/,
     ],
@@ -574,11 +610,19 @@ const REGLES_COMPLEMENTAIRES = [
 
 /** Renvoie { theme, motif } ; theme vaut null si la page est ecartee. */
 function classer(url, titre, mots) {
+  const tropLongue = mots > MAX_MOTS_PAR_PAGE;
+  const raisonTropLongue = `page de ${mots} mots : reference auto-generee, au-dela du seuil`;
+  // La liste blanche court-circuite la liste noire, mais jamais le garde-fou.
+  for (const b of LISTE_BLANCHE) {
+    if (b.motif.test(url)) {
+      return tropLongue ? { theme: null, motif: raisonTropLongue } : { theme: b.cle, motif: null };
+    }
+  }
   for (const n of LISTE_NOIRE) {
     if (n.motif.test(url)) return { theme: null, motif: n.raison };
   }
-  if (mots > MAX_MOTS_PAR_PAGE) {
-    return { theme: null, motif: `page de ${mots} mots : reference auto-generee, au-dela du seuil` };
+  if (tropLongue) {
+    return { theme: null, motif: raisonTropLongue };
   }
   for (const t of THEMES) {
     if (t.exclureUrls && t.exclureUrls.some((r) => r.test(url))) continue;

@@ -1,0 +1,240 @@
+[
+  {
+    "id": "CAD-001",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Choix entre Messages API et Managed Agents selon la duree et l infrastructure",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAD-002",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "La Messages API est sans etat : l historique complet est renvoye a chaque tour",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAD-003",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Tours assistant synthetiques pour orienter le comportement sans gonfler le prompt systeme",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAD-004",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Le prefill n est plus accepte sur les modeles recents : passer aux structured outputs",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAD-005",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "temperature, top_p et top_k refuses sur les modeles recents : piloter par le prompt",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAD-006",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Message systeme en cours de conversation plutot que modification du champ system",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages"
+  },
+  {
+    "id": "CAD-007",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Regles de placement d un message systeme en cours de conversation",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages"
+  },
+  {
+    "id": "CAD-008",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Autorite du role system par rapport au role user pour les faits d operateur",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages"
+  },
+  {
+    "id": "CAD-009",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Ne jamais placer du contenu non fiable dans un message systeme",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages"
+  },
+  {
+    "id": "CAD-010",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Faire evoluer une consigne en ajoutant un message systeme plutot qu en modifiant celui deja envoye",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages"
+  },
+  {
+    "id": "CAD-011",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Fonctionnalite citations plutot que consigne de citer dans le prompt",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-012",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Les citations sont tout ou rien sur l ensemble des documents d une requete",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-013",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Citations et structured outputs sont incompatibles",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-014",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Choix du type de document selon la granularite de citation voulue pour des chunks RAG",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-015",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "cited_text n est facture ni en sortie ni en entree aux tours suivants",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-016",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Les deux facons de fournir des blocs search_result et le cas d usage de chacune",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-017",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Les blocs search_result ne sont acceptes que dans les messages utilisateur",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-018",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Un tool_result contenant un search_result ne peut pas melanger les types de blocs",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-019",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Structurer le contenu des search_result pour obtenir des frontieres de citation utilisables",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-020",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Gerer une recherche vide ou en echec sans interrompre la conversation",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-021",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "search_result_index numerote tous les blocs dans l ordre de la requete, sources confondues",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+  },
+  {
+    "id": "CAD-022",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Combiner citations et prompt caching sur les documents sources",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/citations"
+  },
+  {
+    "id": "CAD-023",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Files API plutot que base64 en ligne pour des documents reutilises",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/files"
+  },
+  {
+    "id": "CAD-024",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Disponibilite de la Files API selon la plateforme de deploiement",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/files"
+  },
+  {
+    "id": "CAD-025",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Seuls les fichiers produits par les skills ou le code execution tool sont telechargeables",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/files"
+  },
+  {
+    "id": "CAD-026",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Limites de pages PDF par requete et effet de la fenetre de contexte",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/pdf-support"
+  },
+  {
+    "id": "CAD-027",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Comprehension visuelle des PDF via l API Converse de Bedrock",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/pdf-support"
+  },
+  {
+    "id": "CAD-028",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Un refus est une reponse HTTP 200 avec stop_reason refusal, pas une erreur",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+    "id": "CAD-029",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Choisir entre repli cote serveur, middleware SDK et reprise manuelle",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+    "id": "CAD-030",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Le parametre fallbacks n est pas supporte par la Batch API",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+    "id": "CAD-031",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Traiter la sortie partielle d un refus en cours de flux comme incomplete",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+    "id": "CAD-032",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Quand un LLM est preferable a une approche ML classique pour une classification",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing"
+  },
+  {
+    "id": "CAD-033",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Definir des criteres de succes mesurables avant de construire",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat"
+  },
+  {
+    "id": "CAD-034",
+    "fichier": "applications-integration_claude-application-design.json",
+    "subdomain": "Claude Application Design",
+    "concept": "Decomposer une interaction en taches distinctes avant de prompter et d evaluer",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat"
+  }
+]

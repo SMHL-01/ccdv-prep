@@ -5,7 +5,47 @@ Préparation à la certification Anthropic **Claude Certified Developer – Foun
 Deux livrables :
 
 1. **Corpus de documentation** découpé pour NotebookLM (`docs-corpus/`)
-2. **Application web de révision par QCM** (à venir, étapes 2 à 4)
+2. **Application web de révision par QCM** (`src/`, questions dans `questions/`)
+
+## L'application
+
+```
+npm install
+npm run dev      # développement
+npm run build    # production, sortie dans dist/
+```
+
+React + Vite, sans backend : les questions sont des JSON statiques et la
+progression vit dans le `localStorage` du navigateur.
+
+**Le dossier `questions/` est chargé dynamiquement**, par
+`import.meta.glob(['../questions/*.json', '!../questions/_*.json'])`. Il n'y a
+aucune liste de fichiers codée en dur : déposer un nouveau fichier de
+sous-domaine suffit, il apparaît au prochain `npm run build`. Les fichiers
+préfixés d'un souligné sont de la méta et sont exclus dès la compilation.
+
+Trois modes : examen blanc (53 questions tirées selon les poids du blueprint,
+chronomètre de 120 minutes, correction à la fin comme le jour J), entraînement
+filtré par domaine, sous-domaine et difficulté, et révisions du jour issues de
+la répétition espacée — une question ratée revient à J+2, puis à J+7 si elle
+est réussie.
+
+Tant que la banque est incomplète, le tirage de l'examen blanc **se rééquilibre
+sur les sous-domaines disponibles** en conservant leurs poids relatifs, et
+l'application affiche en permanence la part du blueprint réellement couverte.
+
+### Scripts de préparation
+
+| Commande | Rôle |
+| --- | --- |
+| `npm run corpus` | aspire la documentation officielle dans `docs-corpus/` |
+| `npm run couverture` | vérifie que chaque sous-domaine du blueprint a des sources |
+| `npm run questions` | contrôle la banque : répartitions, doublons, sourçage |
+| `node lire-page.js <motif>` | lit une page du corpus sans ses blocs de code |
+
+`blueprint.json` est la source de vérité unique des 25 sous-domaines et de
+leurs poids : il est lu à la fois par `verifier-couverture.js` et par
+l'application.
 
 ## Étape 1 — Corpus de documentation
 

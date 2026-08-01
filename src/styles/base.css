@@ -1,0 +1,109 @@
+/* ============================================================
+   BASE — remise a zero et style des elements HTML nus.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: 16px; /* jamais moins : sur iOS, un champ sous 16px declenche un zoom automatique */
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  /* Empeche le rebond horizontal quand un tableau deborde. */
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+h1 {
+  font-size: 1.4rem;
+}
+h2 {
+  font-size: 1.1rem;
+}
+h3 {
+  font-size: 0.95rem;
+}
+
+p {
+  margin: 0 0 var(--e3);
+}
+
+a {
+  color: var(--accent-texte);
+  text-decoration-color: rgba(138, 216, 255, 0.35);
+  text-underline-offset: 3px;
+}
+
+code {
+  font-family: var(--police-mono);
+  font-size: 0.88em;
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  border-radius: var(--r-petit);
+  padding: 1px 5px;
+  /* Les noms de champs de l'API sont longs (`cache_creation_input_tokens`) :
+     sans cela ils forceraient un defilement horizontal sur telephone. */
+  overflow-wrap: anywhere;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* Cible tactile : 44 px est le minimum confortable au pouce. */
+  min-height: 44px;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--lueur-focus);
+  border-radius: var(--r-petit);
+}
+
+select {
+  font: inherit;
+  color: var(--texte);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  border-radius: var(--r-petit);
+  padding: var(--e2) var(--e3);
+  min-height: 44px;
+  width: 100%;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--ligne);
+  margin: var(--e5) 0;
+}
+
+/* Respecte le reglage systeme « reduire les animations ». */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

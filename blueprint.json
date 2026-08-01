@@ -1,0 +1,181 @@
+{
+  "examen": "Claude Certified Developer — Foundations (CCDV-F)",
+  "questions_examen_blanc": 53,
+  "duree_minutes": 120,
+  "commentaire": "Source de verite unique du blueprint : lue par verifier-couverture.js (mots-cles) et par l'application (poids, noms, agregats). 8 domaines, 25 feuilles — 23 sous-domaines nommes plus Claude Code et Eval, Testing and Debugging qui ne sont pas subdivises. Les poids totalisent 100,0.",
+  "domaines": [
+    {
+      "domaine": "Agents and Workflows",
+      "poids": 14.7,
+      "sousDomaines": [
+        {
+          "nom": "Agent Architecture",
+          "poids": 4.5,
+          "motsCles": ["agent loop", "agentic loop", "orchestrator", "subagent", "agent architecture", "harness", "multi-agent"]
+        },
+        {
+          "nom": "Agent Construction with Claude",
+          "poids": 5.3,
+          "motsCles": ["agent sdk", "claude agent sdk", "managed agent", "self-hosted", "anthropic-hosted", "deployment", "environment", "session"]
+        },
+        {
+          "nom": "Agent Patterns and Frameworks",
+          "poids": 4.9,
+          "motsCles": ["prompt chaining", "routing", "parallelization", "evaluator-optimizer", "orchestrator-workers", "building effective agents", "workflow"]
+        }
+      ]
+    },
+    {
+      "domaine": "Applications and Integration",
+      "poids": 33.1,
+      "sousDomaines": [
+        {
+          "nom": "Understanding Requirements",
+          "poids": 3.4,
+          "motsCles": ["success criteria", "requirements", "use case", "define the task", "business metric", "acceptance"]
+        },
+        {
+          "nom": "Systems Life Cycle",
+          "poids": 2.8,
+          "motsCles": ["production", "deployment", "staging", "rollout", "monitoring", "migration", "deprecation", "iterate"]
+        },
+        {
+          "nom": "Claude API Mechanics",
+          "poids": 6.8,
+          "motsCles": ["messages api", "stop_reason", "max_tokens", "content block", "x-api-key", "anthropic-version", "server-sent events", "rate limit", "429"]
+        },
+        {
+          "nom": "Software Engineering Foundations",
+          "poids": 7.4,
+          "motsCles": ["sdk", "typescript", "python", "error handling", "retry", "idempot", "http status", "exponential backoff"]
+        },
+        {
+          "nom": "Claude Application Design",
+          "poids": 8.6,
+          "motsCles": ["rag", "retrieval", "citations", "multi-turn", "conversation", "pipeline", "architecture", "use case guide"]
+        },
+        {
+          "nom": "Configuration Management",
+          "poids": 4.1,
+          "motsCles": ["settings.json", "environment variable", "claude.md", ".claude", ".mcp.json", "configuration file", "permissions"]
+        }
+      ]
+    },
+    {
+      "domaine": "Claude Code",
+      "poids": 3.1,
+      "sousDomaines": [
+        {
+          "nom": "Claude Code",
+          "poids": 3.1,
+          "motsCles": ["claude code", "slash command", "claude.md", "plugin", "skill", "headless", "ide integration"]
+        }
+      ]
+    },
+    {
+      "domaine": "Eval, Testing and Debugging",
+      "poids": 2.6,
+      "sousDomaines": [
+        {
+          "nom": "Eval, Testing and Debugging",
+          "poids": 2.6,
+          "motsCles": ["eval", "test case", "grader", "ground truth", "llm-as-judge", "regression", "debug"]
+        }
+      ]
+    },
+    {
+      "domaine": "Model Selection and Optimization",
+      "poids": 16.8,
+      "sousDomaines": [
+        {
+          "nom": "LLM Fundamentals",
+          "poids": 5.2,
+          "motsCles": ["token", "tokenizer", "temperature", "sampling", "context window", "hallucination", "next token", "training data"]
+        },
+        {
+          "nom": "Technical Fundamentals",
+          "poids": 6.1,
+          "motsCles": ["latency", "throughput", "time to first token", "concurrency", "streaming", "quota", "tokens per minute", "service tier"]
+        },
+        {
+          "nom": "Model Selection and Tradeoffs",
+          "poids": 2.7,
+          "motsCles": ["opus", "sonnet", "haiku", "choosing a model", "model comparison", "tradeoff", "benchmark", "capability"]
+        },
+        {
+          "nom": "Cost and Token Management",
+          "poids": 2.8,
+          "motsCles": ["prompt caching", "cache_control", "cache hit", "batches api", "pricing", "cost", "token counting", "per million tokens"]
+        }
+      ]
+    },
+    {
+      "domaine": "Prompt and Context Engineering",
+      "poids": 11.0,
+      "sousDomaines": [
+        {
+          "nom": "Context Engineering",
+          "poids": 3.8,
+          "motsCles": ["context window", "long context", "compaction", "context editing", "memory tool", "context management", "truncat"]
+        },
+        {
+          "nom": "Prompt Engineering",
+          "poids": 4.6,
+          "motsCles": ["system prompt", "xml tags", "few-shot", "chain of thought", "prefill", "be clear and direct", "prompt template"]
+        },
+        {
+          "nom": "Output Handling",
+          "poids": 2.6,
+          "motsCles": ["structured output", "json schema", "stop_sequence", "output format", "parsing", "strict", "response format"]
+        }
+      ]
+    },
+    {
+      "domaine": "Security and Safety",
+      "poids": 8.1,
+      "sousDomaines": [
+        {
+          "nom": "AI Application Security",
+          "poids": 3.2,
+          "motsCles": ["prompt injection", "untrusted", "exfiltrat", "sandbox", "malicious", "attack", "threat"]
+        },
+        {
+          "nom": "Guardrails and Safe Deployment",
+          "poids": 2.3,
+          "motsCles": ["guardrail", "moderation", "harmful", "refusal", "jailbreak", "safety", "classifier"]
+        },
+        {
+          "nom": "Claude Hooks",
+          "poids": 1.0,
+          "motsCles": ["hook", "pretooluse", "posttooluse", "sessionstart", "hook event", "matcher"]
+        },
+        {
+          "nom": "Identity, Secrets and Key Management",
+          "poids": 1.6,
+          "motsCles": ["api key", "x-api-key", "secret", "credential", "authentication", "environment variable", "rotate"]
+        }
+      ]
+    },
+    {
+      "domaine": "Tools and MCPs",
+      "poids": 10.6,
+      "sousDomaines": [
+        {
+          "nom": "Tool Implementation",
+          "poids": 4.4,
+          "motsCles": ["tool_use", "input_schema", "tool_result", "json schema", "tool definition", "tool_choice", "parallel tool"]
+        },
+        {
+          "nom": "MCP Server Development",
+          "poids": 2.1,
+          "motsCles": ["mcp server", "stdio", "streamable http", "transport", "resources", "model context protocol", "initialize"]
+        },
+        {
+          "nom": "Agentic Customization",
+          "poids": 4.1,
+          "motsCles": ["skill", "subagent", "slash command", "plugin", "custom tool", "output style", "hooks"]
+        }
+      ]
+    }
+  ]
+}

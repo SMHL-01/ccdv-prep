@@ -1,0 +1,463 @@
+/* ============================================================
+   APP — mise en page et blocs propres a l'application.
+   Une seule colonne, pensee d'abord pour le telephone.
+   ============================================================ */
+
+.coque {
+  max-width: var(--largeur);
+  margin: 0 auto;
+  padding: var(--e4);
+  padding-top: max(var(--e4), env(safe-area-inset-top));
+  /* La barre d'onglets est fixe, donc hors du flux : sans cette reserve, les
+     dernieres lignes passeraient dessous. */
+  padding-bottom: calc(var(--barre-onglets) + env(safe-area-inset-bottom) + var(--e6));
+}
+
+/* ------------------------------------------------------------ EN-TETE */
+
+.entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e3);
+  margin-bottom: var(--e4);
+}
+
+.titre-degrade {
+  color: var(--accent-texte);
+  background: var(--degrade-titre);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sous-titre {
+  color: var(--texte-doux);
+  font-size: 0.82rem;
+}
+
+/* ------------------------------------------------------------ CARTES */
+
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-radius: var(--r-grand);
+  padding: var(--e4);
+  margin-bottom: var(--e4);
+}
+
+.carte-titre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3);
+  margin-bottom: var(--e3);
+}
+
+.carte h2 {
+  color: var(--texte);
+}
+
+/* ------------------------------------------------------------ BOUTONS */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e2);
+  width: 100%;
+  padding: var(--e3) var(--e4);
+  border-radius: var(--r);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  color: var(--texte);
+  font-weight: 550;
+  text-align: center;
+}
+
+.bouton:active {
+  transform: translateY(1px);
+}
+
+.bouton-principal {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-encre);
+  box-shadow: var(--lueur-action);
+}
+
+.bouton-principal:active {
+  background: var(--accent-appui);
+}
+
+.bouton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pile > * + * {
+  margin-top: var(--e3);
+}
+
+/* ------------------------------------------------------------ COUVERTURE */
+
+/* Indicateur permanent : ce qui existe, et surtout ce qui manque. */
+.couverture {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--e2);
+  margin-bottom: var(--e3);
+}
+
+.couverture-case {
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  border-radius: var(--r);
+  padding: var(--e3);
+  text-align: center;
+}
+
+.couverture-chiffre {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent-texte);
+  line-height: 1.15;
+}
+
+.couverture-libelle {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--texte-doux);
+  margin-top: var(--e1);
+}
+
+.jauge {
+  height: 8px;
+  border-radius: var(--r-pilule);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  overflow: hidden;
+}
+
+.jauge-remplissage {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--r-pilule);
+}
+
+/* ------------------------------------------------------------ QUESTION */
+
+.meta-question {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2);
+  margin-bottom: var(--e3);
+}
+
+.etiquette {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px var(--e2);
+  border-radius: var(--r-pilule);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  color: var(--texte-doux);
+}
+
+.etiquette-accent {
+  background: var(--accent-voile);
+  border-color: rgba(76, 196, 255, 0.35);
+  color: var(--accent-texte);
+}
+
+/* L'enonce est en anglais : on le distingue nettement de l'interface. */
+.enonce {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  margin-bottom: var(--e4);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e2);
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e3);
+  width: 100%;
+  text-align: left;
+  padding: var(--e3);
+  border-radius: var(--r);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  line-height: 1.5;
+}
+
+.option-cle {
+  flex: 0 0 26px;
+  height: 26px;
+  border-radius: var(--r-petit);
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+}
+
+.option-choisie {
+  border-color: var(--accent);
+  background: var(--accent-voile);
+}
+
+.option-choisie .option-cle {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-encre);
+}
+
+/* Apres correction. Le liseré de couleur est double d'un signe dans la
+   pastille, pour ne pas dependre de la seule couleur. */
+.option-juste {
+  border-color: var(--juste);
+  background: var(--juste-voile);
+}
+
+.option-juste .option-cle {
+  background: var(--juste);
+  border-color: var(--juste);
+  color: #04231a;
+}
+
+.option-fausse {
+  border-color: var(--faux);
+  background: var(--faux-voile);
+}
+
+.option-fausse .option-cle {
+  background: var(--faux);
+  border-color: var(--faux);
+  color: #2b0a0a;
+}
+
+/* ------------------------------------------------------------ CORRECTION */
+
+.correction {
+  margin-top: var(--e4);
+  padding: var(--e4);
+  border-radius: var(--r);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+}
+
+.correction-verdict {
+  font-weight: 700;
+  margin-bottom: var(--e2);
+}
+
+.verdict-juste {
+  color: var(--juste);
+}
+.verdict-faux {
+  color: var(--faux);
+}
+
+.correction h3 {
+  color: var(--texte-doux);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  margin: var(--e4) 0 var(--e2);
+}
+
+.lien-doc {
+  display: inline-block;
+  margin-top: var(--e2);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------ PROGRESSION */
+
+.barre-progression {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3);
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+  margin-bottom: var(--e3);
+}
+
+.chrono {
+  font-family: var(--police-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.chrono-urgent {
+  color: var(--attention);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------ TABLEAUX */
+
+.tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.tableau th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--texte-doux);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: var(--e2);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.tableau td {
+  padding: var(--e2) 0;
+  border-bottom: 1px solid var(--ligne);
+  vertical-align: middle;
+}
+
+.tableau td:last-child,
+.tableau th:last-child {
+  text-align: right;
+}
+
+.nombre {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Petite barre horizontale dans une cellule de tableau. */
+.mini-jauge {
+  display: inline-block;
+  width: 60px;
+  height: 6px;
+  border-radius: var(--r-pilule);
+  background: var(--surface-haute);
+  overflow: hidden;
+  vertical-align: middle;
+  margin-right: var(--e2);
+}
+
+.mini-jauge span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ------------------------------------------------------------ FILTRES */
+
+.filtres {
+  display: grid;
+  gap: var(--e3);
+}
+
+.champ label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--texte-doux);
+  margin-bottom: var(--e1);
+}
+
+/* ------------------------------------------------------------ ONGLETS */
+
+.barre-onglets {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  background: rgba(16, 18, 21, 0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--ligne);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.onglet {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: var(--barre-onglets);
+  font-size: 0.68rem;
+  color: var(--texte-faible);
+}
+
+.onglet-actif {
+  color: var(--accent-texte);
+}
+
+.onglet-pastille {
+  position: absolute;
+  transform: translate(14px, -12px);
+  background: var(--attention);
+  color: #2b1a02;
+  font-size: 0.62rem;
+  font-weight: 700;
+  border-radius: var(--r-pilule);
+  padding: 0 5px;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------ DIVERS */
+
+.vide {
+  text-align: center;
+  color: var(--texte-doux);
+  padding: var(--e6) var(--e4);
+}
+
+.note {
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+
+.avertissement {
+  background: var(--attention-voile);
+  border: 1px solid rgba(255, 196, 107, 0.35);
+  border-radius: var(--r);
+  padding: var(--e3);
+  font-size: 0.82rem;
+  margin-bottom: var(--e4);
+}
+
+.sparkline {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 48px;
+  margin-top: var(--e2);
+}
+
+.sparkline span {
+  flex: 1;
+  background: var(--accent-voile);
+  border-top: 2px solid var(--accent);
+  border-radius: 2px 2px 0 0;
+  min-height: 2px;
+}
+
+@media (min-width: 640px) {
+  .coque {
+    padding: var(--e5);
+    padding-bottom: calc(var(--barre-onglets) + var(--e7));
+  }
+  .filtres {
+    grid-template-columns: 1fr 1fr;
+  }
+}

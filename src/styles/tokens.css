@@ -1,0 +1,69 @@
+/* ============================================================
+   TOKENS — seule source de verite des valeurs de design.
+   Aucun selecteur ici, uniquement des variables.
+   ============================================================ */
+
+:root {
+  /* --- Fonds ---
+     Trois niveaux d'elevation. Gris tres sombre plutot que noir pur : sur
+     ecran OLED, le noir absolu fait baver les bords clairs. */
+  --fond: #101215;
+  --surface: #171a1f;
+  --surface-haute: #1e222a;
+  --ligne: #282d36;
+
+  /* --- Texte ---
+     Blanc casse : le blanc pur sur fond sombre cree un halo et fatigue a la
+     lecture prolongee, or on lit ici des enonces longs en anglais. */
+  --texte: #e8eaee;
+  --texte-doux: #9aa1ad;
+  --texte-faible: #6a7280;
+
+  /* --- Accent : bleu-cyan ---
+     Volontairement different du vert de Tracker : deux applications sur le
+     meme telephone doivent se distinguer d'un coup d'oeil. */
+  --accent: #4cc4ff;
+  --accent-texte: #8ad8ff;
+  --accent-appui: #2aa5e0;
+  --accent-voile: rgba(76, 196, 255, 0.12);
+  --accent-encre: #04212e;
+
+  /* --- Verdicts ---
+     Jamais la couleur seule : chaque etat porte aussi un mot ou un signe,
+     pour rester lisible en cas de daltonisme. */
+  --juste: #57d9a3;
+  --juste-voile: rgba(87, 217, 163, 0.12);
+  --faux: #ff8080;
+  --faux-voile: rgba(255, 128, 128, 0.12);
+  --attention: #ffc46b;
+  --attention-voile: rgba(255, 196, 107, 0.12);
+
+  --degrade-titre: linear-gradient(100deg, #8ad8ff 0%, #4cc4ff 45%, #7ea8ff 100%);
+  --lueur-action: 0 0 20px rgba(76, 196, 255, 0.22);
+  --lueur-focus: 0 0 0 3px rgba(76, 196, 255, 0.18);
+
+  /* --- Espacements ---
+     Echelle geometrique : chaque cran vaut environ 1,5 fois le precedent.
+     Les valeurs intermediaires manquent volontairement, pour eviter le
+     placage au pixel pres. */
+  --e1: 4px;
+  --e2: 8px;
+  --e3: 12px;
+  --e4: 16px;
+  --e5: 24px;
+  --e6: 32px;
+  --e7: 48px;
+
+  --r-petit: 8px;
+  --r: 12px;
+  --r-grand: 16px;
+  --r-pilule: 999px;
+
+  /* Colonne etroite : application de poche, l'etirer sur 1400 px ne rendrait
+     rien plus lisible, et les lignes trop longues nuisent a la lecture. */
+  --largeur: 720px;
+  --barre-onglets: 60px;
+
+  --police: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --police-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}

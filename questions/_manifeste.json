@@ -1,12 +1,22 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
-  "genere": "2026-08-01",
-  "nbQuestions": 55,
+  "genere": "2026-08-02",
+  "nbQuestions": 93,
   "fichiers": [
+    {
+      "fichier": "agents-workflows_agent-architecture.json",
+      "subdomain": "Agent Architecture",
+      "nb": 18
+    },
     {
       "fichier": "agents-workflows_agent-construction-with-claude.json",
       "subdomain": "Agent Construction with Claude",
       "nb": 21
+    },
+    {
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+      "subdomain": "Agent Patterns and Frameworks",
+      "nb": 20
     },
     {
       "fichier": "applications-integration_claude-application-design.json",
@@ -15,6 +25,168 @@
     }
   ],
   "questions": [
+    {
+      "id": "AGA-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
+    {
+      "id": "AGA-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-architecture.json"
+    },
     {
       "id": "AGC-001",
       "domain": "Agents and Workflows",
@@ -203,6 +375,186 @@
       "nature": "factual_magnitude",
       "type": "single",
       "fichier": "agents-workflows_agent-construction-with-claude.json"
+    },
+    {
+      "id": "AGP-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-019",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
+    },
+    {
+      "id": "AGP-020",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
     },
     {
       "id": "CAD-001",

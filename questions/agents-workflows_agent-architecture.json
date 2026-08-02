@@ -1,0 +1,716 @@
+{
+  "subdomain": "Agent Architecture",
+  "domain": "Agents and Workflows",
+  "weight": 4.5,
+  "target_questions": 18,
+  "sources_read": [
+    "https://code.claude.com/docs/en/agent-sdk/agent-loop",
+    "https://code.claude.com/docs/en/agent-sdk/subagents",
+    "https://code.claude.com/docs/en/sub-agents",
+    "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+  ],
+  "questions": [
+    {
+      "id": "AGA-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Ce qui met fin a la boucle d agent",
+      "question_en": "An agent has been calling tools for several turns. What condition actually ends the agent loop?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The tool results stop changing, so the loop detects it is no longer making progress."
+        },
+        {
+          "key": "B",
+          "text_en": "The conversation history fills the context window and compaction cannot free more."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude produces a response containing no tool calls at all."
+        },
+        {
+          "key": "D",
+          "text_en": "Every tool the agent was allowed to use has been called at least one time."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La boucle est décrite en cinq étapes, et la quatrième porte la condition d'arrêt : « Steps 2 and 3 repeat as a cycle. Each full cycle is one turn. Claude continues calling tools and processing results until it produces a response with no tool calls. » Le SDK émet alors un dernier AssistantMessage sans appel d'outil, suivi d'un ResultMessage. Les bornes que vous pouvez poser — maxTurns, maxBudgetUsd — sont des arrêts anticipés, pas la fin naturelle.",
+      "distractors_fr": {
+        "A": "Aucune détection de stagnation n'est décrite. Sans borne explicite, la boucle tourne jusqu'à ce que Claude s'arrête de lui-même, ce qui peut être long sur un prompt ouvert.",
+        "B": "La saturation du contexte déclenche la compaction, qui résume l'historique ancien pour libérer de la place : la boucle continue, elle ne s'arrête pas.",
+        "D": "Claude appelle les outils que la tâche demande. Rien n'exige qu'il les appelle tous, et beaucoup de sessions n'en emploient que deux ou trois."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Message qui marque la fin de la boucle et ce qu il porte",
+      "question_en": "Which SDK message marks the end of the agent loop, and what does it carry?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "SystemMessage with subtype \"init\", carrying the metadata that closes the session."
+        },
+        {
+          "key": "B",
+          "text_en": "The last UserMessage, carrying the tool result that satisfied the original request."
+        },
+        {
+          "key": "C",
+          "text_en": "StreamEvent, whose final delta carries the closing text and the token counts."
+        },
+        {
+          "key": "D",
+          "text_en": "ResultMessage, carrying the final text, token usage, cost and the session ID."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le ResultMessage « marks the end of the agent loop. Contains the final text result, token usage, cost, and session ID. » Il est précédé d'un dernier AssistantMessage porteur du texte sans appel d'outil. Un détail compte en pratique : quelques événements système de queue, comme prompt_suggestion, peuvent arriver après lui, d'où la consigne de parcourir le flux jusqu'au bout plutôt que de sortir dès le résultat.",
+      "distractors_fr": {
+        "A": "Le sous-type init ouvre la session au contraire : il porte les métadonnées du run et arrive avant que la boucle ne commence.",
+        "B": "Un UserMessage est émis après chaque exécution d'outil, pour renvoyer le résultat à Claude. Il ponctue la boucle sans jamais la clore.",
+        "C": "Les StreamEvent ne sont émis que si les messages partiels sont activés, et ils portent les événements bruts de streaming, pas le bilan de la session."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Lire le resultat sans verifier le sous-type de terminaison",
+      "question_en": "Production code reads ResultMessage.result directly and logs it. The agent sometimes hits its turn limit. What goes wrong?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The result field is only present on the success subtype, so nothing is there to log."
+        },
+        {
+          "key": "B",
+          "text_en": "The result field holds the error text, so the log records a failure as if it were output."
+        },
+        {
+          "key": "C",
+          "text_en": "The result field holds the partial answer, which reads as complete but is truncated."
+        },
+        {
+          "key": "D",
+          "text_en": "The message is never emitted on a limit, so the code blocks until the stream times out."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le tableau des sous-types est net : seul success porte le champ result. error_max_turns, error_max_budget_usd, error_during_execution et error_max_structured_output_retries ne le portent pas, d'où la consigne « always check the subtype before reading it ». Les autres champs restent disponibles sur tous les sous-types — total_cost_usd, usage, num_turns, session_id — précisément pour pouvoir suivre le coût et reprendre après une erreur.",
+      "distractors_fr": {
+        "B": "Le texte de l'erreur ne passe pas par result. En appel simple, query() lève une erreur qui contient ce texte après avoir émis le message de résultat.",
+        "C": "Il n'y a pas de réponse partielle exposée : le champ est simplement absent quand la limite est atteinte.",
+        "D": "Le ResultMessage est bien émis, avec le sous-type error_max_turns. C'est justement ce sous-type qu'il faut tester."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Concurrence des appels d outils dans un meme tour",
+      "question_en": "Claude requests several tool calls in a single turn. Which TWO statements describe how the SDK executes them?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Read-only tools such as Read, Glob and Grep are free to run concurrently."
+        },
+        {
+          "key": "B",
+          "text_en": "Tools that change state, such as Edit, Write and Bash, run one after another."
+        },
+        {
+          "key": "C",
+          "text_en": "Every call in a turn runs concurrently, the loop merging results as they land."
+        },
+        {
+          "key": "D",
+          "text_en": "Calls run in the order Claude listed them, concurrency being an MCP-only trait."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "La règle sépare la lecture de l'écriture : « Read-only tools (like Read, Glob, Grep, and MCP tools marked as read-only) can run concurrently. Tools that modify state (like Edit, Write, and Bash) run sequentially to avoid conflicts. » L'exécution séquentielle des outils mutants est une garantie d'architecture, pas une limite de performance : elle évite que deux écritures du même tour se marchent dessus.",
+      "distractors_fr": {
+        "C": "Tout paralléliser reviendrait à laisser deux écritures concurrentes du même tour entrer en conflit, ce que le séquencement des outils mutants existe précisément pour empêcher.",
+        "D": "La concurrence n'a rien de propre à MCP : elle s'applique aux outils intégrés en lecture seule, et les outils MCP en bénéficient quand ils sont marqués comme tels."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Rendre un outil custom eligible a l execution concurrente",
+      "question_en": "A custom tool only queries a cache and never writes. It still runs sequentially with the other calls of the turn. What makes it eligible for concurrency?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Listing it in allowedTools, which marks it safe and lifts the sequential default."
+        },
+        {
+          "key": "B",
+          "text_en": "Setting readOnlyHint in its annotations, the field both SDKs take from MCP."
+        },
+        {
+          "key": "C",
+          "text_en": "Returning its result as a content block rather than a plain string of text."
+        },
+        {
+          "key": "D",
+          "text_en": "Declaring it on an MCP server, since only built-in tools default to sequential."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les outils personnalisés sont séquentiels par défaut, et un seul champ change cela : « Custom tools default to sequential execution. To enable parallel execution for a custom tool, set readOnlyHint in its annotations. Both the TypeScript and Python SDKs use this field name from the MCP SDK. » Le SDK ne peut pas deviner qu'un outil est sans effet de bord : c'est à l'auteur de l'annoter.",
+      "distractors_fr": {
+        "A": "allowedTools relève de la permission : cela auto-approuve l'appel. Cela ne dit rien sur les effets de bord de l'outil, et ne change donc pas son ordonnancement.",
+        "C": "La forme du résultat renvoyé n'a aucune incidence sur l'ordonnancement, qui dépend uniquement de l'annotation de lecture seule.",
+        "D": "Un outil MCP n'est concurrent que s'il est marqué en lecture seule, exactement comme un outil personnalisé local. Le transport ne change rien."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Accumulation du contexte d un tour a l autre dans une session",
+      "question_en": "A long session reads several large files early on. What happens to that content as the session goes on?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is dropped once its turn ends, each turn being sent to the model on its own."
+        },
+        {
+          "key": "B",
+          "text_en": "It is replaced by a digest at the next turn, only the file paths being kept."
+        },
+        {
+          "key": "C",
+          "text_en": "It moves out to session storage, and is fetched back when a later turn cites it."
+        },
+        {
+          "key": "D",
+          "text_en": "It stays in the context, which accumulates and does not reset between turns."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le point est posé sans détour : « The context window is the total amount of information available to Claude during a session. It does not reset between turns within a session. Everything accumulates: the system prompt, tool definitions, conversation history, tool inputs, and tool outputs. » D'où l'avertissement qui suit : lire un gros fichier ou lancer une commande bavarde peut coûter des milliers de jetons en un seul tour, et cette dépense reste dans le contexte des tours suivants.",
+      "distractors_fr": {
+        "A": "Chaque requête emporte tout l'historique de la conversation : c'est ce qui permet à Claude de tenir compte de ce qu'il a lu au tour précédent.",
+        "B": "Aucun résumé automatique n'a lieu tour par tour. La compaction n'intervient qu'à l'approche de la limite de la fenêtre, et elle porte sur l'historique ancien.",
+        "C": "Le stockage de session sert à reprendre une conversation, pas à décharger le contexte en cours de route."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ou placer une regle permanente pour qu elle survive a la compaction",
+      "question_en": "An agent must never touch the production database. The rule is stated in the opening prompt, yet the agent violates it after a long session. What is the architectural fix?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Repeat the rule in each user turn, so the newest copy is always the one in context."
+        },
+        {
+          "key": "B",
+          "text_en": "Raise the effort level, since deeper reasoning revisits the constraints of the session."
+        },
+        {
+          "key": "C",
+          "text_en": "Put the rule in CLAUDE.md, whose content is re-injected on every single request."
+        },
+        {
+          "key": "D",
+          "text_en": "Disable compaction, so that the opening prompt is never summarized away at all."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La compaction remplace les messages anciens par un résumé, et la documentation en tire la conséquence : « specific instructions from early in the conversation may not be preserved. Persistent rules belong in CLAUDE.md (loaded via settingSources) rather than in the initial prompt, because CLAUDE.md content is re-injected on every request. » Une règle permanente doit donc vivre dans un support rechargé à chaque requête, pas dans un message qu'un résumé peut absorber.",
+      "distractors_fr": {
+        "A": "Répéter la règle à la main fonctionne par accident, coûte des jetons à chaque tour, et cède dès qu'un tour l'oublie. CLAUDE.md fait ce travail de façon systématique.",
+        "B": "L'effort règle la profondeur de raisonnement par réponse. Il ne restaure pas une instruction qui n'est plus dans le contexte.",
+        "D": "La documentation ne propose pas de désactiver la compaction, mais de l'orienter : un hook PreCompact, des consignes de résumé dans CLAUDE.md, ou un /compact déclenché à la main."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Signal emis par le SDK quand une compaction a eu lieu",
+      "question_en": "Your application needs to know when the SDK has compacted the conversation. What does it watch for?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A system message with subtype \"compact_boundary\", emitted in the message stream."
+        },
+        {
+          "key": "B",
+          "text_en": "A ResultMessage with subtype \"compacted\", after which the stream starts over."
+        },
+        {
+          "key": "C",
+          "text_en": "A drop in the input token count reported by usage on the following turn."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing: compaction is internal and leaves no trace in the message stream."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le SDK émet un message de type system et de sous-type compact_boundary quand la compaction survient : en Python c'est un SystemMessage, en TypeScript un type propre, SDKCompactBoundaryMessage, dans l'union SDKMessage. Pour agir avant plutôt qu'après, c'est le hook PreCompact qu'il faut poser ; il reçoit un champ trigger valant manual ou auto, ce qui permet par exemple d'archiver la transcription complète avant le résumé.",
+      "distractors_fr": {
+        "B": "Le ResultMessage marque la fin de la boucle. La compaction, elle, survient en cours de route et n'interrompt pas le flux.",
+        "C": "Une baisse du compte de jetons est une conséquence observable, pas le signal prévu. Le SDK émet un message explicite pour cela.",
+        "D": "La compaction est au contraire signalée, précisément parce qu'elle peut faire disparaître des instructions anciennes que l'application doit savoir réinjecter."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Cout en contexte des hooks par rapport a une consigne dans le prompt",
+      "question_en": "A team wants every Bash command audited. They weigh a PostToolUse hook against an instruction in the system prompt. What does the hook give them architecturally?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It runs on the model's side, so the audit trail is signed by the API itself."
+        },
+        {
+          "key": "B",
+          "text_en": "It runs in your process, outside the context window, so it costs no context."
+        },
+        {
+          "key": "C",
+          "text_en": "It is injected once per session, so its cost is paid at startup and never again."
+        },
+        {
+          "key": "D",
+          "text_en": "It replaces the tool result, so the raw command output never reaches the model."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La propriété est explicite : « Hooks run in your application process, not inside the agent's context window, so they don't consume context. » Un hook est donc une garantie déterministe et gratuite en jetons, là où une consigne dans le prompt occupe du contexte à chaque requête et reste une demande que le modèle peut manquer. PostToolUse se déclenche après le retour de l'outil, ce qui en fait le point d'audit naturel.",
+      "distractors_fr": {
+        "A": "Les hooks sont des rappels exécutés dans votre application, pas côté modèle. Rien n'est signé par l'API.",
+        "C": "Un hook n'est pas injecté dans le contexte du tout : il ne coûte rien ni au démarrage ni ensuite.",
+        "D": "C'est PreToolUse qui peut empêcher un appel de s'exécuter. PostToolUse se déclenche après le retour de l'outil, pour auditer ou déclencher des effets de bord."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ce que voit Claude quand un appel d outil est bloque",
+      "question_en": "A PreToolUse hook rejects a dangerous Bash call. From the loop's point of view, what happens next?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The loop ends with an error subtype, the rejection counting as a fatal condition."
+        },
+        {
+          "key": "B",
+          "text_en": "The call is retried once without the hook, so a false positive cannot block work."
+        },
+        {
+          "key": "C",
+          "text_en": "The turn is discarded and replayed, Claude choosing its tools again from scratch."
+        },
+        {
+          "key": "D",
+          "text_en": "The tool never runs, and Claude gets the rejection message as the tool result."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Un hook PreToolUse qui rejette un appel empêche son exécution, « and Claude receives the rejection message instead ». C'est le même schéma que pour une permission refusée : « When a tool is denied, Claude receives a rejection message as the tool result and typically attempts a different approach or reports that it couldn't proceed. » Le refus est donc traité comme une information rendue à la boucle, ce qui laisse à Claude la possibilité de contourner ou d'expliquer.",
+      "distractors_fr": {
+        "A": "Un rejet n'est pas fatal. La boucle continue, avec le message de rejet en guise de résultat d'outil.",
+        "B": "Aucun réessai sans hook n'existe : ce serait une porte dérobée qui viderait le contrôle de sa substance.",
+        "C": "Le tour n'est pas rejoué. Seul l'appel bloqué est remplacé par son message de rejet, le reste du tour tenant."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Ce que l isolation de contexte d un subagent fait gagner au parent",
+      "question_en": "A research subagent opens dozens of files before answering. How much of that lands in the parent agent's context?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Every file the subagent read, since the parent must be able to audit its work."
+        },
+        {
+          "key": "B",
+          "text_en": "The tool calls without their results, so the parent sees the path but not the text."
+        },
+        {
+          "key": "C",
+          "text_en": "Only the subagent's final message, returned to the parent as a tool result."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing at all: a subagent writes to disk, and the parent reads the file back."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "C'est le bénéfice premier des subagents : « Each subagent runs in its own fresh conversation. Intermediate tool calls and results stay inside the subagent; only its final message returns to the parent. » La page d'agent-loop le redit côté coût : « The main agent's context grows by that summary, not by the full subtask transcript. » D'où l'exemple d'un research-assistant qui parcourt des dizaines de fichiers sans que rien de tout cela ne s'accumule dans la conversation principale.",
+      "distractors_fr": {
+        "A": "Ce serait exactement l'inverse de l'objectif : si tout remontait, le subagent n'économiserait aucun contexte.",
+        "B": "Ni les appels ni les résultats intermédiaires ne remontent. Le parent reçoit une réponse finale, pas une trace d'exécution.",
+        "D": "Le résultat revient au parent comme résultat d'outil, par la boucle elle-même. Rien n'impose de passer par le système de fichiers."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
+    },
+    {
+      "id": "AGA-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Contenu initial du contexte d un subagent",
+      "question_en": "A subagent's context window starts fresh but not empty. Which TWO items does it actually receive?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Its own system prompt, taken from the agent definition that declares it."
+        },
+        {
+          "key": "B",
+          "text_en": "The parent's conversation history, minus the tool results already consumed."
+        },
+        {
+          "key": "C",
+          "text_en": "The prompt string the parent passed on the Agent tool call that spawned it."
+        },
+        {
+          "key": "D",
+          "text_en": "The parent's allow and deny rules, restated as text inside its first turn."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Le tableau « What subagents inherit » sépare les deux colonnes. Le subagent reçoit son propre prompt système, celui de sa définition, plus le prompt passé dans l'appel de l'outil Agent, et le CLAUDE.md du projet chargé par les setting sources. Il ne reçoit ni l'historique de conversation du parent, ni ses résultats d'outils. D'où la consigne pratique : « include any file paths, error messages, or decisions the subagent needs directly in that prompt », puisque c'est le seul contenu que le parent transmet.",
+      "distractors_fr": {
+        "B": "L'historique du parent figure explicitement dans la colonne de ce que le subagent ne reçoit pas : c'est précisément ce qui rend son contexte frais.",
+        "D": "Les permissions s'appliquent au subagent comme contraintes d'exécution, pas comme texte injecté dans sa fenêtre de contexte."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
+    },
+    {
+      "id": "AGA-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Empecher un subagent de lancer ses propres subagents",
+      "question_en": "An operator wants a flat hierarchy: the main conversation may spawn subagents, but those subagents may not spawn any of their own. How is that set?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Set CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH to 1, which turns the nesting off."
+        },
+        {
+          "key": "B",
+          "text_en": "Omit the Agent tool from allowedTools, which bars every delegation session-wide."
+        },
+        {
+          "key": "C",
+          "text_en": "Set maxTurns to 1 on each definition, since a spawn consumes a full agentic turn."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing to set: a subagent has never been able to spawn another subagent."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Par défaut les subagents peuvent en engendrer d'autres, jusqu'à trois couches sous la conversation principale. La variable CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH fixe le nombre de couches voulues sous la conversation, et la valeur 1 désactive l'imbrication : le premier niveau existe, mais il ne peut plus déléguer. L'historique des versions le confirme comme un réglage mouvant, ce qui rend le paramétrage explicite d'autant plus utile.",
+      "distractors_fr": {
+        "B": "Retirer Agent des outils autorisés ne se contente pas d'aplatir la hiérarchie : cela empêche aussi la conversation principale de déléguer, ce que l'opérateur veut conserver.",
+        "C": "maxTurns borne le nombre de tours d'un agent, pas sa capacité à déléguer. Un agent limité à un tour peut très bien employer ce tour à lancer un subagent.",
+        "D": "L'imbrication est au contraire active par défaut. C'est justement pour cela qu'il faut la désactiver explicitement quand on n'en veut pas."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
+    },
+    {
+      "id": "AGA-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Perimetre du plafond de depense face aux subagents",
+      "question_en": "An orchestrator agent sets maxBudgetUsd and fans work out to many subagents. What does that cap actually cover?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only the parent's own turns, each subagent carrying a separate budget of its own."
+        },
+        {
+          "key": "B",
+          "text_en": "The whole run: subagent spend counts toward it, and spawning then fails at the cap."
+        },
+        {
+          "key": "C",
+          "text_en": "Only the tokens billed, tool execution time being excluded from the computation."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing while subagents run, the cap being checked once the last one has returned."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le plafond est global : « The budget cap covers subagents: their spend counts toward the total. » Et il est réellement appliqué : une fois la dépense au plafond, engendrer un nouveau subagent échoue avec « Budget limit reached », et Claude Code arrête les subagents d'arrière-plan encore en cours. C'est ce qui fait de maxBudgetUsd une borne utilisable sur un orchestrateur, là où un plafond par agent laisserait le fan-out multiplier la dépense.",
+      "distractors_fr": {
+        "A": "Un budget par agent ne bornerait rien : c'est le nombre de subagents qui fait la dépense d'un fan-out. Le plafond est donc calculé sur le total.",
+        "C": "Le plafond porte sur le coût, exprimé en dollars. Le temps d'exécution des outils n'entre pas dans le calcul, mais ce n'est pas ce qui distingue les réponses.",
+        "D": "L'application est immédiate, pas différée : au plafond, le lancement d'un nouveau subagent échoue et ceux qui tournent en arrière-plan sont arrêtés."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Sort des outils non couverts par une regle selon le mode de permission",
+      "question_en": "A headless agent must expose a fixed tool surface with no prompting. Which TWO statements about permission modes are correct?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In \"acceptEdits\", any Bash command is auto-approved along with the file edits."
+        },
+        {
+          "key": "B",
+          "text_en": "In \"dontAsk\", pre-approved tools run and everything else is denied outright."
+        },
+        {
+          "key": "C",
+          "text_en": "In \"plan\", file edits are auto-approved once the plan has been accepted."
+        },
+        {
+          "key": "D",
+          "text_en": "In \"default\", an uncovered tool calls canUseTool, and no callback means deny."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Le mode de permission décide du sort des outils qu'aucune règle ne couvre. En default, ils déclenchent votre rappel canUseTool, et l'absence de rappel vaut refus. En dontAsk, rien n'est jamais demandé : les outils pré-approuvés par les règles s'exécutent, tout le reste est refusé — y compris AskUserQuestion et les outils marqués requiresUserInteraction, même autorisés. C'est exactement la surface fixe et explicite que recherche un agent sans interface.",
+      "distractors_fr": {
+        "A": "acceptEdits auto-approuve les éditions de fichiers et les commandes de système de fichiers courantes — mkdir, touch, mv, cp — mais les autres commandes Bash restent soumises aux règles par défaut.",
+        "C": "En mode plan, Claude explore et planifie sans toucher aux sources : « file edits are never auto-approved and prompt through your canUseTool callback »."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ce qui est partage et ce qui est isole entre fils d une meme session",
+      "question_en": "In a Managed Agents multiagent session, one agent writes a file and another is expected to read it. What does the thread model guarantee?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing: each thread is fully isolated, so a handoff must go through the API."
+        },
+        {
+          "key": "B",
+          "text_en": "Both the filesystem and the conversation history are shared across the threads."
+        },
+        {
+          "key": "C",
+          "text_en": "The file is copied into each thread at creation, later writes staying private."
+        },
+        {
+          "key": "D",
+          "text_en": "The sandbox and filesystem are shared; only the conversation context is isolated."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La ligne de partage est précise : « All agents share the same sandbox, filesystem, and vault credentials, but each agent runs in its own session thread, a context-isolated event stream with its own conversation history. » L'isolation porte donc sur le contexte, pas sur l'espace de travail : outils, serveurs MCP et contexte ne sont pas partagés, mais le système de fichiers l'est, ce qui en fait le canal naturel d'un passage de relais entre agents.",
+      "distractors_fr": {
+        "A": "Le bac à sable et le système de fichiers sont communs à tous les agents de la session : un fichier écrit par l'un est lisible par l'autre.",
+        "B": "L'historique de conversation, lui, n'est pas partagé : c'est tout le sens du fil isolé en contexte que chaque agent possède.",
+        "C": "Il n'y a pas de copie par fil. Le système de fichiers est le même pour tous, et les écritures y sont visibles."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+    },
+    {
+      "id": "AGA-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Moment de chargement d un skill dans le contexte",
+      "question_en": "Twenty skills are available to an agent through its setting sources. What do they cost in context before any of them is used?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Their full bodies, loaded at session start and cached for the whole session."
+        },
+        {
+          "key": "B",
+          "text_en": "Nothing before the first turn; the twenty bodies then load on the second request."
+        },
+        {
+          "key": "C",
+          "text_en": "Their short descriptions only; the full content loads when a skill is invoked."
+        },
+        {
+          "key": "D",
+          "text_en": "Their names only, the descriptions being fetched when Claude weighs a skill."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le tableau « What consumes context » range les skills à part : ils chargent au démarrage de session, via les setting sources, et leur impact est « Short summaries; full content loads only when invoked ». C'est un chargement en deux temps, comparable à celui de la recherche d'outils pour les schémas MCP : Claude a besoin de savoir qu'un skill existe et à quoi il sert pour décider de l'appeler, pas de son contenu complet.",
+      "distractors_fr": {
+        "A": "Charger vingt corps complets à l'ouverture est exactement ce que le mécanisme évite : seuls les résumés sont présents avant l'invocation.",
+        "B": "Le chargement n'est pas décalé d'un tour : les descriptions sont là dès le démarrage, et le corps ne vient jamais tant que le skill n'est pas invoqué.",
+        "D": "La description fait partie de ce qui charge au démarrage : sans elle, Claude n'aurait pas de quoi juger de la pertinence d'un skill."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "AGA-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Leviers pour tenir le contexte d un agent de longue duree",
+      "question_en": "A long-running agent keeps exhausting its context window. Which TWO levers does the documentation recommend?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Raise the effort level, so fewer turns are needed to reach the same result."
+        },
+        {
+          "key": "B",
+          "text_en": "Move subtasks to subagents, whose transcripts stay out of the main context."
+        },
+        {
+          "key": "C",
+          "text_en": "Scope each subagent to the fewest tools it needs, via the tools field."
+        },
+        {
+          "key": "D",
+          "text_en": "Send the whole history as one user turn, so it is cached as a single prefix."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La section « Keep context efficient » donne quatre leviers, dont ces deux-là. Déléguer une sous-tâche à un subagent fait grandir le contexte principal du seul résumé, pas de la transcription entière. Restreindre les outils compte tout autant, parce que « Every tool definition takes context space » : le champ tools de la définition d'agent sert à réduire cette surface. Les deux autres leviers sont de surveiller le coût des serveurs MCP et de baisser l'effort sur les tâches de routine.",
+      "distractors_fr": {
+        "A": "L'effort joue sur la profondeur de raisonnement par réponse, pas sur l'occupation du contexte. La documentation conseille au contraire de le baisser sur les tâches simples.",
+        "D": "Le cache de prompt réduit le coût d'un préfixe répété, il ne réduit pas le nombre de jetons présents dans la fenêtre."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    }
+  ]
+}

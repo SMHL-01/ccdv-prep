@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-02",
-  "nbQuestions": 93,
+  "nbQuestions": 123,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -22,6 +22,11 @@
       "fichier": "applications-integration_claude-application-design.json",
       "subdomain": "Claude Application Design",
       "nb": 34
+    },
+    {
+      "fichier": "applications-integration_software-engineering-foundations.json",
+      "subdomain": "Software Engineering Foundations",
+      "nb": 30
     }
   ],
   "questions": [
@@ -861,6 +866,276 @@
       "nature": "judgment",
       "type": "multi",
       "fichier": "applications-integration_claude-application-design.json"
+    },
+    {
+      "id": "SEF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-017",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-018",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-019",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-020",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-021",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-022",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-023",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-024",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-025",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-026",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-027",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-028",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-029",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-030",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
     }
   ]
 }

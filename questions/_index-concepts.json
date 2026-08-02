@@ -649,5 +649,215 @@
     "subdomain": "Claude Application Design",
     "concept": "Decomposer une interaction en taches distinctes avant de prompter et d evaluer",
     "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat"
+  },
+  {
+    "id": "SEF-001",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Reessais deja fournis par le SDK officiel",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-002",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Categories d erreurs reessayees automatiquement par le client",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-003",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Prise en compte de l en-tete retry-after par les SDK",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-004",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Distinguer une limite propre au compte d une surcharge globale",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-005",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Portee du type invalid_request_error au dela du code 400",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-006",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Traitement correct d un conflit 409 sur une ressource",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-007",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Plafonds de taille de requete par type d endpoint",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-008",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Conduite a tenir face a une erreur 500 persistante",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-009",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Reponse structurelle a un 504 sur des generations longues",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-010",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Discriminer les erreurs sans dependre du texte des messages",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-011",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Ordre des blocs de capture dans une hierarchie d exceptions",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-012",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Ou trouver l identifiant de requete pour un ticket de support",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-013",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Choisir le bon identifiant de requete sur Claude Platform on AWS",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-014",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Erreur survenant apres un code 200 sur une reponse en flux",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-015",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Erreur de SDK sans code de statut associe",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+  },
+  {
+    "id": "SEF-016",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Classe d exception levee pour un depassement de limite de debit",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-017",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Comportement par defaut des delais d attente des clients",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-018",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Delai calcule dynamiquement par le SDK TypeScript",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+  },
+  {
+    "id": "SEF-019",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Garde-fou du SDK contre une requete non diffusee trop longue",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-020",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Cout cache d un delai trop court sur une generation longue",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-021",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Option de socket posee par le SDK contre les coupures de connexion inactive",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-022",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Mesures recommandees pour des requetes de plus de dix minutes",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-023",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Parcourir toutes les pages d une methode de liste",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-024",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "En-tete de version envoye par defaut et risque a l ecraser",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-025",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Structure d execution d un middleware autour de l appel a next",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  },
+  {
+    "id": "SEF-026",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Ordre d application entre middleware de client et de requete",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  },
+  {
+    "id": "SEF-027",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Place du client HTTP personnalise par rapport a la chaine de middleware",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  },
+  {
+    "id": "SEF-028",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Conserver la configuration par defaut en remplacant le client HTTP",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-029",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Statut du navigateur comme environnement d execution du SDK TypeScript",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+  },
+  {
+    "id": "SEF-030",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Niveau d abstraction des clients SDK face aux outils d agent",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
   }
 ]

@@ -1,0 +1,1185 @@
+{
+  "subdomain": "Software Engineering Foundations",
+  "domain": "Applications and Integration",
+  "weight": 7.4,
+  "target_questions": 30,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/api/errors",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/overview",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  ],
+  "questions": [
+    {
+      "id": "SEF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Reessais deja fournis par le SDK officiel",
+      "question_en": "A developer is about to write a retry wrapper around every SDK call, with exponential backoff. What does the official SDK already do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It retries transient failures twice by default, with a short exponential backoff."
+        },
+        {
+          "key": "B",
+          "text_en": "It retries indefinitely until the request succeeds or the caller cancels it."
+        },
+        {
+          "key": "C",
+          "text_en": "It raises immediately on any failure, retries being left to the application."
+        },
+        {
+          "key": "D",
+          "text_en": "It retries only when the caller opts in by passing a retry policy object."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page d'erreurs le dit pour tous les SDK : « The official SDKs automatically retry transient failures (such as connection errors, rate limits, and 5xx server errors) with exponential backoff, twice by default, honoring the retry-after header when present. » Écrire sa propre couche de réessai par-dessus revient donc à multiplier les tentatives sans le savoir. Chaque client accepte une option de nombre maximal de réessais pour régler ou désactiver ce comportement.",
+      "distractors_fr": {
+        "B": "Le nombre de tentatives est borné à deux par défaut, précisément pour ne pas transformer une panne durable en boucle infinie.",
+        "C": "C'est l'inverse : le réessai est actif par défaut, et c'est au développeur de le désactiver s'il ne le veut pas.",
+        "D": "Aucun opt-in n'est requis. L'option max_retries ou maxRetries sert à modifier ou couper un comportement déjà en place."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Categories d erreurs reessayees automatiquement par le client",
+      "question_en": "Which TWO of the following are retried automatically by the Python and TypeScript SDKs by default?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "429 Rate Limit responses returned by the API."
+        },
+        {
+          "key": "B",
+          "text_en": "Connection errors caused by a network problem."
+        },
+        {
+          "key": "C",
+          "text_en": "400 Bad Request responses on a malformed body."
+        },
+        {
+          "key": "D",
+          "text_en": "401 Authentication errors from an expired key."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "Les deux SDK donnent la même liste : « Connection errors (for example, because of a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors are all retried by default. » Le critère est la transience : une erreur qui a des chances de disparaître d'elle-même est réessayée, une erreur qui vient de la requête ou des identifiants ne l'est pas.",
+      "distractors_fr": {
+        "C": "Un 400 vient du format ou du contenu de la requête. Réessayer à l'identique redonnerait le même résultat : c'est le code appelant qu'il faut corriger.",
+        "D": "Un 401 signale une clé malformée, révoquée ou expirée. Aucun réessai ne peut y remédier tant que les identifiants ne sont pas changés."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Prise en compte de l en-tete retry-after par les SDK",
+      "question_en": "The API returns a 429 carrying a retry-after header. How do the official SDKs treat that header?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "They ignore it and apply their own exponential backoff schedule instead."
+        },
+        {
+          "key": "B",
+          "text_en": "They honor it when it is present, rather than backing off blindly."
+        },
+        {
+          "key": "C",
+          "text_en": "They surface it to the caller but never act on it without an opt-in."
+        },
+        {
+          "key": "D",
+          "text_en": "They treat it as fatal and stop retrying for the rest of the session."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La formule est explicite : les SDK réessaient « with exponential backoff, twice by default, honoring the retry-after header when present ». C'est la bonne pratique côté client : quand le serveur indique lui-même quand revenir, cette valeur vaut mieux qu'un calcul local, puisqu'elle reflète l'état réel de la fenêtre de limitation.",
+      "distractors_fr": {
+        "A": "Le backoff exponentiel est le comportement par défaut en l'absence d'indication du serveur ; quand retry-after est là, il prime.",
+        "C": "Aucun opt-in n'est nécessaire : le respect de l'en-tête fait partie du comportement de réessai livré par défaut.",
+        "D": "Un retry-after n'a rien de fatal : c'est au contraire une invitation explicite à réessayer, après le délai indiqué."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Distinguer une limite propre au compte d une surcharge globale",
+      "question_en": "A service starts seeing 529 responses although its own traffic has not changed. What does that code indicate, compared with a 429?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The account exceeded its quota, whereas a 429 is a transient network fault."
+        },
+        {
+          "key": "B",
+          "text_en": "The request body was too large, whereas a 429 counts calls per minute."
+        },
+        {
+          "key": "C",
+          "text_en": "The API is temporarily overloaded, whereas a 429 is the account's own limit."
+        },
+        {
+          "key": "D",
+          "text_en": "The model was retired, whereas a 429 reports a burst above the ceiling."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "529 est overloaded_error : « The API is temporarily overloaded », et l'avertissement précise que ces erreurs « can occur when the API experiences high traffic across all users » — donc indépendamment de votre propre trafic. 429 est rate_limit_error : « Your account has hit a rate limit », c'est-à-dire une limite qui vous est propre. La nuance à retenir : une hausse brutale de votre usage peut aussi produire des 429 à cause des limites d'accélération, d'où le conseil de monter en charge progressivement.",
+      "distractors_fr": {
+        "A": "C'est inversé, et les deux moitiés sont fausses : 529 est la surcharge globale, et 429 une limite de compte, pas une panne réseau.",
+        "B": "Le dépassement de taille de requête est un 413 request_too_large, sans rapport avec l'un ou l'autre de ces deux codes.",
+        "D": "Aucun des deux codes ne signale un retrait de modèle ; cela relèverait d'une erreur 400 ou 404 selon le cas."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Portee du type invalid_request_error au dela du code 400",
+      "question_en": "An integration branches on the error type field. What does the documentation say about the reach of invalid_request_error?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is reserved for 400, every other 4xx code carrying its own distinct type."
+        },
+        {
+          "key": "B",
+          "text_en": "It is returned for any 4xx, the status code alone telling the cases apart."
+        },
+        {
+          "key": "C",
+          "text_en": "It appears only on validation of the messages array, never on other fields."
+        },
+        {
+          "key": "D",
+          "text_en": "It maps to 400 but may also cover other 4xx codes not listed on the page."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "L'entrée 400 le précise : « invalid_request_error: There was an issue with the format or content of your request. This error type may also be used for other 4XX status codes not listed in this section. » La liste des codes est donc énumérative mais pas exhaustive, ce que confirme la politique de versionnage citée plus bas : les valeurs de ces objets peuvent s'étendre, et les valeurs de type peuvent croître avec le temps. Un aiguillage exhaustif sur le type doit donc prévoir un cas par défaut.",
+      "distractors_fr": {
+        "A": "C'est précisément ce que la page dément : le type peut aussi servir pour d'autres codes 4XX qui ne figurent pas dans la section.",
+        "B": "Les codes 401, 403, 404, 409, 413 et 429 ont chacun leur propre type nommé. invalid_request_error ne les recouvre pas.",
+        "C": "Le type couvre le format ou le contenu de la requête en général, pas un champ particulier."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Traitement correct d un conflit 409 sur une ressource",
+      "question_en": "Two workers update the same resource and one receives a 409 conflict_error. What does the documentation prescribe?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Resolve the conflict, then retry the request that lost the race."
+        },
+        {
+          "key": "B",
+          "text_en": "Treat it as permanent and surface it to the operator without retrying."
+        },
+        {
+          "key": "C",
+          "text_en": "Recreate the resource under a new identifier and abandon the old one."
+        },
+        {
+          "key": "D",
+          "text_en": "Wait for the retry-after delay, the conflict clearing on its own."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "L'entrée 409 décrit la cause et la conduite à tenir : « The request conflicts with the current state of a resource. For example, the resource was modified concurrently, or a value that must be unique is already in use. Resolve the conflict, then retry the request. » Le 409 figure d'ailleurs dans la liste des erreurs que les SDK réessaient d'eux-mêmes, ce qui suffit souvent quand le conflit était purement transitoire.",
+      "distractors_fr": {
+        "B": "Un 409 n'est pas permanent : il décrit un désaccord avec l'état courant de la ressource, qui peut être levé puis la requête rejouée.",
+        "C": "Changer d'identifiant contourne le conflit au lieu de le résoudre, et laisse derrière soi une ressource orpheline.",
+        "D": "Attendre ne suffit pas quand la cause est un état à réconcilier ou une valeur unique déjà prise ; il faut agir sur le conflit."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "concept": "Plafonds de taille de requete par type d endpoint",
+      "question_en": "A pipeline uploads large documents. Which pairing of endpoint and maximum request size is correct?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Messages API 256 MB, Files API 32 MB, Batch API 500 MB."
+        },
+        {
+          "key": "B",
+          "text_en": "Messages API 32 MB, Batch API 256 MB, Files API 500 MB."
+        },
+        {
+          "key": "C",
+          "text_en": "Messages API 500 MB, Batch API 32 MB, Files API 256 MB."
+        },
+        {
+          "key": "D",
+          "text_en": "Every endpoint shares one 32 MB ceiling, without exception."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le tableau des limites donne quatre valeurs : Messages API et Token Counting API à 32 Mo, Batch API à 256 Mo, Files API à 500 Mo. Un dépassement produit un 413 request_too_large, et un détail opérationnel mérite d'être connu : sur l'API Claude directe, c'est Cloudflare qui renvoie cette erreur avant même que la requête n'atteigne les serveurs de l'API.",
+      "distractors_fr": {
+        "A": "Les trois valeurs sont permutées. C'est l'API Files qui accepte le plus, à 500 Mo, et l'API Messages le moins, à 32 Mo.",
+        "C": "L'API Messages est la plus contrainte des trois, à 32 Mo, et non la plus permissive.",
+        "D": "Les plafonds diffèrent par type d'endpoint, précisément parce que les usages diffèrent : un lot ou un fichier pèse plus qu'un message."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Conduite a tenir face a une erreur 500 persistante",
+      "question_en": "A 500 api_error keeps recurring after several retries. What does the documentation tell you to do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Switch to another model, the error pointing to that model's capacity."
+        },
+        {
+          "key": "B",
+          "text_en": "Halve the request size, a 500 usually meaning the payload was too big."
+        },
+        {
+          "key": "C",
+          "text_en": "Contact support with the request ID, once backoff has failed to clear it."
+        },
+        {
+          "key": "D",
+          "text_en": "Rotate the API key, the error meaning the credential became invalid."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "L'entrée 500 donne la marche à suivre en deux temps : « An unexpected error has occurred internal to Anthropic's systems. Retry the request with exponential backoff; if the error persists, contact support with the request ID. » Le request ID est justement conçu pour cela : chaque réponse porte un en-tête request-id, et la même valeur figure dans le corps des réponses d'erreur.",
+      "distractors_fr": {
+        "A": "Un 500 est une erreur interne, sans lien avec le modèle demandé. La saturation, elle, se signale par un 529.",
+        "B": "Une requête trop volumineuse donne un 413 request_too_large, avec un plafond documenté par endpoint.",
+        "D": "Un problème de clé se manifeste par un 401 authentication_error, pas par une erreur interne au serveur."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Reponse structurelle a un 504 sur des generations longues",
+      "question_en": "Long generations intermittently return 504 timeout_error. Which change does the documentation point to first?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Raise the client timeout well above ten minutes and keep the call as is."
+        },
+        {
+          "key": "B",
+          "text_en": "Lower max_tokens until every response fits inside the default window."
+        },
+        {
+          "key": "C",
+          "text_en": "Add more retries, since a 504 clears on the second or third attempt."
+        },
+        {
+          "key": "D",
+          "text_en": "Move to the streaming Messages API, or to Batches for long requests."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "L'entrée 504 renvoie directement au bon levier : « The request timed out while processing. Consider using the streaming Messages API for long-running requests. » La section « Long requests » complète : au-delà de dix minutes, streaming ou Message Batches, cette dernière permettant de sonder les résultats plutôt que de tenir une connexion ininterrompue. Le streaming évite en outre qu'un réseau ne coupe une connexion restée inactive.",
+      "distractors_fr": {
+        "A": "Allonger le délai ne règle pas la cause : certains réseaux coupent les connexions inactives, indépendamment de ce que le client accepte d'attendre.",
+        "B": "Réduire max_tokens tronque le travail au lieu de traiter le problème de transport. La documentation déconseille surtout un grand max_tokens sans streaming.",
+        "C": "Multiplier les tentatives sur une requête qui met trop longtemps reproduit le même échec, au prix de plusieurs générations facturées."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Discriminer les erreurs sans dependre du texte des messages",
+      "question_en": "A codebase branches on error handling by matching substrings of the exception message. Why does the documentation advise against it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Messages are localized per account, so the text varies by workspace."
+        },
+        {
+          "key": "B",
+          "text_en": "Messages are redacted in production, leaving only the status code."
+        },
+        {
+          "key": "C",
+          "text_en": "Messages are only populated on 5xx, being empty on every 4xx."
+        },
+        {
+          "key": "D",
+          "text_en": "The SDKs raise typed classes, which are the stable thing to catch."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La consigne est donnée telle quelle : « Catch the SDK's typed classes rather than string-matching error messages, handling the most specific classes first. » Les SDK lèvent des exceptions typées plutôt que de renvoyer du JSON brut, avec une hiérarchie documentée par langage. S'y ajoute la politique de versionnage : les valeurs à l'intérieur des objets d'erreur peuvent s'étendre, ce qui rend tout filtrage textuel fragile dans la durée.",
+      "distractors_fr": {
+        "A": "Rien n'indique une localisation des messages par compte. Le problème est la stabilité du texte dans le temps, pas sa langue.",
+        "B": "Les messages ne sont pas expurgés : le corps d'erreur porte toujours un type et un message, ainsi qu'un request_id.",
+        "C": "Le champ message est présent quel que soit le code : la page montre la même forme d'objet d'erreur pour tous."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ordre des blocs de capture dans une hierarchie d exceptions",
+      "question_en": "A handler catches APIError first, then RateLimitError in a later block. What is the practical consequence?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The rate-limit block is dead code, the base class having caught it first."
+        },
+        {
+          "key": "B",
+          "text_en": "Both blocks run in turn, the SDK re-raising after the first one returns."
+        },
+        {
+          "key": "C",
+          "text_en": "The SDK reorders the blocks so the most specific one always wins."
+        },
+        {
+          "key": "D",
+          "text_en": "The code fails to compile, the two classes being mutually exclusive."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La consigne « handling the most specific classes first » découle de la hiérarchie : les erreurs typées dérivent d'APIError, dont RateLimitError est une sous-classe. Capturer la classe de base d'abord absorbe donc tout, et le bloc spécifique placé ensuite ne s'exécute jamais. C'est un piège classique en Python comme en TypeScript, et la raison pour laquelle chaque page de SDK documente sa hiérarchie complète.",
+      "distractors_fr": {
+        "B": "Une exception n'est traitée que par le premier bloc qui correspond. Rien n'est relevé automatiquement derrière lui.",
+        "C": "Aucun réordonnancement n'a lieu : l'ordre des blocs est celui que vous écrivez, et c'est bien pour cela que la documentation le rappelle.",
+        "D": "Le code est parfaitement valide : le second bloc est simplement inatteignable, ce qui est le genre de défaut qu'aucun compilateur ne signale ici."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Ou trouver l identifiant de requete pour un ticket de support",
+      "question_en": "An operator needs the identifier to quote in a support ticket. Which TWO statements about the request ID are correct?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is issued only for failed calls, successful ones carrying no such ID."
+        },
+        {
+          "key": "B",
+          "text_en": "It must be generated by the client and sent on the way out."
+        },
+        {
+          "key": "C",
+          "text_en": "Every API response carries it in a request-id response header."
+        },
+        {
+          "key": "D",
+          "text_en": "Python and TypeScript expose it as a _request_id property."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "Deux faits se combinent : « Every API response includes a unique request-id header » et, côté SDK, « All object responses in the SDK provide a _request_id property which is added from the request-id response header ». La même valeur apparaît dans le champ request_id du corps des réponses d'erreur. Détail utile en Python : contrairement aux autres attributs préfixés d'un souligné, _request_id est public.",
+      "distractors_fr": {
+        "A": "Toutes les réponses en portent un, succès compris. C'est ce qui permet de tracer une requête qui a réussi mais dont le résultat surprend.",
+        "B": "L'identifiant est émis par l'API, pas par le client. Il arrive en en-tête de réponse."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Choisir le bon identifiant de requete sur Claude Platform on AWS",
+      "question_en": "On Claude Platform on AWS a response carries two identifiers. Which one goes where?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both are interchangeable, either one resolving a lookup on either side."
+        },
+        {
+          "key": "B",
+          "text_en": "x-amzn-requestid for CloudTrail lookups, request-id for Anthropic support."
+        },
+        {
+          "key": "C",
+          "text_en": "request-id for CloudTrail lookups, x-amzn-requestid for Anthropic support."
+        },
+        {
+          "key": "D",
+          "text_en": "Only x-amzn-requestid exists there, the Anthropic one being dropped."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La règle est donnée avec la hiérarchie entre les deux : l'identifiant AWS (x-amzn-requestid) est le principal, indexé dans CloudTrail ; l'identifiant Anthropic (request-id) est le secondaire. « Use the AWS request ID for CloudTrail lookups and the Anthropic request ID for Anthropic support tickets. » En pratique, il faut passer par l'accesseur de réponse brute du SDK pour lire l'en-tête AWS.",
+      "distractors_fr": {
+        "A": "Chaque identifiant n'a de sens que dans le système qui l'a émis : CloudTrail n'indexe pas le request-id d'Anthropic.",
+        "C": "Les deux rôles sont inversés. C'est l'identifiant AWS qui est indexé dans CloudTrail.",
+        "D": "Les deux sont présents. La réponse porte bien l'identifiant Anthropic en plus de celui d'AWS."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Erreur survenant apres un code 200 sur une reponse en flux",
+      "question_en": "A streaming call returns HTTP 200, then fails partway through. Why does the usual error handling miss it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The SDK swallows mid-stream failures and returns the partial text."
+        },
+        {
+          "key": "B",
+          "text_en": "The stream is retried transparently, so no error ever surfaces at all."
+        },
+        {
+          "key": "C",
+          "text_en": "The status was already sent, so the failure arrives as an error event."
+        },
+        {
+          "key": "D",
+          "text_en": "The status is rewritten to 500 once the connection has been closed."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La page le signale à part, parce que c'est un angle mort classique : « When receiving a streaming response over server-sent events (SSE), an error can occur after the API returns a 200 response. In that case, error handling doesn't follow these standard mechanisms. » Le code HTTP a déjà été émis avec les en-têtes ; la panne se manifeste donc dans le flux lui-même, sous forme d'événement d'erreur, et un code qui ne teste que le statut la manquera.",
+      "distractors_fr": {
+        "A": "Rien n'est avalé : l'erreur est bien transmise, mais par le flux d'événements et non par le code de statut.",
+        "B": "Aucun réessai transparent n'a lieu en cours de flux. Les réessais automatiques portent sur l'établissement de la requête.",
+        "D": "Un statut HTTP est envoyé une seule fois, avant le corps. Il ne peut pas être réécrit une fois le flux commencé."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Erreur de SDK sans code de statut associe",
+      "question_en": "In the SDK error tables, which entry has no HTTP status code attached to it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "RateLimitError, whose code varies with the limit that was exceeded."
+        },
+        {
+          "key": "B",
+          "text_en": "InternalServerError, which covers a whole family of 5xx codes."
+        },
+        {
+          "key": "C",
+          "text_en": "UnprocessableEntityError, only raised on validation done client-side."
+        },
+        {
+          "key": "D",
+          "text_en": "APIConnectionError, listed as N/A because no response ever arrived."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le tableau des deux SDK associe un code à chaque classe — 400 BadRequestError, 401 AuthenticationError, 403 PermissionDeniedError, 404 NotFoundError, 409 ConflictError, 422 UnprocessableEntityError, 429 RateLimitError, >=500 InternalServerError — sauf une ligne : APIConnectionError, marquée N/A. La raison est logique : la bibliothèque n'a pas pu joindre l'API, donc aucune réponse HTTP n'existe. C'est aussi pour cela que ces erreurs figurent parmi celles qui sont réessayées automatiquement.",
+      "distractors_fr": {
+        "A": "RateLimitError est associée sans ambiguïté au code 429 dans le tableau.",
+        "B": "InternalServerError couvre bien plusieurs codes, mais le tableau les note « >=500 » : la plage est indiquée, elle n'est pas absente.",
+        "C": "UnprocessableEntityError porte le code 422, qui vient bien du serveur."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Classe d exception levee pour un depassement de limite de debit",
+      "question_en": "Which exception class do the Python and TypeScript SDKs raise on a 429 response?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "RateLimitError, the class the error tables map to code 429."
+        },
+        {
+          "key": "B",
+          "text_en": "APITimeoutError, since a throttled call is a delayed call."
+        },
+        {
+          "key": "C",
+          "text_en": "OverloadedError, shared by the 429 and 529 status codes."
+        },
+        {
+          "key": "D",
+          "text_en": "BadRequestError, the caller having sent one request too many."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le tableau associe 429 à RateLimitError dans les deux SDK, avec les mêmes noms de classe. Cette symétrie est utile en pratique : les noms se transposent d'un langage à l'autre, même si les espaces de noms diffèrent — Anthropic::Errors::NotFoundError en Ruby, com.anthropic.errors.NotFoundException en Java, et en Go une seule valeur *anthropic.Error sur laquelle on teste StatusCode.",
+      "distractors_fr": {
+        "B": "APITimeoutError est levée sur expiration du délai côté client, pas sur une limitation de débit renvoyée par le serveur.",
+        "C": "Aucune classe OverloadedError ne figure dans le tableau ; les codes >= 500, dont 529, tombent sur InternalServerError.",
+        "D": "BadRequestError correspond au code 400, c'est-à-dire à une requête malformée, pas à une requête de trop."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-017",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Comportement par defaut des delais d attente des clients",
+      "question_en": "A team is reviewing the timeout behaviour of the client SDKs. Which TWO statements are correct?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "By default a request will time out after ten minutes have passed."
+        },
+        {
+          "key": "B",
+          "text_en": "A request that times out is not retried, to avoid double billing."
+        },
+        {
+          "key": "C",
+          "text_en": "A timed-out request is retried twice, like transient faults."
+        },
+        {
+          "key": "D",
+          "text_en": "Timeouts cannot be configured once the client has been built."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Les deux SDK annoncent la même valeur : « By default requests time out after 10 minutes », réglable par une option timeout au niveau du client ou de la requête. Et ils ajoutent la même note, facile à manquer : « Note that requests that time out are retried twice by default. » Un délai mal réglé se paie donc en double, puisque chaque tentative consomme une génération.",
+      "distractors_fr": {
+        "B": "C'est l'inverse : l'expiration compte comme une panne transitoire et déclenche les réessais par défaut, ce qui peut se révéler coûteux.",
+        "D": "L'option timeout se règle au niveau du client comme au niveau de la requête, et accepte en Python un flottant ou un objet httpx.Timeout."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-018",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Delai calcule dynamiquement par le SDK TypeScript",
+      "question_en": "A non-streaming TypeScript call sets a large max_tokens. What does the SDK do about the default timeout?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It keeps the flat ten minutes, large generations having to stream."
+        },
+        {
+          "key": "B",
+          "text_en": "It computes one from max_tokens, up to sixty minutes at the ceiling."
+        },
+        {
+          "key": "C",
+          "text_en": "It drops the timeout entirely and waits for the server to respond."
+        },
+        {
+          "key": "D",
+          "text_en": "It rejects the call outright, large budgets requiring streaming."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le SDK TypeScript se distingue ici du Python : « if you have specified a large max_tokens value and are not streaming, the default timeout will be calculated dynamically [...] which will result in a timeout up to 60 minutes, scaled by the max_tokens parameter, unless overridden at the request or client level. » Le SDK Python, lui, garde un défaut fixe de dix minutes et lève une ValueError si une requête non diffusée est estimée plus longue.",
+      "distractors_fr": {
+        "A": "Le délai fixe de dix minutes est le défaut Python. En TypeScript, il est mis à l'échelle par max_tokens quand on ne diffuse pas.",
+        "C": "Aucun SDK ne supprime le délai : ce serait le meilleur moyen de bloquer indéfiniment sur une connexion coupée en silence.",
+        "D": "Le SDK TypeScript lève bien une erreur quand une requête non diffusée est estimée à plus de dix minutes environ, mais le calcul dynamique du délai est ce qui répond ici."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-019",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Garde-fou du SDK contre une requete non diffusee trop longue",
+      "question_en": "The Python SDK raises a ValueError before a non-streaming request is even sent. What triggered it, and what clears it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The prompt exceeded the context window; trimming the history clears it."
+        },
+        {
+          "key": "B",
+          "text_en": "The API key lacks streaming rights; a workspace setting clears it."
+        },
+        {
+          "key": "C",
+          "text_en": "The call is expected to run past ten minutes; streaming clears it."
+        },
+        {
+          "key": "D",
+          "text_en": "The model no longer accepts max_tokens; a newer alias clears it."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le garde-fou est décrit ainsi : « The SDK will throw a ValueError if a non-streaming request is expected to take longer than approximately 10 minutes. Passing stream=True or overriding the timeout option at the client or request level disables this error. » Il est là pour éviter un échec plus insidieux : « An expected request latency longer than the timeout for a non-streaming request will result in the client terminating the connection and retrying without receiving a response » — c'est-à-dire payer plusieurs fois sans jamais rien recevoir.",
+      "distractors_fr": {
+        "A": "Un dépassement de fenêtre de contexte est refusé par l'API avec un 400, pas par une validation locale du client.",
+        "B": "Le streaming n'est pas un droit à accorder : il s'active par un paramètre de requête.",
+        "D": "max_tokens reste un paramètre valide. C'est la durée estimée de la requête, et non le paramètre lui-même, qui déclenche l'erreur."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-020",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Cout cache d un delai trop court sur une generation longue",
+      "question_en": "A team lowers the client timeout to two minutes to fail fast on a long non-streaming call. What actually happens?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The call fails once after two minutes, exactly as the team intended."
+        },
+        {
+          "key": "B",
+          "text_en": "The timeout is clamped up to the ten-minute default and ignored."
+        },
+        {
+          "key": "C",
+          "text_en": "The server aborts the generation at the same moment the client does."
+        },
+        {
+          "key": "D",
+          "text_en": "The client cuts the connection and retries twice, billing each attempt."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Deux faits se combinent pour produire un piège coûteux. D'abord : « An expected request latency longer than the timeout for a non-streaming request will result in the client terminating the connection and retrying without receiving a response. » Ensuite : « requests that time out are retried twice by default ». Une génération plus longue que le délai est donc lancée trois fois au total, facturée à chaque fois, sans qu'aucune réponse ne parvienne jamais. Sur des requêtes longues, la solution est le streaming ou les lots, pas un délai plus court.",
+      "distractors_fr": {
+        "A": "Ce serait vrai si l'expiration était terminale. Elle ne l'est pas : elle figure parmi les pannes que le SDK réessaie.",
+        "B": "Le délai que vous posez est respecté ; c'est bien cela qui déclenche l'abandon prématuré et les réessais.",
+        "C": "Couper la connexion côté client n'annule pas le travail déjà engagé côté serveur, d'où la facturation d'une génération sans réponse reçue."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-021",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Option de socket posee par le SDK contre les coupures de connexion inactive",
+      "question_en": "Idle connections are dropped by a corporate network before long responses arrive. What do the SDKs already set to reduce this?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A TCP socket keep-alive, which a custom HTTP client can override."
+        },
+        {
+          "key": "B",
+          "text_en": "An HTTP/2 ping frame sent by the API on a fixed interval."
+        },
+        {
+          "key": "C",
+          "text_en": "A heartbeat request issued on a second connection in parallel."
+        },
+        {
+          "key": "D",
+          "text_en": "A chunked encoding header that forces the proxy to keep the socket."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Les deux SDK posent la même option : « The SDK sets a TCP socket keep-alive option to reduce the impact of idle connection timeouts on some networks. » Le point d'attention est la suite : en Python, cela peut être écrasé en passant un http_client personnalisé ; en TypeScript, en configurant un proxy sur mesure. Autrement dit, remplacer le client HTTP fait perdre ce réglage si on ne le repose pas.",
+      "distractors_fr": {
+        "B": "Aucun ping applicatif de ce genre n'est décrit. Le mécanisme documenté opère au niveau du socket TCP.",
+        "C": "Une connexion parallèle ne maintiendrait pas la connexion inactive qui porte la réponse.",
+        "D": "L'encodage par morceaux décrit la façon dont le corps est transmis ; il n'empêche pas un intermédiaire de fermer un socket resté silencieux."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-022",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Mesures recommandees pour des requetes de plus de dix minutes",
+      "question_en": "A job issues requests expected to run well past ten minutes. Which TWO measures does the documentation recommend?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Split the prompt across several accounts to spread the load out."
+        },
+        {
+          "key": "B",
+          "text_en": "Use the Message Batches API and poll for results when they are ready."
+        },
+        {
+          "key": "C",
+          "text_en": "Disable the SDK's retries so a slow call is never sent a second time."
+        },
+        {
+          "key": "D",
+          "text_en": "Use the streaming Messages API rather than one long blocking call."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "L'avertissement de la section « Long requests » nomme les deux voies : « Consider using the streaming Messages API or Message Batches API for long-running requests, especially those over 10 minutes. » L'argument diffère pour chacune : le streaming évite qu'une connexion reste inactive assez longtemps pour être coupée, et les lots suppriment carrément la dépendance à une connexion ininterrompue, puisqu'on interroge les résultats plus tard.",
+      "distractors_fr": {
+        "A": "Répartir sur plusieurs comptes ne change rien à la durée d'une requête donnée, et sort du cadre documenté.",
+        "C": "Couper les réessais masque un symptôme sans traiter la cause : la requête restera trop longue pour la connexion qui la porte."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-023",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Parcourir toutes les pages d une methode de liste",
+      "question_en": "Code calls a list method and processes only what the first response returned. What does the SDK offer instead?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A page size large enough that a single call always returns everything."
+        },
+        {
+          "key": "B",
+          "text_en": "Auto-pagination: iterate with for and the SDK walks every page for you."
+        },
+        {
+          "key": "C",
+          "text_en": "A server-side cursor that replays the list from the start on each call."
+        },
+        {
+          "key": "D",
+          "text_en": "A callback fired once per page, which the caller has to register first."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les méthodes de liste de l'API Claude sont paginées, et les SDK exposent une itération transparente : « You can use the for syntax to iterate through items across all pages », avec l'équivalent asynchrone. Pour un contrôle plus fin, les méthodes has_next_page(), next_page_info() et get_next_page() permettent de travailler page par page. Ne lire que la première réponse revient donc à ignorer silencieusement une partie des données.",
+      "distractors_fr": {
+        "A": "Aucune taille de page ne garantit l'exhaustivité : la pagination existe justement parce qu'un jeu de résultats peut dépasser n'importe quel plafond.",
+        "C": "Un curseur qui recommencerait à chaque appel ne paginerait rien ; la pagination avance au contraire dans la liste.",
+        "D": "L'interface documentée est une itération, pas un enregistrement de rappel."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-024",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "En-tete de version envoye par defaut et risque a l ecraser",
+      "question_en": "A developer plans to set the anthropic-version header by hand on every SDK call. What does the documentation say?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is required on each call, the SDK sending no version of its own."
+        },
+        {
+          "key": "B",
+          "text_en": "It is rejected when set by hand, the SDK owning the header outright."
+        },
+        {
+          "key": "C",
+          "text_en": "The SDK sends it already; overriding risks wrong types and odd behaviour."
+        },
+        {
+          "key": "D",
+          "text_en": "It only applies to raw HTTP calls, being ignored when an SDK is used."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Les deux SDK envoient automatiquement l'en-tête anthropic-version, positionné à 2023-06-01. L'écrasement reste possible, par des en-têtes par défaut sur le client ou au coup par coup, mais la documentation l'assortit d'un avertissement : « Overriding default headers may result in incorrect types and other unexpected or undefined behavior in the SDK. » Le SDK est en effet typé pour la version qu'il annonce.",
+      "distractors_fr": {
+        "A": "L'en-tête est envoyé automatiquement : c'est justement ce qui dispense d'y penser à chaque appel.",
+        "B": "L'écrasement est possible, la documentation explique comment le faire. Elle met simplement en garde contre ses effets.",
+        "D": "L'en-tête est bien émis par le SDK sur chaque requête ; il n'est pas réservé aux appels HTTP écrits à la main."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-025",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Structure d execution d un middleware autour de l appel a next",
+      "question_en": "A middleware is added to log outgoing requests and incoming responses. Which TWO statements about the hook are correct?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Code before the next call runs on the way out to the API."
+        },
+        {
+          "key": "B",
+          "text_en": "Code after the next call runs on the way back with the response."
+        },
+        {
+          "key": "C",
+          "text_en": "A middleware may read the request but never replace it."
+        },
+        {
+          "key": "D",
+          "text_en": "A middleware runs only on failures, successes bypassing the chain."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "Le fonctionnement tient en une phrase : « Call next to forward the request to the rest of the chain (or directly to the SDK core if this is the last middleware), and return its response. Anything before the next call runs on the way out; anything after runs on the way back. » Cette symétrie fait du middleware l'endroit naturel des préoccupations transversales que cite la page : journalisation, réessais sur mesure, annotation de requête, repli sur refus.",
+      "distractors_fr": {
+        "C": "Le remplacement est explicitement prévu : « Each middleware can inspect or replace the request before calling next(), and the response after next() returns. »",
+        "D": "La chaîne s'exécute sur toutes les requêtes. Elle enveloppe l'appel, elle ne se déclenche pas sur erreur."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+    },
+    {
+      "id": "SEF-026",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Ordre d application entre middleware de client et de requete",
+      "question_en": "A middleware is registered on the client and another is passed as a per-request option. Which runs first on the way out?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The per-request one, being the more specific of the two registrations."
+        },
+        {
+          "key": "B",
+          "text_en": "Whichever was declared last, later entries always wrapping the earlier."
+        },
+        {
+          "key": "C",
+          "text_en": "Neither: registering both raises an error at client construction time."
+        },
+        {
+          "key": "D",
+          "text_en": "The client one, which the documentation says runs before the request one."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La règle est donnée directement : « When you register multiple middleware, they apply in the order given: the first middleware's \"before\" code runs first, and its \"after\" code runs last. Middleware registered on the client runs before middleware passed as a per-request option. » L'ordre d'enveloppement suit ensuite la mécanique habituelle : le premier entré est le dernier sorti.",
+      "distractors_fr": {
+        "A": "La spécificité ne joue pas ici : c'est l'ordre d'enregistrement qui décide, et le client vient avant la requête.",
+        "B": "Dans les SDK autres que Go, les entrées plus tardives enveloppent bien vers l'intérieur, mais cela ne renverse pas la préséance du client sur la requête.",
+        "C": "Combiner les deux est un usage prévu, pas une erreur : c'est ce qui permet un socle commun plus des ajouts ponctuels."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+    },
+    {
+      "id": "SEF-027",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Place du client HTTP personnalise par rapport a la chaine de middleware",
+      "question_en": "A team supplies a custom HTTP client for proxy and TLS settings, and also registers middleware. How do the two combine?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The custom client replaces the default and receives requests after middleware."
+        },
+        {
+          "key": "B",
+          "text_en": "The custom client sits before the chain, so middleware never sees the request."
+        },
+        {
+          "key": "C",
+          "text_en": "Both HTTP clients stay active, the SDK choosing per request between them."
+        },
+        {
+          "key": "D",
+          "text_en": "Supplying a custom client disables middleware, the two being incompatible."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page pose les deux moitiés de la réponse : « Only one HTTP client is used per SDK client; setting it replaces the default » et « The custom HTTP client receives requests after all middleware has run. » L'ordre est donc net : votre chaîne de middleware s'exécute d'abord, puis la requête, éventuellement modifiée, part par le transport que vous avez fourni. Corollaire à connaître : remplacer le client fait perdre les réglages par défaut, d'où l'usage de DefaultHttpxClient plutôt que d'un httpx.Client brut.",
+      "distractors_fr": {
+        "B": "L'ordre est inverse : le middleware court en premier, ce qui lui permet précisément d'annoter ou de remplacer la requête avant son départ.",
+        "C": "Un seul client HTTP est utilisé par client SDK : en fournir un remplace le défaut, il ne s'y ajoute pas.",
+        "D": "Les deux mécanismes sont complémentaires et documentés côte à côte : l'un traite la requête, l'autre la transporte."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+    },
+    {
+      "id": "SEF-028",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Conserver la configuration par defaut en remplacant le client HTTP",
+      "question_en": "Python code needs proxy support and passes a plain httpx.Client to the constructor. What does the documentation advise instead?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Set the proxy through an environment variable, never in client code."
+        },
+        {
+          "key": "B",
+          "text_en": "Use DefaultHttpxClient, so the SDK's own defaults are preserved."
+        },
+        {
+          "key": "C",
+          "text_en": "Wrap the raw client in a middleware, which restores the defaults."
+        },
+        {
+          "key": "D",
+          "text_en": "Subclass the Anthropic client and re-declare the transport by hand."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La note est explicite : « Use DefaultHttpxClient and DefaultAsyncHttpxClient instead of raw httpx.Client and httpx.AsyncClient to ensure the SDK's default configuration (such as timeouts and connection limits) is preserved. » Un client brut repart des défauts de httpx et fait perdre les réglages que le SDK avait posés — au premier rang desquels le keep-alive TCP destiné à limiter les coupures de connexion inactive.",
+      "distractors_fr": {
+        "A": "Le SDK prévoit la personnalisation du client httpx pour les proxys et les transports ; rien n'impose de passer par l'environnement.",
+        "C": "Le middleware agit sur les requêtes et les réponses, pas sur la configuration du transport. Il ne restaure aucun défaut.",
+        "D": "Aucun héritage n'est nécessaire : l'option de client HTTP est un point d'extension prévu par l'API publique."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "SEF-029",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Statut du navigateur comme environnement d execution du SDK TypeScript",
+      "question_en": "Why does the TypeScript SDK refuse to run in a web browser unless a flag is set?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Browsers cannot open the server-sent event streams the SDK relies on."
+        },
+        {
+          "key": "B",
+          "text_en": "The bundle is too large for browsers, so a slimmer build is required."
+        },
+        {
+          "key": "C",
+          "text_en": "It is off by default to avoid exposing your secret API credentials."
+        },
+        {
+          "key": "D",
+          "text_en": "Browser support was removed, and the flag only restores a legacy path."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La liste des environnements pris en charge le formule ainsi : « Web browsers: disabled by default to avoid exposing your secret API credentials. Enable browser support by explicitly setting dangerouslyAllowBrowser to true. » Le nom même de l'option porte l'avertissement : faire tourner le SDK dans une page revient à livrer la clé d'API à quiconque ouvre les outils de développement. La parade habituelle est un service intermédiaire qui détient la clé.",
+      "distractors_fr": {
+        "A": "Les navigateurs savent parfaitement consommer un flux SSE ; ce n'est pas une limite technique qui motive le refus.",
+        "B": "La taille du paquet n'est pas en cause. Le SDK vise d'ailleurs Cloudflare Workers et Vercel Edge Runtime, deux cibles contraintes.",
+        "D": "La prise en charge n'a pas été retirée : elle est désactivée par défaut et s'active explicitement, en connaissance de cause."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-030",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Niveau d abstraction des clients SDK face aux outils d agent",
+      "question_en": "A team must place the client SDKs against Claude Code and the Agent SDK. Which TWO statements match the documentation?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The client SDKs are Messages API clients: you send each request yourself."
+        },
+        {
+          "key": "B",
+          "text_en": "The client SDKs run the agent loop for you and execute tool calls."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Code and the Agent SDK work higher up, providing the agent loop."
+        },
+        {
+          "key": "D",
+          "text_en": "The Agent SDK is a thin wrapper published over the client SDKs."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La page d'aperçu trace la frontière : « The CLI, client SDKs, and libraries are for calling the Claude API yourself: you send each request and handle each response. Claude Code, the Claude Agent SDK, and Claude Managed Agents work at a higher level, providing the agent loop, tool execution, and runtime. » Les SDK client sont décrits comme des clients Messages API pour sept langages, avec des interfaces idiomatiques, la sûreté de typage et la prise en charge intégrée du streaming, des réessais et de la gestion d'erreurs.",
+      "distractors_fr": {
+        "B": "C'est exactement ce que les SDK client ne font pas : la boucle d'agent et l'exécution des outils relèvent du niveau supérieur.",
+        "D": "L'Agent SDK n'est pas présenté comme une surcouche des SDK client, mais comme un outillage d'un autre niveau, qui fournit la boucle et le runtime."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+    }
+  ]
+}

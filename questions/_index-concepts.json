@@ -147,6 +147,146 @@
     "doc_ref": "https://platform.claude.com/docs/en/managed-agents/scheduled-deployments"
   },
   {
+    "id": "AGP-001",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Qui tient le plan : subagents, skills, agent teams ou workflow",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-002",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Ou vivent les resultats intermediaires pendant un workflow",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-003",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Communication entre travailleurs : agent teams contre subagents",
+    "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+  },
+  {
+    "id": "AGP-004",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Motifs de delegation cites pour la coordination multiagent",
+    "doc_ref": "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+  },
+  {
+    "id": "AGP-005",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Profondeur de delegation d un coordinateur multiagent",
+    "doc_ref": "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+  },
+  {
+    "id": "AGP-006",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Revue en parallele : une lentille distincte par relecteur",
+    "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+  },
+  {
+    "id": "AGP-007",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Structure de debat contradictoire contre l ancrage",
+    "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+  },
+  {
+    "id": "AGP-008",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Forme d un script de workflow sauvegarde",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-009",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Ce qu une reprise rejoue apres un arret en plein fan-out",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-010",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Granularite du fan-out et progression preservee a la reprise",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-011",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Empecher deux travailleurs paralleles d ecraser les memes fichiers",
+    "doc_ref": "https://code.claude.com/docs/en/agents"
+  },
+  {
+    "id": "AGP-012",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Taille d equipe et charge de taches recommandees",
+    "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+  },
+  {
+    "id": "AGP-013",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Ou le mot-cle ultracode vaut opt-in a une orchestration",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-014",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Statut de la consigne de taille face a un prompt qui demande plus",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
+    "id": "AGP-015",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Quand preferer Claude a un classifieur ML pour le routage",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing"
+  },
+  {
+    "id": "AGP-016",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Ou reside le consentement permanent d un mode orchestration",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+  },
+  {
+    "id": "AGP-017",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Comportement par defaut d un verificateur dans une vague de verification",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+  },
+  {
+    "id": "AGP-018",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Journal adresse par contenu pour rendre un fan-out rejouable",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+  },
+  {
+    "id": "AGP-019",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Qui coordonne le travail dans chacune des quatre approches paralleles",
+    "doc_ref": "https://code.claude.com/docs/en/agents"
+  },
+  {
+    "id": "AGP-020",
+    "fichier": "agents-workflows_agent-patterns-and-frameworks.json",
+    "subdomain": "Agent Patterns and Frameworks",
+    "concept": "Formes de taches pour lesquelles un workflow convient le mieux",
+    "doc_ref": "https://code.claude.com/docs/en/workflows"
+  },
+  {
     "id": "CAD-001",
     "fichier": "applications-integration_claude-application-design.json",
     "subdomain": "Claude Application Design",

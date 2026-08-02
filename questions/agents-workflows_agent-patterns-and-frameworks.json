@@ -1,0 +1,797 @@
+{
+  "subdomain": "Agent Patterns and Frameworks",
+  "domain": "Agents and Workflows",
+  "weight": 4.9,
+  "target_questions": 20,
+  "sources_read": [
+    "https://code.claude.com/docs/en/workflows",
+    "https://code.claude.com/docs/en/agents",
+    "https://code.claude.com/docs/en/agent-teams",
+    "https://code.claude.com/docs/en/sub-agents",
+    "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration",
+    "https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing",
+    "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+  ],
+  "questions": [
+    {
+      "id": "AGP-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Qui tient le plan : subagents, skills, agent teams ou workflow",
+      "question_en": "A team wants a codebase-wide bug sweep over hundreds of files, with the orchestration itself codified as something they can read and rerun on demand. Which approach holds the plan the way they need?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Skills: the instructions Claude follows are reusable, and results stay in the context window."
+        },
+        {
+          "key": "B",
+          "text_en": "Dynamic workflows: a script holds the loop, and the orchestration itself is what repeats."
+        },
+        {
+          "key": "C",
+          "text_en": "Agent teams: a lead supervises peer sessions, and the shared task list records the plan."
+        },
+        {
+          "key": "D",
+          "text_en": "Subagents: Claude decides turn by turn what to spawn, and each result returns to it."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le tableau « When to use a workflow » oppose les quatre primitives sur un seul axe : qui décide de ce qui tourne ensuite. Pour les subagents, les skills et les agent teams, c'est Claude ou l'agent chef, tour par tour ; pour un workflow, c'est le script. La colonne « What's repeatable » achève de trancher : la définition du travailleur pour un subagent, les instructions pour un skill, la définition d'équipe pour une team — mais pour un workflow, « the orchestration itself ». C'est exactement ce que l'équipe demande : le plan codifié, lisible et rejouable.",
+      "distractors_fr": {
+        "A": "Un skill est un jeu d'instructions que Claude suit : c'est encore Claude qui décide tour par tour, et les résultats intermédiaires atterrissent dans sa fenêtre de contexte. Ce qui se répète, ce sont les instructions, pas l'orchestration.",
+        "C": "Une agent team met un agent chef à la tête de sessions pairs coordonnées par une liste de tâches partagée. Le chef décide tour par tour ; l'échelle documentée est « a handful of long-running peers », pas des centaines de fichiers.",
+        "D": "Un subagent est le travailleur qu'un workflow orchestre, pas l'orchestrateur. Son échelle documentée est « a few delegated tasks per turn », et c'est Claude qui décide à chaque tour de ce qu'il lance."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ou vivent les resultats intermediaires pendant un workflow",
+      "question_en": "During a dynamic workflow run, where do the subagents' intermediate results live, and what ends up reaching the main conversation?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In Claude's context as they arrive, so the conversation can steer the run turn by turn."
+        },
+        {
+          "key": "B",
+          "text_en": "In the shared task list the agents claim from, which the conversation reads at the end."
+        },
+        {
+          "key": "C",
+          "text_en": "In script variables held by the runtime, so only the final answer reaches Claude."
+        },
+        {
+          "key": "D",
+          "text_en": "In the session transcript, which the runtime replays into the conversation at the end."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "C'est la propriété qui distingue un workflow des trois autres primitives : « A workflow script holds the loop, the branching, and the intermediate results itself, so Claude's context holds only the final answer. » Le runtime exécute le script dans un environnement isolé, séparé de la conversation, et c'est précisément ce qui permet à un run de dépasser ce qu'une fenêtre de contexte peut tenir.",
+      "distractors_fr": {
+        "A": "C'est le comportement des subagents et des skills : « every result lands in a context window ». Un workflow est justement conçu pour l'éviter, et le run tourne en arrière-plan sans entrée utilisateur en cours de route.",
+        "B": "La liste de tâches partagée est le mécanisme des agent teams, pas des workflows. Dans un workflow, les résultats intermédiaires vivent dans des variables de script.",
+        "D": "Le runtime écrit bien le script du run dans le répertoire de session, mais il ne rejoue pas les résultats intermédiaires dans la conversation : c'est le rapport final qui y atterrit."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Communication entre travailleurs : agent teams contre subagents",
+      "question_en": "What distinguishes agent teams from subagents in the way the workers communicate with each other?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Teammates message each other directly; subagents report only to the agent that spawned them."
+        },
+        {
+          "key": "B",
+          "text_en": "Teammates report only to the lead; subagents message each other through the main agent."
+        },
+        {
+          "key": "C",
+          "text_en": "Both message each other directly, but only teammates share a task list to coordinate."
+        },
+        {
+          "key": "D",
+          "text_en": "Neither can reach the other workers; both report back to the session that spawned them."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le tableau de comparaison est explicite sur la ligne « Communication » : les subagents « report results back to the main agent only », les coéquipiers « message each other directly ». C'est le critère de choix que la page met en avant : « Choose based on whether your workers need to communicate with each other. » S'y ajoute que l'on peut aussi parler directement à un coéquipier sans passer par le chef.",
+      "distractors_fr": {
+        "B": "C'est l'inverse exact. Ce sont les subagents qui ne remontent qu'à l'agent principal ; les coéquipiers, eux, s'adressent des messages directement, par nom, via leur boîte aux lettres.",
+        "C": "Les subagents ne communiquent pas entre eux : chacun travaille dans son propre contexte et rend un résumé à l'appelant. La liste partagée est bien propre aux teams, mais la première moitié de l'énoncé est fausse.",
+        "D": "Les coéquipiers disposent d'une messagerie directe : chacun a une boîte aux lettres et peut écrire à n'importe quel autre par son nom."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "AGP-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Motifs de delegation cites pour la coordination multiagent",
+      "question_en": "The multiagent orchestration guide names the delegation patterns that work well. Which TWO of the following does it list?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Parallelization: fan out independent subtasks, then have the coordinator synthesize."
+        },
+        {
+          "key": "B",
+          "text_en": "Compaction: fold each agent's thread back into the coordinator as its context fills."
+        },
+        {
+          "key": "C",
+          "text_en": "Specialization: route to agents with domain-focused prompts and tools of their own."
+        },
+        {
+          "key": "D",
+          "text_en": "Replication: run one subtask on several agents and keep the most frequent answer."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La section « What to delegate » énumère trois motifs qui fonctionnent bien : la parallélisation (éclater des sous-tâches indépendantes — chercher dans plusieurs sources, analyser des fichiers séparés — et laisser le coordinateur synthétiser), la spécialisation (router vers des agents à prompt système et outils ciblés, un agent sécurité ou un agent documentation, plutôt que de charger un agent unique de toutes les capacités) et l'escalade (consulter un agent ou un modèle plus capable pour un sous-ensemble de sous-tâches complexes).",
+      "distractors_fr": {
+        "B": "La compaction existe bien dans la plateforme, mais comme technique de gestion de contexte, pas comme motif de délégation multiagent. Ici, chaque agent tourne dans son propre fil isolé : le contexte n'est justement pas partagé.",
+        "D": "Le vote majoritaire entre copies n'est pas un motif cité par cette page. Le troisième motif de la liste est l'escalade : consulter un agent ou un modèle plus capable pour les sous-tâches complexes."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+    },
+    {
+      "id": "AGP-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Profondeur de delegation d un coordinateur multiagent",
+      "question_en": "A coordinator's roster references an agent that itself declares a multiagent roster. What does the API do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It ignores the nested roster at runtime, and the referenced agent runs without delegating."
+        },
+        {
+          "key": "B",
+          "text_en": "It flattens the nested agents into the coordinator's roster, up to the 20-agent maximum."
+        },
+        {
+          "key": "C",
+          "text_en": "It allows the delegation, but every nested thread counts twice against the thread ceiling."
+        },
+        {
+          "key": "D",
+          "text_en": "It fails the create or update request: a coordinator delegates to one level of agents."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La règle est posée telle quelle : « The coordinator can only delegate to one level of agents; referencing an agent that has its own multiagent.agents roster fails the create or update request with a validation error. » L'échec est donc à la création ou à la mise à jour du coordinateur, pas à l'exécution. La limite de 20 agents distincts dans le roster est une contrainte distincte, qui n'a rien à voir avec la profondeur.",
+      "distractors_fr": {
+        "A": "Rien n'est ignoré silencieusement : la requête est rejetée avec une erreur de validation, ce qui rend le problème visible à la configuration plutôt qu'à l'exécution.",
+        "B": "Aucun aplatissement n'a lieu. Le plafond de 20 agents porte sur le nombre d'entrées distinctes du roster, sachant que le coordinateur peut appeler plusieurs copies de chacune.",
+        "C": "Le plafond de 25 fils concurrents existe, mais il ne s'applique pas ici : la hiérarchie à deux niveaux n'est jamais créée, puisque la requête échoue."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration"
+    },
+    {
+      "id": "AGP-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Revue en parallele : une lentille distincte par relecteur",
+      "question_en": "In the parallel code review example, why does the prompt give each teammate a distinct lens instead of the same brief?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Because a shared brief would make teammates claim the same items from the task list."
+        },
+        {
+          "key": "B",
+          "text_en": "Because teammates cannot read one pull request at the same time without conflicting."
+        },
+        {
+          "key": "C",
+          "text_en": "Because one reviewer drifts toward a single kind of issue, leaving the others thin."
+        },
+        {
+          "key": "D",
+          "text_en": "Because the lead can only synthesize findings that arrive tagged with a category."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le raisonnement de l'exemple est donné en une phrase : « A single reviewer tends to gravitate toward one type of issue at a time. Splitting review criteria into independent domains means security, performance, and test coverage all get thorough attention simultaneously. » Assigner une lentille distincte n'est pas un simple partage de charge : c'est ce qui empêche les trois angles de se recouvrir, chaque relecteur partant du même diff avec un filtre différent.",
+      "distractors_fr": {
+        "A": "La liste de tâches gère déjà la concurrence par verrouillage de fichier ; ce n'est pas ce que la lentille distincte cherche à résoudre.",
+        "B": "Lire le même diff en parallèle ne pose aucun problème : le conflit documenté porte sur l'écriture, et se règle en partitionnant les fichiers, pas la revue.",
+        "D": "Le chef synthétise les retours des trois relecteurs une fois qu'ils ont fini ; aucun étiquetage n'est requis pour cela."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "AGP-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Structure de debat contradictoire contre l ancrage",
+      "question_en": "In the competing-hypotheses example, what mechanism makes the surviving theory more likely to be the real root cause?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The lead assigns hypotheses in order, so each theory builds on the previous finding."
+        },
+        {
+          "key": "B",
+          "text_en": "Investigators actively try to disprove each other, so anchoring cannot take hold."
+        },
+        {
+          "key": "C",
+          "text_en": "Each investigator runs in its own worktree, so no theory is polluted by another's edits."
+        },
+        {
+          "key": "D",
+          "text_en": "The teammates vote, and the theory with the most votes is reported back to the lead."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "L'exemple nomme le mécanisme et le mal qu'il traite : « The debate structure is the key mechanism here. Sequential investigation suffers from anchoring: once one theory is explored, subsequent investigation is biased toward it. With multiple independent investigators actively trying to disprove each other, the theory that survives is much more likely to be the actual root cause. » Le prompt rend donc les coéquipiers explicitement adversariaux : chacun doit non seulement défendre sa théorie mais attaquer celles des autres.",
+      "distractors_fr": {
+        "A": "C'est exactement le contraire : l'enquête séquentielle est le défaut que le motif corrige, parce qu'une fois une théorie explorée, la suite est biaisée en sa faveur.",
+        "C": "Les agent teams n'isolent pas les coéquipiers dans des worktrees ; la page recommande de partitionner les fichiers. Et une enquête ne modifie de toute façon rien.",
+        "D": "Il n'y a pas de vote majoritaire dans cet exemple. Ce qui départage, c'est la réfutation mutuelle : la théorie qui survit aux attaques des autres."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "AGP-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Forme d un script de workflow sauvegarde",
+      "question_en": "You open a saved workflow script under .claude/workflows/ to read what Claude generated. What structure do you find?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A meta block, then a JavaScript body where agent() spawns one and pipeline() maps a list."
+        },
+        {
+          "key": "B",
+          "text_en": "A YAML frontmatter block with a tools allowlist, then a Markdown prompt for each phase."
+        },
+        {
+          "key": "C",
+          "text_en": "A JSON object listing the phases, which the runtime interprets without running a script."
+        },
+        {
+          "key": "D",
+          "text_en": "A shell script that starts one claude -p process per item and collects their output."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page décrit le fichier sauvegardé : « the file in .claude/workflows/ holds a meta block followed by a script body that orchestrates subagents » et « The body is plain JavaScript with top-level await. agent() spawns one subagent and pipeline() runs one per item in a list. » Le script est donc du vrai code exécuté par le runtime, ce qui est précisément ce qui déplace le plan hors de la fenêtre de contexte.",
+      "distractors_fr": {
+        "B": "Le couple frontmatter YAML plus corps Markdown est la forme d'une définition de subagent dans .claude/agents/, pas d'un workflow. Un workflow est un script.",
+        "C": "Le fichier n'est pas déclaratif : le runtime exécute un programme JavaScript, avec ses boucles et ses branchements, ce qui est tout l'intérêt du motif.",
+        "D": "Le workflow lui-même n'a ni accès au système de fichiers ni accès au shell : ce sont les agents qui lisent, écrivent et exécutent, le script se contentant de les coordonner."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ce qu une reprise rejoue apres un arret en plein fan-out",
+      "question_en": "A script starts agents A, B, C and D in that order. You stop the run while B is still going; C and D had already finished. What runs again on resume?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only B, since A, C and D finished and every completed agent's result is cached."
+        },
+        {
+          "key": "B",
+          "text_en": "A and B, since replay restarts at the beginning of the phase that was interrupted."
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing at all: the run picks up where B stopped and keeps B's partial output."
+        },
+        {
+          "key": "D",
+          "text_en": "B, C and D, since caching stops at the first agent that had not finished."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Deux règles décident, et c'est la seconde qui surprend : « Replay follows the order agents started. Cached results stop at the first agent that didn't finish, and every agent that started after that one runs again, even if it completed. » B n'avait pas fini, donc B repart ; C et D ont démarré après B, donc ils repartent aussi malgré leur achèvement. Seul A, démarré avant B, revient du cache. La documentation prend exactement cet exemple.",
+      "distractors_fr": {
+        "A": "Ce serait le cas si le cache était purement par agent. Mais le rejeu suit l'ordre de démarrage : tout ce qui a démarré après le premier agent inachevé est réexécuté, achevé ou non.",
+        "B": "Le rejeu ne raisonne pas par phase mais par ordre de démarrage des agents. A revient du cache même si B, dans la même phase, doit repartir.",
+        "C": "Un agent encore en cours au moment de l'arrêt n'est pas sauvegardé : « it starts over on resume ». Il n'existe donc aucune sortie partielle à conserver."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Granularite du fan-out et progression preservee a la reprise",
+      "question_en": "Given how a stopped run replays, which script shape preserves the most completed work when a run is interrupted?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "One long-running agent per phase, so a single cached result covers that whole phase."
+        },
+        {
+          "key": "B",
+          "text_en": "A script that starts its agents in the order their results are needed downstream."
+        },
+        {
+          "key": "C",
+          "text_en": "A fan-out over many small agents, so less work sits behind the first unfinished one."
+        },
+        {
+          "key": "D",
+          "text_en": "A script that pauses between phases, because a planned pause is always cached."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation tire elle-même la conséquence de la règle de rejeu : « A workflow that fans work out across many small agents therefore preserves more progress than one long agent. » Un agent long a toutes les chances d'être en cours au moment de l'arrêt, et il repart alors de zéro ; beaucoup de petits agents, au contraire, ont pour la plupart déjà rendu leur résultat, et le point de reprise se situe plus loin.",
+      "distractors_fr": {
+        "A": "C'est la forme la plus fragile : un agent encore en cours n'est pas sauvegardé, donc un agent long interrompu perd tout son travail et redémarre entièrement.",
+        "B": "L'ordre de démarrage détermine ce qui est rejoué, mais l'ordonner sur les dépendances ne réduit pas la perte : c'est la granularité des agents qui la réduit.",
+        "D": "Seules les demandes de permission d'un agent peuvent suspendre un run ; le script ne peut pas s'interrompre lui-même pour demander une validation intermédiaire."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Empecher deux travailleurs paralleles d ecraser les memes fichiers",
+      "question_en": "Parallel workers must not overwrite each other's files. Which TWO measures does the documentation actually prescribe?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Agent teams put each teammate in its own worktree as soon as the team is formed."
+        },
+        {
+          "key": "B",
+          "text_en": "Give subagents and the sessions you run yourself a separate checkout via worktrees."
+        },
+        {
+          "key": "C",
+          "text_en": "Rely on the runtime to serialize edits, since one agent holds the write lock at a time."
+        },
+        {
+          "key": "D",
+          "text_en": "Partition the work in an agent team so each teammate owns a different set of files."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "La page « Run agents in parallel » sépare les deux cas. Pour les subagents et les sessions que vous lancez vous-même : « Isolate the work with worktrees. Subagents and sessions you run yourself can each use a separate worktree. » Pour les équipes, l'isolation n'existe pas : « Agent teams don't isolate teammates in worktrees, so partition the work so each teammate owns a different set of files. » La bonne pratique des agent teams le redit : « Two teammates editing the same file leads to overwrites. »",
+      "distractors_fr": {
+        "A": "C'est précisément ce que les agent teams ne font pas. C'est l'agent view qui déplace automatiquement chaque session dépêchée dans son propre worktree.",
+        "C": "Aucun verrou d'écriture global n'existe entre agents. Le verrouillage de fichier documenté sert à réserver une tâche dans la liste partagée, pas à protéger le code source."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agents"
+    },
+    {
+      "id": "AGP-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "concept": "Taille d equipe et charge de taches recommandees",
+      "question_en": "What starting team size and task load does the agent teams guide recommend for most workflows?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Three to five teammates, with five or six tasks each to keep everyone productive."
+        },
+        {
+          "key": "B",
+          "text_en": "Ten to twelve teammates, with two tasks each so nobody waits on a long assignment."
+        },
+        {
+          "key": "C",
+          "text_en": "One teammate per file being changed, each with a single task, to avoid all conflicts."
+        },
+        {
+          "key": "D",
+          "text_en": "Two teammates, with as many tasks as needed, since coordination cost grows quickly."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page donne les deux chiffres ensemble : « Start with 3-5 teammates for most workflows. This balances parallel work with manageable coordination » et « Having 5-6 tasks per teammate keeps everyone productive without excessive context switching. » Elle en donne même l'application : quinze tâches indépendantes appellent trois coéquipiers. Trois raisons bornent la montée en charge : le coût en jetons croît linéairement, la coordination s'alourdit, et les rendements décroissent.",
+      "distractors_fr": {
+        "B": "Trop de coéquipiers pour trop peu de tâches chacun : la page prévient des rendements décroissants et note que « Three focused teammates often outperform five scattered ones ».",
+        "C": "Une tâche par coéquipier tombe dans le travers « too small » : le coût de coordination dépasse alors le bénéfice de la parallélisation.",
+        "D": "Deux coéquipiers restent en deçà de la fourchette recommandée, et charger l'un d'eux de tâches sans limite le fait travailler trop longtemps sans point de contrôle."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "AGP-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Ou le mot-cle ultracode vaut opt-in a une orchestration",
+      "question_en": "Where does the ultracode keyword actually opt a task into a dynamic workflow?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In any prompt the session receives, a relayed webhook payload counting like the rest."
+        },
+        {
+          "key": "B",
+          "text_en": "In a prompt passed with -p, non-interactive runs being where large sweeps pay off."
+        },
+        {
+          "key": "C",
+          "text_en": "In a scheduled task prompt, so a recurring job can orchestrate without a human there."
+        },
+        {
+          "key": "D",
+          "text_en": "In a prompt you type yourself, or one an SDK app stamps as human input; nowhere else."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le mot-clé n'est un opt-in que dans un prompt que vous tapez vous-même : à l'invite interactive, dans un panneau d'extension IDE, dans un client Remote Control, ou dans une application Agent SDK qui marque l'entrée clavier avec un origin { kind: \"human\" }. La page énumère ensuite les routes où il ne déclenche rien : un prompt passé avec -p, un prompt envoyé par une application SDK sans ce marquage, un prompt de tâche planifiée, et une charge utile de webhook ou un commentaire de pull request relayé dans la conversation.",
+      "distractors_fr": {
+        "A": "C'était le comportement d'avant la v2.1.210, et c'est justement ce qui a été resserré : un webhook ou un commentaire de pull request relayé ne déclenche plus de workflow.",
+        "B": "Un prompt passé avec -p figure explicitement dans la liste des routes qui ne déclenchent pas de workflow. Les workflows restent disponibles en mode non interactif, mais pas via ce mot-clé.",
+        "C": "Un prompt de tâche planifiée est cité nommément parmi les routes exclues : l'opt-in doit venir d'une frappe humaine."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-014",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Statut de la consigne de taille face a un prompt qui demande plus",
+      "question_en": "A project sets the dynamic workflow size guideline to small. A later prompt asks for an exhaustive audit of the repository. What governs the agent count?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The guideline caps the run below five agents, and the rest of the work is dropped."
+        },
+        {
+          "key": "B",
+          "text_en": "The guideline is advice, so a prompt calling for another scale still overrides it."
+        },
+        {
+          "key": "C",
+          "text_en": "The guideline is inert once set in a settings file; only /config values reach Claude."
+        },
+        {
+          "key": "D",
+          "text_en": "The guideline replaces the runtime caps, so the run may pass the concurrency limit."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La consigne de taille est transmise à Claude comme un conseil : « Claude Code sends the guideline to Claude as advice, not a cap, so a prompt that calls for a different scale still overrides it. » Elle oriente le dimensionnement par défaut — moins de 5 agents pour small, moins de 15 pour medium, moins de 50 pour large — sans jamais l'imposer. Ce qui borne réellement un run, ce sont les plafonds du runtime : 16 agents concurrents et 1 000 agents au total.",
+      "distractors_fr": {
+        "A": "La consigne ne coupe pas le travail : elle n'est qu'un conseil de dimensionnement, et un prompt qui appelle une autre échelle l'emporte.",
+        "C": "C'est l'inverse de la précédence documentée : à partir de la v2.1.219, une valeur posée dans un fichier de réglages prime sur /config, dont Claude Code masque alors la ligne.",
+        "D": "Les plafonds du runtime s'appliquent quoi qu'il arrive : « The runtime agent caps still apply regardless of the setting. »"
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "id": "AGP-015",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Quand preferer Claude a un classifieur ML pour le routage",
+      "question_en": "Which situation is given as an indicator to route support tickets with Claude rather than a traditional ML classifier?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The routing categories are likely to evolve, and relabeling training data is costly."
+        },
+        {
+          "key": "B",
+          "text_en": "Ticket volume is high enough that per-ticket inference cost is the leading concern."
+        },
+        {
+          "key": "C",
+          "text_en": "The routing rules are a fixed lookup table that has not changed in several years."
+        },
+        {
+          "key": "D",
+          "text_en": "A large labeled corpus exists already, and the classes are stable and well separated."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le guide énumère les indicateurs qui font pencher vers un LLM, et celui-ci en fait partie : une fois une approche ML classique établie, la changer est laborieux et gourmand en données, alors que Claude s'adapte à des définitions de classes nouvelles ou modifiées sans réétiquetage massif. Les autres indicateurs vont dans le même sens : peu de données étiquetées, du texte non structuré, des règles sémantiques, un besoin d'explication, des cas limites, du multilingue sans modèle par langue.",
+      "distractors_fr": {
+        "B": "Le coût d'inférence par ticket n'est pas un indicateur cité. Les critères listés portent sur la nature du problème de classification, pas sur son économie unitaire.",
+        "C": "Des règles figées et purement tabulaires sont le cas où une approche classique suffit : le guide vante l'adaptabilité de Claude quand les catégories bougent.",
+        "D": "C'est l'argument inverse. Le premier indicateur cité est justement de disposer de peu de données étiquetées : quelques dizaines d'exemples suffisent à Claude."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing"
+    },
+    {
+      "id": "AGP-016",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ou reside le consentement permanent d un mode orchestration",
+      "question_en": "In the orchestration mode example, where does the standing consent to fan out without asking first actually live?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In the top-level system field, rewritten each time the mode is switched on or off."
+        },
+        {
+          "key": "B",
+          "text_en": "In an API parameter that lifts effort above the levels the Effort page documents."
+        },
+        {
+          "key": "C",
+          "text_en": "In the orchestration tool's description, which carries the behavioral contract."
+        },
+        {
+          "key": "D",
+          "text_en": "In the first user message, rewritten so the consent sits at the head of the context."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le mode se construit de trois pièces documentées : un niveau d'effort, un rappel envoyé en message système en cours de conversation, et le consentement permanent placé dans la description de l'outil d'orchestration. C'est là que réside le contrat : « The Workflow tool carries the real behavioral contract: the opt-in rule, the standing consent that applies while the mode is on, granularity guidance for sizing the fan-out, and the quality patterns the model can reach for. » Les rappels, eux, sont courts à dessein et pointent vers cette description.",
+      "distractors_fr": {
+        "A": "Le champ system de premier niveau ne change jamais, et c'est délibéré : « The top-level system field never changes, so the cached prefix stays intact. » Le basculement passe par des messages système en cours de conversation.",
+        "B": "Le mode n'est pas un paramètre d'API, et il n'existe aucun niveau caché au-dessus de ceux de la page Effort : « There is no hidden level above the ones on that page. »",
+        "D": "Réécrire le début du contexte invaliderait le cache de prompt. Le message système est au contraire placé après le tour utilisateur, pour laisser intact tout ce qui le précède."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+    },
+    {
+      "id": "AGP-017",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Comportement par defaut d un verificateur dans une vague de verification",
+      "question_en": "In the verification wave of the orchestration example, how is each verifier told to behave when it cannot settle a claim?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "To rerun the original subagent, so the claim is derived a second time before a verdict."
+        },
+        {
+          "key": "B",
+          "text_en": "To let the claim through, an unverified claim not being the same thing as a wrong one."
+        },
+        {
+          "key": "C",
+          "text_en": "To escalate to the orchestrator, which decides whether the source supports the claim."
+        },
+        {
+          "key": "D",
+          "text_en": "To default to refuted, each verifier re-deriving the claims from the source itself."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La seconde vague réemprunte le même chemin de sous-agent pour tenter de réfuter chaque résultat : « every verifier re-derives the claims from the source, defaulting to refuted when uncertain ». Le doute joue donc contre l'affirmation, et non en sa faveur. Le résultat d'origine et son verdict sont tous deux renvoyés à l'orchestrateur, qui les pèse ensemble plutôt que de recevoir un simple filtre déjà appliqué.",
+      "distractors_fr": {
+        "A": "La vague de vérification ne rejoue pas la sous-tâche d'origine : elle redérive les affirmations depuis la source, ce qui est un contrôle indépendant et non une répétition.",
+        "B": "C'est l'inverse du défaut retenu ici. Laisser passer ce qui n'a pas pu être vérifié est précisément ce que le motif cherche à empêcher.",
+        "C": "L'orchestrateur reçoit bien les deux éléments — résultat et verdict — mais le vérificateur tranche d'abord, avec « réfuté » comme valeur par défaut en cas d'incertitude."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+    },
+    {
+      "id": "AGP-018",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Journal adresse par contenu pour rendre un fan-out rejouable",
+      "question_en": "Why does the orchestration example hash each subagent prompt into a local journal before dispatching the subtask?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "To cap the fan-out, a repeated hash counting only once against the total budget."
+        },
+        {
+          "key": "B",
+          "text_en": "To make reruns idempotent: a recorded result comes back instead of being recomputed."
+        },
+        {
+          "key": "C",
+          "text_en": "To keep prompts out of the context window, which then holds only their digests."
+        },
+        {
+          "key": "D",
+          "text_en": "To deduplicate the subtasks inside one fan-out wave before any are dispatched."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le raisonnement est économique : « A fan-out that spawns dozens of subagents is expensive to restart from scratch. A small content-addressed journal makes it idempotent: before dispatching a subagent, look up the SHA-256 of its prompt in a local JSON file, and return the recorded result if one exists. » On peut donc interrompre puis relancer : seules les sous-tâches jamais terminées sont recalculées.",
+      "distractors_fr": {
+        "A": "Le plafonnement est assuré par MAX_CONCURRENT et MAX_TOTAL_SUBTASKS, pas par le journal. La page note d'ailleurs qu'un vrai harnais ajouterait un budget suivi sur toute la session.",
+        "C": "Le journal est un fichier JSON local, sans effet sur la fenêtre de contexte : c'est un cache de résultats, pas une technique de compression du contexte.",
+        "D": "Le périmètre est explicitement l'inverse : « The journal deduplicates across runs, not within a single fan-out wave. »"
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/mid-conversation-effort-example"
+    },
+    {
+      "id": "AGP-019",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Qui coordonne le travail dans chacune des quatre approches paralleles",
+      "question_en": "Claude Code documents four ways to parallelize work. Which TWO statements match the documented answer to \"who coordinates the work?\"",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "With subagents, Claude delegates and collects results inside a single conversation."
+        },
+        {
+          "key": "B",
+          "text_en": "With agent view, a lead agent plans and assigns the work to background sessions."
+        },
+        {
+          "key": "C",
+          "text_en": "With agent teams, you hand off independent tasks and check back on them later."
+        },
+        {
+          "key": "D",
+          "text_en": "With dynamic workflows, a script holds the plan rather than turn-by-turn judgment."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "La section « Choose an approach » range les quatre approches sur la question « Who coordinates the work? » : Claude délègue et collecte à l'intérieur d'une conversation pour les subagents ; vous dépêchez des tâches indépendantes et revenez plus tard pour l'agent view ; Claude planifie, assigne et supervise un groupe de travailleurs pour les agent teams ; un script tient le plan à la place du jugement tour par tour de Claude pour les workflows.",
+      "distractors_fr": {
+        "B": "Cette description est celle des agent teams, où un chef planifie et assigne. L'agent view ne coordonne rien pour vous : vous dépêchez les sessions et les surveillez depuis un écran unique.",
+        "C": "C'est la description de l'agent view. Dans une agent team, c'est au contraire Claude qui planifie, assigne et supervise le groupe."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agents"
+    },
+    {
+      "id": "AGP-020",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Patterns and Frameworks",
+      "weight": 4.9,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Formes de taches pour lesquelles un workflow convient le mieux",
+      "question_en": "The workflows guide states when a workflow fits best. Which TWO task shapes does it name?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A task needing someone to sign off between two stages of the same run."
+        },
+        {
+          "key": "B",
+          "text_en": "A task larger than one agent can hold in context, such as a repo-wide audit."
+        },
+        {
+          "key": "C",
+          "text_en": "The same step run across many items, such as migrating hundreds of files."
+        },
+        {
+          "key": "D",
+          "text_en": "A short task whose answer depends on the previous conversation turn."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La page pose la règle avant de donner ses exemples de prompts : « A workflow fits best when the task is larger than one agent can hold in context, or when the same step needs to run across many items. » Les formes listées ensuite s'y rattachent toutes : auditer beaucoup de fichiers, migrer en parallèle, relire chaque fichier modifié puis synthétiser, enquêter sur plusieurs sources, boucler jusqu'à ce que la liste cesse de grandir.",
+      "distractors_fr": {
+        "A": "C'est une contrainte explicite du runtime : pas d'entrée utilisateur en cours de run. « For sign-off between stages, run each stage as its own workflow. »",
+        "D": "Une tâche courte et conversationnelle est justement celle qu'il faut traiter tour par tour : un workflow multiplie les agents et les jetons pour un gain nul."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/workflows"
+    }
+  ]
+}

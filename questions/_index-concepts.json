@@ -1708,6 +1708,83 @@
     "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
   },
   {
+    "id": "MST-001",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Trois criteres a arbitrer pour choisir un modele",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-002",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Ajuster l'effort plutot que changer de modele",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-003",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Modele de depart de l'approche efficiency-first",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-004",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Situation adaptee a l'approche capability-first",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-005",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Etape la plus importante avant de changer de modele",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-006",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Modele conseille pour la capacite maximale dans la matrice",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-007",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Modele conseille pour du temps reel a fort volume economique",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-008",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Valeur par defaut du parametre effort sur Opus 5 et 4.8",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-009",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Situations recommandant l'approche efficiency-first",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
+    "id": "MST-010",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Difference de classifieurs entre Fable 5 et Mythos 5",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5"
+  },
+  {
+    "id": "MST-011",
+    "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+    "subdomain": "Model Selection and Tradeoffs",
+    "concept": "Dimensions a comparer entre modeles lors d'un benchmark",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+  },
+  {
     "id": "TCF-001",
     "fichier": "model-selection-optimization_technical-fundamentals.json",
     "subdomain": "Technical Fundamentals",

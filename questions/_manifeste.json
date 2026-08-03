@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 348,
+  "nbQuestions": 359,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -62,6 +62,11 @@
       "fichier": "model-selection-optimization_llm-fundamentals.json",
       "subdomain": "LLM Fundamentals",
       "nb": 21
+    },
+    {
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json",
+      "subdomain": "Model Selection and Tradeoffs",
+      "nb": 11
     },
     {
       "fichier": "model-selection-optimization_technical-fundamentals.json",
@@ -2290,6 +2295,105 @@
       "nature": "factual_semantic",
       "type": "single",
       "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "MST-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
+    },
+    {
+      "id": "MST-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_model-selection-and-tradeoffs.json"
     },
     {
       "id": "TCF-001",

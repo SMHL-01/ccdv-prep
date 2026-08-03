@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 359,
+  "nbQuestions": 369,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -52,6 +52,11 @@
       "fichier": "claude-code_claude-code.json",
       "subdomain": "Claude Code",
       "nb": 12
+    },
+    {
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+      "subdomain": "Eval, Testing and Debugging",
+      "nb": 10
     },
     {
       "fichier": "model-selection-optimization_cost-and-token-management.json",
@@ -1926,6 +1931,96 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "ETD-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
+    },
+    {
+      "id": "ETD-010",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json"
     },
     {
       "id": "CTM-001",

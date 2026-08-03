@@ -1421,6 +1421,76 @@
     "doc_ref": "https://code.claude.com/docs/en/vs-code"
   },
   {
+    "id": "ETD-001",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Principe d'automatisation de la notation des evals",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-002",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Privilegier le volume sur la qualite des evals",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-003",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Ce que mesure une evaluation exact match",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-004",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Utiliser un modele different pour noter les sorties",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-005",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Usage d'une echelle de Likert notee par LLM",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-006",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Avantage de la classification binaire LLM sur les regles",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-007",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Principe be task-specific pour concevoir les evals",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-008",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Types de cas limites a integrer aux evals",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-009",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Difference entre echelle ordinale et classification binaire",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "ETD-010",
+    "fichier": "eval-testing-and-debugging_eval-testing-and-debugging.json",
+    "subdomain": "Eval, Testing and Debugging",
+    "concept": "Formats de notation adaptes a l'automatisation",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
     "id": "CTM-001",
     "fichier": "model-selection-optimization_cost-and-token-management.json",
     "subdomain": "Cost and Token Management",

@@ -2,14 +2,14 @@
 
 > Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
 
-**359 / 400 questions** — **87.8 %** du poids de l'examen couvert — **19 / 25** sous-domaines termines.
+**369 / 400 questions** — **90.4 %** du poids de l'examen couvert — **20 / 25** sous-domaines termines.
 
 ## Charge restante
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
 | Said (Claude Pro, quota limite -> petits sous-domaines) | 37 | 5 | 123 |
-| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 10 | 1 | 236 |
+| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 0 | 0 | 246 |
 
 ## Les 25 sous-domaines
 
@@ -45,7 +45,7 @@
 
 | | Sous-domaine | Ecrites | Cible | Poids | Qui |
 | --- | --- | ---: | ---: | ---: | --- |
-| `[?]` | Eval, Testing and Debugging | 0 | 10 | 2.6 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
+| `[x]` | Eval, Testing and Debugging | 10 | 10 | 2.6 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 
 ### Model Selection and Optimization
 

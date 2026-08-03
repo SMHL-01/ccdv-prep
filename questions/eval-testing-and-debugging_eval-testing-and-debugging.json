@@ -1,0 +1,259 @@
+{
+  "subdomain": "Eval, Testing and Debugging",
+  "domain": "Eval, Testing and Debugging",
+  "weight": 2.6,
+  "target_questions": 10,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  ],
+  "questions": [
+    {
+      "id": "ETD-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Principe d'automatisation de la notation des evals",
+      "question_en": "One eval design principle is to automate when possible. Which grading approach does it favor?",
+      "options": [
+        { "key": "A", "text_en": "Multiple-choice, string match, code-graded, or LLM-graded" },
+        { "key": "B", "text_en": "Manual human hand-grading of every single response" },
+        { "key": "C", "text_en": "Reading each output aloud to a panel of experts" },
+        { "key": "D", "text_en": "Skipping grading and shipping once it looks fine" }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le principe est : « Automate when possible: Structure questions to allow for automated grading (for example, multiple-choice, string match, code-graded, LLM-graded). » La notation manuelle systematique, la lecture a un panel ou l'absence de notation vont a l'encontre de ce principe.",
+      "distractors_fr": {
+        "B": "La notation manuelle de chaque reponse est exactement ce que l'automatisation vise a eviter.",
+        "C": "Lire les sorties a un panel n'est pas une methode automatisable.",
+        "D": "Renoncer a la notation contredit tout l'objectif de mesurer la performance."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Privilegier le volume sur la qualite des evals",
+      "question_en": "The docs advise prioritizing volume over quality in evals. What does that mean concretely?",
+      "options": [
+        { "key": "A", "text_en": "Fewer questions graded carefully by expert humans" },
+        { "key": "B", "text_en": "More questions with slightly lower-signal auto grading" },
+        { "key": "C", "text_en": "One perfect question repeated across every run" },
+        { "key": "D", "text_en": "Only questions that the model already answers right" }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le principe dit : « More questions with slightly lower signal automated grading is better than fewer questions with high-quality human hand-graded evals. » On prefere donc le volume auto-note, pas un petit jeu note a la main.",
+      "distractors_fr": {
+        "A": "Peu de questions notees a la main est justement l'option jugee moins bonne.",
+        "C": "Repeter une seule question ne cree pas le volume et la diversite recherches.",
+        "D": "Ne garder que les cas deja reussis biaise l'evaluation et masque les faiblesses."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Ce que mesure une evaluation exact match",
+      "question_en": "What does an exact match evaluation measure?",
+      "options": [
+        { "key": "A", "text_en": "How semantically similar two summaries are overall" },
+        { "key": "B", "text_en": "A 1-to-5 subjective rating produced by a judge LLM" },
+        { "key": "C", "text_en": "Whether output equals a preset answer after normalizing" },
+        { "key": "D", "text_en": "The longest common subsequence between two texts" }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc definit : « Exact match evals measure whether the model's output matches a predefined correct answer, typically after normalizing whitespace and case. » C'est une comparaison stricte, pas une similarite semantique, un score Likert ou une sous-sequence commune.",
+      "distractors_fr": {
+        "A": "La similarite semantique correspond a la similarite cosinus, pas a l'exact match.",
+        "B": "Un score subjectif de 1 a 5 releve d'une echelle Likert notee par un LLM.",
+        "D": "La plus longue sous-sequence commune est la mesure de ROUGE-L, pas de l'exact match."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Utiliser un modele different pour noter les sorties",
+      "question_en": "The eval examples note a best practice for LLM-based grading. What is it?",
+      "options": [
+        { "key": "A", "text_en": "Grade with the exact same model that produced output" },
+        { "key": "B", "text_en": "Always grade with the cheapest available Haiku model" },
+        { "key": "C", "text_en": "Let the model grade its own answers for consistency" },
+        { "key": "D", "text_en": "Use a different model to grade than the one generating" }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Les exemples rappellent : « Generally best practice to use a different model to evaluate than the model used to generate the evaluated output. » Faire noter un modele par lui-meme introduit un biais, et le critere n'est pas le prix du modele.",
+      "distractors_fr": {
+        "A": "Noter avec le meme modele que celui qui genere est precisement deconseille.",
+        "B": "Le choix ne porte pas sur le cout du juge mais sur le fait qu'il soit different.",
+        "C": "Laisser le modele s'auto-noter cree un biais d'auto-complaisance."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Usage d'une echelle de Likert notee par LLM",
+      "question_en": "What is an LLM-based Likert scale used for in evaluation?",
+      "options": [
+        { "key": "A", "text_en": "An LLM judging subjective tone on a 1-to-5 scale" },
+        { "key": "B", "text_en": "An exact string comparison of two categorical labels" },
+        { "key": "C", "text_en": "A rule-based regex scan for forbidden PHI strings" },
+        { "key": "D", "text_en": "A cosine similarity score between two embeddings" }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc decrit : « The LLM-based Likert scale is a psychometric scale that uses an LLM to judge subjective attitudes or perceptions [...] to rate the tone of responses on a scale from 1 to 5. » Ce n'est ni une comparaison exacte, ni un scan regex, ni une similarite cosinus.",
+      "distractors_fr": {
+        "B": "La comparaison exacte de labels est l'exact match, pas une echelle de Likert.",
+        "C": "Un scan regex est une methode par regles, l'oppose d'une notation par LLM.",
+        "D": "La similarite cosinus compare des embeddings, sans echelle subjective 1-5."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Avantage de la classification binaire LLM sur les regles",
+      "question_en": "Why use LLM-based binary classification instead of a rule-based system, for example to detect PHI?",
+      "options": [
+        { "key": "A", "text_en": "It is always faster and cheaper than any regex" },
+        { "key": "B", "text_en": "It can catch subtle or implicit cases rules miss" },
+        { "key": "C", "text_en": "It never requires any labeled test cases at all" },
+        { "key": "D", "text_en": "It returns a 1-to-5 score rather than two classes" }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc note : « This method can account for context and identify subtle or implicit forms of PHI that rule-based systems might miss. » L'avantage est la finesse contextuelle, pas la vitesse, ni l'absence de cas de test, et une classification binaire produit bien deux classes.",
+      "distractors_fr": {
+        "A": "La doc met en avant la finesse contextuelle, pas une garantie de rapidite ou de cout.",
+        "C": "Une eval de classification binaire s'appuie justement sur des cas de test etiquetes.",
+        "D": "Un score 1-5 correspond a une echelle ordinale, pas a une classification binaire."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Principe be task-specific pour concevoir les evals",
+      "question_en": "The first eval design principle is to be task-specific. What does it require?",
+      "options": [
+        { "key": "A", "text_en": "Reusing one generic benchmark across every application here" },
+        { "key": "B", "text_en": "Testing only the easy happy path to keep evals simpler" },
+        { "key": "C", "text_en": "Evals mirroring your real task distribution, with edge cases" },
+        { "key": "D", "text_en": "Grading absolutely everything by hand for top accuracy" }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le premier principe est : « Be task-specific: Design evals that mirror your real-world task distribution. Don't forget to factor in edge cases! » Un benchmark generique, le seul happy path ou la notation manuelle ne repondent pas a cette exigence.",
+      "distractors_fr": {
+        "A": "Un benchmark generique partage ne reflete pas la distribution reelle de votre tache.",
+        "B": "Ne tester que le happy path ignore les cas limites explicitement demandes.",
+        "D": "Tout noter a la main n'est pas ce qu'exige le principe task-specific."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Types de cas limites a integrer aux evals",
+      "question_en": "Select TWO kinds of edge cases the guide says to factor into evals.",
+      "options": [
+        { "key": "A", "text_en": "Irrelevant or nonexistent input data" },
+        { "key": "B", "text_en": "Only inputs the model already handles well" },
+        { "key": "C", "text_en": "Perfectly clean, average-length questions" },
+        { "key": "D", "text_en": "Ambiguous cases where even humans disagree" }
+      ],
+      "correct": ["A", "D"],
+      "explanation_fr": "La liste des cas limites cite « Irrelevant or nonexistent input data » et « Ambiguous test cases where even humans would find it hard to reach an assessment consensus ». Les entrees deja bien gerees ou parfaitement propres ne sont pas des cas limites.",
+      "distractors_fr": {
+        "B": "Les entrees deja bien traitees ne testent aucune limite du modele.",
+        "C": "Des questions propres et de longueur moyenne sont le cas nominal, pas un cas limite."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Difference entre echelle ordinale et classification binaire",
+      "question_en": "How does an LLM-based ordinal scale differ from binary classification?",
+      "options": [
+        { "key": "A", "text_en": "It requires no LLM and runs on pure string matching" },
+        { "key": "B", "text_en": "It only ever outputs a binary pass or fail result" },
+        { "key": "C", "text_en": "It measures word overlap like a ROUGE-L F1 score" },
+        { "key": "D", "text_en": "It rates on a fixed ordered 1-to-5 scale, not two classes" }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc precise : « the ordinal scale measures on a fixed, ordered scale (1-5) », captant un degre plutot que deux classes. Elle utilise bien un LLM, ne se reduit pas a un pass/fail et ne mesure pas le recouvrement de mots comme ROUGE-L.",
+      "distractors_fr": {
+        "A": "L'echelle ordinale utilise un LLM juge ; ce n'est pas du simple string matching.",
+        "B": "Un resultat pass/fail a deux issues correspond a la classification binaire, pas a l'ordinale.",
+        "C": "Le recouvrement de mots est la mesure ROUGE-L, distincte de l'echelle ordinale."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "ETD-010",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Formats de notation adaptes a l'automatisation",
+      "question_en": "Select TWO grading formats the guide lists as suitable for automated grading.",
+      "options": [
+        { "key": "A", "text_en": "Free-form essays scored by a human panel" },
+        { "key": "B", "text_en": "String match against a normalized answer" },
+        { "key": "C", "text_en": "Code-graded checks run programmatically" },
+        { "key": "D", "text_en": "Verbal interviews with each test author" }
+      ],
+      "correct": ["B", "C"],
+      "explanation_fr": "Le principe d'automatisation cite « multiple-choice, string match, code-graded, LLM-graded » comme formats notables automatiquement. Les essais notes par un panel humain et les entretiens oraux ne sont pas automatisables.",
+      "distractors_fr": {
+        "A": "Un essai note par un panel humain est l'exemple meme de notation non automatisable.",
+        "D": "Des entretiens oraux avec les auteurs ne peuvent pas etre notes par un programme."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 305,
+  "nbQuestions": 317,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -42,6 +42,11 @@
       "fichier": "applications-integration_understanding-requirements.json",
       "subdomain": "Understanding Requirements",
       "nb": 14
+    },
+    {
+      "fichier": "claude-code_claude-code.json",
+      "subdomain": "Claude Code",
+      "nb": 12
     },
     {
       "fichier": "model-selection-optimization_llm-fundamentals.json",
@@ -1699,6 +1704,114 @@
       "nature": "factual_semantic",
       "type": "single",
       "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "CC-001",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-002",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-003",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-004",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-005",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-006",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-007",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-008",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-009",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-010",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-011",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CC-012",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "claude-code_claude-code.json"
     },
     {
       "id": "LLF-001",

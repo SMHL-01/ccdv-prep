@@ -2,13 +2,13 @@
 
 > Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
 
-**387 / 400 questions** — **95.1 %** du poids de l'examen couvert — **23 / 25** sous-domaines termines.
+**396 / 400 questions** — **97.4 %** du poids de l'examen couvert — **24 / 25** sous-domaines termines.
 
 ## Charge restante
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
-| Said (Claude Pro, quota limite -> petits sous-domaines) | 19 | 2 | 141 |
+| Said (Claude Pro, quota limite -> petits sous-domaines) | 10 | 1 | 150 |
 | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 0 | 0 | 246 |
 
 ## Les 25 sous-domaines
@@ -69,7 +69,7 @@
 | | Sous-domaine | Ecrites | Cible | Poids | Qui |
 | --- | --- | ---: | ---: | ---: | --- |
 | `[x]` | AI Application Security | 13 | 13 | 3.2 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
-| `[ ]` | Guardrails and Safe Deployment | 0 | 9 | 2.3 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
+| `[x]` | Guardrails and Safe Deployment | 9 | 9 | 2.3 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
 | `[x]` | Claude Hooks | 4 | 4 | 1 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
 | `[x]` | Identity, Secrets and Key Management | 6 | 6 | 1.6 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
 

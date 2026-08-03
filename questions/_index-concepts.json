@@ -2373,6 +2373,69 @@
     "doc_ref": "https://code.claude.com/docs/en/hooks"
   },
   {
+    "id": "GSD-001",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Distinguer l injection directe de l injection indirecte par le modele de menace",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+  },
+  {
+    "id": "GSD-002",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Ou placer un contenu tiers pour que Claude le traite avec mefiance",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+  },
+  {
+    "id": "GSD-003",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Ses propres consignes n ont pas leur place dans un bloc de resultat d outil",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+  },
+  {
+    "id": "GSD-004",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Le blindage anti-fuite de prompt se paie en performance et vient en dernier",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-prompt-leak"
+  },
+  {
+    "id": "GSD-005",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Ecran de classification leger applique en entree comme en sortie d outil",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+  },
+  {
+    "id": "GSD-006",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Champs disponibles sur un refus de classifieur en flux",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+  },
+  {
+    "id": "GSD-007",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Poursuivre une conversation apres un refus sans reinitialiser le contexte",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+  },
+  {
+    "id": "GSD-008",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Facturation et metriques d usage d une requete refusee",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+  },
+  {
+    "id": "GSD-009",
+    "fichier": "security-safety_guardrails-and-safe-deployment.json",
+    "subdomain": "Guardrails and Safe Deployment",
+    "concept": "Les trois formes que prend un refus et le format de reponse associe",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+  },
+  {
     "id": "ISK-001",
     "fichier": "security-safety_identity-secrets-and-key-management.json",
     "subdomain": "Identity, Secrets and Key Management",

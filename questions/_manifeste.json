@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 387,
+  "nbQuestions": 396,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -97,6 +97,11 @@
       "fichier": "security-safety_claude-hooks.json",
       "subdomain": "Claude Hooks",
       "nb": 4
+    },
+    {
+      "fichier": "security-safety_guardrails-and-safe-deployment.json",
+      "subdomain": "Guardrails and Safe Deployment",
+      "nb": 9
     },
     {
       "fichier": "security-safety_identity-secrets-and-key-management.json",
@@ -3170,6 +3175,87 @@
       "nature": "factual_semantic",
       "type": "single",
       "fichier": "security-safety_claude-hooks.json"
+    },
+    {
+      "id": "GSD-001",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-002",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-003",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-004",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-005",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-006",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-007",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-008",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
+    },
+    {
+      "id": "GSD-009",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_guardrails-and-safe-deployment.json"
     },
     {
       "id": "ISK-001",

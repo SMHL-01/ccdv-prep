@@ -1,0 +1,236 @@
+{
+  "subdomain": "Guardrails and Safe Deployment",
+  "domain": "Security and Safety",
+  "weight": 2.3,
+  "target_questions": 9,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+    "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-prompt-leak",
+    "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+  ],
+  "questions": [
+    {
+      "id": "GSD-001",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Distinguer l injection directe de l injection indirecte par le modele de menace",
+      "question_en": "An assistant summarizes inbound emails for a trusted employee, and one email body carries hidden instructions. Which threat model is this?",
+      "options": [
+        { "key": "A", "text_en": "Direct injection, since the instructions reach Claude from a user turn." },
+        { "key": "B", "text_en": "Indirect injection: the user is trusted, the third-party content is not." },
+        { "key": "C", "text_en": "Neither, because a jailbreak requires the operator to be the attacker." },
+        { "key": "D", "text_en": "Direct injection, as any text Claude reads counts as adversarial input." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La page sépare deux modèles de menace : « Jailbreaks and direct prompt injection, where the *user* of your application is the adversary » et « Indirect prompt injection, where the user is trusted but Claude processes *third-party content* (web pages, emails, documents, tool results) that contains adversarial instructions. » Un courriel entrant relève du second.",
+      "distractors_fr": {
+        "A": "L'employé n'a rien rédigé d'hostile : l'attaque est portée par le contenu tiers que Claude lit pour lui, pas par le tour de l'utilisateur.",
+        "C": "L'injection indirecte est bien l'un des deux modèles traités par la page ; il n'est pas nécessaire que l'utilisateur soit l'adversaire.",
+        "D": "Ce raccourci efface la distinction utile : c'est l'origine du contenu, pas le simple fait d'être lu, qui classe la menace."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+    },
+    {
+      "id": "GSD-002",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ou placer un contenu tiers pour que Claude le traite avec mefiance",
+      "question_en": "A team pastes fetched web pages into the system prompt so Claude always has them. What does the documentation prescribe instead?",
+      "options": [
+        { "key": "A", "text_en": "Keep them in the system prompt, but wrap each page in XML tags." },
+        { "key": "B", "text_en": "Move them into a plain user text block, closer to the question asked." },
+        { "key": "C", "text_en": "Deliver them in tool_result blocks, which Claude treats with skepticism." },
+        { "key": "D", "text_en": "Summarize each page first, so only your own wording reaches the model." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La règle est explicite : « Put untrusted content only in tool results. Deliver third-party content to Claude inside `tool_result` blocks, never in `system` prompts or plain user `text` blocks. Claude is trained to treat instructions that appear inside tool results with appropriate skepticism. »",
+      "distractors_fr": {
+        "A": "Le balisage ne change pas le statut du canal : la doc exclut nommément le prompt système pour du contenu tiers.",
+        "B": "Le bloc `text` d'un tour utilisateur est l'autre canal explicitement écarté ; Claude y accorde la confiance due à l'utilisateur.",
+        "D": "Résumer en amont ne supprime pas la menace et coûte de l'information ; la doc traite du canal de livraison, pas d'un pré-traitement."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+    },
+    {
+      "id": "GSD-003",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ses propres consignes n ont pas leur place dans un bloc de resultat d outil",
+      "question_en": "A developer appends \"now answer only in French\" to each tool_result, and Claude keeps ignoring it. What explains this?",
+      "options": [
+        { "key": "A", "text_en": "Tool results are untrusted data, so your own directives may be ignored." },
+        { "key": "B", "text_en": "Tool results accept one instruction each, and the first one wins out." },
+        { "key": "C", "text_en": "Language directives are only honoured when set in the system prompt." },
+        { "key": "D", "text_en": "The block was malformed, since tool_result takes no free-form text." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Conséquence directe de la règle précédente, et souvent contre-intuitive : « Don't put your own instructions in tool results. Because Claude treats tool-result content as untrusted data, instructions you place there may be ignored or flagged as a potential injection. Send your instructions in a `user` turn that follows the `tool_result` block. »",
+      "distractors_fr": {
+        "B": "Il n'existe aucune limite d'une instruction par résultat : c'est le statut du canal, non leur nombre, qui les fait écarter.",
+        "C": "Les consignes passent très bien dans un tour `user` suivant le résultat d'outil, et sur les modèles compatibles dans un message système en cours de conversation.",
+        "D": "Un bloc `tool_result` accepte du texte libre : le problème n'est pas sa forme mais la confiance qui lui est accordée."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+    },
+    {
+      "id": "GSD-004",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le blindage anti-fuite de prompt se paie en performance et vient en dernier",
+      "question_en": "A team plans an elaborate leak-proofing layer on a prompt that works well today. What does the documentation advise first?",
+      "options": [
+        { "key": "A", "text_en": "Ship the layer: leak-proofing carries no cost to task performance." },
+        { "key": "B", "text_en": "Prefill the assistant turn, which fully blocks leaks on every model." },
+        { "key": "C", "text_en": "Move the whole prompt to the user turn, where leaks cannot happen." },
+        { "key": "D", "text_en": "Try monitoring first: output screening and post-processing catch leaks." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La page ouvre sur cette mise en garde : « Consider using leak-resistant prompt engineering strategies only when absolutely necessary. Attempts to leak-proof your prompt can add complexity that may degrade performance in other parts of the task », et recommande : « Try monitoring techniques first, like output screening and post-processing, to try to catch instances of prompt leak. »",
+      "distractors_fr": {
+        "A": "C'est exactement ce que la doc conteste : la complexité ajoutée peut dégrader les résultats ailleurs dans la tâche.",
+        "B": "Le préremplissage est l'une des pistes citées, mais il ne bloque rien totalement, et il n'est pas pris en charge sur Claude 4.6 et au-delà.",
+        "C": "Déplacer le prompt ne le met pas à l'abri ; la page traite de filtrage en sortie et de séparation contexte / requête, pas d'un tour miracle."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-prompt-leak"
+    },
+    {
+      "id": "GSD-005",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ecran de classification leger applique en entree comme en sortie d outil",
+      "question_en": "A team adds a lightweight screening layer around an agent. Select the TWO practices the documentation describes.",
+      "options": [
+        { "key": "A", "text_en": "Pre-screen user input with a small model such as Claude Haiku 4.5." },
+        { "key": "B", "text_en": "Screen only user input, since tool output comes from systems you own." },
+        { "key": "C", "text_en": "Screen raw tool output before returning it in a tool_result block." },
+        { "key": "D", "text_en": "Let the screen answer in free text, which is richer than a fixed schema." }
+      ],
+      "correct": ["A", "C"],
+      "explanation_fr": "Le même motif est recommandé des deux côtés : « Use a lightweight model like Claude Haiku 4.5 to pre-screen user input before it reaches your main conversation », puis « Run each tool, pass its raw output to a small classifier call with Claude Haiku 4.5, and only return the content as a `tool_result` block if the screen reports no injection attempt. » Les deux emploient des sorties structurées pour rendre le verdict exploitable.",
+      "distractors_fr": {
+        "B": "L'injection indirecte arrive précisément par les résultats d'outils : pages web, courriels, OCR. Les filtrer est l'objet d'une section entière.",
+        "D": "L'inverse de la consigne : « Use structured outputs so the classifier's verdict is a parseable value your application can branch on. »"
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks"
+    },
+    {
+      "id": "GSD-006",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Champs disponibles sur un refus de classifieur en flux",
+      "question_en": "On a streaming refusal, what can an application safely assume about the stop_details object it receives?",
+      "options": [
+        { "key": "A", "text_en": "It is absent unless the refusal maps to a named policy category." },
+        { "key": "B", "text_en": "Its category is always filled, so branching on that string is safe." },
+        { "key": "C", "text_en": "It arrives on message_stop, after the final usage totals are known." },
+        { "key": "D", "text_en": "It is always present, but category and explanation may both be null." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La note est explicite : « On a refusal the `stop_details` object is always present, but its `category` and `explanation` fields can be `null`, for example when the refusal maps to no named category. Branch on `stop_reason` or `stop_details.type` rather than assuming `category` and `explanation` are populated. » Dans le flux, `stop_details` arrive sur l'événement `message_delta`, aux côtés de `stop_reason`.",
+      "distractors_fr": {
+        "A": "L'objet est toujours présent sur un refus ; ce sont ses champs internes qui peuvent être nuls.",
+        "B": "C'est le piège que la note désigne : brancher sur `category` casse dès qu'un refus ne correspond à aucune catégorie nommée.",
+        "C": "L'événement porteur est `message_delta`, pas `message_stop`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+    },
+    {
+      "id": "GSD-007",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Poursuivre une conversation apres un refus sans reinitialiser le contexte",
+      "question_en": "After a stop_reason of refusal, an app appends an apology and keeps the history intact. Every later turn is refused too. Why?",
+      "options": [
+        { "key": "A", "text_en": "The account is rate limited for an hour once a refusal is triggered." },
+        { "key": "B", "text_en": "The context must be reset, or the refusals simply keep on coming." },
+        { "key": "C", "text_en": "The API key is flagged and has to be rotated before requests resume." },
+        { "key": "D", "text_en": "Streaming is disabled after a refusal until the session is recreated." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "« When you receive `stop_reason`: `refusal`, you must reset the conversation context before continuing. You can remove or rephrase the turn that triggered the refusal, or clear the conversation history entirely. Attempting to continue without resetting will result in continued refusals. » Une autre voie existe : rejouer la requête refusée sur un autre modèle Claude, par bascule côté serveur ou middleware du SDK.",
+      "distractors_fr": {
+        "A": "Un refus n'entraîne aucune limitation de débit : c'est le contexte conservé qui reproduit le refus à chaque tour.",
+        "C": "Aucun marquage de clé n'intervient ; le refus porte sur le contenu de la conversation, pas sur l'identité de l'appelant.",
+        "D": "Le flux reste disponible ; c'est l'historique inchangé qui rejoue la cause du refus."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+    },
+    {
+      "id": "GSD-008",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Facturation et metriques d usage d une requete refusee",
+      "question_en": "A finance team asks what a refused request costs on the Claude API. Select the TWO accurate statements.",
+      "options": [
+        { "key": "A", "text_en": "Every refused request is free, whatever the model had already emitted." },
+        { "key": "B", "text_en": "A refusal arriving before any output is generated is not billed to you." },
+        { "key": "C", "text_en": "Usage metrics still come back in the response, even when it is refused." },
+        { "key": "D", "text_en": "Refused requests are billed at double rate to discourage repeat tries." }
+      ],
+      "correct": ["B", "C"],
+      "explanation_fr": "La note sur la facturation dit les deux : « Usage metrics are still provided in the response, even when the response is refused », puis « When a refusal arrives before Claude generates any output, you are not billed for the request on the Claude API, and the usage counts in that response are informational only. When Claude generates output before the refusal, you are billed for that request. »",
+      "distractors_fr": {
+        "A": "La gratuité est conditionnelle : dès que Claude a produit de la sortie avant le refus, la requête est facturée.",
+        "D": "Aucune surfacturation n'existe ; la doc ne prévoit qu'une facturation normale ou une absence de facturation."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+    },
+    {
+      "id": "GSD-009",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Les trois formes que prend un refus et le format de reponse associe",
+      "question_en": "The API handles refusals in three ways. Which pairing of refusal type and response format is correct?",
+      "options": [
+        { "key": "A", "text_en": "Input validation failures surface as 400 error codes from the API." },
+        { "key": "B", "text_en": "Model-generated refusals arrive as a stop_reason of refusal as well." },
+        { "key": "C", "text_en": "Streaming classifier refusals surface as a 403 status on the request." },
+        { "key": "D", "text_en": "Copyright validation failures arrive as ordinary assistant text output." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le tableau des types de refus donne trois lignes : les refus de classifieur en flux répondent par `stop_reason: refusal`, la validation d'entrée et de copyright par des codes d'erreur 400, et les refus produits par le modèle lui-même par une réponse texte ordinaire.",
+      "distractors_fr": {
+        "B": "Les refus produits par le modèle passent par une réponse texte standard ; `stop_reason: refusal` signale l'intervention d'un classifieur en flux.",
+        "C": "Aucun 403 n'est en jeu : le refus de classifieur se lit sur `stop_reason`, dans une réponse par ailleurs normale.",
+        "D": "La validation de copyright échoue en 400, au même titre que la validation d'entrée."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals"
+    }
+  ]
+}

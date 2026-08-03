@@ -8,7 +8,7 @@
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
-| Said (Claude Pro, quota limite -> petits sous-domaines) | 37 | 5 | 123 |
+| Said (Claude Pro -> petits sous-domaines) | 37 | 5 | 123 |
 | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 129 | 10 | 108 |
 
 ## Les 25 sous-domaines

@@ -31,7 +31,7 @@
     "Claude Code": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
     "Systems Life Cycle": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
     "Cost and Token Management": { "qui": "marie-line", "etat": "fait", "note": "20 questions dont 1 factual_magnitude a 5.0% (plafond 5%/fichier respecte)" },
-    "Model Selection and Tradeoffs": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
-    "Eval, Testing and Debugging": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" }
+    "Model Selection and Tradeoffs": { "qui": "marie-line", "etat": "fait" },
+    "Eval, Testing and Debugging": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" }
   }
 }

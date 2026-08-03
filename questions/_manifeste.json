@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 369,
+  "nbQuestions": 373,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -92,6 +92,11 @@
       "fichier": "security-safety_ai-application-security.json",
       "subdomain": "AI Application Security",
       "nb": 13
+    },
+    {
+      "fichier": "security-safety_claude-hooks.json",
+      "subdomain": "Claude Hooks",
+      "nb": 4
     },
     {
       "fichier": "tools-mcps_agentic-customization.json",
@@ -3119,6 +3124,42 @@
       "nature": "factual_semantic",
       "type": "multi",
       "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "CLH-001",
+      "domain": "Security and Safety",
+      "subdomain": "Claude Hooks",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_claude-hooks.json"
+    },
+    {
+      "id": "CLH-002",
+      "domain": "Security and Safety",
+      "subdomain": "Claude Hooks",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_claude-hooks.json"
+    },
+    {
+      "id": "CLH-003",
+      "domain": "Security and Safety",
+      "subdomain": "Claude Hooks",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "security-safety_claude-hooks.json"
+    },
+    {
+      "id": "CLH-004",
+      "domain": "Security and Safety",
+      "subdomain": "Claude Hooks",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_claude-hooks.json"
     },
     {
       "id": "AGC-001",

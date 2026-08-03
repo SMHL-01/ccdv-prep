@@ -2345,6 +2345,34 @@
     "doc_ref": "https://code.claude.com/docs/en/security"
   },
   {
+    "id": "CLH-001",
+    "fichier": "security-safety_claude-hooks.json",
+    "subdomain": "Claude Hooks",
+    "concept": "Un hook silencieux ne vaut pas approbation de l appel d outil",
+    "doc_ref": "https://code.claude.com/docs/en/hooks"
+  },
+  {
+    "id": "CLH-002",
+    "fichier": "security-safety_claude-hooks.json",
+    "subdomain": "Claude Hooks",
+    "concept": "Le code de sortie 2 ne bloque rien sur un evenement posterieur a l execution",
+    "doc_ref": "https://code.claude.com/docs/en/hooks"
+  },
+  {
+    "id": "CLH-003",
+    "fichier": "security-safety_claude-hooks.json",
+    "subdomain": "Claude Hooks",
+    "concept": "Portee reelle d une decision allow renvoyee par un hook PreToolUse",
+    "doc_ref": "https://code.claude.com/docs/en/hooks"
+  },
+  {
+    "id": "CLH-004",
+    "fichier": "security-safety_claude-hooks.json",
+    "subdomain": "Claude Hooks",
+    "concept": "Emplacement de definition d un hook a partager avec toute l equipe",
+    "doc_ref": "https://code.claude.com/docs/en/hooks"
+  },
+  {
     "id": "AGC-001",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",

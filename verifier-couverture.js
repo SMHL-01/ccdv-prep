@@ -15,6 +15,13 @@
  * distincts de son jeu. Le seuil de deux evite le bruit : "token" tout seul
  * apparait dans la moitie du corpus, "token" + "tokenizer" + "context window"
  * designe vraiment une page de fondamentaux.
+ *
+ * ATTENTION — ce script ne dit RIEN de l'avancement de la redaction. Il repond
+ * a « la doc permet-elle d'ecrire ces questions ? », pas a « sont-elles
+ * ecrites ? ». Un « OK » sur les 25 lignes et un « aucun trou » final restent
+ * vrais avec zero question dans la banque. Pour l'avancement : node etat.js.
+ * La colonne ECRIT/CIBLE ci-dessous est la pour que la confusion ne soit plus
+ * possible : la cible vient du blueprint, l'ecrit vient du manifeste.
  */
 
 const fs = require('fs');
@@ -22,6 +29,7 @@ const path = require('path');
 
 const DIR_CORPUS = path.join(__dirname, 'docs-corpus');
 const FICHIER_BLUEPRINT = path.join(__dirname, 'blueprint.json');
+const FICHIER_MANIFESTE = path.join(__dirname, 'questions', '_manifeste.json');
 const TOTAL_QUESTIONS = 400; // cible de l'etape 2
 const SEUIL_MOTS_CLES = 2; // mots-cles distincts requis pour qu'une page compte
 const SEUIL_FAIBLE = 3; // en dessous de ce nombre de pages, on signale
@@ -32,6 +40,16 @@ const SEUIL_FAIBLE = 3; // en dessous de ce nombre de pages, on signale
 // blanc. Une seule copie, donc pas de derive possible entre les deux.
 
 const BLUEPRINT = JSON.parse(fs.readFileSync(FICHIER_BLUEPRINT, 'utf8')).domaines;
+
+/** Ce qui est reellement ecrit, par sous-domaine. Vide si le manifeste manque. */
+function questionsEcrites() {
+  const m = new Map();
+  if (!fs.existsSync(FICHIER_MANIFESTE)) return m;
+  for (const f of JSON.parse(fs.readFileSync(FICHIER_MANIFESTE, 'utf8')).fichiers) {
+    m.set(f.subdomain, f.nb);
+  }
+  return m;
+}
 
 // --- Lecture du corpus -----------------------------------------------------
 
@@ -84,9 +102,10 @@ function main() {
   console.log(`\nCorpus lu : ${pages.length} pages dans ${DIR_CORPUS}`);
   console.log(`Regle : une page compte si elle contient >= ${SEUIL_MOTS_CLES} mots-cles distincts du sous-domaine.\n`);
 
-  const L = [42, 6, 5, 7, 7];
+  const ecrites = questionsEcrites();
+  const L = [42, 6, 11, 7, 7];
   console.log(
-    cadrer('SOUS-DOMAINE', L[0]) + ' ' + cadrer('POIDS', L[1]) + ' ' + cadrer('QUEST', L[2]) + ' ' + cadrer('PAGES', L[3]) + ' ' + 'VERDICT'
+    cadrer('SOUS-DOMAINE', L[0]) + ' ' + cadrer('POIDS', L[1]) + ' ' + cadrer('ECRIT/CIBLE', L[2]) + ' ' + cadrer('PAGES', L[3]) + ' ' + 'VERDICT'
   );
   console.log('-'.repeat(L.reduce((a, b) => a + b + 1, 0) + 7));
 
@@ -101,14 +120,15 @@ function main() {
       const { trouvees, verdict } = evaluer(sd, pages);
       if (verdict === 'TROU') trous.push(sd.nom);
       if (verdict === 'FAIBLE') faibles.push(sd.nom);
-      const questions = Math.round((TOTAL_QUESTIONS * sd.poids) / 100);
+      const cible = Math.round((TOTAL_QUESTIONS * sd.poids) / 100);
+      const nb = ecrites.get(sd.nom) || 0;
       console.log(
         '  ' +
           cadrer(sd.nom, L[0] - 2) +
           ' ' +
           cadrer(sd.poids.toFixed(1), L[1]) +
           ' ' +
-          cadrer(questions, L[2]) +
+          cadrer(`${nb} / ${cible}`, L[2]) +
           ' ' +
           cadrer(trouvees.length, L[3]) +
           ' ' +
@@ -130,7 +150,8 @@ function main() {
     console.log(`\nTROUS (${trous.length}) — aucune source, ces questions ne peuvent pas etre ecrites :`);
     for (const t of trous) console.log(`  - ${t}`);
   } else {
-    console.log('\nAucun trou : les 25 sous-domaines ont au moins une page source.');
+    console.log('\nAucun trou : les 25 sous-domaines ont au moins une page SOURCE.');
+    console.log('Cela ne dit rien de la redaction : voir la colonne ECRIT/CIBLE, ou node etat.js.');
   }
   if (faibles.length) {
     console.log(`\nCouverture mince (< ${SEUIL_FAIBLE} pages), a surveiller pendant la redaction :`);

@@ -47,10 +47,23 @@ l'application affiche en permanence la part du blueprint réellement couverte.
 
 | Commande | Rôle |
 | --- | --- |
+| `npm run etat` | **où en est le projet** : écrit / cible par sous-domaine, et qui fait quoi |
+| `npm run livrer` | régénère manifeste, index des concepts et `ETAT.md` — à lancer avant chaque commit |
 | `npm run corpus` | aspire la documentation officielle dans `docs-corpus/` |
-| `npm run couverture` | vérifie que chaque sous-domaine du blueprint a des sources |
+| `npm run couverture` | vérifie que chaque sous-domaine du blueprint a des **sources** |
 | `npm run questions` | contrôle la banque : répartitions, doublons, sourçage |
 | `node lire-page.js <motif>` | lit une page du corpus sans ses blocs de code |
+
+**L'avancement se lit avec `npm run etat`, et nulle part ailleurs.**
+`npm run couverture` répond à une autre question — « la documentation permet-elle
+d'écrire ces questions ? » — et affiche `OK` sur les 25 lignes même quand rien
+n'est rédigé. Cette confusion a coûté une journée de travail en double le
+2026-08-02 ; la colonne `ECRIT/CIBLE` a été ajoutée pour qu'elle ne se
+reproduise pas.
+
+Le projet se rédige à deux : `METHODE.md` décrit le cycle de travail,
+`reservations.json` dit qui s'est attribué quel sous-domaine, et `ETAT.md` — qui
+se lit directement sur GitHub — donne l'état à jour.
 
 `blueprint.json` est la source de vérité unique des 25 sous-domaines et de
 leurs poids : il est lu à la fois par `verifier-couverture.js` et par

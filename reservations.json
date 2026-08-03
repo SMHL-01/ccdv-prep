@@ -1,0 +1,37 @@
+{
+  "commentaire": "Qui travaille sur quoi. UN SEUL fichier a modifier pour reserver un sous-domaine, et il est minuscule : c'est ce qui rend les conflits git quasi impossibles. Regle : on ne commence a ecrire QU'APRES avoir pousse sa reservation ici. Voir METHODE.md.",
+  "personnes": {
+    "said": "Said (Claude Pro, quota limite -> petits sous-domaines)",
+    "marie-line": "Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines)"
+  },
+  "reservations": {
+    "Agent Architecture": { "qui": "said", "etat": "fait" },
+    "Agent Construction with Claude": { "qui": "said", "etat": "fait" },
+    "Agent Patterns and Frameworks": { "qui": "said", "etat": "fait" },
+    "Claude Application Design": { "qui": "said", "etat": "fait" },
+    "Software Engineering Foundations": { "qui": "said", "etat": "fait", "note": "ecrit en double le 2026-08-02, fusionne le 2026-08-03 : 21 questions de Said, 9 de Marie-Line" },
+
+    "Claude API Mechanics": { "qui": "marie-line", "etat": "fait" },
+    "LLM Fundamentals": { "qui": "marie-line", "etat": "fait" },
+    "Technical Fundamentals": { "qui": "marie-line", "etat": "fait" },
+    "Prompt Engineering": { "qui": "marie-line", "etat": "fait" },
+    "Tool Implementation": { "qui": "marie-line", "etat": "fait" },
+
+    "Claude Hooks": { "qui": "said", "etat": "reserve", "depuis": "2026-08-03" },
+    "Identity, Secrets and Key Management": { "qui": "said", "etat": "reserve", "depuis": "2026-08-03" },
+    "MCP Server Development": { "qui": "said", "etat": "reserve", "depuis": "2026-08-03" },
+    "Guardrails and Safe Deployment": { "qui": "said", "etat": "reserve", "depuis": "2026-08-03" },
+    "Output Handling": { "qui": "said", "etat": "reserve", "depuis": "2026-08-03" },
+
+    "Configuration Management": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Agentic Customization": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Context Engineering": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Understanding Requirements": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "AI Application Security": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Claude Code": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Systems Life Cycle": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Cost and Token Management": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Model Selection and Tradeoffs": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Eval, Testing and Debugging": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" }
+  }
+}

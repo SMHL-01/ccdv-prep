@@ -11,7 +11,9 @@
     "manifeste": "node generer-manifeste.js",
     "corpus": "node aspirer-docs.js",
     "couverture": "node verifier-couverture.js",
-    "questions": "node verifier-questions.js"
+    "questions": "node verifier-questions.js",
+    "etat": "node etat.js",
+    "livrer": "node generer-manifeste.js && node verifier-questions.js --index && node etat.js --ecrire"
   },
   "dependencies": {
     "react": "^19.2.7",

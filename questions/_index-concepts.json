@@ -1421,6 +1421,146 @@
     "doc_ref": "https://code.claude.com/docs/en/vs-code"
   },
   {
+    "id": "CTM-001",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Interet du prompt caching pour un prefixe repete",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+  },
+  {
+    "id": "CTM-002",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Deux facons d'activer le prompt caching",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+  },
+  {
+    "id": "CTM-003",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Taux de facturation de l'API Batches vs prix standard",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-004",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Charge de travail adaptee a l'API Batches",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-005",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Operation de cache la moins chere",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-006",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Conditions de rentabilite du cache 5 minutes",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-007",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Comportement du cache automatique en conversation multi-tour",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+  },
+  {
+    "id": "CTM-008",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Raison d'appeler le comptage de tokens avant l'envoi",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+  },
+  {
+    "id": "CTM-009",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Le comptage de tokens renvoie une estimation",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+  },
+  {
+    "id": "CTM-010",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Facturation exclut les tokens ajoutes par le systeme",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+  },
+  {
+    "id": "CTM-011",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Parametres non supportes dans une requete Batch",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-012",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Recuperation asynchrone des resultats d'un batch",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-013",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Choisir le cache 1 heure pour les batches partageant du contexte",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-014",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Modeles supportant l'API Batches",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "CTM-015",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Cumul du multiplicateur de cache avec la remise Batch",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-016",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Structure de tarification input, output et cache",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-017",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Compter les tokens pour decider du routage de modele",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+  },
+  {
+    "id": "CTM-018",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Moment de facturation ecriture vs lecture de cache",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-019",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Surcout des endpoints regionaux face au global",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/pricing"
+  },
+  {
+    "id": "CTM-020",
+    "fichier": "model-selection-optimization_cost-and-token-management.json",
+    "subdomain": "Cost and Token Management",
+    "concept": "Deux usages du comptage de tokens",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+  },
+  {
     "id": "LLF-001",
     "fichier": "model-selection-optimization_llm-fundamentals.json",
     "subdomain": "LLM Fundamentals",

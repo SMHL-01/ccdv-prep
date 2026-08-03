@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 328,
+  "nbQuestions": 348,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -52,6 +52,11 @@
       "fichier": "claude-code_claude-code.json",
       "subdomain": "Claude Code",
       "nb": 12
+    },
+    {
+      "fichier": "model-selection-optimization_cost-and-token-management.json",
+      "subdomain": "Cost and Token Management",
+      "nb": 20
     },
     {
       "fichier": "model-selection-optimization_llm-fundamentals.json",
@@ -1916,6 +1921,186 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "claude-code_claude-code.json"
+    },
+    {
+      "id": "CTM-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-014",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-015",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-016",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-017",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-018",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-019",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
+    },
+    {
+      "id": "CTM-020",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_cost-and-token-management.json"
     },
     {
       "id": "LLF-001",

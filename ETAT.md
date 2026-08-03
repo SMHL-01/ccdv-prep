@@ -2,14 +2,14 @@
 
 > Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
 
-**328 / 400 questions** — **82.3 %** du poids de l'examen couvert — **17 / 25** sous-domaines termines.
+**348 / 400 questions** — **85.1 %** du poids de l'examen couvert — **18 / 25** sous-domaines termines.
 
 ## Charge restante
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
 | Said (Claude Pro, quota limite -> petits sous-domaines) | 37 | 5 | 123 |
-| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 32 | 3 | 205 |
+| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 21 | 2 | 225 |
 
 ## Les 25 sous-domaines
 
@@ -54,7 +54,7 @@
 | `[x]` | LLM Fundamentals | 21 | 21 | 5.2 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 | `[x]` | Technical Fundamentals | 24 | 24 | 6.1 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 | `[?]` | Model Selection and Tradeoffs | 0 | 11 | 2.7 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
-| `[?]` | Cost and Token Management | 0 | 11 | 2.8 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
+| `[x]` | Cost and Token Management <br><sub>gonfle a ~20 questions pour loger 1 factual_magnitude sous le plafond 5%/fichier (decision duo)</sub> | 20 | 11 | 2.8 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 
 ### Prompt and Context Engineering
 

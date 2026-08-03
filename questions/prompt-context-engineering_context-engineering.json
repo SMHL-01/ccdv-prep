@@ -1,0 +1,385 @@
+{
+ "subdomain": "Context Engineering",
+ "domain": "Prompt and Context Engineering",
+ "weight": 3.8,
+ "target_questions": 15,
+ "sources_read": [
+  "https://platform.claude.com/docs/en/build-with-claude/compaction",
+  "https://platform.claude.com/docs/en/build-with-claude/context-editing",
+  "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+ ],
+ "questions": [
+  {
+   "id": "CTX-001",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "La compaction cote serveur est la strategie recommandee pour les longues conversations",
+   "question_en": "What is the recommended way to manage context in long-running conversations and agentic workflows?",
+   "options": [
+    { "key": "A", "text_en": "Server-side compaction, which handles it automatically." },
+    { "key": "B", "text_en": "Manually truncating the oldest messages in your own client code." },
+    { "key": "C", "text_en": "Starting a brand-new conversation each time the context grows large." },
+    { "key": "D", "text_en": "Lowering max_tokens so the model simply writes shorter replies." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc : « Server-side compaction is the recommended strategy for managing context in long-running conversations and agentic workflows. It handles context management automatically, without client-side summarization code. »",
+   "distractors_fr": {
+    "B": "La troncature manuelle côté client est précisément ce que la compaction serveur évite.",
+    "C": "Repartir de zéro fait perdre le contexte utile ; la compaction résume au lieu de jeter.",
+    "D": "Réduire max_tokens raccourcit les réponses, sans gérer la croissance de l'historique."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+   "id": "CTX-002",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "La compaction garde le contexte actif petit car la qualite se degrade quand il grossit",
+   "question_en": "Beyond fitting within limits, why does compaction replace older content with a summary?",
+   "options": [
+    { "key": "A", "text_en": "Because summaries are always cheaper to cache than raw turns." },
+    { "key": "B", "text_en": "Because response quality degrades as the active context grows." },
+    { "key": "C", "text_en": "Because the API cannot accept more than ten conversation turns." },
+    { "key": "D", "text_en": "Because older turns are automatically deleted from your own database storage." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc : « It also keeps the active context small: as a conversation grows, response quality degrades, so compaction replaces older content with a concise summary. »",
+   "distractors_fr": {
+    "A": "L'objectif cité est la qualité de réponse, pas un avantage de cache garanti.",
+    "C": "Il n'y a pas de limite fixe à dix tours ; c'est la fenêtre de contexte en tokens qui compte.",
+    "D": "La compaction résume l'historique dans la requête ; elle ne supprime rien dans ta base."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+   "id": "CTX-003",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "difficile",
+   "concept": "Apres compaction, l API supprime les blocs anterieurs au bloc compaction",
+   "question_en": "After compaction, how does the conversation continue on subsequent requests?",
+   "options": [
+    { "key": "A", "text_en": "You must manually delete the summarized turns before resending them." },
+    { "key": "B", "text_en": "The API resends every original turn plus the new summary block." },
+    { "key": "C", "text_en": "The API drops all content blocks before the compaction block." },
+    { "key": "D", "text_en": "The client re-summarizes the whole history on every new request." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc : « On subsequent requests, append the response to your messages. The API automatically drops all content blocks prior to the compaction block, continuing the conversation from the summary. »",
+   "distractors_fr": {
+    "A": "Tu n'as rien à supprimer manuellement : l'API laisse tomber les blocs antérieurs elle-même.",
+    "B": "Justement, les tours originaux avant le bloc compaction ne sont pas renvoyés.",
+    "D": "Le résumé est produit côté serveur une fois, pas re-généré par le client à chaque requête."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+   "id": "CTX-004",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Cas d usage ideaux de la compaction : longs chats multi-tours et taches a fort usage d outils",
+   "question_en": "For which TWO situations is server-side compaction ideal?",
+   "options": [
+    { "key": "A", "text_en": "Long multi-turn chats users keep open for a long period." },
+    { "key": "B", "text_en": "Single-shot prompts that return one short answer immediately." },
+    { "key": "C", "text_en": "Task-oriented work with lots of follow-up tool use." },
+    { "key": "D", "text_en": "Stateless requests where no history is ever retained." }
+   ],
+   "correct": ["A", "C"],
+   "explanation_fr": "La doc cite comme idéaux : « Chat-based, multi-turn conversations where you want users to use one chat for a long period » et « Task-oriented prompts that require a lot of follow-up work (often tool use) that might exceed the context window. »",
+   "distractors_fr": {
+    "B": "Un prompt unique et court n'accumule pas d'historique : la compaction n'y sert à rien.",
+    "D": "Sans historique conservé, il n'y a rien à compacter."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+   "id": "CTX-005",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Le context editing permet de vider selectivement du contenu de l historique",
+   "question_en": "What does context editing let you do?",
+   "options": [
+    { "key": "A", "text_en": "Permanently delete conversations from Anthropic's servers." },
+    { "key": "B", "text_en": "Increase the model's maximum context window size on demand at runtime." },
+    { "key": "C", "text_en": "Encrypt the conversation history before sending it to Claude." },
+    { "key": "D", "text_en": "Selectively clear specific content from history as it grows." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc : « Context editing allows you to selectively clear specific content from conversation history as it grows », pour curer activement ce que Claude voit.",
+   "distractors_fr": {
+    "A": "Le context editing gère le contenu de la requête, il n'efface pas des données serveur.",
+    "B": "Il ne modifie pas la taille de la fenêtre de contexte du modèle.",
+    "C": "Il n'a rien à voir avec le chiffrement de l'historique."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-006",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "difficile",
+   "concept": "Le tool result clearing vide les resultats d outils les plus anciens et laisse un placeholder",
+   "question_en": "When tool result clearing activates, what does the API do?",
+   "options": [
+    { "key": "A", "text_en": "Clears the oldest tool results first and leaves a placeholder." },
+    { "key": "B", "text_en": "Clears the most recent tool results first to keep the older ones fully intact." },
+    { "key": "C", "text_en": "Deletes the entire conversation and starts it over silently." },
+    { "key": "D", "text_en": "Randomly removes tool results until it fits the token budget." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc : « the API automatically clears the oldest tool results in chronological order. The API replaces each cleared result with placeholder text so Claude knows it was removed. »",
+   "distractors_fr": {
+    "B": "L'ordre est chronologique en commençant par les plus anciens, pas les plus récents.",
+    "C": "Seuls les vieux résultats d'outils sont vidés, pas toute la conversation.",
+    "D": "La suppression suit l'ordre chronologique, elle n'est pas aléatoire."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-007",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "clear_tool_inputs vide aussi les appels d outils, pas seulement leurs resultats",
+   "question_en": "By default tool result clearing removes only tool results. How do you also clear the tool calls?",
+   "options": [
+    { "key": "A", "text_en": "Set clear_thinking to true in the strategy configuration." },
+    { "key": "B", "text_en": "Set clear_tool_inputs to true in the strategy configuration." },
+    { "key": "C", "text_en": "There is no option; tool calls can never be cleared at all." },
+    { "key": "D", "text_en": "Switch to client-side compaction, which always clears absolutely everything." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc : « By default, only tool results are cleared. You can optionally clear both tool results and tool calls (the tool use parameters) by setting clear_tool_inputs to true. »",
+   "distractors_fr": {
+    "A": "`clear_thinking` concerne les blocs de raisonnement, pas les appels d'outils.",
+    "C": "On peut bel et bien vider les appels d'outils via `clear_tool_inputs`.",
+    "D": "Basculer côté client n'est pas nécessaire pour vider les appels d'outils."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-008",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Le context editing agit cote serveur ; le client conserve l historique complet sans resynchroniser",
+   "question_en": "How does context editing affect the conversation history your client stores?",
+   "options": [
+    { "key": "A", "text_en": "Your client must be updated to match the edited server version." },
+    { "key": "B", "text_en": "Your client history is discarded and then rebuilt from the server copy." },
+    { "key": "C", "text_en": "Your client keeps the full history; editing happens server-side." },
+    { "key": "D", "text_en": "Your client and server must re-sync after every single edit." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc : « Context editing is applied server-side before the prompt reaches Claude. Your client application maintains the full, unmodified conversation history. You do not need to sync your client state with the edited version. »",
+   "distractors_fr": {
+    "A": "Aucune mise à jour du client n'est requise : il garde l'historique complet.",
+    "B": "L'historique client n'est ni jeté ni reconstruit depuis le serveur.",
+    "D": "La doc précise explicitement qu'aucune resynchronisation n'est nécessaire."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-009",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "multi",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Les deux strategies serveur du context editing : tool result clearing et thinking block clearing",
+   "question_en": "Which TWO strategies does server-side context editing support?",
+   "options": [
+    { "key": "A", "text_en": "Prompt caching of the system prompt prefix." },
+    { "key": "B", "text_en": "Tool result clearing of old tool outputs." },
+    { "key": "C", "text_en": "Automatic model version upgrades taken mid-conversation." },
+    { "key": "D", "text_en": "Thinking block clearing for extended thinking." }
+   ],
+   "correct": ["B", "D"],
+   "explanation_fr": "La doc liste deux stratégies serveur : « Tool result clearing (clear_tool_uses_20250919) » et « Thinking block clearing (clear_thinking_20251015) ».",
+   "distractors_fr": {
+    "A": "Le prompt caching est une fonctionnalité distincte, pas une stratégie de context editing.",
+    "C": "Le context editing ne fait pas de mise à niveau automatique de modèle."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-010",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Compaction comme strategie principale, context editing pour un controle fin du contenu vide",
+   "question_en": "How do compaction and context editing relate for most use cases?",
+   "options": [
+    { "key": "A", "text_en": "Context editing fully replaces compaction across every possible scenario." },
+    { "key": "B", "text_en": "They are the same feature under two different marketing names." },
+    { "key": "C", "text_en": "Compaction only works after context editing has run first." },
+    { "key": "D", "text_en": "Compaction is primary; editing gives finer control over clearing." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc : « For most use cases, server-side compaction is the primary strategy for managing context in long-running conversations. The strategies on this page are useful for specific scenarios where you need more fine-grained control over what content is cleared. »",
+   "distractors_fr": {
+    "A": "Le context editing ne remplace pas la compaction ; il la complète pour un contrôle fin.",
+    "B": "Ce sont deux mécanismes distincts, pas un seul renommé.",
+    "C": "La compaction ne dépend pas d'un passage préalable par le context editing."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+   "id": "CTX-011",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "L outil memory persiste entre conversations et fonctionne cote client",
+   "question_en": "Select the TWO accurate statements about the memory tool.",
+   "options": [
+    { "key": "A", "text_en": "It persists information across separate conversations." },
+    { "key": "B", "text_en": "It runs client-side; your application executes the file operations." },
+    { "key": "C", "text_en": "It automatically expands the model's underlying context window size." },
+    { "key": "D", "text_en": "Anthropic stores the memory files on its own servers for you." }
+   ],
+   "correct": ["A", "B"],
+   "explanation_fr": "La doc : « Claude can create, read, update, and delete files that persist between sessions » et « The memory tool operates client-side: Claude requests file operations, and your application executes them. You control where and how the data is stored. »",
+   "distractors_fr": {
+    "C": "La mémoire évite de tout garder en contexte ; elle n'agrandit pas la fenêtre du modèle.",
+    "D": "Le stockage est côté client, sur ton infrastructure, pas sur les serveurs d'Anthropic."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+   "id": "CTX-012",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "L outil memory fait de la recuperation juste-a-temps : ecrire puis relire a la demande",
+   "question_en": "How does the memory tool keep the active context focused?",
+   "options": [
+    { "key": "A", "text_en": "It records learnings in files and reads them back on demand." },
+    { "key": "B", "text_en": "It eagerly loads every single memory file into the context at session start." },
+    { "key": "C", "text_en": "It compresses the system prompt to free up token space." },
+    { "key": "D", "text_en": "It blocks the model from reading anything outside memory." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc : « Memory supports just-in-time context retrieval. Rather than loading all relevant information up front, an agent records what it learns in memory files and reads them back on demand. This keeps the active context focused on the current task. »",
+   "distractors_fr": {
+    "B": "Le principe juste-à-temps est l'inverse d'un chargement massif au démarrage.",
+    "C": "La mémoire ne compresse pas le prompt système.",
+    "D": "La mémoire n'interdit pas au modèle de lire d'autres contenus."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+   "id": "CTX-014",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Les fichiers memoire vivent sous /memories et Claude consulte ce dossier avant une tache",
+   "question_en": "Where does Claude store memory files, and when does it consult them?",
+   "options": [
+    { "key": "A", "text_en": "In the ~/.claude/memory folder; it reads them only whenever you explicitly ask." },
+    { "key": "B", "text_en": "Under /memories; it checks the directory before starting a task." },
+    { "key": "C", "text_en": "In the system prompt; it reloads them after every response." },
+    { "key": "D", "text_en": "In a hidden .mcp cache; it reads them once at install time." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc : « Claude automatically checks its memory directory before starting a task. As it works, Claude stores what it learns in files under /memories and reads them back in later conversations. »",
+   "distractors_fr": {
+    "A": "Le préfixe est `/memories`, et Claude consulte le dossier de lui-même avant la tâche.",
+    "C": "Les fichiers mémoire ne vivent pas dans le prompt système.",
+    "D": "Rien n'indique un cache `.mcp` lu une seule fois à l'installation."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+   "id": "CTX-015",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Securite de l outil memory : restreindre toutes les operations au dossier /memories",
+   "question_en": "What security practice does the memory tool documentation require?",
+   "options": [
+    { "key": "A", "text_en": "Encrypt every single memory file using a user-specific private key pair." },
+    { "key": "B", "text_en": "Send all memory operations through Anthropic for validation." },
+    { "key": "C", "text_en": "Restrict all memory operations to the /memories directory." },
+    { "key": "D", "text_en": "Disable memory whenever the conversation includes any tools." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc : « For security, restrict all memory operations to the /memories directory », au titre de la protection contre la traversée de chemin.",
+   "distractors_fr": {
+    "A": "Le chiffrement par clé n'est pas la protection citée ; c'est le confinement au dossier.",
+    "B": "Les opérations mémoire s'exécutent côté client, pas via une validation Anthropic.",
+    "D": "Rien n'impose de désactiver la mémoire en présence d'autres outils."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+   "id": "CTX-016",
+   "domain": "Prompt and Context Engineering",
+   "subdomain": "Context Engineering",
+   "weight": 3.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Le contexte est une ressource finie a rendements decroissants ; le contenu inutile nuit au focus",
+   "question_en": "Which principle underlies context engineering?",
+   "options": [
+    { "key": "A", "text_en": "More context in the prompt always yields better answers." },
+    { "key": "B", "text_en": "The context window is effectively unlimited on all modern frontier models." },
+    { "key": "C", "text_en": "Only the system prompt influences how the model behaves." },
+    { "key": "D", "text_en": "Context is finite with diminishing returns; clutter hurts focus." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc : « context is a finite resource with diminishing returns, and irrelevant content degrades model focus. »",
+   "distractors_fr": {
+    "A": "Justement non : au-delà d'un point, ajouter du contexte donne des rendements décroissants.",
+    "B": "La fenêtre de contexte est finie, pas illimitée.",
+    "C": "Tout le contenu de la fenêtre influence le comportement, pas seulement le prompt système."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  }
+ ]
+}

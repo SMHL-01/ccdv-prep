@@ -1477,6 +1477,111 @@
     "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
   },
   {
+    "id": "CTX-001",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "La compaction cote serveur est la strategie recommandee pour les longues conversations",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+    "id": "CTX-002",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "La compaction garde le contexte actif petit car la qualite se degrade quand il grossit",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+    "id": "CTX-003",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Apres compaction, l API supprime les blocs anterieurs au bloc compaction",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+    "id": "CTX-004",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Cas d usage ideaux de la compaction : longs chats multi-tours et taches a fort usage d outils",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+  },
+  {
+    "id": "CTX-005",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Le context editing permet de vider selectivement du contenu de l historique",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-006",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Le tool result clearing vide les resultats d outils les plus anciens et laisse un placeholder",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-007",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "clear_tool_inputs vide aussi les appels d outils, pas seulement leurs resultats",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-008",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Le context editing agit cote serveur ; le client conserve l historique complet sans resynchroniser",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-009",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Les deux strategies serveur du context editing : tool result clearing et thinking block clearing",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-010",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Compaction comme strategie principale, context editing pour un controle fin du contenu vide",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
+    "id": "CTX-011",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "L outil memory persiste entre conversations et fonctionne cote client",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+    "id": "CTX-012",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "L outil memory fait de la recuperation juste-a-temps : ecrire puis relire a la demande",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+    "id": "CTX-014",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Les fichiers memoire vivent sous /memories et Claude consulte ce dossier avant une tache",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+    "id": "CTX-015",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Securite de l outil memory : restreindre toutes les operations au dossier /memories",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+  },
+  {
+    "id": "CTX-016",
+    "fichier": "prompt-context-engineering_context-engineering.json",
+    "subdomain": "Context Engineering",
+    "concept": "Le contexte est une ressource finie a rendements decroissants ; le contenu inutile nuit au focus",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
+  },
+  {
     "id": "PRE-001",
     "fichier": "prompt-context-engineering_prompt-engineering.json",
     "subdomain": "Prompt Engineering",

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 263,
+  "nbQuestions": 278,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -47,6 +47,11 @@
       "fichier": "model-selection-optimization_technical-fundamentals.json",
       "subdomain": "Technical Fundamentals",
       "nb": 24
+    },
+    {
+      "fichier": "prompt-context-engineering_context-engineering.json",
+      "subdomain": "Context Engineering",
+      "nb": 15
     },
     {
       "fichier": "prompt-context-engineering_prompt-engineering.json",
@@ -1963,6 +1968,141 @@
       "nature": "factual_semantic",
       "type": "single",
       "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "CTX-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-011",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-012",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-014",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-015",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "CTX-016",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_context-engineering.json"
     },
     {
       "id": "PRE-001",

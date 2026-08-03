@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 292,
+  "nbQuestions": 305,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -62,6 +62,11 @@
       "fichier": "prompt-context-engineering_prompt-engineering.json",
       "subdomain": "Prompt Engineering",
       "nb": 18
+    },
+    {
+      "fichier": "security-safety_ai-application-security.json",
+      "subdomain": "AI Application Security",
+      "nb": 13
     },
     {
       "fichier": "tools-mcps_agentic-customization.json",
@@ -2396,6 +2401,123 @@
       "nature": "factual_semantic",
       "type": "multi",
       "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "SEC-001",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-002",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-005",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_ai-application-security.json"
+    },
+    {
+      "id": "SEC-013",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "security-safety_ai-application-security.json"
     },
     {
       "id": "AGC-001",

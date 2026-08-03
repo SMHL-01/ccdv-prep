@@ -1806,6 +1806,97 @@
     "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
   },
   {
+    "id": "SEC-001",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Definition de l'injection de prompt",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-002",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Architecture par permissions : lecture seule par defaut",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-003",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Frontiere du repertoire de travail en ecriture",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-004",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Fenetre de contexte isolee pour la recuperation web",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-005",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Commandes reseau curl et wget non auto-approuvees",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-006",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Bac a sable bash : isolation fichiers et reseau",
+    "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+  },
+  {
+    "id": "SEC-007",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Bonnes pratiques face au contenu non fiable",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-008",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Verification de confiance pour nouveaux codebases et serveurs MCP",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-009",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Correspondance fail-closed : approbation manuelle par defaut",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-010",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Detection d'injection de commande malgre l'allowlist",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-011",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Protections principales contre l'injection de prompt",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-012",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Responsabilite de l'utilisateur sur les permissions accordees",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
+    "id": "SEC-013",
+    "fichier": "security-safety_ai-application-security.json",
+    "subdomain": "AI Application Security",
+    "concept": "Controles de securite des sessions cloud de Claude Code",
+    "doc_ref": "https://code.claude.com/docs/en/security"
+  },
+  {
     "id": "AGC-001",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",

@@ -1,0 +1,334 @@
+{
+  "subdomain": "AI Application Security",
+  "domain": "Security and Safety",
+  "weight": 3.2,
+  "target_questions": 13,
+  "sources_read": [
+    "https://code.claude.com/docs/en/security",
+    "https://code.claude.com/docs/en/sandboxing"
+  ],
+  "questions": [
+    {
+      "id": "SEC-001",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Definition de l'injection de prompt",
+      "question_en": "What is 'prompt injection'?",
+      "options": [
+        { "key": "A", "text_en": "A method to speed up model responses by preloading prompts." },
+        { "key": "B", "text_en": "A way to compress long prompts to save tokens." },
+        { "key": "C", "text_en": "Malicious text inserted to override the AI's instructions." },
+        { "key": "D", "text_en": "A feature that lets users chain multiple prompts together." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc : « Prompt injection is a technique where an attacker attempts to override or manipulate an AI assistant's instructions by inserting malicious text. » C'est une attaque, pas une optimisation.",
+      "distractors_fr": {
+        "A": "L'injection de prompt est une attaque, pas une technique d'acceleration des reponses.",
+        "B": "La compression de prompt concerne les tokens, sans rapport avec la manipulation d'instructions.",
+        "D": "Chainer des prompts est un usage legitime ; l'injection vise a detourner les instructions."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-002",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Architecture par permissions : lecture seule par defaut",
+      "question_en": "By default, what is Claude Code allowed to do without asking permission?",
+      "options": [
+        { "key": "A", "text_en": "Only read-only actions; changes need approval." },
+        { "key": "B", "text_en": "Any file edit within the home directory, silently." },
+        { "key": "C", "text_en": "Any Bash command, since the user launched the tool." },
+        { "key": "D", "text_en": "Nothing at all until every command is allowlisted." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc : « Claude Code uses strict read-only permissions by default. When additional actions are needed [...] Claude Code requests explicit permission. »",
+      "distractors_fr": {
+        "B": "Modifier des fichiers sort du perimetre lecture seule et declenche une demande d'autorisation.",
+        "C": "Les commandes qui modifient le systeme exigent une approbation ; elles ne passent pas automatiquement.",
+        "D": "Les commandes en lecture seule (ls, cat, git status) s'executent sans allowlist prealable."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Frontiere du repertoire de travail en ecriture",
+      "question_en": "Where can Claude Code write files without an extra permission prompt?",
+      "options": [
+        { "key": "A", "text_en": "Anywhere on the filesystem the OS user can reach." },
+        { "key": "B", "text_en": "Only inside the system temp directory." },
+        { "key": "C", "text_en": "In parent directories of where it was started." },
+        { "key": "D", "text_en": "The startup folder and its subfolders only." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc : « Claude Code can only write to the folder where it was started and its subfolders, and cannot modify files in parent directories without explicit permission. »",
+      "distractors_fr": {
+        "A": "L'ecriture est bornee au dossier de demarrage ; le reste du systeme n'est pas accessible librement.",
+        "B": "Le repertoire temporaire n'est pas la frontiere d'ecriture definie par la doc.",
+        "C": "Ecrire dans un repertoire parent exige justement une autorisation explicite."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Fenetre de contexte isolee pour la recuperation web",
+      "question_en": "Why does Claude Code's web fetch use a separate context window?",
+      "options": [
+        { "key": "A", "text_en": "To cache web pages so repeat fetches are faster." },
+        { "key": "B", "text_en": "To let the model read more tokens than usual." },
+        { "key": "C", "text_en": "To avoid injecting malicious prompts." },
+        { "key": "D", "text_en": "To bill web requests to a different usage pool." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc (Additional safeguards) : « Isolated context windows: Web fetch uses a separate context window to avoid injecting potentially malicious prompts. »",
+      "distractors_fr": {
+        "A": "L'isolation vise la securite contre l'injection, pas la mise en cache.",
+        "B": "Le but est de contenir le contenu web, pas d'augmenter la fenetre de tokens.",
+        "D": "La facturation n'a aucun rapport avec l'isolation du contexte de web fetch."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-005",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Commandes reseau curl et wget non auto-approuvees",
+      "question_en": "How are network commands like curl and wget handled by default?",
+      "options": [
+        { "key": "A", "text_en": "They are auto-approved because they only read data." },
+        { "key": "B", "text_en": "They are not auto-approved; they prompt as usual." },
+        { "key": "C", "text_en": "They are always blocked and cannot be allowlisted." },
+        { "key": "D", "text_en": "They run silently inside the sandbox with no limits." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc : « Commands that fetch content from the web such as curl and wget are not auto-approved by default. They prompt like any other non-read-only Bash command. »",
+      "distractors_fr": {
+        "A": "Justement non : curl et wget ne sont pas auto-approuves malgre leur apparence de lecture.",
+        "C": "Ils ne sont pas bloques par defaut ; on peut les approuver ou ajouter une regle allow.",
+        "D": "Rien n'indique une execution silencieuse sans limite : ils declenchent une demande."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Bac a sable bash : isolation fichiers et reseau",
+      "question_en": "What does enabling the sandboxed Bash tool provide?",
+      "options": [
+        { "key": "A", "text_en": "Faster command execution through parallel processing." },
+        { "key": "B", "text_en": "Automatic approval of every Bash command." },
+        { "key": "C", "text_en": "A cloud VM that replaces your local machine." },
+        { "key": "D", "text_en": "Filesystem and network isolation for commands." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc : « Claude Code's sandboxed Bash tool provides filesystem and network isolation for safer, more autonomous agent execution. »",
+      "distractors_fr": {
+        "A": "Le bac a sable vise l'isolation de securite, pas la parallelisation des commandes.",
+        "B": "Le sandbox reduit les invites mais certaines commandes continuent d'exiger une approbation.",
+        "C": "Le sandbox local ne remplace pas la machine par une VM cloud ; il isole les commandes localement."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "SEC-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Bonnes pratiques face au contenu non fiable",
+      "question_en": "Select the TWO practices the guide recommends when working with untrusted content.",
+      "options": [
+        { "key": "A", "text_en": "Pipe the untrusted content straight into Claude for speed." },
+        { "key": "B", "text_en": "Avoid piping untrusted content directly to Claude." },
+        { "key": "C", "text_en": "Disable the permission system to reduce prompts." },
+        { "key": "D", "text_en": "Run scripts and tool calls inside a virtual machine." }
+      ],
+      "correct": ["B", "D"],
+      "explanation_fr": "La doc liste : « Avoid piping untrusted content directly to Claude » et « Use virtual machines (VMs) to run scripts and make tool calls, especially when interacting with external web services. »",
+      "distractors_fr": {
+        "A": "C'est l'inverse de la recommandation : il faut eviter d'injecter directement du contenu non fiable.",
+        "C": "Desactiver le systeme de permissions supprime une protection cle contre l'injection."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Verification de confiance pour nouveaux codebases et serveurs MCP",
+      "question_en": "When does Claude Code require trust verification?",
+      "options": [
+        { "key": "A", "text_en": "On first-time codebases and new MCP servers." },
+        { "key": "B", "text_en": "Every single time any Bash command is executed." },
+        { "key": "C", "text_en": "Only when the user explicitly types /trust." },
+        { "key": "D", "text_en": "Never, since trust is inferred from the OS user." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc : « Trust verification: First-time codebase runs and new MCP servers require trust verification. » (Elle est desactivee en mode non interactif avec le drapeau -p.)",
+      "distractors_fr": {
+        "B": "La verification de confiance porte sur les nouveaux codebases et serveurs MCP, pas sur chaque commande.",
+        "C": "Elle se declenche automatiquement au premier contact, sans commande /trust dediee.",
+        "D": "La confiance n'est pas deduite de l'utilisateur OS : une verification explicite est requise."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Correspondance fail-closed : approbation manuelle par defaut",
+      "question_en": "A Bash command matches no permission rule. What happens under fail-closed matching?",
+      "options": [
+        { "key": "A", "text_en": "It runs automatically since nothing forbids it." },
+        { "key": "B", "text_en": "It is silently dropped without notifying the user." },
+        { "key": "C", "text_en": "It defaults to requiring manual approval." },
+        { "key": "D", "text_en": "It inherits the permission of the last command." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc : « Fail-closed matching: Unmatched commands default to requiring manual approval. » L'absence de regle mene a une demande, pas a une execution automatique.",
+      "distractors_fr": {
+        "A": "Fail-closed signifie precisement que l'absence de regle bloque l'execution automatique.",
+        "B": "La commande n'est pas abandonnee en silence : elle declenche une demande d'approbation.",
+        "D": "Aucun heritage de permission n'a lieu ; chaque commande non appariee est reevaluee."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Detection d'injection de commande malgre l'allowlist",
+      "question_en": "Why might a previously allowlisted command still prompt for approval?",
+      "options": [
+        { "key": "A", "text_en": "Allowlists expire automatically after one hour." },
+        { "key": "B", "text_en": "Injection detection flags suspicious commands." },
+        { "key": "C", "text_en": "The sandbox re-checks every command against the cloud." },
+        { "key": "D", "text_en": "The model forgot the earlier approval decision." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc : « Command injection detection: Suspicious bash commands require manual approval even if previously allowlisted. »",
+      "distractors_fr": {
+        "A": "Les allowlists n'expirent pas apres une heure ; c'est la detection d'injection qui reactive l'invite.",
+        "C": "Aucune re-verification systematique vers le cloud n'est en cause ici.",
+        "D": "Ce n'est pas un oubli du modele mais une detection deliberee de commande suspecte."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Protections principales contre l'injection de prompt",
+      "question_en": "Select the TWO core safeguards Claude Code uses against prompt injection.",
+      "options": [
+        { "key": "A", "text_en": "Permission system requiring approval for sensitive ops." },
+        { "key": "B", "text_en": "Letting the model grade its own safety after the fact anyway." },
+        { "key": "C", "text_en": "Context-aware analysis of the full request." },
+        { "key": "D", "text_en": "Automatically trusting any content fetched from the open web." }
+      ],
+      "correct": ["A", "C"],
+      "explanation_fr": "La doc (Core protections) : « Permission system: Sensitive operations require explicit approval » et « Context-aware analysis: Detects potentially harmful instructions by analyzing the full request. »",
+      "distractors_fr": {
+        "B": "L'auto-evaluation du modele n'est pas listee comme protection principale contre l'injection.",
+        "D": "Au contraire, le contenu web est isole dans un contexte separe, pas approuve automatiquement."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Responsabilite de l'utilisateur sur les permissions accordees",
+      "question_en": "What does the guide say about Claude Code's permissions and your role?",
+      "options": [
+        { "key": "A", "text_en": "Claude Code can act beyond granted permissions if needed." },
+        { "key": "B", "text_en": "Anthropic reviews every command before it runs for you." },
+        { "key": "C", "text_en": "Approved commands never require any further review." },
+        { "key": "D", "text_en": "It has only what you grant; you review before approving." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc : « Claude Code only has the permissions you grant it. You're responsible for reviewing proposed code and commands for safety before approval. »",
+      "distractors_fr": {
+        "A": "Claude Code ne peut pas depasser les permissions accordees : il n'a que celles que vous donnez.",
+        "B": "Anthropic ne revoit pas chaque commande a votre place ; la revue vous incombe.",
+        "C": "La detection d'injection peut re-demander une approbation meme sur des commandes deja approuvees."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    },
+    {
+      "id": "SEC-013",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Controles de securite des sessions cloud de Claude Code",
+      "question_en": "Select the TWO security controls specific to Claude Code cloud (web) sessions.",
+      "options": [
+        { "key": "A", "text_en": "Each session runs in an isolated managed VM." },
+        { "key": "B", "text_en": "Git push is restricted to the current working branch." },
+        { "key": "C", "text_en": "Network access is unlimited to any external domain." },
+        { "key": "D", "text_en": "Every action is auto-approved to speed up the cloud run somehow." }
+      ],
+      "correct": ["A", "B"],
+      "explanation_fr": "La doc (Cloud execution security) : « Isolated virtual machines: Each cloud session runs in an isolated, Anthropic-managed VM » et « Branch restrictions: Git push operations are restricted to the current working branch. »",
+      "distractors_fr": {
+        "C": "L'acces reseau est au contraire limite par defaut, et peut etre desactive ou restreint a certains domaines.",
+        "D": "Aucune auto-approbation generalisee : les sessions cloud ajoutent des controles, elles n'en retirent pas."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/security"
+    }
+  ]
+}

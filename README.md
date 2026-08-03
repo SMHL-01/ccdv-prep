@@ -54,6 +54,13 @@ l'application affiche en permanence la part du blueprint réellement couverte.
 | `npm run questions` | contrôle la banque : répartitions, doublons, sourçage |
 | `node lire-page.js <motif>` | lit une page du corpus sans ses blocs de code |
 
+La banque compte **406 questions pour une cible de 400**. Les 6 en trop viennent de
+*Cost and Token Management*, écrit à 20 questions au lieu de 11 pour qu'une
+question `factual_magnitude` tienne sous l'ancien plafond de 5 % par fichier.
+Ce plafond s'évalue maintenant sur la banque entière ; les questions
+excédentaires sont conservées comme bonus d'entraînement. L'examen blanc n'en
+est pas affecté : le tirage suit les poids du blueprint, pas le stock disponible.
+
 **L'avancement se lit avec `npm run etat`, et nulle part ailleurs.**
 `npm run couverture` répond à une autre question — « la documentation permet-elle
 d'écrire ces questions ? » — et affiche `OK` sur les 25 lignes même quand rien

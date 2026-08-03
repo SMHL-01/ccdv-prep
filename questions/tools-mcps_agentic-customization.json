@@ -1,413 +1,640 @@
 {
- "subdomain": "Agentic Customization",
- "domain": "Tools and MCPs",
- "weight": 4.1,
- "target_questions": 16,
- "sources_read": [
-  "https://code.claude.com/docs/en/agent-sdk/skills",
-  "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts",
-  "https://code.claude.com/docs/en/agent-sdk/plugins",
-  "https://code.claude.com/docs/en/agent-teams",
-  "https://code.claude.com/docs/en/agent-sdk/subagents",
-  "https://code.claude.com/docs/en/agent-sdk/custom-tools"
- ],
- "questions": [
-  {
-   "id": "AGC-001",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "facile",
-   "concept": "Les skills se chargent a la demande, contrairement au CLAUDE.md charge a chaque session",
-   "question_en": "How do Skills differ from a CLAUDE.md file in how they load?",
-   "options": [
-    { "key": "A", "text_en": "Skills load on demand; only their descriptions load at startup." },
-    { "key": "B", "text_en": "Skills load fully every session, exactly like CLAUDE.md does." },
-    { "key": "C", "text_en": "Skills never load at all unless you paste them into the prompt yourself." },
-    { "key": "D", "text_en": "Skills load only once, on the very first run of the project." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc : « Unlike CLAUDE.md (which loads every session), skills load on demand. The agent receives skill descriptions at startup and loads the full content when relevant. »",
-   "distractors_fr": {
-    "B": "C'est CLAUDE.md qui se charge intégralement à chaque session ; les skills, non.",
-    "C": "Les skills sont découverts et leurs descriptions chargées automatiquement, sans copier-coller.",
-    "D": "Le chargement est déclenché par la pertinence, pas limité au premier lancement."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
-  },
-  {
-   "id": "AGC-002",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Un skill est un dossier avec un SKILL.md dont la description declenche l invocation",
-   "question_en": "How is a Skill defined on the filesystem?",
-   "options": [
-    { "key": "A", "text_en": "A single JSON file registered through the SDK's programmatic API." },
-    { "key": "B", "text_en": "A directory holding a SKILL.md whose description triggers it." },
-    { "key": "C", "text_en": "An entry added directly inside the project's settings.json configuration." },
-    { "key": "D", "text_en": "A shell script placed in the .claude/hooks directory." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : « Create each Skill as a directory containing a SKILL.md file with YAML frontmatter and Markdown content. The description field determines when Claude invokes your Skill. »",
-   "distractors_fr": {
-    "A": "Il n'existe pas d'API programmatique pour enregistrer un skill : ce sont des artefacts de fichiers.",
-    "C": "Un skill n'est pas une entrée de settings.json mais un dossier SKILL.md dédié.",
-    "D": "Un script shell dans .claude/hooks relève des hooks, pas des skills."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
-  },
-  {
-   "id": "AGC-003",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "Emplacements des skills : projet .claude/skills et utilisateur ~/.claude/skills",
-   "question_en": "From which TWO filesystem directories are Skills loaded via setting sources?",
-   "options": [
-    { "key": "A", "text_en": "`.claude/skills/` in the project, shared through git." },
-    { "key": "B", "text_en": "`.claude/output-styles/` inside the project repository folder." },
-    { "key": "C", "text_en": "`~/.claude/settings.json` in your home directory." },
-    { "key": "D", "text_en": "`~/.claude/skills/` for personal skills across all projects." }
-   ],
-   "correct": ["A", "D"],
-   "explanation_fr": "La doc liste : « Project Skills (.claude/skills/): Shared with your team via git » et « User Skills (~/.claude/skills/): Personal Skills across all projects. »",
-   "distractors_fr": {
-    "B": "`.claude/output-styles/` stocke des output styles, pas des skills.",
-    "C": "`~/.claude/settings.json` contient des réglages, pas des skills ; les skills utilisateur sont dans `~/.claude/skills/`."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
-  },
-  {
-   "id": "AGC-005",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Un output style modifie durablement le prompt systeme de Claude",
-   "question_en": "What does activating an output style change?",
-   "options": [
-    { "key": "A", "text_en": "It appends a one-off note to the current user message only." },
-    { "key": "B", "text_en": "It rewrites the project's CLAUDE.md file on disk automatically." },
-    { "key": "C", "text_en": "It modifies Claude's system prompt with a saved configuration." },
-    { "key": "D", "text_en": "It installs a new MCP server for the duration of the session." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : « Output styles are saved configurations that modify Claude's system prompt. They're stored as markdown files and can be reused across sessions and projects. »",
-   "distractors_fr": {
-    "A": "Un output style est une configuration persistante, pas une note ajoutée à un seul message.",
-    "B": "Il ne réécrit pas le CLAUDE.md ; il agit sur le prompt système.",
-    "D": "Un output style ne déploie pas de serveur MCP."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
-  },
-  {
-   "id": "AGC-006",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Emplacements des output styles : ~/.claude/output-styles ou .claude/output-styles",
-   "question_en": "Where can output styles be stored?",
-   "options": [
-    { "key": "A", "text_en": "Only inline in code, since they cannot be saved as files at all." },
-    { "key": "B", "text_en": "In the .mcp.json file at the repository root." },
-    { "key": "C", "text_en": "In ~/.claude.json under a dedicated styles key." },
-    { "key": "D", "text_en": "In ~/.claude/output-styles/ or .claude/output-styles/." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc : « Save it to ~/.claude/output-styles/ for a user-level style available in every project, or .claude/output-styles/ in your repository for a project-level style you can commit and share. »",
-   "distractors_fr": {
-    "A": "Les output styles sont justement des fichiers markdown enregistrés, réutilisables.",
-    "B": "`.mcp.json` sert aux serveurs MCP, pas aux output styles.",
-    "C": "`~/.claude.json` ne stocke pas les output styles."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
-  },
-  {
-   "id": "AGC-007",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "keep-coding-instructions : conserver les instructions d ingenierie du preset claude_code",
-   "question_en": "By default, how does a custom output style interact with the claude_code preset's coding instructions?",
-   "options": [
-    { "key": "A", "text_en": "It replaces them, unless you set keep-coding-instructions: true." },
-    { "key": "B", "text_en": "It always keeps them and simply appends your own text right after them." },
-    { "key": "C", "text_en": "It merges them automatically with no way to override it." },
-    { "key": "D", "text_en": "It ignores your style whenever coding instructions are present." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc : « By default, a custom output style replaces the claude_code preset's software engineering instructions with your own. To keep them and layer your instructions on top, set keep-coding-instructions: true in the frontmatter. »",
-   "distractors_fr": {
-    "B": "Le comportement par défaut est le remplacement ; conserver puis empiler exige keep-coding-instructions: true.",
-    "C": "On peut précisément contrôler le comportement via le frontmatter, ce n'est pas une fusion imposée.",
-    "D": "L'output style s'applique bel et bien ; il remplace les instructions de codage par défaut."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
-  },
-  {
-   "id": "AGC-008",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Output style (prompt systeme) vs CLAUDE.md (contexte projet injecte)",
-   "question_en": "An output style and a CLAUDE.md both shape behavior. How do they differ mechanically?",
-   "options": [
-    { "key": "A", "text_en": "Both are injected in exactly the same way into the system prompt at every startup." },
-    { "key": "B", "text_en": "The style changes the system prompt; CLAUDE.md is injected as project context." },
-    { "key": "C", "text_en": "CLAUDE.md changes the system prompt; the style is only project context." },
-    { "key": "D", "text_en": "Neither touches the prompt; both are enforced by Claude Code." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : « Output styles ... change the system prompt directly. CLAUDE.md takes a different path: the SDK reads it and injects its content into the conversation as project context, not into the system prompt. »",
-   "distractors_fr": {
-    "A": "Les deux n'empruntent pas le même chemin : seul l'output style modifie le prompt système.",
-    "C": "C'est l'inverse : l'output style modifie le prompt système, CLAUDE.md est injecté comme contexte.",
-    "D": "L'output style touche bien le prompt système ; ce ne sont pas des règles imposées par Claude Code."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
-  },
-  {
-   "id": "AGC-009",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "facile",
-   "concept": "Un plugin regroupe skills, agents, hooks et serveurs MCP",
-   "question_en": "A plugin packages Claude Code extensions. Select TWO things a plugin can bundle.",
-   "options": [
-    { "key": "A", "text_en": "Billing invoices for your Anthropic API usage." },
-    { "key": "B", "text_en": "Skills that Claude can invoke autonomously." },
-    { "key": "C", "text_en": "Hooks that respond to tool-use events." },
-    { "key": "D", "text_en": "The user's personal ~/.claude.json session file." }
-   ],
-   "correct": ["B", "C"],
-   "explanation_fr": "La doc : « Plugins are packages of Claude Code extensions that can include: Skills ... Agents ... Hooks ... MCP servers. » Skills et hooks en font partie.",
-   "distractors_fr": {
-    "A": "Un plugin ne regroupe pas de factures de facturation.",
-    "D": "`~/.claude.json` est un fichier de session personnel, pas un composant empaqueté dans un plugin."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
-  },
-  {
-   "id": "AGC-010",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Le dossier commands/ d un plugin est legacy : utiliser skills/",
-   "question_en": "You're building a new plugin. Where should its invocable capabilities go?",
-   "options": [
-    { "key": "A", "text_en": "In the commands/ directory, the current recommended format." },
-    { "key": "B", "text_en": "In a top-level plugin.py file at the repository root." },
-    { "key": "C", "text_en": "In the skills/ directory; commands/ is a legacy format." },
-    { "key": "D", "text_en": "In settings.json, which registers plugin capabilities." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : « The commands/ directory is a legacy format. Use skills/ for new plugins. Claude Code continues to support both formats for backward compatibility. »",
-   "distractors_fr": {
-    "A": "`commands/` est justement le format legacy, pas le format recommandé.",
-    "B": "Un plugin ne se structure pas autour d'un `plugin.py` racine.",
-    "D": "Les capacités d'un plugin ne s'enregistrent pas via settings.json."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
-  },
-  {
-   "id": "AGC-011",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Distribution des plugins par marketplace puis chargement local",
-   "question_en": "How do you use a plugin distributed through a marketplace with the SDK?",
-   "options": [
-    { "key": "A", "text_en": "Pass its marketplace URL directly; the SDK fetches it remotely." },
-    { "key": "B", "text_en": "Reference it by name; the SDK resolves it from the registry." },
-    { "key": "C", "text_en": "Publish your own copy to the marketplace before loading it." },
-    { "key": "D", "text_en": "Download it first, then load it from its local directory path." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc : « To use a plugin distributed through a marketplace or remote repository, download it first and provide the local directory path. » Le champ `type` n'accepte que `\"local\"`.",
-   "distractors_fr": {
-    "A": "Le SDK ne récupère pas un plugin depuis une URL distante ; il faut un chemin local.",
-    "B": "Il n'y a pas de résolution par nom depuis un registre : on fournit un chemin local.",
-    "C": "Publier n'est pas requis pour consommer un plugin de marketplace : il faut le télécharger localement."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
-  },
-  {
-   "id": "AGC-012",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "Les skills et commandes d un plugin sont prefixes par le nom du plugin",
-   "question_en": "A plugin named my-plugin ships a skill called greet. How does it appear?",
-   "options": [
-    { "key": "A", "text_en": "As greet, with no prefix, merged into the global list." },
-    { "key": "B", "text_en": "As plugin:greet, using a generic fixed keyword prefix." },
-    { "key": "C", "text_en": "As my-plugin:greet, prefixed with the plugin's name." },
-    { "key": "D", "text_en": "As greet@my-plugin, using an at-sign separator syntax." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : « Plugin skills appear with the plugin name as a prefix », exemple `[\"my-plugin:greet\"]`, et les commandes utilisent le même préfixe.",
-   "distractors_fr": {
-    "A": "Le nom est préfixé par celui du plugin, il n'est pas fusionné sans préfixe.",
-    "B": "Le préfixe est le nom réel du plugin (`my-plugin`), pas le mot générique `plugin`.",
-    "D": "Le séparateur est deux-points après le nom du plugin, pas un `@`."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
-  },
-  {
-   "id": "AGC-013",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Un subagent a sa propre fenetre de contexte et ne rend compte qu a l agent principal",
-   "question_en": "What characterizes how a subagent runs?",
-   "options": [
-    { "key": "A", "text_en": "It has its own context window and reports results to the main agent." },
-    { "key": "B", "text_en": "It shares the main agent's context window the entire time." },
-    { "key": "C", "text_en": "It messages every other subagent directly to coordinate all the work." },
-    { "key": "D", "text_en": "It runs in the user's terminal without any main agent." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc (tableau subagents vs agent teams) : contexte « Own context window; results return to the caller » et communication « Report results back to the main agent only ».",
-   "distractors_fr": {
-    "B": "Un subagent a sa propre fenêtre de contexte, il ne partage pas celle de l'agent principal.",
-    "C": "La communication directe entre pairs caractérise les agent teams, pas les subagents.",
-    "D": "Un subagent est justement piloté par l'agent principal qui l'a lancé."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-teams"
-  },
-  {
-   "id": "AGC-014",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Cout en tokens plus faible d un subagent : resultat resume vers le contexte principal",
-   "question_en": "Why do subagents typically cost fewer tokens than an agent team?",
-   "options": [
-    { "key": "A", "text_en": "Because each subagent always runs on a smaller and cheaper model by default." },
-    { "key": "B", "text_en": "Because a subagent's results are summarized back to the main context." },
-    { "key": "C", "text_en": "Because subagents skip the system prompt to save on tokens." },
-    { "key": "D", "text_en": "Because subagents cache every response and never re-run." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc (tableau) : coût en tokens des subagents « Lower: results summarized back to main context », alors qu'une agent team fait tourner chaque coéquipier comme une instance séparée.",
-   "distractors_fr": {
-    "A": "L'économie ne vient pas d'un modèle plus petit imposé, mais du résumé des résultats.",
-    "C": "Les subagents ne sautent pas le prompt système.",
-    "D": "Rien dans la doc n'attribue l'économie à un cache systématique des réponses."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-teams"
-  },
-  {
-   "id": "AGC-015",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "AgentDefinition d un subagent : description et prompt requis, model en surcharge",
-   "question_en": "Which fields are required to define a subagent programmatically (AgentDefinition)?",
-   "options": [
-    { "key": "A", "text_en": "Only a unique name string; everything else is inferred." },
-    { "key": "B", "text_en": "A model ID and a list of allowed tools, and nothing else." },
-    { "key": "C", "text_en": "A memory source and an MCP server list are both mandatory." },
-    { "key": "D", "text_en": "A description of when to use it and the agent's prompt." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "Dans `AgentDefinition`, seuls `description` (« Natural language description of when to use this agent ») et `prompt` (« The agent's system prompt ») sont requis ; `tools`, `model`, `skills`, etc. sont optionnels.",
-   "distractors_fr": {
-    "A": "`AgentDefinition` n'a pas de champ nom obligatoire : ce sont `description` et `prompt` qui sont requis.",
-    "B": "`model` et `tools` sont optionnels, pas requis.",
-    "C": "`memory` et `mcpServers` sont optionnels."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
-  },
-  {
-   "id": "AGC-016",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Subagents vs agent teams : remontee au principal contre communication entre pairs",
-   "question_en": "Select the TWO statements that describe subagents rather than agent teams.",
-   "options": [
-    { "key": "A", "text_en": "They report their results back to the main agent only." },
-    { "key": "B", "text_en": "The main agent manages all of the work they do." },
-    { "key": "C", "text_en": "Teammates message each other directly during the task." },
-    { "key": "D", "text_en": "They coordinate through a shared, self-managed task list." }
-   ],
-   "correct": ["A", "B"],
-   "explanation_fr": "La doc (tableau) attribue aux subagents « Report results back to the main agent only » et « Main agent manages all work » ; la messagerie entre pairs et la liste de tâches partagée décrivent les agent teams.",
-   "distractors_fr": {
-    "C": "La communication directe entre coéquipiers est une caractéristique des agent teams.",
-    "D": "La liste de tâches partagée en auto-coordination décrit les agent teams, pas les subagents."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-teams"
-  },
-  {
-   "id": "AGC-018",
-   "domain": "Tools and MCPs",
-   "subdomain": "Agentic Customization",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Les custom tools tournent via un serveur MCP in-process du SDK",
-   "question_en": "How does the Agent SDK expose your own custom functions to Claude?",
-   "options": [
-    { "key": "A", "text_en": "By spawning each individual function as its own separate external MCP process." },
-    { "key": "B", "text_en": "By writing them into Claude's system prompt as pseudocode." },
-    { "key": "C", "text_en": "Through an in-process MCP server running inside your application." },
-    { "key": "D", "text_en": "By uploading them to Anthropic's servers for remote execution." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : « Using the SDK's in-process MCP server, you can give Claude access to databases, external APIs, domain-specific logic ... The server runs in-process inside your application, not as a separate process. »",
-   "distractors_fr": {
-    "A": "Le serveur MCP tourne in-process, pas comme un processus externe séparé par fonction.",
-    "B": "Les custom tools ne sont pas écrits dans le prompt système en pseudo-code.",
-    "D": "Ils s'exécutent dans ton application, pas en étant téléversés pour exécution distante."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/agent-sdk/custom-tools"
-  }
- ]
+  "subdomain": "Agentic Customization",
+  "domain": "Tools and MCPs",
+  "weight": 4.1,
+  "target_questions": 16,
+  "sources_read": [
+    "https://code.claude.com/docs/en/agent-sdk/skills",
+    "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts",
+    "https://code.claude.com/docs/en/agent-sdk/plugins",
+    "https://code.claude.com/docs/en/agent-teams",
+    "https://code.claude.com/docs/en/agent-sdk/subagents",
+    "https://code.claude.com/docs/en/agent-sdk/custom-tools"
+  ],
+  "questions": [
+    {
+      "id": "ACU-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Les skills se chargent a la demande, contrairement au CLAUDE.md charge a chaque session",
+      "question_en": "How do Skills differ from a CLAUDE.md file in how they load?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Skills load on demand; only their descriptions load at startup."
+        },
+        {
+          "key": "B",
+          "text_en": "Skills load fully every session, exactly like CLAUDE.md does."
+        },
+        {
+          "key": "C",
+          "text_en": "Skills never load at all unless you paste them into the prompt yourself."
+        },
+        {
+          "key": "D",
+          "text_en": "Skills load only once, on the very first run of the project."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc : « Unlike CLAUDE.md (which loads every session), skills load on demand. The agent receives skill descriptions at startup and loads the full content when relevant. »",
+      "distractors_fr": {
+        "B": "C'est CLAUDE.md qui se charge intégralement à chaque session ; les skills, non.",
+        "C": "Les skills sont découverts et leurs descriptions chargées automatiquement, sans copier-coller.",
+        "D": "Le chargement est déclenché par la pertinence, pas limité au premier lancement."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
+    },
+    {
+      "id": "ACU-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Un skill est un dossier avec un SKILL.md dont la description declenche l invocation",
+      "question_en": "How is a Skill defined on the filesystem?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A single JSON file registered through the SDK's programmatic API."
+        },
+        {
+          "key": "B",
+          "text_en": "A directory holding a SKILL.md whose description triggers it."
+        },
+        {
+          "key": "C",
+          "text_en": "An entry added directly inside the project's settings.json configuration."
+        },
+        {
+          "key": "D",
+          "text_en": "A shell script placed in the .claude/hooks directory."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : « Create each Skill as a directory containing a SKILL.md file with YAML frontmatter and Markdown content. The description field determines when Claude invokes your Skill. »",
+      "distractors_fr": {
+        "A": "Il n'existe pas d'API programmatique pour enregistrer un skill : ce sont des artefacts de fichiers.",
+        "C": "Un skill n'est pas une entrée de settings.json mais un dossier SKILL.md dédié.",
+        "D": "Un script shell dans .claude/hooks relève des hooks, pas des skills."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
+    },
+    {
+      "id": "ACU-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Emplacements des skills : projet .claude/skills et utilisateur ~/.claude/skills",
+      "question_en": "From which TWO filesystem directories are Skills loaded via setting sources?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`.claude/skills/` in the project, shared through git."
+        },
+        {
+          "key": "B",
+          "text_en": "`.claude/output-styles/` inside the project repository folder."
+        },
+        {
+          "key": "C",
+          "text_en": "`~/.claude/settings.json` in your home directory."
+        },
+        {
+          "key": "D",
+          "text_en": "`~/.claude/skills/` for personal skills across all projects."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "La doc liste : « Project Skills (.claude/skills/): Shared with your team via git » et « User Skills (~/.claude/skills/): Personal Skills across all projects. »",
+      "distractors_fr": {
+        "B": "`.claude/output-styles/` stocke des output styles, pas des skills.",
+        "C": "`~/.claude/settings.json` contient des réglages, pas des skills ; les skills utilisateur sont dans `~/.claude/skills/`."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
+    },
+    {
+      "id": "ACU-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Un output style modifie durablement le prompt systeme de Claude",
+      "question_en": "What does activating an output style change?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It appends a one-off note to the current user message only."
+        },
+        {
+          "key": "B",
+          "text_en": "It rewrites the project's CLAUDE.md file on disk automatically."
+        },
+        {
+          "key": "C",
+          "text_en": "It modifies Claude's system prompt with a saved configuration."
+        },
+        {
+          "key": "D",
+          "text_en": "It installs a new MCP server for the duration of the session."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : « Output styles are saved configurations that modify Claude's system prompt. They're stored as markdown files and can be reused across sessions and projects. »",
+      "distractors_fr": {
+        "A": "Un output style est une configuration persistante, pas une note ajoutée à un seul message.",
+        "B": "Il ne réécrit pas le CLAUDE.md ; il agit sur le prompt système.",
+        "D": "Un output style ne déploie pas de serveur MCP."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
+    },
+    {
+      "id": "ACU-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Emplacements des output styles : ~/.claude/output-styles ou .claude/output-styles",
+      "question_en": "Where can output styles be stored?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only inline in code, since they cannot be saved as files at all."
+        },
+        {
+          "key": "B",
+          "text_en": "In the .mcp.json file at the repository root."
+        },
+        {
+          "key": "C",
+          "text_en": "In ~/.claude.json under a dedicated styles key."
+        },
+        {
+          "key": "D",
+          "text_en": "In ~/.claude/output-styles/ or .claude/output-styles/."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc : « Save it to ~/.claude/output-styles/ for a user-level style available in every project, or .claude/output-styles/ in your repository for a project-level style you can commit and share. »",
+      "distractors_fr": {
+        "A": "Les output styles sont justement des fichiers markdown enregistrés, réutilisables.",
+        "B": "`.mcp.json` sert aux serveurs MCP, pas aux output styles.",
+        "C": "`~/.claude.json` ne stocke pas les output styles."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
+    },
+    {
+      "id": "ACU-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "keep-coding-instructions : conserver les instructions d ingenierie du preset claude_code",
+      "question_en": "By default, how does a custom output style interact with the claude_code preset's coding instructions?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It replaces them, unless you set keep-coding-instructions: true."
+        },
+        {
+          "key": "B",
+          "text_en": "It always keeps them and simply appends your own text right after them."
+        },
+        {
+          "key": "C",
+          "text_en": "It merges them automatically with no way to override it."
+        },
+        {
+          "key": "D",
+          "text_en": "It ignores your style whenever coding instructions are present."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc : « By default, a custom output style replaces the claude_code preset's software engineering instructions with your own. To keep them and layer your instructions on top, set keep-coding-instructions: true in the frontmatter. »",
+      "distractors_fr": {
+        "B": "Le comportement par défaut est le remplacement ; conserver puis empiler exige keep-coding-instructions: true.",
+        "C": "On peut précisément contrôler le comportement via le frontmatter, ce n'est pas une fusion imposée.",
+        "D": "L'output style s'applique bel et bien ; il remplace les instructions de codage par défaut."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
+    },
+    {
+      "id": "ACU-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Output style (prompt systeme) vs CLAUDE.md (contexte projet injecte)",
+      "question_en": "An output style and a CLAUDE.md both shape behavior. How do they differ mechanically?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both are injected in exactly the same way into the system prompt at every startup."
+        },
+        {
+          "key": "B",
+          "text_en": "The style changes the system prompt; CLAUDE.md is injected as project context."
+        },
+        {
+          "key": "C",
+          "text_en": "CLAUDE.md changes the system prompt; the style is only project context."
+        },
+        {
+          "key": "D",
+          "text_en": "Neither touches the prompt; both are enforced by Claude Code."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : « Output styles ... change the system prompt directly. CLAUDE.md takes a different path: the SDK reads it and injects its content into the conversation as project context, not into the system prompt. »",
+      "distractors_fr": {
+        "A": "Les deux n'empruntent pas le même chemin : seul l'output style modifie le prompt système.",
+        "C": "C'est l'inverse : l'output style modifie le prompt système, CLAUDE.md est injecté comme contexte.",
+        "D": "L'output style touche bien le prompt système ; ce ne sont pas des règles imposées par Claude Code."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
+    },
+    {
+      "id": "ACU-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Un plugin regroupe skills, agents, hooks et serveurs MCP",
+      "question_en": "A plugin packages Claude Code extensions. Select TWO things a plugin can bundle.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Billing invoices for your Anthropic API usage."
+        },
+        {
+          "key": "B",
+          "text_en": "Skills that Claude can invoke autonomously."
+        },
+        {
+          "key": "C",
+          "text_en": "Hooks that respond to tool-use events."
+        },
+        {
+          "key": "D",
+          "text_en": "The user's personal ~/.claude.json session file."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La doc : « Plugins are packages of Claude Code extensions that can include: Skills ... Agents ... Hooks ... MCP servers. » Skills et hooks en font partie.",
+      "distractors_fr": {
+        "A": "Un plugin ne regroupe pas de factures de facturation.",
+        "D": "`~/.claude.json` est un fichier de session personnel, pas un composant empaqueté dans un plugin."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
+    },
+    {
+      "id": "ACU-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le dossier commands/ d un plugin est legacy : utiliser skills/",
+      "question_en": "You're building a new plugin. Where should its invocable capabilities go?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In the commands/ directory, the current recommended format."
+        },
+        {
+          "key": "B",
+          "text_en": "In a top-level plugin.py file at the repository root."
+        },
+        {
+          "key": "C",
+          "text_en": "In the skills/ directory; commands/ is a legacy format."
+        },
+        {
+          "key": "D",
+          "text_en": "In settings.json, which registers plugin capabilities."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : « The commands/ directory is a legacy format. Use skills/ for new plugins. Claude Code continues to support both formats for backward compatibility. »",
+      "distractors_fr": {
+        "A": "`commands/` est justement le format legacy, pas le format recommandé.",
+        "B": "Un plugin ne se structure pas autour d'un `plugin.py` racine.",
+        "D": "Les capacités d'un plugin ne s'enregistrent pas via settings.json."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
+    },
+    {
+      "id": "ACU-011",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Distribution des plugins par marketplace puis chargement local",
+      "question_en": "How do you use a plugin distributed through a marketplace with the SDK?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Pass its marketplace URL directly; the SDK fetches it remotely."
+        },
+        {
+          "key": "B",
+          "text_en": "Reference it by name; the SDK resolves it from the registry."
+        },
+        {
+          "key": "C",
+          "text_en": "Publish your own copy to the marketplace before loading it."
+        },
+        {
+          "key": "D",
+          "text_en": "Download it first, then load it from its local directory path."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc : « To use a plugin distributed through a marketplace or remote repository, download it first and provide the local directory path. » Le champ `type` n'accepte que `\"local\"`.",
+      "distractors_fr": {
+        "A": "Le SDK ne récupère pas un plugin depuis une URL distante ; il faut un chemin local.",
+        "B": "Il n'y a pas de résolution par nom depuis un registre : on fournit un chemin local.",
+        "C": "Publier n'est pas requis pour consommer un plugin de marketplace : il faut le télécharger localement."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
+    },
+    {
+      "id": "ACU-012",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Les skills et commandes d un plugin sont prefixes par le nom du plugin",
+      "question_en": "A plugin named my-plugin ships a skill called greet. How does it appear?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "As greet, with no prefix, merged into the global list."
+        },
+        {
+          "key": "B",
+          "text_en": "As plugin:greet, using a generic fixed keyword prefix."
+        },
+        {
+          "key": "C",
+          "text_en": "As my-plugin:greet, prefixed with the plugin's name."
+        },
+        {
+          "key": "D",
+          "text_en": "As greet@my-plugin, using an at-sign separator syntax."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : « Plugin skills appear with the plugin name as a prefix », exemple `[\"my-plugin:greet\"]`, et les commandes utilisent le même préfixe.",
+      "distractors_fr": {
+        "A": "Le nom est préfixé par celui du plugin, il n'est pas fusionné sans préfixe.",
+        "B": "Le préfixe est le nom réel du plugin (`my-plugin`), pas le mot générique `plugin`.",
+        "D": "Le séparateur est deux-points après le nom du plugin, pas un `@`."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
+    },
+    {
+      "id": "ACU-013",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Un subagent a sa propre fenetre de contexte et ne rend compte qu a l agent principal",
+      "question_en": "What characterizes how a subagent runs?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It has its own context window and reports results to the main agent."
+        },
+        {
+          "key": "B",
+          "text_en": "It shares the main agent's context window the entire time."
+        },
+        {
+          "key": "C",
+          "text_en": "It messages every other subagent directly to coordinate all the work."
+        },
+        {
+          "key": "D",
+          "text_en": "It runs in the user's terminal without any main agent."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc (tableau subagents vs agent teams) : contexte « Own context window; results return to the caller » et communication « Report results back to the main agent only ».",
+      "distractors_fr": {
+        "B": "Un subagent a sa propre fenêtre de contexte, il ne partage pas celle de l'agent principal.",
+        "C": "La communication directe entre pairs caractérise les agent teams, pas les subagents.",
+        "D": "Un subagent est justement piloté par l'agent principal qui l'a lancé."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "ACU-014",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Cout en tokens plus faible d un subagent : resultat resume vers le contexte principal",
+      "question_en": "Why do subagents typically cost fewer tokens than an agent team?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Because each subagent always runs on a smaller and cheaper model by default."
+        },
+        {
+          "key": "B",
+          "text_en": "Because a subagent's results are summarized back to the main context."
+        },
+        {
+          "key": "C",
+          "text_en": "Because subagents skip the system prompt to save on tokens."
+        },
+        {
+          "key": "D",
+          "text_en": "Because subagents cache every response and never re-run."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc (tableau) : coût en tokens des subagents « Lower: results summarized back to main context », alors qu'une agent team fait tourner chaque coéquipier comme une instance séparée.",
+      "distractors_fr": {
+        "A": "L'économie ne vient pas d'un modèle plus petit imposé, mais du résumé des résultats.",
+        "C": "Les subagents ne sautent pas le prompt système.",
+        "D": "Rien dans la doc n'attribue l'économie à un cache systématique des réponses."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "ACU-015",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "AgentDefinition d un subagent : description et prompt requis, model en surcharge",
+      "question_en": "Which fields are required to define a subagent programmatically (AgentDefinition)?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only a unique name string; everything else is inferred."
+        },
+        {
+          "key": "B",
+          "text_en": "A model ID and a list of allowed tools, and nothing else."
+        },
+        {
+          "key": "C",
+          "text_en": "A memory source and an MCP server list are both mandatory."
+        },
+        {
+          "key": "D",
+          "text_en": "A description of when to use it and the agent's prompt."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Dans `AgentDefinition`, seuls `description` (« Natural language description of when to use this agent ») et `prompt` (« The agent's system prompt ») sont requis ; `tools`, `model`, `skills`, etc. sont optionnels.",
+      "distractors_fr": {
+        "A": "`AgentDefinition` n'a pas de champ nom obligatoire : ce sont `description` et `prompt` qui sont requis.",
+        "B": "`model` et `tools` sont optionnels, pas requis.",
+        "C": "`memory` et `mcpServers` sont optionnels."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
+    },
+    {
+      "id": "ACU-016",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Subagents vs agent teams : remontee au principal contre communication entre pairs",
+      "question_en": "Select the TWO statements that describe subagents rather than agent teams.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "They report their results back to the main agent only."
+        },
+        {
+          "key": "B",
+          "text_en": "The main agent manages all of the work they do."
+        },
+        {
+          "key": "C",
+          "text_en": "Teammates message each other directly during the task."
+        },
+        {
+          "key": "D",
+          "text_en": "They coordinate through a shared, self-managed task list."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "La doc (tableau) attribue aux subagents « Report results back to the main agent only » et « Main agent manages all work » ; la messagerie entre pairs et la liste de tâches partagée décrivent les agent teams.",
+      "distractors_fr": {
+        "C": "La communication directe entre coéquipiers est une caractéristique des agent teams.",
+        "D": "La liste de tâches partagée en auto-coordination décrit les agent teams, pas les subagents."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "id": "ACU-018",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Les custom tools tournent via un serveur MCP in-process du SDK",
+      "question_en": "How does the Agent SDK expose your own custom functions to Claude?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "By spawning each individual function as its own separate external MCP process."
+        },
+        {
+          "key": "B",
+          "text_en": "By writing them into Claude's system prompt as pseudocode."
+        },
+        {
+          "key": "C",
+          "text_en": "Through an in-process MCP server running inside your application."
+        },
+        {
+          "key": "D",
+          "text_en": "By uploading them to Anthropic's servers for remote execution."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : « Using the SDK's in-process MCP server, you can give Claude access to databases, external APIs, domain-specific logic ... The server runs in-process inside your application, not as a separate process. »",
+      "distractors_fr": {
+        "A": "Le serveur MCP tourne in-process, pas comme un processus externe séparé par fonction.",
+        "B": "Les custom tools ne sont pas écrits dans le prompt système en pseudo-code.",
+        "D": "Ils s'exécutent dans ton application, pas en étant téléversés pour exécution distante."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/custom-tools"
+    }
+  ]
 }

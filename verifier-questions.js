@@ -241,6 +241,23 @@ function main() {
     console.log(`\n  Questions portant sur une API beta : ${a.beta} (plafond ${PLAFOND_BETA})`);
     if (a.beta > PLAFOND_BETA) anomaliesGlobales.push(`plafond beta depasse : ${a.beta} questions (max ${PLAFOND_BETA})`);
 
+    // Identifiants dupliques entre fichiers. Le controle par fichier ne suffit
+    // pas : deux sous-domaines dont les initiales se rejoignent produisent le
+    // meme prefixe, et l'application indexe ses questions par identifiant --
+    // une collision y fait disparaitre une question au profit de son homonyme,
+    // et confond leur progression en repetition espacee.
+    const parId = new Map();
+    for (const e of index) {
+      if (!parId.has(e.id)) parId.set(e.id, []);
+      parId.get(e.id).push(e.fichier);
+    }
+    const idsEnDouble = [...parId.entries()].filter(([, f]) => f.length > 1);
+    if (idsEnDouble.length) {
+      console.log(`\n  ${idsEnDouble.length} identifiant(s) partage(s) par plusieurs fichiers :`);
+      for (const [id, f] of idsEnDouble) console.log(`    ! ${id} — ${[...new Set(f)].join(', ')}`);
+      anomaliesGlobales.push(`${idsEnDouble.length} identifiant(s) en double entre fichiers`);
+    }
+
     // Doublons de concept entre fichiers.
     const parConcept = new Map();
     for (const e of index) {

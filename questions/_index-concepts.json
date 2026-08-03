@@ -2548,112 +2548,112 @@
     "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
   },
   {
-    "id": "AGC-001",
+    "id": "ACU-001",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Les skills se chargent a la demande, contrairement au CLAUDE.md charge a chaque session",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
   },
   {
-    "id": "AGC-002",
+    "id": "ACU-002",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Un skill est un dossier avec un SKILL.md dont la description declenche l invocation",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
   },
   {
-    "id": "AGC-003",
+    "id": "ACU-003",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Emplacements des skills : projet .claude/skills et utilisateur ~/.claude/skills",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/skills"
   },
   {
-    "id": "AGC-005",
+    "id": "ACU-005",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Un output style modifie durablement le prompt systeme de Claude",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
   },
   {
-    "id": "AGC-006",
+    "id": "ACU-006",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Emplacements des output styles : ~/.claude/output-styles ou .claude/output-styles",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
   },
   {
-    "id": "AGC-007",
+    "id": "ACU-007",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "keep-coding-instructions : conserver les instructions d ingenierie du preset claude_code",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
   },
   {
-    "id": "AGC-008",
+    "id": "ACU-008",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Output style (prompt systeme) vs CLAUDE.md (contexte projet injecte)",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts"
   },
   {
-    "id": "AGC-009",
+    "id": "ACU-009",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Un plugin regroupe skills, agents, hooks et serveurs MCP",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
   },
   {
-    "id": "AGC-010",
+    "id": "ACU-010",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Le dossier commands/ d un plugin est legacy : utiliser skills/",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
   },
   {
-    "id": "AGC-011",
+    "id": "ACU-011",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Distribution des plugins par marketplace puis chargement local",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
   },
   {
-    "id": "AGC-012",
+    "id": "ACU-012",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Les skills et commandes d un plugin sont prefixes par le nom du plugin",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/plugins"
   },
   {
-    "id": "AGC-013",
+    "id": "ACU-013",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Un subagent a sa propre fenetre de contexte et ne rend compte qu a l agent principal",
     "doc_ref": "https://code.claude.com/docs/en/agent-teams"
   },
   {
-    "id": "AGC-014",
+    "id": "ACU-014",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Cout en tokens plus faible d un subagent : resultat resume vers le contexte principal",
     "doc_ref": "https://code.claude.com/docs/en/agent-teams"
   },
   {
-    "id": "AGC-015",
+    "id": "ACU-015",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "AgentDefinition d un subagent : description et prompt requis, model en surcharge",
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
   },
   {
-    "id": "AGC-016",
+    "id": "ACU-016",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Subagents vs agent teams : remontee au principal contre communication entre pairs",
     "doc_ref": "https://code.claude.com/docs/en/agent-teams"
   },
   {
-    "id": "AGC-018",
+    "id": "ACU-018",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",
     "concept": "Les custom tools tournent via un serveur MCP in-process du SDK",

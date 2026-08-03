@@ -3407,7 +3407,7 @@
       "fichier": "security-safety_identity-secrets-and-key-management.json"
     },
     {
-      "id": "AGC-001",
+      "id": "ACU-001",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "facile",
@@ -3416,7 +3416,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-002",
+      "id": "ACU-002",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "facile",
@@ -3425,7 +3425,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-003",
+      "id": "ACU-003",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3434,7 +3434,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-005",
+      "id": "ACU-005",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3443,7 +3443,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-006",
+      "id": "ACU-006",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "facile",
@@ -3452,7 +3452,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-007",
+      "id": "ACU-007",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "difficile",
@@ -3461,7 +3461,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-008",
+      "id": "ACU-008",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "difficile",
@@ -3470,7 +3470,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-009",
+      "id": "ACU-009",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "facile",
@@ -3479,7 +3479,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-010",
+      "id": "ACU-010",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3488,7 +3488,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-011",
+      "id": "ACU-011",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3497,7 +3497,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-012",
+      "id": "ACU-012",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3506,7 +3506,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-013",
+      "id": "ACU-013",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3515,7 +3515,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-014",
+      "id": "ACU-014",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3524,7 +3524,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-015",
+      "id": "ACU-015",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "moyen",
@@ -3533,7 +3533,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-016",
+      "id": "ACU-016",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "difficile",
@@ -3542,7 +3542,7 @@
       "fichier": "tools-mcps_agentic-customization.json"
     },
     {
-      "id": "AGC-018",
+      "id": "ACU-018",
       "domain": "Tools and MCPs",
       "subdomain": "Agentic Customization",
       "difficulty": "difficile",

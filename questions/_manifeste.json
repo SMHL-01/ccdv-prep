@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 247,
+  "nbQuestions": 263,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -52,6 +52,11 @@
       "fichier": "prompt-context-engineering_prompt-engineering.json",
       "subdomain": "Prompt Engineering",
       "nb": 18
+    },
+    {
+      "fichier": "tools-mcps_agentic-customization.json",
+      "subdomain": "Agentic Customization",
+      "nb": 16
     },
     {
       "fichier": "tools-mcps_tool-implementation.json",
@@ -2120,6 +2125,150 @@
       "nature": "factual_semantic",
       "type": "multi",
       "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "AGC-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-011",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-012",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-013",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-014",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-015",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-016",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "AGC-018",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_agentic-customization.json"
     },
     {
       "id": "TLI-001",

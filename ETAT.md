@@ -2,14 +2,14 @@
 
 > Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
 
-**247 / 400 questions** — **61.9 %** du poids de l'examen couvert — **11 / 25** sous-domaines termines.
+**263 / 400 questions** — **66.0 %** du poids de l'examen couvert — **12 / 25** sous-domaines termines.
 
 ## Charge restante
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
 | Said (Claude Pro, quota limite -> petits sous-domaines) | 37 | 5 | 123 |
-| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 113 | 9 | 124 |
+| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 97 | 8 | 140 |
 
 ## Les 25 sous-domaines
 
@@ -79,5 +79,5 @@
 | --- | --- | ---: | ---: | ---: | --- |
 | `[x]` | Tool Implementation | 18 | 18 | 4.4 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 | `[ ]` | MCP Server Development | 0 | 8 | 2.1 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
-| `[?]` | Agentic Customization | 0 | 16 | 4.1 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
+| `[x]` | Agentic Customization | 16 | 16 | 4.1 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 

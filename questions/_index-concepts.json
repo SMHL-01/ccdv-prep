@@ -2527,6 +2527,62 @@
     "doc_ref": "https://code.claude.com/docs/en/agent-sdk/custom-tools"
   },
   {
+    "id": "MSD-001",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Un client MCP est instancie par serveur, le host les coordonne",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+  },
+  {
+    "id": "MSD-002",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Ce qui distingue le transport stdio du transport Streamable HTTP",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+  },
+  {
+    "id": "MSD-003",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "MCP est sans etat : chaque requete porte elle-meme sa version et ses capacites",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+  },
+  {
+    "id": "MSD-004",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Les trois primitives qu un serveur expose et leur role respectif",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+  },
+  {
+    "id": "MSD-005",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Primitives client depreciees en 2026-07-28 et solutions de remplacement",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+  },
+  {
+    "id": "MSD-006",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Un serveur stdio ne doit jamais ecrire sur la sortie standard",
+    "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server"
+  },
+  {
+    "id": "MSD-007",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Convention de nommage des outils MCP cote Claude Code",
+    "doc_ref": "https://code.claude.com/docs/en/agent-sdk/mcp"
+  },
+  {
+    "id": "MSD-008",
+    "fichier": "tools-mcps_mcp-server-development.json",
+    "subdomain": "MCP Server Development",
+    "concept": "Plafond de l attente de connexion aux serveurs MCP au demarrage",
+    "doc_ref": "https://code.claude.com/docs/en/agent-sdk/mcp"
+  },
+  {
     "id": "TLI-001",
     "fichier": "tools-mcps_tool-implementation.json",
     "subdomain": "Tool Implementation",

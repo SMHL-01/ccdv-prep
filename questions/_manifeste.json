@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 379,
+  "nbQuestions": 387,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -107,6 +107,11 @@
       "fichier": "tools-mcps_agentic-customization.json",
       "subdomain": "Agentic Customization",
       "nb": 16
+    },
+    {
+      "fichier": "tools-mcps_mcp-server-development.json",
+      "subdomain": "MCP Server Development",
+      "nb": 8
     },
     {
       "fichier": "tools-mcps_tool-implementation.json",
@@ -3363,6 +3368,78 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "tools-mcps_agentic-customization.json"
+    },
+    {
+      "id": "MSD-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
+    },
+    {
+      "id": "MSD-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "tools-mcps_mcp-server-development.json"
     },
     {
       "id": "TLI-001",

@@ -1,0 +1,211 @@
+{
+  "subdomain": "MCP Server Development",
+  "domain": "Tools and MCPs",
+  "weight": 2.1,
+  "target_questions": 8,
+  "sources_read": [
+    "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+    "https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server",
+    "https://code.claude.com/docs/en/agent-sdk/mcp"
+  ],
+  "questions": [
+    {
+      "id": "MSD-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Un client MCP est instancie par serveur, le host les coordonne",
+      "question_en": "An editor acting as an MCP host connects to a Sentry server and then to a filesystem server. How many MCP clients does it end up with?",
+      "options": [
+        { "key": "A", "text_en": "One, reused for both servers since the host owns the connection." },
+        { "key": "B", "text_en": "One per tool exposed, so the count follows the tools discovered." },
+        { "key": "C", "text_en": "Two, because the host creates one MCP client for each server." },
+        { "key": "D", "text_en": "None, as a host talks to servers directly without a client layer." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "L'architecture est explicite : « The MCP host accomplishes this by creating one MCP client for each MCP server. Each MCP client maintains a dedicated connection with its corresponding MCP server. » L'exemple donné est exactement celui-ci : VS Code instancie un client pour Sentry, puis un second pour le serveur de fichiers.",
+      "distractors_fr": {
+        "A": "Chaque client maintient une connexion dédiée à son serveur ; il n'y a pas de client mutualisé au niveau du host.",
+        "B": "Le découpage se fait par serveur, pas par outil : un serveur exposant dix outils reste servi par un seul client.",
+        "D": "Le client est précisément la couche que le host instancie pour parler à un serveur ; le host ne s'y substitue pas."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    },
+    {
+      "id": "MSD-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ce qui distingue le transport stdio du transport Streamable HTTP",
+      "question_en": "A team must pick a transport for a server that several remote users will share. Select the TWO statements that match the documentation.",
+      "options": [
+        { "key": "A", "text_en": "Streamable HTTP suits remote servers and typically serves many clients." },
+        { "key": "B", "text_en": "Stdio scales to many remote clients once a port is exposed for it." },
+        { "key": "C", "text_en": "Streamable HTTP forbids bearer tokens, so keys must go in the body." },
+        { "key": "D", "text_en": "Stdio runs between local processes, with no network overhead at all." }
+      ],
+      "correct": ["A", "D"],
+      "explanation_fr": "Deux phrases de l'architecture : « Local MCP servers that use the STDIO transport typically serve a single MCP client, whereas remote MCP servers that use the Streamable HTTP transport will typically serve many MCP clients », et pour stdio « direct process communication between local processes on the same machine, providing optimal performance with no network overhead ».",
+      "distractors_fr": {
+        "B": "Stdio passe par les flux d'entrée et de sortie standard de processus locaux : il n'y a pas de port à exposer, et il sert typiquement un client unique.",
+        "C": "L'inverse : le transport HTTP « supports standard HTTP authentication methods including bearer tokens, API keys, and custom headers », et MCP recommande OAuth."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    },
+    {
+      "id": "MSD-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "MCP est sans etat : chaque requete porte elle-meme sa version et ses capacites",
+      "question_en": "A developer plans to store negotiated capabilities in server memory after a first handshake, then rely on them for later calls. Why does that design not hold?",
+      "options": [
+        { "key": "A", "text_en": "Capabilities live only in the client, which never discloses them at all." },
+        { "key": "B", "text_en": "MCP is stateless: each request carries its own version and capabilities." },
+        { "key": "C", "text_en": "The handshake result expires after a fixed idle window on the server." },
+        { "key": "D", "text_en": "Servers may not read capabilities, which the transport strips en route." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La spécification 2026-07-28 est explicite : « MCP is a stateless protocol. Every request carries the protocol version and the capabilities relevant to that request in its `_meta` field, so the server can process each request on its own. » Il n'y a donc aucun état de session à conserver entre deux requêtes ; les serveurs annoncent versions et capacités via la requête obligatoire `server/discover`, dont la réponse est généralement cachable.",
+      "distractors_fr": {
+        "A": "Les capacités circulent bel et bien : elles voyagent dans le champ `_meta` de chaque requête, et le client s'y identifie sauf configuration contraire.",
+        "C": "Il n'y a pas de fenêtre d'inactivité à surveiller, puisqu'il n'y a pas d'état de session à faire expirer.",
+        "D": "Le champ `_meta` est justement destiné au serveur : c'est ce qui lui permet de traiter chaque requête isolément."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    },
+    {
+      "id": "MSD-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Les trois primitives qu un serveur expose et leur role respectif",
+      "question_en": "A server wraps a database. Which mapping of MCP server primitives to that server's offerings is correct?",
+      "options": [
+        { "key": "A", "text_en": "Tools for the schema, resources for queries, prompts for the transport." },
+        { "key": "B", "text_en": "Tools for the schema, prompts for queries, resources for permissions." },
+        { "key": "C", "text_en": "Resources for queries, prompts for the schema, tools for few-shot text." },
+        { "key": "D", "text_en": "Tools for queries, resources for the schema, prompts for few-shot text." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "L'exemple de la doc est mot pour mot celui-ci : « consider an MCP server that provides context about a database. It can expose tools for querying the database, a resource that contains the schema of the database, and a prompt that includes few-shot examples for interacting with the tools. » Tools = actions exécutables, resources = données de contexte, prompts = gabarits réutilisables.",
+      "distractors_fr": {
+        "A": "Inversion : interroger la base est une action, donc un tool ; le schéma est une donnée de contexte, donc une resource. Le transport n'est pas une primitive.",
+        "B": "Les prompts sont des gabarits d'interaction, pas un canal d'exécution de requêtes, et les permissions ne relèvent d'aucune des trois primitives.",
+        "C": "Les resources fournissent du contexte en lecture et n'exécutent rien ; ce sont les tools qui portent les appels."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    },
+    {
+      "id": "MSD-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Primitives client depreciees en 2026-07-28 et solutions de remplacement",
+      "question_en": "A server author targets protocol version 2026-07-28 and wants an LLM completion plus debug logs. Select the TWO statements that apply.",
+      "options": [
+        { "key": "A", "text_en": "Sampling is the supported route, and logging still ships log messages." },
+        { "key": "B", "text_en": "Sampling is deprecated; new servers call an LLM provider API directly." },
+        { "key": "C", "text_en": "Logging is deprecated; write to stderr on stdio, or use OpenTelemetry." },
+        { "key": "D", "text_en": "Elicitation replaces both, since it can also return model completions." }
+      ],
+      "correct": ["B", "C"],
+      "explanation_fr": "La liste des primitives client marque les deux comme dépréciées à partir de la version `2026-07-28`. Pour sampling : « New implementations should integrate directly with LLM provider APIs. » Pour logging : « New implementations should log to `stderr` (stdio transport) or use OpenTelemetry. » Seule elicitation reste une primitive client vivante.",
+      "distractors_fr": {
+        "A": "C'est l'état antérieur du protocole : les deux primitives sont explicitement marquées dépréciées depuis `2026-07-28`.",
+        "D": "Elicitation sert à demander une information ou une confirmation à l'utilisateur via `elicitation/create` ; elle ne renvoie aucune complétion de modèle."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    },
+    {
+      "id": "MSD-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Un serveur stdio ne doit jamais ecrire sur la sortie standard",
+      "question_en": "A Python MCP server on the stdio transport works alone but breaks under a host, right after debug print() calls were added. What is the cause?",
+      "options": [
+        { "key": "A", "text_en": "print() writes to stdout, which corrupts the JSON-RPC message stream." },
+        { "key": "B", "text_en": "print() is synchronous, so it starves the server's asynchronous loop." },
+        { "key": "C", "text_en": "Hosts cap server output, and the extra lines cross that size ceiling." },
+        { "key": "D", "text_en": "Debug output must be JSON, so plain strings fail the schema check." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le guide de construction d'un serveur met en garde noir sur blanc : « For STDIO-based servers: Never write to stdout. Writing to stdout will corrupt the JSON-RPC messages and break your server. The `print()` function writes to stdout by default, so keep it out of a STDIO server entirely. » Sur un serveur HTTP, en revanche, écrire sur la sortie standard ne gêne pas.",
+      "distractors_fr": {
+        "B": "Le problème n'est pas de concurrence : c'est le canal lui-même, stdout, qui transporte les messages JSON-RPC et se retrouve pollué.",
+        "C": "Aucun plafond de volume n'est en cause ; une seule ligne parasite sur stdout suffit à casser le flux.",
+        "D": "Rien n'impose un format aux traces : la règle est de ne pas écrire sur stdout du tout, quel que soit le format."
+      },
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server"
+    },
+    {
+      "id": "MSD-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Convention de nommage des outils MCP cote Claude Code",
+      "question_en": "A server registered as \"github\" exposes a list_issues tool. Under what name does Claude Code expose it?",
+      "options": [
+        { "key": "A", "text_en": "github.list_issues, the server name and tool joined by a dot." },
+        { "key": "B", "text_en": "list_issues@github, the tool first and the server after an at sign." },
+        { "key": "C", "text_en": "mcp__github__list_issues, with double underscores around the server." },
+        { "key": "D", "text_en": "mcp:github/list_issues, a scheme, the server, then a path segment." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La convention est donnée telle quelle : « MCP tools follow the naming pattern `mcp__<server-name>__<tool-name>`. For example, a GitHub server named `\"github\"` with a `list_issues` tool becomes `mcp__github__list_issues`. » C'est ce nom qu'il faut employer pour accorder une permission d'outil.",
+      "distractors_fr": {
+        "A": "Le point n'est pas le séparateur retenu ; le motif documenté encadre le nom du serveur par des doubles soulignés.",
+        "B": "L'ordre est inverse de la convention : le serveur précède l'outil, et aucune arobase n'intervient.",
+        "D": "Aucun schéma d'URI n'est utilisé pour nommer les outils exposés à Claude."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/mcp"
+    },
+    {
+      "id": "MSD-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "concept": "Plafond de l attente de connexion aux serveurs MCP au demarrage",
+      "question_en": "Startup is set to wait for MCP servers by disabling non-blocking connection. How long can that wait last by default?",
+      "options": [
+        { "key": "A", "text_en": "Up to 1 second, after which pending servers are dropped outright." },
+        { "key": "B", "text_en": "Up to 5 seconds, and pending servers keep connecting in background." },
+        { "key": "C", "text_en": "Up to 30 seconds, the same deadline the first model call uses." },
+        { "key": "D", "text_en": "There is no cap: startup waits until every server has answered." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "« To restore a bounded startup wait for every server, set the `MCP_CONNECTION_NONBLOCKING` environment variable to `0`. The wait is capped at 5 seconds by `MCP_CONNECT_TIMEOUT_MS`, and servers still pending at that deadline keep connecting in the background. » Le champ `alwaysLoad: true` sur un serveur donné s'aligne sur la même échéance de 5 secondes.",
+      "distractors_fr": {
+        "A": "Ni la durée ni le comportement : aucun serveur n'est abandonné à l'échéance, ceux qui restent en attente poursuivent leur connexion en arrière-plan.",
+        "C": "Trente secondes n'apparaît nulle part comme plafond de connexion ; la valeur documentée est de cinq secondes.",
+        "D": "C'est justement ce que le plafond évite : sans lui, un serveur injoignable retiendrait le démarrage indéfiniment."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/mcp"
+    }
+  ]
+}

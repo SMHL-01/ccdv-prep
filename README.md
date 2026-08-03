@@ -72,6 +72,11 @@ Le projet se rédige à deux : `METHODE.md` décrit le cycle de travail,
 `reservations.json` dit qui s'est attribué quel sous-domaine, et `ETAT.md` — qui
 se lit directement sur GitHub — donne l'état à jour.
 
+**`ARCHITECTURE.md` documente tout le reste** : le format exact d'une question,
+les fichiers générés, la chaîne de production, le chargement différé de
+l'application, l'algorithme de tirage de l'examen blanc, la répétition espacée
+et le format du `localStorage`.
+
 `blueprint.json` est la source de vérité unique des 25 sous-domaines et de
 leurs poids : il est lu à la fois par `verifier-couverture.js` et par
 l'application.

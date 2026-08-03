@@ -840,6 +840,118 @@
     "doc_ref": "https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat"
   },
   {
+    "id": "CFG-001",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Les quatre portees de configuration : Managed, User, Project, Local",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-002",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Emplacements des settings : utilisateur ~/.claude vs projet .claude",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-003",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "settings.local.json : reglages personnels non versionnes",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-004",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Ordre de priorite des portees de configuration",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-005",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "La portee Managed ne peut etre surchargee par personne",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-006",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Portees partagees avec l equipe : Project et Managed",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-007",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Contenu de ~/.claude.json : session OAuth, serveurs MCP user/local, etat par projet",
+    "doc_ref": "https://code.claude.com/docs/en/settings"
+  },
+  {
+    "id": "CFG-008",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "CLAUDE.md est charge comme contexte a chaque session, pas comme config imposee",
+    "doc_ref": "https://code.claude.com/docs/en/memory"
+  },
+  {
+    "id": "CFG-009",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Emplacements d un CLAUDE.md de projet : ./CLAUDE.md ou ./.claude/CLAUDE.md",
+    "doc_ref": "https://code.claude.com/docs/en/memory"
+  },
+  {
+    "id": "CFG-010",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Pour bloquer reellement une action : hook PreToolUse, pas CLAUDE.md",
+    "doc_ref": "https://code.claude.com/docs/en/memory"
+  },
+  {
+    "id": "CFG-011",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Evaluation des regles de permission : deny, puis ask, puis allow",
+    "doc_ref": "https://code.claude.com/docs/en/permissions"
+  },
+  {
+    "id": "CFG-012",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Regle deny nue vs portee : retirer l outil du contexte ou bloquer des appels",
+    "doc_ref": "https://code.claude.com/docs/en/permissions"
+  },
+  {
+    "id": "CFG-013",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Les regles de permission sont appliquees par Claude Code, pas par le modele",
+    "doc_ref": "https://code.claude.com/docs/en/permissions"
+  },
+  {
+    "id": "CFG-014",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "Portees MCP stockees dans ~/.claude.json : local et user",
+    "doc_ref": "https://code.claude.com/docs/en/mcp"
+  },
+  {
+    "id": "CFG-015",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": "bypassPermissions : environnements isoles, rm -rf / invite quand meme",
+    "doc_ref": "https://code.claude.com/docs/en/permissions"
+  },
+  {
+    "id": "CFG-016",
+    "fichier": "applications-integration_configuration-management.json",
+    "subdomain": "Configuration Management",
+    "concept": ".mcp.json : serveurs MCP partages avec tous ceux qui clonent le depot",
+    "doc_ref": "https://code.claude.com/docs/en/mcp"
+  },
+  {
     "id": "SEF-001",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",

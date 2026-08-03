@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 231,
+  "nbQuestions": 247,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -27,6 +27,11 @@
       "fichier": "applications-integration_claude-application-design.json",
       "subdomain": "Claude Application Design",
       "nb": 34
+    },
+    {
+      "fichier": "applications-integration_configuration-management.json",
+      "subdomain": "Configuration Management",
+      "nb": 16
     },
     {
       "fichier": "applications-integration_software-engineering-foundations.json",
@@ -1134,6 +1139,150 @@
       "nature": "judgment",
       "type": "multi",
       "fichier": "applications-integration_claude-application-design.json"
+    },
+    {
+      "id": "CFG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
+    },
+    {
+      "id": "CFG-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_configuration-management.json"
     },
     {
       "id": "SEF-001",

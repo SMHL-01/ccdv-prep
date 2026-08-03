@@ -1,0 +1,685 @@
+{
+ "subdomain": "Claude API Mechanics",
+ "domain": "Applications and Integration",
+ "weight": 6.8,
+ "target_questions": 27,
+ "sources_read": [
+  "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+  "https://platform.claude.com/docs/en/build-with-claude/streaming",
+  "https://platform.claude.com/docs/en/api/rate-limits",
+  "https://platform.claude.com/docs/en/build-with-claude/working-with-messages",
+  "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+ ],
+ "questions": [
+  {
+   "id": "CAM-001",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "end_turn signale une fin naturelle : utiliser la reponse",
+   "question_en": "A response comes back with stop_reason end_turn and non-empty content. How should the application treat it?",
+   "options": [
+    { "key": "A", "text_en": "Use the response; Claude finished its turn naturally." },
+    { "key": "B", "text_en": "Retry the request, since end_turn marks an internal error." },
+    { "key": "C", "text_en": "Raise max_tokens, because the output was clearly cut short." },
+    { "key": "D", "text_en": "Discard it and switch to a fallback model right away." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La table des `stop_reason` associe `end_turn` à « Claude finished its response naturally » avec pour action « Use the response. » Une terminaison `end_turn` avec du contenu est le cas nominal : on consomme la réponse.",
+   "distractors_fr": {
+    "B": "`end_turn` n'est pas une erreur : c'est une fin normale de tour, il n'y a rien à réessayer.",
+    "C": "Élever `max_tokens` répond à une troncature (`max_tokens`), pas à une fin naturelle `end_turn`.",
+    "D": "Le repli sur un autre modèle vise les refus ; `end_turn` ne justifie aucun basculement."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-002",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Reagir a une reponse tronquee par la limite max_tokens",
+   "question_en": "A response stops with stop_reason max_tokens and the text is clearly cut off. Which action fits the documentation?",
+   "options": [
+    { "key": "A", "text_en": "Treat max_tokens as a fatal error and abort the task." },
+    { "key": "B", "text_en": "Raise max_tokens, or continue the response where it stopped." },
+    { "key": "C", "text_en": "Resend the identical request unchanged until it completes." },
+    { "key": "D", "text_en": "Lower max_tokens so the model finishes within budget." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "Pour `max_tokens`, la doc indique « Raise `max_tokens` or continue the response. » On augmente donc le plafond, ou l'on relance pour poursuivre la génération là où elle s'est arrêtée.",
+   "distractors_fr": {
+    "A": "`max_tokens` n'est pas fatal : la réponse est simplement tronquée et peut être poursuivie.",
+    "C": "Renvoyer la requête à l'identique, sans plus de budget, redonnera la même troncature.",
+    "D": "Baisser `max_tokens` réduit encore la place disponible et aggrave la troncature."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-003",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Savoir quelle stop_sequence a mis fin a la generation via le champ stop_sequence",
+   "question_en": "A response returns stop_reason stop_sequence. Where do you learn which sequence fired?",
+   "options": [
+    { "key": "A", "text_en": "It is not reported; you must diff the text yourself." },
+    { "key": "B", "text_en": "Check the refusal stop_details object for the category." },
+    { "key": "C", "text_en": "Read the stop_sequence field naming the matched string." },
+    { "key": "D", "text_en": "Inspect the retry-after header returned with it." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc précise pour `stop_sequence` : « Read `stop_sequence` to see which one fired. » Le champ `stop_sequence` de la réponse nomme la chaîne qui a déclenché l'arrêt.",
+   "distractors_fr": {
+    "A": "La séquence est bien reportée, dans le champ `stop_sequence` ; nul besoin de comparer les textes.",
+    "B": "`stop_details` ne concerne que les refus ; il vaut `null` pour une terminaison `stop_sequence`.",
+    "D": "Le header `retry-after` accompagne un 429, pas une terminaison `stop_sequence`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-004",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "tool_use signale qu il faut executer l outil et renvoyer son resultat",
+   "question_en": "A response ends with stop_reason tool_use. What does the loop do next?",
+   "options": [
+    { "key": "A", "text_en": "Assume Claude refused and fall back to another model." },
+    { "key": "B", "text_en": "Treat the turn as finished and show the text to the user." },
+    { "key": "C", "text_en": "Raise max_tokens and resend the very same request again." },
+    { "key": "D", "text_en": "Run the requested tool and return its result to Claude." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La table associe `tool_use` à « Run the tool and return the result. » Claude appelle un outil : la boucle exécute l'outil et renvoie un `tool_result` pour poursuivre le tour.",
+   "distractors_fr": {
+    "A": "Un refus donne `stop_reason: refusal`, pas `tool_use` ; il n'y a pas lieu de replier de modèle.",
+    "B": "Le tour n'est pas fini : Claude attend le résultat de l'outil pour continuer.",
+    "C": "`tool_use` n'a rien à voir avec une troncature ; augmenter `max_tokens` ne fournit pas le résultat attendu."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-005",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Gerer pause_turn en renvoyant la reponse pour poursuivre le tour",
+   "question_en": "In an agent loop using server tools, a response comes back with stop_reason pause_turn. How should the loop proceed?",
+   "options": [
+    { "key": "A", "text_en": "Return client tool_result blocks, as you would for tool_use." },
+    { "key": "B", "text_en": "Treat it as a refusal and retry on a different Claude model." },
+    { "key": "C", "text_en": "Stop the loop; pause_turn means the turn cannot resume." },
+    { "key": "D", "text_en": "Send the assistant content back so Claude continues the turn." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "Pour `pause_turn`, la doc dit « Send the assistant content back to continue » et « Add the assistant's response to your messages array and make another API request. » On renvoie la réponse telle quelle pour laisser Claude poursuivre.",
+   "distractors_fr": {
+    "A": "Renvoyer des `tool_result` est la réponse à `tool_use` ; pour `pause_turn` on renvoie la réponse assistant elle-même.",
+    "B": "`pause_turn` n'est pas un refus : c'est une boucle d'outil serveur en pause, à reprendre, pas à replier.",
+    "C": "Le tour reprend précisément en renvoyant la réponse ; il n'est pas définitivement arrêté."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-006",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "model_context_window_exceeded : traiter la reponse comme tronquee",
+   "question_en": "A response carries stop_reason model_context_window_exceeded. How should your code handle it?",
+   "options": [
+    { "key": "A", "text_en": "Treat the response as truncated; the window filled up." },
+    { "key": "B", "text_en": "Treat it as a refusal and inspect the stop_details field." },
+    { "key": "C", "text_en": "Retry unchanged; the next attempt fits the same window." },
+    { "key": "D", "text_en": "Ignore stop_reason and assume the output is complete." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La table associe `model_context_window_exceeded` à « The response filled the model's context window » avec l'action « Treat the response as truncated. » La sortie est incomplète et doit être gérée comme telle.",
+   "distractors_fr": {
+    "B": "Ce n'est pas un refus : `stop_details` vaut `null` en dehors de `refusal`.",
+    "C": "Rejouer à l'identique reproduit le même dépassement de fenêtre ; il faut réduire l'entrée.",
+    "D": "Ignorer un `stop_reason` de dépassement laisse passer une réponse tronquée pour complète."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-007",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Reponse vide avec end_turn apres des tool_result : cause et remede",
+   "question_en": "Claude sometimes returns an empty response (2-3 tokens) with stop_reason end_turn, often after tool results. Select the TWO accurate statements.",
+   "options": [
+    { "key": "A", "text_en": "Resending the identical empty response reliably resolves the issue." },
+    { "key": "B", "text_en": "It often follows tool results, when Claude reads the turn as done." },
+    { "key": "C", "text_en": "The documented fix is a continuation prompt in a fresh user message." },
+    { "key": "D", "text_en": "It is an authentication failure; you must rotate the API key first." }
+   ],
+   "correct": ["B", "C"],
+   "explanation_fr": "La doc décrit ce cas : « Sometimes Claude returns an empty response ... with `stop_reason: end_turn`. This typically occurs ... particularly after tool results. » Elle recommande d'« add a continuation prompt in a new user message rather than retrying with the empty response. » Donc B (cause) et C (remède) sont exacts.",
+   "distractors_fr": {
+    "A": "La doc dit explicitement « Don't retry empty responses without modification » : renvoyer la réponse vide n'aide pas.",
+    "D": "Il ne s'agit pas d'authentification : c'est une réponse 200 vide liée à la structure des messages."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-008",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Bloc tool_use incomplet du a max_tokens : reessayer avec un max_tokens plus haut",
+   "question_en": "A response hit max_tokens and its truncated content holds an incomplete tool_use block. What does the doc advise?",
+   "options": [
+    { "key": "A", "text_en": "Execute the partial tool call as-is; the arguments are complete." },
+    { "key": "B", "text_en": "Retry with a higher max_tokens to obtain the full tool use." },
+    { "key": "C", "text_en": "Treat the incomplete block as a refusal and switch models." },
+    { "key": "D", "text_en": "Send the empty response back unchanged to finish the call." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc prévient : si la réponse est coupée par `max_tokens` et « contains an incomplete tool use block, you'll need to retry the request with a higher `max_tokens` value to get the full tool use. »",
+   "distractors_fr": {
+    "A": "Le bloc `tool_use` est justement incomplet : ses arguments sont tronqués et ne peuvent pas être exécutés tels quels.",
+    "C": "Une troncature n'est pas un refus ; changer de modèle ne complète pas l'appel d'outil.",
+    "D": "Il n'y a pas de réponse vide ici, mais un bloc tronqué : il faut relancer avec un budget plus large."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-009",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "stop_details nomme la categorie de refus et vaut null pour les autres terminaisons",
+   "question_en": "For a response with stop_reason refusal, what does the stop_details object provide, and when is it populated?",
+   "options": [
+    { "key": "A", "text_en": "It lists the stop_sequences, and is set on every stop reason." },
+    { "key": "B", "text_en": "It holds the retry-after value, and appears only on 429 errors." },
+    { "key": "C", "text_en": "It names the policy category, and is null for other stop reasons." },
+    { "key": "D", "text_en": "It carries token usage, and is present on end_turn responses only." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc énonce : « the `stop_details` object identifies the policy category that triggered it » et « `stop_details` is `null` for all stop reasons other than `refusal`. » Il nomme donc la catégorie de politique et n'est renseigné que sur un refus.",
+   "distractors_fr": {
+    "A": "`stop_details` n'énumère pas les `stop_sequences` et n'est pas présent sur toutes les terminaisons.",
+    "B": "Le `retry-after` est un header de 429 ; il n'a rien à voir avec `stop_details`.",
+    "D": "`stop_details` ne porte pas l'`usage` et vaut `null` sur `end_turn`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-010",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Repondre a un stop_reason refusal en repliant sur un autre modele",
+   "question_en": "Your app frequently gets stop_reason refusal on one model. What is a documented way to recover the request?",
+   "options": [
+    { "key": "A", "text_en": "Retry the identical call on the same model until it passes." },
+    { "key": "B", "text_en": "Lower max_tokens so the refusal filter is not triggered." },
+    { "key": "C", "text_en": "Add the refusal text back as an assistant turn and resend." },
+    { "key": "D", "text_en": "Retry the request on a different Claude fallback model." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc indique qu'« A refused request ... can usually be served by retrying on another Claude model » et renvoie à « Refusals and fallback » pour mettre en place ce repli, côté serveur ou côté client.",
+   "distractors_fr": {
+    "A": "Rejouer à l'identique sur le même modèle redonne le même refus : le repli se fait sur un autre modèle.",
+    "B": "Le refus est déclenché par une politique de sécurité, pas par la taille de sortie ; baisser `max_tokens` n'y change rien.",
+    "C": "Réinjecter le texte du refus n'est pas le remède documenté ; on relance sur un modèle de repli."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+   "id": "CAM-011",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "message_start ouvre le flux avec un Message au content vide",
+   "question_en": "In a streaming response, what does the opening message_start event contain?",
+   "options": [
+    { "key": "A", "text_en": "A Message object whose content array is initially empty." },
+    { "key": "B", "text_en": "The full final Message with all content already filled in." },
+    { "key": "C", "text_en": "Only the cumulative usage totals for the whole response." },
+    { "key": "D", "text_en": "The stop_reason for the turn, sent before any content." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc décrit le flux : « `message_start`: contains a `Message` object with empty `content`. » L'événement d'ouverture porte l'enveloppe du message, sans contenu encore.",
+   "distractors_fr": {
+    "B": "Le contenu n'est pas rempli à l'ouverture : il arrive ensuite par blocs et deltas.",
+    "C": "Les totaux d'`usage` finaux remontent via `message_delta`, pas `message_start`.",
+    "D": "Le `stop_reason` final est porté par `message_delta`, en fin de flux, pas au départ."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+   "id": "CAM-012",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Structure d un bloc de contenu en flux : start, deltas puis stop",
+   "question_en": "How is a single content block represented within a stream?",
+   "options": [
+    { "key": "A", "text_en": "A single content_block_delta carrying the whole block at once." },
+    { "key": "B", "text_en": "A content_block_start, one or more deltas, then a stop event." },
+    { "key": "C", "text_en": "A message_delta per block, with no start or stop events." },
+    { "key": "D", "text_en": "Only a content_block_stop whose data holds the full block." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc décrit chaque bloc comme « a `content_block_start`, one or more `content_block_delta` events, and a `content_block_stop` event », chacun portant un `index` correspondant à sa place dans le tableau `content` final.",
+   "distractors_fr": {
+    "A": "Un bloc n'arrive pas en un seul delta : le contenu est fragmenté en plusieurs `content_block_delta`.",
+    "C": "`message_delta` porte les changements de haut niveau du Message, pas la structure d'un bloc.",
+    "D": "`content_block_stop` clôt le bloc ; il ne contient pas à lui seul tout le contenu."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+   "id": "CAM-013",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "multi",
+   "nature": "factual_semantic",
+   "difficulty": "difficile",
+   "concept": "message_delta porte les changements de haut niveau et un usage cumulatif",
+   "question_en": "Select the TWO statements that correctly describe message_delta events in a stream.",
+   "options": [
+    { "key": "A", "text_en": "They carry top-level changes such as the final stop_reason." },
+    { "key": "B", "text_en": "They always arrive before the very first message_start event." },
+    { "key": "C", "text_en": "Each one opens a new content block at a fresh index." },
+    { "key": "D", "text_en": "Their usage token counts are cumulative across the response." }
+   ],
+   "correct": ["A", "D"],
+   "explanation_fr": "La doc indique que `message_delta` porte « top-level changes to the final `Message` object » (dont le `stop_reason` final) et que « The token counts shown in the `usage` field of the `message_delta` event are cumulative. » Donc A et D.",
+   "distractors_fr": {
+    "B": "`message_start` ouvre toujours le flux ; les `message_delta` viennent après les blocs de contenu.",
+    "C": "Ouvrir un bloc est le rôle de `content_block_start`, pas de `message_delta`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+   "id": "CAM-014",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Gerer gracieusement les types d evenements de flux inconnus et les ping",
+   "question_en": "The streaming doc says new event types may appear over time. How should a client be written?",
+   "options": [
+    { "key": "A", "text_en": "Reject the whole stream if any unlisted event type is seen." },
+    { "key": "B", "text_en": "Assume the event set is fixed and index events by position." },
+    { "key": "C", "text_en": "Handle unknown event types gracefully, and tolerate ping events." },
+    { "key": "D", "text_en": "Treat ping events as errors and abort the open connection." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc prévient : « new event types may be added, and your code should handle unknown event types gracefully », et « Event streams may also include any number of `ping` events. » Le client doit donc rester tolérant.",
+   "distractors_fr": {
+    "A": "Rejeter le flux sur un type inconnu casse la compatibilité que la doc demande justement de préserver.",
+    "B": "Le jeu d'événements n'est pas figé : indexer par position casse dès qu'un type nouveau apparaît.",
+    "D": "Les `ping` sont normaux et attendus ; les traiter comme des erreurs interrompt une connexion saine."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+   "id": "CAM-015",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Accumuler les deltas puis parser le JSON a content_block_stop",
+   "question_en": "You stream a tool call and need its JSON arguments. How should your code assemble them?",
+   "options": [
+    { "key": "A", "text_en": "Parse each content_block_delta on its own as full JSON." },
+    { "key": "B", "text_en": "Read the finished arguments directly from message_start." },
+    { "key": "C", "text_en": "Wait for message_stop and read the arguments from there." },
+    { "key": "D", "text_en": "Accumulate the delta strings, then parse at content_block_stop." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc conseille : « You can accumulate the string deltas and parse the JSON once you receive a `content_block_stop` event » (ou utiliser les helpers des SDK). Les `input` d'outil arrivent en JSON partiel chunké.",
+   "distractors_fr": {
+    "A": "Chaque `content_block_delta` ne porte qu'un fragment de JSON : pris isolément il n'est pas parsable.",
+    "B": "`message_start` ouvre le flux avec un `content` vide ; les arguments n'y figurent pas.",
+    "C": "`message_stop` clôt le message ; les arguments d'un bloc se lisent à son `content_block_stop`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+   "id": "CAM-016",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Distinguer limites de debit et limites de depense",
+   "question_en": "A team hits an error and debates whether it is a spend limit or a rate limit. What distinguishes the two?",
+   "options": [
+    { "key": "A", "text_en": "Rate limits cap throughput; spend limits cap monthly cost." },
+    { "key": "B", "text_en": "They are the same control under two different names." },
+    { "key": "C", "text_en": "Spend limits cap throughput; rate limits cap the bill." },
+    { "key": "D", "text_en": "Only rate limits exist; spend limits come from the SDK." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc distingue deux familles : les limites de débit (RPM/ITPM/OTPM) qui bornent le trafic, et le plafond de dépense mensuel qui borne le coût. Ce sont deux garde-fous distincts.",
+   "distractors_fr": {
+    "B": "Ce ne sont pas des synonymes : l'un limite le débit, l'autre la dépense mensuelle.",
+    "C": "L'attribution est inversée : le débit est plafonné par les limites de débit, le coût par la dépense.",
+    "D": "Le plafond de dépense est une limite du compte, réglée dans la console, pas une option du SDK."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-017",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Messages API limitee en RPM, ITPM et OTPM par classe de modele",
+   "question_en": "How are Messages API rate limits measured for each model class?",
+   "options": [
+    { "key": "A", "text_en": "In requests per hour and total tokens per calendar day." },
+    { "key": "B", "text_en": "In requests, input tokens, and output tokens per minute." },
+    { "key": "C", "text_en": "In concurrent connections and megabytes per request." },
+    { "key": "D", "text_en": "In dollars spent per minute against your monthly cap." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc énonce : « The rate limits for the Messages API are measured in requests per minute (RPM), input tokens per minute (ITPM), and output tokens per minute (OTPM) for each model class. »",
+   "distractors_fr": {
+    "A": "Les limites sont par minute (RPM/ITPM/OTPM), pas par heure ni par jour.",
+    "C": "Les limites de débit portent sur les requêtes et les tokens, pas sur des connexions ou des méga-octets.",
+    "D": "Le coût par mois relève du plafond de dépense, distinct des limites de débit."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-018",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Contenu d un 429 : header retry-after et limite depassee indiquee",
+   "question_en": "A request returns 429 for a rate limit. Select the TWO statements that match the documentation.",
+   "options": [
+    { "key": "A", "text_en": "The 429 always means your monthly spend cap is reached." },
+    { "key": "B", "text_en": "A retry-after header tells you how long to wait." },
+    { "key": "C", "text_en": "The error describes which rate limit was exceeded." },
+    { "key": "D", "text_en": "No header is returned, so you must guess the backoff." }
+   ],
+   "correct": ["B", "C"],
+   "explanation_fr": "La doc dit : « you will get a 429 error describing which rate limit was exceeded, along with a `retry-after` header indicating how long to wait. » Donc B et C. Un 429 peut aussi venir des limites d'accélération, pas seulement du plafond de dépense.",
+   "distractors_fr": {
+    "A": "Un 429 signale un dépassement de débit (ou d'accélération) ; il ne veut pas dire que le plafond de dépense mensuel est atteint.",
+    "D": "Un header `retry-after` est justement renvoyé : nul besoin de deviner le délai."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-019",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Token bucket : capacite reconstituee en continu, sans reset periodique",
+   "question_en": "The API rate-limits with a token bucket algorithm. What does that imply about your capacity?",
+   "options": [
+    { "key": "A", "text_en": "It resets to zero at fixed intervals every minute." },
+    { "key": "B", "text_en": "It is fixed for the month and never refills until renewal." },
+    { "key": "C", "text_en": "It replenishes continuously up to your maximum limit." },
+    { "key": "D", "text_en": "It grows without bound as long as you keep sending." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc précise : « your capacity is continuously replenished up to your maximum limit, rather than being reset at fixed intervals. » Le seau se remplit en continu jusqu'au plafond.",
+   "distractors_fr": {
+    "A": "Le token bucket ne fait pas de remise à zéro périodique : la reconstitution est continue.",
+    "B": "La capacité de débit n'est pas figée pour le mois ; elle se régénère en permanence.",
+    "D": "La capacité est bornée par le plafond de la limite : elle ne croît pas sans fin."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-020",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Comptage ITPM sensible au cache : input et cache_creation comptent, cache_read non",
+   "question_en": "For ITPM on most models, which TWO token kinds count toward the limit?",
+   "options": [
+    { "key": "A", "text_en": "input_tokens, the tokens after your last cache breakpoint." },
+    { "key": "B", "text_en": "cache_read_input_tokens, tokens read back from the cache." },
+    { "key": "C", "text_en": "output_tokens produced by the model during the response." },
+    { "key": "D", "text_en": "cache_creation_input_tokens, tokens being written to cache." }
+   ],
+   "correct": ["A", "D"],
+   "explanation_fr": "La doc coche `input_tokens` et `cache_creation_input_tokens` comme comptant pour l'ITPM, et marque `cache_read_input_tokens` d'un « Do NOT count toward ITPM » (pour la plupart des modèles). Donc A et D.",
+   "distractors_fr": {
+    "B": "`cache_read_input_tokens` ne compte pas pour l'ITPM sur la plupart des modèles : c'est justement l'intérêt du cache pour le débit.",
+    "C": "Les tokens de sortie relèvent de l'OTPM, pas de l'ITPM qui porte sur l'entrée."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-021",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "OTPM compte les tokens produits, pas la valeur de max_tokens",
+   "question_en": "Does setting a high max_tokens hurt you against the OTPM limit?",
+   "options": [
+    { "key": "A", "text_en": "No; OTPM counts only tokens actually generated, not max_tokens." },
+    { "key": "B", "text_en": "Yes; the full max_tokens value is billed against OTPM upfront." },
+    { "key": "C", "text_en": "Yes; OTPM reserves max_tokens for the whole minute ahead." },
+    { "key": "D", "text_en": "No; max_tokens is irrelevant because OTPM does not exist." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc précise : « OTPM rate limits ... count only the actual tokens generated. The `max_tokens` parameter does not factor into OTPM ... so there is no rate limit downside to setting a higher `max_tokens` value. »",
+   "distractors_fr": {
+    "B": "`max_tokens` n'est pas décompté d'avance : seuls les tokens réellement produits comptent pour l'OTPM.",
+    "C": "L'OTPM ne réserve rien à l'avance ; il s'évalue en temps réel à mesure que les tokens sortent.",
+    "D": "L'OTPM existe bien : c'est la limite de tokens de sortie par minute."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-022",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Limites d acceleration sur hausse brutale : monter en charge progressivement",
+   "question_en": "An organization sees 429s after a sudden traffic spike, below its stated limits. What does the doc recommend?",
+   "options": [
+    { "key": "A", "text_en": "Ignore it; acceleration limits are never enforced in practice." },
+    { "key": "B", "text_en": "Ramp traffic up gradually; sharp spikes trip acceleration limits." },
+    { "key": "C", "text_en": "Immediately double the traffic to push past the soft cap." },
+    { "key": "D", "text_en": "Rotate the API key, which resets the acceleration counter." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc explique ces 429 par les limites d'accélération sur « a sharp increase in usage » et conseille : « ramp up your traffic gradually and maintain consistent usage patterns. »",
+   "distractors_fr": {
+    "A": "Les limites d'accélération sont bien appliquées ; c'est précisément ce qui déclenche ces 429.",
+    "C": "Doubler brutalement le trafic aggrave le pic et déclenche davantage la limite d'accélération.",
+    "D": "Changer de clé ne remet aucun compteur d'accélération à zéro ; il faut lisser la montée en charge."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-023",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_magnitude",
+   "difficulty": "moyen",
+   "concept": "Montant du plafond de depense mensuel du palier Build",
+   "question_en": "What monthly spend cap does the standard Build tier carry?",
+   "options": [
+    { "key": "A", "text_en": "$500 USD." },
+    { "key": "B", "text_en": "$200,000 USD." },
+    { "key": "C", "text_en": "$10,000 USD." },
+    { "key": "D", "text_en": "$1,000 USD." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La table des plafonds de dépense mensuels donne : Start $500, Build $1,000, Scale $200,000. Le palier Build est donc plafonné à 1 000 USD par mois.",
+   "distractors_fr": {
+    "A": "500 USD est le plafond du palier Start, pas Build.",
+    "B": "200 000 USD est le plafond du palier Scale.",
+    "C": "Aucun palier standard n'affiche 10 000 USD : Build est à 1 000 USD."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-024",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "input_tokens ne compte que les tokens apres le dernier point de rupture de cache",
+   "question_en": "You read usage.input_tokens to estimate ITPM cost but the number looks too low with caching on. Why?",
+   "options": [
+    { "key": "A", "text_en": "input_tokens always excludes the system prompt from its total." },
+    { "key": "B", "text_en": "input_tokens is rounded down to the nearest thousand tokens." },
+    { "key": "C", "text_en": "input_tokens counts only tokens after your last cache breakpoint." },
+    { "key": "D", "text_en": "input_tokens omits any tool definitions sent with the request." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc avertit : « The `input_tokens` field only represents tokens that appear after your last cache breakpoint, not all input tokens. » Pour le total, il faut y ajouter les tokens de création et de lecture de cache.",
+   "distractors_fr": {
+    "A": "`input_tokens` n'exclut pas le prompt système en soi ; il exclut ce qui est couvert par le cache jusqu'au dernier point de rupture.",
+    "B": "Il n'y a pas d'arrondi au millier : le champ ne compte simplement pas les tokens mis en cache avant le dernier breakpoint.",
+    "D": "Les définitions d'outils ne sont pas spécifiquement omises ; c'est le contenu mis en cache qui n'est pas dans `input_tokens`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+   "id": "CAM-025",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Forme d une reponse Messages API : liste de blocs, stop_reason et usage",
+   "question_en": "What is the shape of a Messages API response body?",
+   "options": [
+    { "key": "A", "text_en": "A content list of blocks, plus stop_reason and usage fields." },
+    { "key": "B", "text_en": "A single plain text string with no stop_reason field." },
+    { "key": "C", "text_en": "Exactly one block, since responses never mix content types." },
+    { "key": "D", "text_en": "A stream of SSE events the client must reassemble itself." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "Une réponse de la Messages API porte un `content` sous forme de liste de blocs (par ex. `text`, `tool_use`), accompagné du `stop_reason` du tour et de l'objet `usage`. La Messages API est par ailleurs sans état.",
+   "distractors_fr": {
+    "B": "La réponse n'est pas une simple chaîne : `content` est une liste de blocs, et `stop_reason` est bien présent.",
+    "C": "Une réponse peut contenir plusieurs blocs et mélanger des types (texte et `tool_use`, par exemple).",
+    "D": "Le flux SSE est le mode streaming ; une réponse non streamée est un corps JSON complet."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+   "id": "CAM-026",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "server_tool_use sans bloc resultat : appel serveur non termine, outils client d abord",
+   "question_en": "A tool_use response includes a server_tool_use block whose id has no matching result block. Select the TWO accurate statements.",
+   "options": [
+    { "key": "A", "text_en": "The missing result means the request has failed fatally." },
+    { "key": "B", "text_en": "You detect this state from the stop_reason value alone." },
+    { "key": "C", "text_en": "That server tool call is not finished in this response." },
+    { "key": "D", "text_en": "Claude often returns so you run the client tools first." }
+   ],
+   "correct": ["C", "D"],
+   "explanation_fr": "La doc explique : « A `tool_use` response can also contain a `server_tool_use` block whose `id` has no matching result block. That server tool call is not finished. » Cas courant : Claude appelle un outil serveur et un outil client en parallèle, et l'API rend la main pour que vous exécutiez d'abord les outils client. Donc C et D.",
+   "distractors_fr": {
+    "A": "Rien n'a échoué : l'appel serveur est simplement en attente et se terminera dans une réponse ultérieure.",
+    "B": "Le `stop_reason` reste `tool_use` ; on détecte l'état en vérifiant l'`id` de chaque bloc, pas via le `stop_reason` seul."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+   "id": "CAM-027",
+   "domain": "Applications and Integration",
+   "subdomain": "Claude API Mechanics",
+   "weight": 6.8,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Definir des stop_sequences pour arreter la generation sur une chaine",
+   "question_en": "You want generation to halt as soon as the model emits a specific marker string. What is the mechanism?",
+   "options": [
+    { "key": "A", "text_en": "Set max_tokens to the marker length so output stops there." },
+    { "key": "B", "text_en": "Define it in stop_sequences; a match stops the turn." },
+    { "key": "C", "text_en": "Add the marker to stop_details, which aborts on a match." },
+    { "key": "D", "text_en": "There is no such control; truncate the text yourself." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "En déclarant la chaîne dans `stop_sequences`, la génération s'arrête dès qu'elle est émise, et la réponse revient avec `stop_reason: stop_sequence` et le champ `stop_sequence` indiquant laquelle a déclenché l'arrêt.",
+   "distractors_fr": {
+    "A": "`max_tokens` borne un nombre de tokens, pas l'apparition d'une chaîne précise.",
+    "C": "`stop_details` décrit un refus ; ce n'est pas un paramètre de requête qui arrête la génération.",
+    "D": "Le contrôle existe : c'est précisément le paramètre `stop_sequences`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  }
+ ]
+}

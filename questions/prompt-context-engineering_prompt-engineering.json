@@ -1,0 +1,458 @@
+{
+  "subdomain": "Prompt Engineering",
+  "domain": "Prompt and Context Engineering",
+  "weight": 4.6,
+  "target_questions": 18,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  ],
+  "questions": [
+    {
+      "id": "PRE-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Le principe etre clair et direct : demander explicitement le comportement voulu",
+      "question_en": "A prompt vaguely asks Claude to \"write a good summary\" and the team is unhappy that outputs rarely go above and beyond. Per the best-practices guide, what is the most reliable fix?",
+      "options": [
+        { "key": "A", "text_en": "Raise the temperature so the model explores more ambitious phrasings on its own." },
+        { "key": "B", "text_en": "Retry the same prompt several times and keep whichever output reads as the strongest." },
+        { "key": "C", "text_en": "State the desired format and the above-and-beyond behavior explicitly in the prompt." },
+        { "key": "D", "text_en": "Move to a larger model, since vague prompts mostly reflect limited model capability." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La règle « Be clear and direct » est explicite : « If you want 'above and beyond' behavior, explicitly request it rather than relying on the model to infer this from vague prompts. » La doc compare Claude à un employé brillant mais nouveau, sans contexte sur vos normes — plus la consigne est précise, meilleur est le résultat. La correction porte donc sur le prompt, pas sur les paramètres d'échantillonnage ni sur le modèle.",
+      "distractors_fr": {
+        "A": "La température joue sur la variété du phrasé, pas sur la compréhension de l'objectif. Un prompt vague reste vague à n'importe quelle température.",
+        "B": "Rejouer le même prompt masque le problème sans le régler : la doc demande de rendre l'attente explicite, pas de trier au hasard des sorties toutes issues d'une consigne floue.",
+        "D": "La doc attribue le résultat décevant au flou du prompt, pas à la capacité du modèle. Elle range d'ailleurs latence et coût, pas la clarté, du côté du choix de modèle."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Ajouter le pourquoi d une consigne pour ameliorer la performance",
+      "question_en": "You need Claude to always reply in formal British English. Beyond stating the rule, which addition does the guide say tends to improve adherence?",
+      "options": [
+        { "key": "A", "text_en": "Explain why the rule matters, for example that the audience is UK enterprise clients." },
+        { "key": "B", "text_en": "Repeat the same rule three separate times so the instruction cannot be missed." },
+        { "key": "C", "text_en": "Put the rule in all capital letters to signal that it is a hard requirement." },
+        { "key": "D", "text_en": "Add the rule only to the final user turn so it stays freshest in the context." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La section « Add context to improve performance » dit que donner le contexte ou la motivation derrière une consigne — expliquer pourquoi ce comportement compte — aide Claude à mieux cerner l'objectif et à répondre de façon plus ciblée. La doc conclut : « Claude is smart enough to generalize from the explanation. » C'est le pourquoi qui porte, pas la répétition ni la mise en forme.",
+      "distractors_fr": {
+        "B": "Répéter la consigne n'est pas la technique décrite ; la doc mise sur l'explication de la motivation, pas sur la redondance.",
+        "C": "Les majuscules ne figurent pas parmi les leviers recommandés. La doc conseille plutôt de dire quoi faire et d'expliquer pourquoi.",
+        "D": "Placer la règle au dernier tour touche à la position, pas à la motivation. Le levier cité ici est d'ajouter le pourquoi, quel que soit l'emplacement."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Nombre et qualites recommandes des exemples few-shot",
+      "question_en": "Your teammate adds one example to a classification prompt and asks how many the best-practices guide suggests for reliable few-shot steering, and what they should look like.",
+      "options": [
+        { "key": "A", "text_en": "One carefully chosen example, kept minimal so the model is not overly constrained." },
+        { "key": "B", "text_en": "3 to 5 examples that are relevant, diverse, and wrapped in example tags." },
+        { "key": "C", "text_en": "At least 10 near-identical examples, so the target pattern is unmistakable." },
+        { "key": "D", "text_en": "As many examples as the context window allows, ordered from short to long." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc recommande d'« Include 3–5 examples for best results » et précise les qualités attendues : relevant (proches du cas réel), diverse (couvrant des cas limites pour éviter que Claude n'apprenne un motif involontaire), et structured (enveloppés dans des balises `<example>`, plusieurs dans `<examples>`). C'est le triptyque pertinence / diversité / structure, sur 3 à 5 exemples.",
+      "distractors_fr": {
+        "A": "Un seul exemple minimal contredit la fourchette de 3 à 5 et la qualité de diversité, qui suppose plusieurs exemples couvrant des cas variés.",
+        "C": "Dix exemples quasi identiques violent la consigne de diversité : la doc avertit qu'un manque de variété fait apprendre à Claude des motifs involontaires.",
+        "D": "Remplir la fenêtre n'est pas la recommandation, et l'ordre court-vers-long relève du long-context, pas des critères de qualité des exemples few-shot."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Balises pour separer les exemples des consignes dans un prompt",
+      "question_en": "The guide says few-shot examples should be wrapped so Claude can tell them apart from instructions. Which tag convention does it name?",
+      "options": [
+        { "key": "A", "text_en": "A fenced code block per example, so formatting is preserved verbatim by the model." },
+        { "key": "B", "text_en": "A numbered markdown list, one list item holding each individual example." },
+        { "key": "C", "text_en": "A JSON array of strings passed as a separate examples field on the request body." },
+        { "key": "D", "text_en": "Example tags per example, with multiple examples grouped inside examples tags." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc est littérale : « Wrap examples in `<example>` tags (multiple examples in `<examples>` tags) so Claude can distinguish them from instructions. » C'est la même logique que le balisage XML général : chaque type de contenu dans sa propre balise pour lever l'ambiguïté. Il n'existe pas de champ `examples` séparé dans le corps de requête.",
+      "distractors_fr": {
+        "A": "Les blocs de code servent à préserver du code, pas à séparer exemples et consignes ; la doc nomme explicitement les balises `<example>`.",
+        "B": "Une liste markdown numérotée n'est pas la convention citée ; la doc s'appuie sur des balises XML dédiées.",
+        "C": "Il n'y a pas de champ `examples` dans l'API Messages : les exemples vivent dans le texte du prompt, balisés en `<example>`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Role des balises XML pour desambiguiser un prompt qui melange plusieurs types de contenu",
+      "question_en": "A prompt mixes instructions, background context, examples, and the variable user input all as plain prose, and Claude sometimes confuses one for another. What does the guide advise?",
+      "options": [
+        { "key": "A", "text_en": "Split the prompt across several requests, one content type sent per API call." },
+        { "key": "B", "text_en": "Wrap each type of content in its own descriptive XML tag within the one prompt." },
+        { "key": "C", "text_en": "Move every instruction into the system prompt and leave only input in the user turn." },
+        { "key": "D", "text_en": "Delete the background context, since mixing it in is what causes the confusion." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La section « Structure prompts with XML tags » vise exactement ce cas : « Wrapping each type of content in its own tag (for example, `<instructions>`, `<context>`, `<input>`) reduces misinterpretation. » Elle conseille des noms de balises cohérents et descriptifs, et l'imbrication quand le contenu a une hiérarchie naturelle. On sépare par balisage, sans découper la requête ni supprimer le contexte utile.",
+      "distractors_fr": {
+        "A": "Découper en plusieurs requêtes casse le contexte partagé et n'est pas la réponse : la doc résout l'ambiguïté par le balisage à l'intérieur d'un même prompt.",
+        "C": "Déplacer les consignes vers le système peut aider au ton, mais ne règle pas le mélange context/exemples/input ; la doc prescrit le balisage XML par type de contenu.",
+        "D": "Le contexte de fond améliore la performance quand il est bien présenté ; on le balise, on ne le supprime pas."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Definir un role dans le prompt systeme pour orienter ton et comportement",
+      "question_en": "A legal-review assistant answers correctly but in a tone too casual for the audience. Per the guide, what is the lightest-touch lever to focus its behavior and tone?",
+      "options": [
+        { "key": "A", "text_en": "Give Claude a role in the system prompt; even one sentence shifts tone and focus." },
+        { "key": "B", "text_en": "Prefill the assistant turn with a formal opening line for the model to continue." },
+        { "key": "C", "text_en": "Lower the temperature to zero so the wording becomes maximally formal." },
+        { "key": "D", "text_en": "Append a long style guide of dos and don'ts to every single user message." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La section « Give Claude a role » dit qu'un rôle posé dans le prompt système oriente le comportement et le ton, et que « Even a single sentence makes a difference. » C'est le levier le plus léger : une phrase de rôle. Le prefill sur le dernier tour assistant n'est plus accepté sur les modèles récents, et la température n'agit pas sur la formalité du ton.",
+      "distractors_fr": {
+        "B": "Le prefill du dernier tour assistant renvoie une erreur 400 sur les modèles récents ; ce n'est plus une option, et ce n'était pas le levier le plus léger.",
+        "C": "La température à zéro rend la sortie déterministe, pas formelle : elle ne fixe pas le registre de langue.",
+        "D": "Coller un long guide de style à chaque message est lourd et coûteux ; une phrase de rôle dans le système suffit selon la doc."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Placer les donnees longues en haut du prompt pour le long contexte",
+      "question_en": "For a task over several 20k-token documents, where does the guide say the long input should sit relative to the query and instructions?",
+      "options": [
+        { "key": "A", "text_en": "Interleaved, with each instruction placed right beside the document it refers to." },
+        { "key": "B", "text_en": "After the query, so Claude reads what you want before it reads the documents." },
+        { "key": "C", "text_en": "At the top of the prompt, above the query, instructions, and any examples." },
+        { "key": "D", "text_en": "In the system prompt, kept apart from the user turn that holds the query." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La section « Long context prompting » est nette : « Place your long documents and inputs near the top of your prompt, above your query, instructions, and examples. This improves performance across all models. » La doc ajoute que mettre les requêtes à la fin peut améliorer la qualité jusqu'à 30 % sur des entrées complexes multi-documents. Les données longues vont donc en haut, la requête en bas.",
+      "distractors_fr": {
+        "A": "L'entrelacement n'est pas recommandé ; la doc veut le bloc de données en haut et la requête à la fin, pas des consignes dispersées au fil des documents.",
+        "B": "C'est l'inverse : les documents en haut, la requête après. Placer la requête à la fin améliore justement la qualité.",
+        "D": "Le placement décrit est en haut du prompt, pas une séparation système/utilisateur ; la doc ne conditionne pas ce gain au rôle système."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Deux pratiques recommandees pour les taches sur documents longs",
+      "question_en": "A team builds Q&A over large multi-document inputs and wants the two long-context practices the guide recommends. Select the TWO that the guide names.",
+      "options": [
+        { "key": "A", "text_en": "Place the longform documents near the top, above the query and the instructions." },
+        { "key": "B", "text_en": "Summarize each document down to a paragraph before putting any of it in the prompt." },
+        { "key": "C", "text_en": "Ask Claude to first quote the relevant parts, then carry out the task from them." },
+        { "key": "D", "text_en": "Randomly shuffle the document order per request so no position is ever favored." }
+      ],
+      "correct": ["A", "C"],
+      "explanation_fr": "La doc long-context nomme deux leviers repris ici. D'abord la position : « Place your long documents and inputs near the top of your prompt. » Ensuite l'ancrage : « ask Claude to quote relevant parts of the documents first before carrying out its task », ce qui l'aide à se concentrer sur le pertinent et à ignorer le reste. Les deux bonnes réponses sont donc A et C.",
+      "distractors_fr": {
+        "B": "Résumer chaque document en amont détruit l'information que la tâche doit exploiter ; la doc conserve les documents entiers, bien placés et structurés en balises.",
+        "D": "Mélanger l'ordre au hasard n'est pas recommandé et contredit la règle de placer les données longues en haut, dans une structure stable."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Dire a Claude quoi faire plutot que ce qu il ne faut pas faire",
+      "question_en": "Outputs keep containing markdown even though the prompt says \"Do not use markdown.\" Which rewrite does the guide recommend?",
+      "options": [
+        { "key": "A", "text_en": "\"Your response should be composed of smoothly flowing prose paragraphs.\"" },
+        { "key": "B", "text_en": "\"Do not use markdown, and do not use bullet points or headings either.\"" },
+        { "key": "C", "text_en": "\"NEVER USE MARKDOWN,\" placed in capitals at the very end of the prompt." },
+        { "key": "D", "text_en": "\"Avoid markdown unless you happen to think it improves the answer here.\"" }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc « Control the format of responses » donne exactement cet exemple : au lieu de « Do not use markdown in your response », préférer « Your response should be composed of smoothly flowing prose paragraphs. » Le principe est de dire à Claude quoi faire plutôt que ce qu'il ne faut pas faire ; une consigne positive décrivant la sortie voulue steer mieux le format.",
+      "distractors_fr": {
+        "B": "Empiler des interdictions reste une formulation négative, exactement ce que la doc conseille de remplacer par une consigne positive.",
+        "C": "Les majuscules ne sont pas le levier ; le principe est de reformuler positivement, pas de crier l'interdiction.",
+        "D": "Rendre la règle optionnelle (« unless you think ») affaiblit la consigne au lieu de décrire clairement la sortie prose attendue."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Indicateur de format XML pour steer le formatage de la sortie",
+      "question_en": "Besides telling Claude what to do, the guide lists an XML technique to steer output formatting. Which option states it correctly?",
+      "options": [
+        { "key": "A", "text_en": "Set a response_format parameter to xml so the API enforces the tag layout." },
+        { "key": "B", "text_en": "Ask Claude to write the prose inside a smoothly_flowing_prose_paragraphs tag." },
+        { "key": "C", "text_en": "Send a stop_sequence of a closing tag so generation halts at the format boundary." },
+        { "key": "D", "text_en": "Prefill the assistant turn with an opening tag to lock the output structure in." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc liste « Use XML format indicators » avec l'exemple : « Write the prose sections of your response in `<smoothly_flowing_prose_paragraphs>` tags. » L'indicateur de format est une balise demandée dans le prompt, pas un paramètre d'API. Il n'existe pas de `response_format: xml`, et le prefill du dernier tour assistant n'est plus accepté sur les modèles récents.",
+      "distractors_fr": {
+        "A": "Aucun paramètre `response_format: xml` n'existe pour ce cas ; la doc obtient le format par une balise demandée dans le prompt.",
+        "C": "Une `stop_sequence` arrête la génération, elle ne façonne pas le format en balises ; ce n'est pas l'indicateur de format décrit.",
+        "D": "Le prefill du dernier tour assistant renvoie 400 sur les modèles récents ; la doc pousse la balise dans le prompt, pas un préfixe assistant."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-011",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Faire correspondre le style du prompt au style de sortie voulu",
+      "question_en": "You want plain-text output but keep getting heavy markdown, and explicit instructions only half-help. What extra lever does the guide mention?",
+      "options": [
+        { "key": "A", "text_en": "Turn on a plain-text mode flag on the request that strips markdown after generation." },
+        { "key": "B", "text_en": "Lower max_tokens sharply so there is no room left for markdown scaffolding." },
+        { "key": "C", "text_en": "Match your prompt style to the output; remove markdown from the prompt itself." },
+        { "key": "D", "text_en": "Add a second model pass whose only job is to delete markdown from the first output." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc « Match your prompt style to the desired output » est explicite : « The formatting style used in your prompt may influence Claude's response style... try matching your prompt style to your desired output style as closely as possible. For example, removing markdown from your prompt can reduce the volume of markdown in the output. » Le levier est donc de retirer le markdown du prompt lui-même.",
+      "distractors_fr": {
+        "A": "Aucun flag de mode texte brut n'est décrit ; la doc agit en amont, sur le style du prompt.",
+        "B": "Réduire `max_tokens` tronque la réponse sans supprimer le markdown ; ce n'est pas le levier cité.",
+        "D": "Une seconde passe de nettoyage est coûteuse et non recommandée ici ; la doc obtient l'effet en alignant le style du prompt sur la sortie voulue."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-012",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "La regle d or : faire relire le prompt par un collegue sans contexte",
+      "question_en": "The guide states a \"golden rule\" for judging whether a prompt is clear enough. Which option restates it faithfully?",
+      "options": [
+        { "key": "A", "text_en": "Show it to a colleague with minimal context; if they'd be confused, Claude will be too." },
+        { "key": "B", "text_en": "Run it at three temperatures; if answers diverge, the prompt is not yet clear enough." },
+        { "key": "C", "text_en": "Count its tokens; if it exceeds the model's ideal budget, it is too long to be clear." },
+        { "key": "D", "text_en": "Ask Claude to grade its own prompt from one to ten and revise anything under eight." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La règle d'or est citée telle quelle : « Show your prompt to a colleague with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too. » Le test de clarté est humain et s'applique au prompt lui-même, pas une mesure de tokens, de température, ni une auto-notation par le modèle.",
+      "distractors_fr": {
+        "B": "La divergence entre températures n'est pas la règle d'or ; celle-ci est un test de compréhension par un collègue peu informé.",
+        "C": "Le comptage de tokens concerne le coût et la fenêtre, pas le critère de clarté énoncé par la règle d'or.",
+        "D": "L'auto-notation par le modèle n'est pas la règle d'or ; la doc s'appuie sur la lecture par un humain sans contexte."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-013",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Quand le prompt engineering n est pas le bon levier : latence et cout",
+      "question_en": "A failing eval is really about response latency and cost, not answer quality. What does the prompt-engineering overview say about using prompting to fix it?",
+      "options": [
+        { "key": "A", "text_en": "Prompt engineering is the first lever to try for essentially any failing eval." },
+        { "key": "B", "text_en": "Not every failing eval is best fixed by prompting; latency may favor a model change." },
+        { "key": "C", "text_en": "Latency and cost are always prompt problems, since shorter prompts run faster and cheaper." },
+        { "key": "D", "text_en": "Prompting cannot influence quality either, so evals should be scored by humans only." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "L'overview cadre le périmètre : « Not every success criteria or failing eval is best solved by prompt engineering. For example, you can sometimes improve latency and cost more easily by selecting a different model. » Le prompt engineering vise les critères pilotables par le prompt ; latence et coût relèvent souvent d'un autre levier, comme le choix de modèle.",
+      "distractors_fr": {
+        "A": "L'overview dit précisément l'inverse : toutes les évaluations ratées ne se règlent pas au prompt.",
+        "C": "Latence et coût ne sont pas systématiquement des problèmes de prompt ; la doc oriente vers le choix de modèle pour ces critères.",
+        "D": "Le prompt engineering influence bel et bien la qualité ; la doc porte sur les critères pilotables par le prompt, pas sur l'abandon de l'évaluation."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+    },
+    {
+      "id": "PRE-014",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Prerequis a etablir avant de se lancer dans le prompt engineering",
+      "question_en": "A team wants to iterate on prompts but has no way to tell whether a change helped. What does the overview say they should establish first?",
+      "options": [
+        { "key": "A", "text_en": "A fine-tuned model, so the base behavior is fixed before prompts are tuned on top." },
+        { "key": "B", "text_en": "A production traffic rollout, so real user feedback drives every prompt revision." },
+        { "key": "C", "text_en": "A larger context window, so full documents fit before prompt tuning begins." },
+        { "key": "D", "text_en": "Clear success criteria plus a way to test against them, and a first-draft prompt." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "L'overview pose trois prérequis avant de faire du prompt engineering : « A clear definition of the success criteria for your use case », « Some ways to empirically test against those criteria », et « A first draft prompt you want to improve ». Sans critères mesurables et sans moyen de tester, on itère à l'aveugle ; la doc renvoie d'ailleurs à « Define success criteria and build evaluations ».",
+      "distractors_fr": {
+        "A": "Le fine-tuning n'est pas un prérequis au prompt engineering ; la doc demande des critères de succès et des tests, pas un modèle spécialisé.",
+        "B": "Déployer en production avant d'avoir des critères et des tests, c'est justement itérer sans boussole ; l'ordre prescrit est l'inverse.",
+        "C": "La taille de la fenêtre de contexte ne fait pas partie des trois prérequis énoncés."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+    },
+    {
+      "id": "PRE-015",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Prefill du dernier tour assistant refuse par les modeles recents et son remplacement",
+      "question_en": "A pipeline prefills the final assistant turn with an opening brace to force JSON, and after upgrading to a 4.6-generation model every such request now returns HTTP 400. What is the documented fix?",
+      "options": [
+        { "key": "A", "text_en": "Move the opening brace into the system prompt so it is no longer an assistant turn." },
+        { "key": "B", "text_en": "Add anthropic-beta: prefill so the older prefill behavior is re-enabled for the call." },
+        { "key": "C", "text_en": "Drop the prefill and use Structured Outputs to constrain the response to the schema." },
+        { "key": "D", "text_en": "Retry with exponential backoff, since a 400 here is a transient capacity signal." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc « Migrating away from prefilled responses » explique qu'à partir des modèles 4.6, un prefill sur le dernier tour assistant n'est plus supporté et renvoie une erreur 400. Pour le cas du forçage de format, elle oriente vers la fonctionnalité Structured Outputs, conçue pour contraindre la réponse à un schéma donné. Ajouter des messages assistant ailleurs que sur le dernier tour reste possible, mais ce n'est pas ce que fait ce pipeline.",
+      "distractors_fr": {
+        "A": "Une accolade dans le système ne contraint pas la sortie et n'est pas la migration décrite ; la doc renvoie aux Structured Outputs.",
+        "B": "Aucun en-tête beta ne réactive le prefill du dernier tour ; le comportement est retiré sur ces modèles, pas caché derrière un flag.",
+        "D": "Un 400 `invalid_request` n'est pas transitoire : réessayer ne changera rien tant que le prefill reste sur le dernier tour assistant."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-016",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Deux techniques recommandees pour steer le formatage de la sortie",
+      "question_en": "You want tighter control over Claude's output format. Select the TWO techniques the best-practices guide recommends for steering formatting.",
+      "options": [
+        { "key": "A", "text_en": "Increase the model's temperature so it explores more formatting styles per request." },
+        { "key": "B", "text_en": "Lower max_tokens until the response is too short to contain unwanted formatting." },
+        { "key": "C", "text_en": "Tell Claude what to do instead of what not to do, describing the format you want." },
+        { "key": "D", "text_en": "Match the prompt style to the output; remove markdown from the prompt to reduce it." }
+      ],
+      "correct": ["C", "D"],
+      "explanation_fr": "La doc « Control the format of responses » liste plusieurs leviers, dont deux repris ici : « Tell Claude what to do instead of what not to do » (consigne positive décrivant la sortie voulue) et « Match your prompt style to the desired output » (retirer le markdown du prompt réduit le markdown en sortie). Ce sont C et D. Les indicateurs de format XML en font aussi partie, mais ne sont pas listés ici.",
+      "distractors_fr": {
+        "A": "La température joue sur la variété, pas sur le contrôle du format ; l'augmenter irait à rebours d'un formatage régulier.",
+        "B": "Réduire `max_tokens` tronque la réponse au lieu de façonner son format ; ce n'est pas une technique de formatage citée."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-017",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Deux qualites que doivent avoir les exemples few-shot",
+      "question_en": "A prompt includes several near-identical examples and outputs pick up an unintended pattern. Per the guide's example criteria, select the TWO qualities the examples are missing.",
+      "options": [
+        { "key": "A", "text_en": "Brevity, so that each example stays as short as the model can possibly tolerate." },
+        { "key": "B", "text_en": "Diversity, varying enough that Claude does not latch onto an unintended pattern." },
+        { "key": "C", "text_en": "Alphabetical ordering, so the set is arranged predictably from first to last." },
+        { "key": "D", "text_en": "Relevance, mirroring the actual use case the prompt will be run against closely." }
+      ],
+      "correct": ["B", "D"],
+      "explanation_fr": "La doc « Use examples effectively » demande trois qualités : relevant (proche du cas réel), diverse (assez variés pour que Claude n'apprenne pas de motif involontaire) et structured (balisés). Des exemples quasi identiques échouent sur la diversité, et s'ils ne reflètent pas le cas d'usage, sur la pertinence : ce sont B et D. La brièveté et l'ordre alphabétique ne figurent pas parmi les critères.",
+      "distractors_fr": {
+        "A": "La brièveté n'est pas un critère : la doc parle de pertinence, de diversité et de structure, pas de minimiser la longueur.",
+        "C": "L'ordre alphabétique n'est pas mentionné ; il ne fait pas partie des qualités attendues des exemples."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PRE-018",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Deux affirmations exactes sur le balisage XML dans les prompts",
+      "question_en": "Which TWO statements about XML tags in prompts match the best-practices guide?",
+      "options": [
+        { "key": "A", "text_en": "Use consistent, descriptive tag names across your prompts for the same content types." },
+        { "key": "B", "text_en": "Tag names must come from a fixed reserved list the API validates on every request." },
+        { "key": "C", "text_en": "A closing tag doubles as a stop_sequence, so generation ends when the tag appears." },
+        { "key": "D", "text_en": "Nest tags when content has a hierarchy, like each document inside a documents tag." }
+      ],
+      "correct": ["A", "D"],
+      "explanation_fr": "La doc « Structure prompts with XML tags » donne deux bonnes pratiques reprises ici : « Use consistent, descriptive tag names across your prompts » et « Nest tags when content has a natural hierarchy (documents inside `<documents>`, each inside `<document index=\"n\">`) ». Ce sont A et D. Les balises XML sont libres — pas de liste réservée validée par l'API — et une balise n'est pas une `stop_sequence`.",
+      "distractors_fr": {
+        "B": "Il n'existe pas de liste réservée de noms de balises validée par l'API : la doc encourage des noms descriptifs choisis par vous.",
+        "C": "Une balise de fermeture n'agit pas comme `stop_sequence` : le balisage sert à structurer, pas à arrêter la génération."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    }
+  ]
+}

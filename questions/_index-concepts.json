@@ -413,6 +413,195 @@
     "doc_ref": "https://code.claude.com/docs/en/workflows"
   },
   {
+    "id": "CAM-001",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "end_turn signale une fin naturelle : utiliser la reponse",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-002",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Reagir a une reponse tronquee par la limite max_tokens",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-003",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Savoir quelle stop_sequence a mis fin a la generation via le champ stop_sequence",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-004",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "tool_use signale qu il faut executer l outil et renvoyer son resultat",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-005",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Gerer pause_turn en renvoyant la reponse pour poursuivre le tour",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-006",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "model_context_window_exceeded : traiter la reponse comme tronquee",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-007",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Reponse vide avec end_turn apres des tool_result : cause et remede",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-008",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Bloc tool_use incomplet du a max_tokens : reessayer avec un max_tokens plus haut",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-009",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "stop_details nomme la categorie de refus et vaut null pour les autres terminaisons",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-010",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Repondre a un stop_reason refusal en repliant sur un autre modele",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback"
+  },
+  {
+    "id": "CAM-011",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "message_start ouvre le flux avec un Message au content vide",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+    "id": "CAM-012",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Structure d un bloc de contenu en flux : start, deltas puis stop",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+    "id": "CAM-013",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "message_delta porte les changements de haut niveau et un usage cumulatif",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+    "id": "CAM-014",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Gerer gracieusement les types d evenements de flux inconnus et les ping",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+    "id": "CAM-015",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Accumuler les deltas puis parser le JSON a content_block_stop",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+  },
+  {
+    "id": "CAM-016",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Distinguer limites de debit et limites de depense",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-017",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Messages API limitee en RPM, ITPM et OTPM par classe de modele",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-018",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Contenu d un 429 : header retry-after et limite depassee indiquee",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-019",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Token bucket : capacite reconstituee en continu, sans reset periodique",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-020",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Comptage ITPM sensible au cache : input et cache_creation comptent, cache_read non",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-021",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "OTPM compte les tokens produits, pas la valeur de max_tokens",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-022",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Limites d acceleration sur hausse brutale : monter en charge progressivement",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-023",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Montant du plafond de depense mensuel du palier Build",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-024",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "input_tokens ne compte que les tokens apres le dernier point de rupture de cache",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "CAM-025",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Forme d une reponse Messages API : liste de blocs, stop_reason et usage",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+  },
+  {
+    "id": "CAM-026",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "server_tool_use sans bloc resultat : appel serveur non termine, outils client d abord",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
+    "id": "CAM-027",
+    "fichier": "applications-integration_claude-api-mechanics.json",
+    "subdomain": "Claude API Mechanics",
+    "concept": "Definir des stop_sequences pour arreter la generation sur une chaine",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+  },
+  {
     "id": "CAD-001",
     "fichier": "applications-integration_claude-application-design.json",
     "subdomain": "Claude Application Design",
@@ -654,210 +843,777 @@
     "id": "SEF-001",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
+    "concept": "Niveau d abstraction des clients SDK face aux outils d agent",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+  },
+  {
+    "id": "SEF-002",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
     "concept": "Reessais deja fournis par le SDK officiel",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
-    "id": "SEF-002",
+    "id": "SEF-003",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "Categories d erreurs reessayees automatiquement par le client",
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
   },
   {
-    "id": "SEF-003",
+    "id": "SEF-004",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "Prise en compte de l en-tete retry-after par les SDK",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
-    "id": "SEF-004",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Distinguer une limite propre au compte d une surcharge globale",
-    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
-  },
-  {
     "id": "SEF-005",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Portee du type invalid_request_error au dela du code 400",
-    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    "concept": "Desactiver ou regler les reessais automatiques via l option maxRetries",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
   },
   {
     "id": "SEF-006",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Traitement correct d un conflit 409 sur une ressource",
+    "concept": "Distinguer un 401 authentication_error d un 403 permission_error pour agir",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-007",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Plafonds de taille de requete par type d endpoint",
+    "concept": "Type d erreur associe au code 402",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-008",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Conduite a tenir face a une erreur 500 persistante",
+    "concept": "Distinguer une limite propre au compte d une surcharge globale",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-009",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Reponse structurelle a un 504 sur des generations longues",
+    "concept": "Portee du type invalid_request_error au dela du code 400",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-010",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Discriminer les erreurs sans dependre du texte des messages",
+    "concept": "Traiter un 409 conflict en resolvant le conflit avant de reessayer",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-011",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Ordre des blocs de capture dans une hierarchie d exceptions",
+    "concept": "Conduite a tenir face a une erreur 500 persistante",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-012",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Ou trouver l identifiant de requete pour un ticket de support",
+    "concept": "Attraper les classes d exception typees plutot que filtrer le texte du message",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-013",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Choisir le bon identifiant de requete sur Claude Platform on AWS",
+    "concept": "Ordre des blocs de capture dans une hierarchie d exceptions",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-014",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Erreur survenant apres un code 200 sur une reponse en flux",
+    "concept": "Les noms de classes d exception different selon le langage du SDK",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-015",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Erreur de SDK sans code de statut associe",
+    "concept": "Un echec de connexion sans code HTTP se presente comme une erreur de connexion dediee",
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
   },
   {
     "id": "SEF-016",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Classe d exception levee pour un depassement de limite de debit",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    "concept": "Une erreur survenue en plein flux SSE apres un 200 ne suit pas la gestion d erreur standard",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
     "id": "SEF-017",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Comportement par defaut des delais d attente des clients",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
-  },
-  {
-    "id": "SEF-018",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Delai calcule dynamiquement par le SDK TypeScript",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
-  },
-  {
-    "id": "SEF-019",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Garde-fou du SDK contre une requete non diffusee trop longue",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
-  },
-  {
-    "id": "SEF-020",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Cout cache d un delai trop court sur une generation longue",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
-  },
-  {
-    "id": "SEF-021",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Option de socket posee par le SDK contre les coupures de connexion inactive",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
-  },
-  {
-    "id": "SEF-022",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "Mesures recommandees pour des requetes de plus de dix minutes",
     "doc_ref": "https://platform.claude.com/docs/en/api/errors"
   },
   {
+    "id": "SEF-018",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Plafonds de taille de requete par type d endpoint",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-019",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Comportement par defaut des delais d attente des clients",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-020",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Delai calcule dynamiquement par le SDK TypeScript",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+  },
+  {
+    "id": "SEF-021",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Cout cache d un delai trop court sur une generation longue",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
+    "id": "SEF-022",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Option de socket posee par le SDK contre les coupures de connexion inactive",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+  },
+  {
     "id": "SEF-023",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Interroger un batch en toute securite grace a l idempotence de l endpoint de recuperation",
+    "doc_ref": "https://platform.claude.com/docs/en/api/messages/batches/retrieve"
+  },
+  {
+    "id": "SEF-024",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Ou trouver l identifiant de requete pour un ticket de support",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-025",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Choisir le bon identifiant de requete sur Claude Platform on AWS",
+    "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+  },
+  {
+    "id": "SEF-026",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "Parcourir toutes les pages d une methode de liste",
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
   },
   {
-    "id": "SEF-024",
+    "id": "SEF-027",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "En-tete de version envoye par defaut et risque a l ecraser",
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
   },
   {
-    "id": "SEF-025",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Structure d execution d un middleware autour de l appel a next",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
-  },
-  {
-    "id": "SEF-026",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Ordre d application entre middleware de client et de requete",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
-  },
-  {
-    "id": "SEF-027",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Place du client HTTP personnalise par rapport a la chaine de middleware",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
-  },
-  {
     "id": "SEF-028",
-    "fichier": "applications-integration_software-engineering-foundations.json",
-    "subdomain": "Software Engineering Foundations",
-    "concept": "Conserver la configuration par defaut en remplacant le client HTTP",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
-  },
-  {
-    "id": "SEF-029",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
     "concept": "Statut du navigateur comme environnement d execution du SDK TypeScript",
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
   },
   {
+    "id": "SEF-029",
+    "fichier": "applications-integration_software-engineering-foundations.json",
+    "subdomain": "Software Engineering Foundations",
+    "concept": "Structure d execution d un middleware autour de l appel a next",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  },
+  {
     "id": "SEF-030",
     "fichier": "applications-integration_software-engineering-foundations.json",
     "subdomain": "Software Engineering Foundations",
-    "concept": "Niveau d abstraction des clients SDK face aux outils d agent",
-    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+    "concept": "Place du client HTTP personnalise par rapport a la chaine de middleware",
+    "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
+  },
+  {
+    "id": "LLF-001",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Definition d un token : plus petite unite (mot, sous-mot, caractere, octet)",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-002",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Le texte d entree est encode en tokens avant traitement",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-003",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Un modele pre-entraine genere en predisant le token suivant",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-004",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Pre-entrainement : entrainement initial sur un grand corpus non etiquete",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-005",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Fine-tuning : poursuite de l entrainement sur des donnees supplementaires",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-006",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "RLHF : aligner le modele sur des preferences humaines classees",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-007",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Claude n est pas un modele brut : fine-tuning et RLHF pour etre utile, honnete, inoffensif",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-008",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Un modele juste pre-entraine ne suit pas naturellement les instructions",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-009",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "La fenetre de contexte est une memoire de travail, distincte des donnees d entrainement",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+    "id": "LLF-010",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Tout compte dans la fenetre de contexte, y compris la sortie et les definitions d outils",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+    "id": "LLF-011",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Context rot : la precision se degrade quand le nombre de tokens grossit",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+    "id": "LLF-012",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Tailles de fenetre de contexte : 1M pour les modeles recents, 200k pour Sonnet 4.5",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+    "id": "LLF-013",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Accumulation progressive : les tours precedents sont conserves integralement",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+    "id": "LLF-014",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "La temperature regle l alea : haute pour la diversite, basse pour le determinisme",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-015",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Non-determinisme : meme a temperature 0, les sorties ne sont pas identiques",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-016",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Definition d une hallucination : sortie factuellement fausse ou incoherente",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+    "id": "LLF-017",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Autoriser Claude a dire qu il ne sait pas pour reduire les hallucinations",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+    "id": "LLF-018",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Rendre une reponse auditable : citer une phrase par affirmation ou la retirer",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+    "id": "LLF-019",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Best-of-N : comparer plusieurs sorties d un meme prompt pour reperer les ecarts",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+    "id": "LLF-020",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "RAG : injecter des documents externes dans le contexte pour depasser les donnees d entrainement",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "LLF-021",
+    "fichier": "model-selection-optimization_llm-fundamentals.json",
+    "subdomain": "LLM Fundamentals",
+    "concept": "Definition d un LLM : modele a nombreux parametres entraine sur de vastes textes",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+    "id": "TCF-001",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Definition de la latence : delai entre l envoi du prompt et la sortie",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-002",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "TTFT : temps jusqu au premier token de la reponse",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-003",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Termes de mesure de la latence : latence de base et TTFT",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-004",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Choisir un modele plus rapide comme premier levier de latence",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-005",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Ordre recommande : regler la latence apres avoir un bon prompt",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-006",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Reduire la latence en reduisant les tokens d entree et de sortie",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-007",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Le streaming ameliore la reactivite percue, pas la latence totale",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-008",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "max_tokens, levier brutal qui peut couper la reponse en plein mot",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-009",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Preferer une limite en phrases ou paragraphes a un nombre de mots",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "TCF-010",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Les trois paliers de service : Standard, Priority et Batch",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-011",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Palier Standard : par defaut, disponibilite au mieux-effort",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-012",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Le palier Priority reduit les erreurs de surcharge en pic",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-013",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Valeurs du parametre service_tier : auto et standard_only",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-014",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Comportement de service_tier auto : Priority si dispo, sinon repli",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-015",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Une requete Priority puise dans la capacite Priority et les rate limits",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-016",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Savoir quel palier a servi une requete via l usage de la reponse",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-017",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Le palier Batch pour des charges asynchrones qui peuvent attendre",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-018",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Fenetre d expiration d un batch : 24 heures",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "TCF-019",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Traitement d un batch : requetes independantes et types melanges",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "TCF-020",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Batch inadapte a l interactif car asynchrone, sans reponse immediate",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "TCF-021",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "La concurrence augmente le debit mais reste bornee par les rate limits",
+    "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+  },
+  {
+    "id": "TCF-022",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Fast mode regle la latence synchrone, sans effet sur un batch",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  },
+  {
+    "id": "TCF-023",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Affectation au palier Priority selon la capacite Priority en tokens/minute",
+    "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+  },
+  {
+    "id": "TCF-024",
+    "fichier": "model-selection-optimization_technical-fundamentals.json",
+    "subdomain": "Technical Fundamentals",
+    "concept": "Facteurs de latence : taille du modele, complexite du prompt, infrastructure",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  },
+  {
+    "id": "PRE-001",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Le principe etre clair et direct : demander explicitement le comportement voulu",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-002",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Ajouter le pourquoi d une consigne pour ameliorer la performance",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-003",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Nombre et qualites recommandes des exemples few-shot",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-004",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Balises pour separer les exemples des consignes dans un prompt",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-005",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Role des balises XML pour desambiguiser un prompt qui melange plusieurs types de contenu",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-006",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Definir un role dans le prompt systeme pour orienter ton et comportement",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-007",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Placer les donnees longues en haut du prompt pour le long contexte",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-008",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Deux pratiques recommandees pour les taches sur documents longs",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-009",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Dire a Claude quoi faire plutot que ce qu il ne faut pas faire",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-010",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Indicateur de format XML pour steer le formatage de la sortie",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-011",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Faire correspondre le style du prompt au style de sortie voulu",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-012",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "La regle d or : faire relire le prompt par un collegue sans contexte",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-013",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Quand le prompt engineering n est pas le bon levier : latence et cout",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+  },
+  {
+    "id": "PRE-014",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Prerequis a etablir avant de se lancer dans le prompt engineering",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+  },
+  {
+    "id": "PRE-015",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Prefill du dernier tour assistant refuse par les modeles recents et son remplacement",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-016",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Deux techniques recommandees pour steer le formatage de la sortie",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-017",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Deux qualites que doivent avoir les exemples few-shot",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "PRE-018",
+    "fichier": "prompt-context-engineering_prompt-engineering.json",
+    "subdomain": "Prompt Engineering",
+    "concept": "Deux affirmations exactes sur le balisage XML dans les prompts",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  },
+  {
+    "id": "TLI-001",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Trois elements d une definition d outil : name, description, input_schema",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-002",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "input_schema est un objet JSON Schema decrivant les parametres attendus",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-003",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Nom d outil : contrainte de format par regex",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-004",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "La description est le facteur le plus important de la performance d un outil",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-005",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Regrouper des operations liees dans un seul outil avec un parametre action",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-006",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Nommer les outils avec un prefixe de service (namespacing)",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-007",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Les quatre valeurs de tool_choice : auto, any, tool, none",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-008",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Valeurs par defaut de tool_choice selon la presence d outils",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-009",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Forcer un outil avec any ou tool prefille et supprime le texte naturel",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-010",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "disable_parallel_tool_use se place dans tool_choice, pas au niveau racine",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+  },
+  {
+    "id": "TLI-011",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Les deux categories d outils executes cote client",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+  },
+  {
+    "id": "TLI-012",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Outils serveur : on ne construit jamais de bloc tool_result",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+  },
+  {
+    "id": "TLI-013",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Bloc tool_use : champs id, name et input",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+    "id": "TLI-014",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Les blocs tool_result doivent preceder tout texte dans le message",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+    "id": "TLI-015",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "is_error a true signale une erreur d execution que Claude integre",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+    "id": "TLI-016",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "Contenu de tool_result non fiable : injection de prompt indirecte",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+    "id": "TLI-017",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "strict a true garantit que les entrees respectent le schema",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+    "id": "TLI-018",
+    "fichier": "tools-mcps_tool-implementation.json",
+    "subdomain": "Tool Implementation",
+    "concept": "L API integre les outils aux messages user/assistant, sans role tool dedie",
+    "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
   }
 ]

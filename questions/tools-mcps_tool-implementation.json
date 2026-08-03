@@ -1,0 +1,460 @@
+{
+ "subdomain": "Tool Implementation",
+ "domain": "Tools and MCPs",
+ "weight": 4.4,
+ "target_questions": 18,
+ "sources_read": [
+  "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools",
+  "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works",
+  "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls",
+  "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+ ],
+ "questions": [
+  {
+   "id": "TLI-001",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Trois elements d une definition d outil : name, description, input_schema",
+   "question_en": "What three things does every client tool definition include?",
+   "options": [
+    { "key": "A", "text_en": "A name, a description, and an input_schema." },
+    { "key": "B", "text_en": "A name, a return_type, and an output_schema." },
+    { "key": "C", "text_en": "An id, a role, and a content block array." },
+    { "key": "D", "text_en": "A prompt, a temperature, and a max_tokens value." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc liste les composants d'une définition d'outil client : `name`, `description` et `input_schema` (plus des propriétés optionnelles comme `input_examples`).",
+   "distractors_fr": {
+    "B": "Il n'existe pas de `return_type` ni d'`output_schema` : on ne décrit que l'entrée via `input_schema`.",
+    "C": "`id`, `role` et `content` décrivent des blocs de message, pas une définition d'outil.",
+    "D": "`temperature` et `max_tokens` sont des paramètres de requête, pas des champs d'une définition d'outil."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-002",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "input_schema est un objet JSON Schema decrivant les parametres attendus",
+   "question_en": "What is a tool's input_schema?",
+   "options": [
+    { "key": "A", "text_en": "A plaintext summary of when to call the tool." },
+    { "key": "B", "text_en": "A JSON Schema object defining the expected parameters." },
+    { "key": "C", "text_en": "A list of example outputs the tool has returned." },
+    { "key": "D", "text_en": "The special system prompt the API builds from your tool set." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc définit `input_schema` comme « a JSON Schema object defining the expected parameters for the tool ».",
+   "distractors_fr": {
+    "A": "Un résumé en clair de l'usage de l'outil est la `description`, pas l'`input_schema`.",
+    "C": "Une liste d'exemples relève d'`input_examples` ; `input_schema` décrit la structure des paramètres.",
+    "D": "Le prompt système est construit à partir des outils, mais ce n'est pas ce qu'est l'`input_schema`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-003",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Nom d outil : contrainte de format par regex",
+   "question_en": "What constraint must a tool 'name' satisfy?",
+   "options": [
+    { "key": "A", "text_en": "It must be a globally unique UUID string." },
+    { "key": "B", "text_en": "It must exactly match the underlying function's method name." },
+    { "key": "C", "text_en": "It may freely contain spaces and punctuation." },
+    { "key": "D", "text_en": "It must match the regex ^[a-zA-Z0-9_-]{1,64}$." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc précise que le nom de l'outil « must match the regex ^[a-zA-Z0-9_-]{1,64}$ » : lettres, chiffres, tiret et underscore, de 1 à 64 caractères.",
+   "distractors_fr": {
+    "A": "Aucune contrainte d'UUID : le nom doit juste respecter la regex de caractères autorisés.",
+    "B": "Le nom n'a pas à égaler le nom de méthode sous-jacent ; il doit respecter la regex.",
+    "C": "Espaces et ponctuation ne sont pas autorisés : la regex limite aux lettres, chiffres, `-` et `_`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-004",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "La description est le facteur le plus important de la performance d un outil",
+   "question_en": "Which factor most improves a tool's performance?",
+   "options": [
+    { "key": "A", "text_en": "Setting a low temperature on the request." },
+    { "key": "B", "text_en": "Giving the tool the shortest possible name." },
+    { "key": "C", "text_en": "An extremely detailed description of the tool." },
+    { "key": "D", "text_en": "Listing the tool first in the tools array." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc insiste : « Provide extremely detailed descriptions. This is by far the most important factor in tool performance. »",
+   "distractors_fr": {
+    "A": "La température n'est pas citée comme le levier majeur de performance d'un outil.",
+    "B": "Un nom court n'améliore pas la performance ; c'est la description détaillée qui compte.",
+    "D": "L'ordre des outils dans le tableau n'est pas le facteur décisif de performance."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-005",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Regrouper des operations liees dans un seul outil avec un parametre action",
+   "question_en": "You have create_pr, review_pr, and merge_pr. What does the guide recommend?",
+   "options": [
+    { "key": "A", "text_en": "Consolidate them into one tool with an action parameter." },
+    { "key": "B", "text_en": "Keep them separate so each has a single responsibility." },
+    { "key": "C", "text_en": "Move them into the system prompt instead of tools." },
+    { "key": "D", "text_en": "Expose all three plus a fourth combined orchestrator tool." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc conseille : « Consolidate related operations into fewer tools ... group them into a single tool with an action parameter. Fewer, more capable tools reduce selection ambiguity. »",
+   "distractors_fr": {
+    "B": "La doc recommande l'inverse : moins d'outils, plus capables, pour réduire l'ambiguïté de sélection.",
+    "C": "Ces opérations restent des outils exécutables ; on ne les déplace pas dans le prompt système.",
+    "D": "Ajouter un quatrième outil augmente la surface et l'ambiguïté, à rebours de la consolidation."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-006",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Nommer les outils avec un prefixe de service (namespacing)",
+   "question_en": "Your tools span GitHub and Slack. How should you name them?",
+   "options": [
+    { "key": "A", "text_en": "Give every tool the same generic verb, like run or do." },
+    { "key": "B", "text_en": "Prefix each name with its service, like github_list_prs." },
+    { "key": "C", "text_en": "Use random unique ids so names never collide anywhere." },
+    { "key": "D", "text_en": "Number the tools in the order you registered them." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc recommande un namespacing explicite : « prefix names with the service (for example, github_list_prs, slack_send_message). This makes tool selection unambiguous. »",
+   "distractors_fr": {
+    "A": "Des verbes génériques identiques rendent la sélection ambiguë, l'opposé du but recherché.",
+    "C": "Des ids aléatoires n'aident pas Claude à comprendre ce que fait chaque outil.",
+    "D": "Numéroter les outils n'apporte aucun signal sémantique pour la sélection."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-007",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Les quatre valeurs de tool_choice : auto, any, tool, none",
+   "question_en": "What are the four possible values of the tool_choice type?",
+   "options": [
+    { "key": "A", "text_en": "start, continue, stop, and reset." },
+    { "key": "B", "text_en": "low, medium, high, and maximum." },
+    { "key": "C", "text_en": "auto, any, tool, and none." },
+    { "key": "D", "text_en": "client, server, schema, and strict." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc énumère les quatre options de `tool_choice` : `auto`, `any`, `tool` et `none`.",
+   "distractors_fr": {
+    "A": "Ces valeurs ne correspondent à aucune option de `tool_choice`.",
+    "B": "Ce sont des niveaux inventés, pas les valeurs de `tool_choice`.",
+    "D": "`strict` est une propriété d'une définition d'outil, pas une valeur de `tool_choice`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-008",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Valeurs par defaut de tool_choice selon la presence d outils",
+   "question_en": "Which TWO statements about tool_choice defaults are correct?",
+   "options": [
+    { "key": "A", "text_en": "auto is the default when you provide tools." },
+    { "key": "B", "text_en": "any is the default when you provide tools." },
+    { "key": "C", "text_en": "none is the default when you provide no tools." },
+    { "key": "D", "text_en": "tool is the default when you provide no tools." }
+   ],
+   "correct": ["A", "C"],
+   "explanation_fr": "La doc précise : `auto` « is the default value when tools are provided » et `none` « is the default value when no tools are provided ». Donc A et C.",
+   "distractors_fr": {
+    "B": "Le défaut avec des outils est `auto`, pas `any` ; `any` doit être demandé explicitement.",
+    "D": "Sans outils, le défaut est `none`, pas `tool`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-009",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Forcer un outil avec any ou tool prefille et supprime le texte naturel",
+   "question_en": "You set tool_choice to any or tool. Select the TWO accurate consequences.",
+   "options": [
+    { "key": "A", "text_en": "Claude may still answer without calling any tool." },
+    { "key": "B", "text_en": "Claude is forced to emit a tool_use block on this turn." },
+    { "key": "C", "text_en": "Claude adds a natural-language explanation before the call." },
+    { "key": "D", "text_en": "No natural-language text precedes the tool_use blocks." }
+   ],
+   "correct": ["B", "D"],
+   "explanation_fr": "La doc explique qu'avec `any` ou `tool`, l'API préremplit le message assistant pour forcer l'usage d'un outil : « the models will not emit a natural language response or explanation before tool_use content blocks. » Donc B et D.",
+   "distractors_fr": {
+    "A": "Avec `any`/`tool`, Claude est forcé d'appeler un outil ; il ne peut pas répondre sans en appeler.",
+    "C": "C'est le contraire : aucun texte explicatif n'est émis avant les blocs `tool_use`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-010",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "disable_parallel_tool_use se place dans tool_choice, pas au niveau racine",
+   "question_en": "Select the TWO accurate statements about disable_parallel_tool_use.",
+   "options": [
+    { "key": "A", "text_en": "It is set inside the tool_choice object, not at the top level." },
+    { "key": "B", "text_en": "It is a top-level request parameter passed alongside the tools array." },
+    { "key": "C", "text_en": "With tool_choice auto, it caps Claude at one tool call per turn." },
+    { "key": "D", "text_en": "It forces Claude to always call at least two tools." }
+   ],
+   "correct": ["A", "C"],
+   "explanation_fr": "La doc précise que `disable_parallel_tool_use` se met « inside the tool_choice object. It is not a top-level request parameter », et qu'avec `auto` « Claude calls at most one tool per response ». Donc A et C.",
+   "distractors_fr": {
+    "B": "Ce n'est justement pas un paramètre racine : il vit dans l'objet `tool_choice`.",
+    "D": "Il limite le parallélisme (au plus/exactement un outil), il n'en impose jamais deux."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+  },
+  {
+   "id": "TLI-011",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Les deux categories d outils executes cote client",
+   "question_en": "Which TWO tool categories are executed by your own client code?",
+   "options": [
+    { "key": "A", "text_en": "Server-executed tools like web_search and code_execution." },
+    { "key": "B", "text_en": "User-defined tools calling your application logic." },
+    { "key": "C", "text_en": "Server tools whose loop runs inside Anthropic's infra." },
+    { "key": "D", "text_en": "Anthropic-schema tools like bash and text_editor." }
+   ],
+   "correct": ["B", "D"],
+   "explanation_fr": "La doc distingue deux catégories exécutées côté client : les outils user-defined et les outils Anthropic-schema (`memory`, `bash`, `text_editor`, `computer`). Les outils serveur, eux, sont exécutés par Anthropic.",
+   "distractors_fr": {
+    "A": "`web_search` et `code_execution` sont des outils serveur, exécutés par Anthropic, pas par le client.",
+    "C": "Une boucle qui tourne dans l'infrastructure d'Anthropic est par définition côté serveur, pas client."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+  },
+  {
+   "id": "TLI-012",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Outils serveur : on ne construit jamais de bloc tool_result",
+   "question_en": "For server-executed tools such as web_search, what is your app's responsibility?",
+   "options": [
+    { "key": "A", "text_en": "Build and return a tool_result block for each call." },
+    { "key": "B", "text_en": "Run the search yourself and post the results back." },
+    { "key": "C", "text_en": "Match every server_tool_use id to a tool_result id." },
+    { "key": "D", "text_en": "Enable the tool and read the final answer, not run it." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc indique que pour les outils serveur « You never construct a tool_result block for these tools » ; votre rôle est d'activer l'outil et de lire la réponse finale.",
+   "distractors_fr": {
+    "A": "Pour un outil serveur, on ne construit jamais de bloc `tool_result` : Anthropic exécute l'outil.",
+    "B": "L'exécution est faite côté serveur par Anthropic, pas par votre application.",
+    "C": "Vous ne construisez pas de `tool_result` pour un outil serveur ; il n'y a pas d'appariement à faire."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+  },
+  {
+   "id": "TLI-013",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Bloc tool_use : champs id, name et input",
+   "question_en": "A client tool_use block from Claude contains which fields?",
+   "options": [
+    { "key": "A", "text_en": "id, name, and input." },
+    { "key": "B", "text_en": "role, content, and stop_reason." },
+    { "key": "C", "text_en": "tool_use_id, output, and is_error." },
+    { "key": "D", "text_en": "schema, examples, and description." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc décrit le bloc `tool_use` avec `id` (identifiant unique), `name` (nom de l'outil) et `input` (objet des arguments conforme à l'`input_schema`).",
+   "distractors_fr": {
+    "B": "`role`, `content` et `stop_reason` sont des champs de la réponse/message, pas du bloc `tool_use`.",
+    "C": "`tool_use_id` et `is_error` appartiennent au bloc `tool_result` que VOUS renvoyez, pas au `tool_use`.",
+    "D": "`schema`, `examples` et `description` relèvent de la définition de l'outil, pas de l'appel `tool_use`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+   "id": "TLI-014",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Les blocs tool_result doivent preceder tout texte dans le message",
+   "question_en": "In a user message returning tool results, how must the blocks be ordered?",
+   "options": [
+    { "key": "A", "text_en": "Any text first, then all the tool_result blocks after it." },
+    { "key": "B", "text_en": "Tool results and text may appear in any order you like." },
+    { "key": "C", "text_en": "All tool_result blocks first, before any text content." },
+    { "key": "D", "text_en": "One tool_result per message, each in its own user turn." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc l'exige : « the tool_result blocks must come FIRST in the content array. Any text must come AFTER all tool results. »",
+   "distractors_fr": {
+    "A": "C'est l'inverse : les `tool_result` viennent d'abord, le texte éventuel ensuite.",
+    "B": "L'ordre n'est pas libre : les `tool_result` doivent précéder tout texte.",
+    "D": "Plusieurs résultats vont dans un même message utilisateur, pas un message par résultat."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+   "id": "TLI-015",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "is_error a true signale une erreur d execution que Claude integre",
+   "question_en": "Your tool throws a network error. How do you report it to Claude?",
+   "options": [
+    { "key": "A", "text_en": "Omit the tool_result so Claude retries automatically." },
+    { "key": "B", "text_en": "Return the message in content with is_error set to true." },
+    { "key": "C", "text_en": "Send a top-level error field on the next API request." },
+    { "key": "D", "text_en": "Raise the exception and let the API surface it for you." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc : « you can return the error message in the content along with is_error: true. Claude will then incorporate this error into its response. »",
+   "distractors_fr": {
+    "A": "Omettre le `tool_result` casse le format ; il faut renvoyer un résultat marqué `is_error`.",
+    "C": "Il n'y a pas de champ d'erreur racine : l'erreur se signale dans le bloc `tool_result`.",
+    "D": "L'API ne remonte pas vos exceptions ; vous devez renvoyer un `tool_result` avec `is_error: true`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+   "id": "TLI-016",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Contenu de tool_result non fiable : injection de prompt indirecte",
+   "question_en": "A tool returns web-page text that includes instructions aimed at Claude. How should you treat it?",
+   "options": [
+    { "key": "A", "text_en": "As trusted input, since your tool fetched it for you." },
+    { "key": "B", "text_en": "Move it into the system prompt for stronger weighting." },
+    { "key": "C", "text_en": "Merge it into a plain user text block for clarity." },
+    { "key": "D", "text_en": "As untrusted content kept inside tool_result blocks." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc avertit que le contenu des `tool_result` vient souvent de sources non contrôlées : « Treat that content as untrusted ... Keep untrusted content inside tool_result blocks rather than system prompts or plain user text blocks » (injection de prompt indirecte).",
+   "distractors_fr": {
+    "A": "Le fait que votre outil l'ait récupéré ne rend pas le contenu fiable : il peut contenir des instructions hostiles.",
+    "B": "Le placer dans le prompt système est exactement ce que la doc déconseille : cela accroît le risque d'injection.",
+    "C": "Un bloc de texte utilisateur brut est aussi déconseillé ; il faut le garder dans un `tool_result`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  },
+  {
+   "id": "TLI-017",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "strict a true garantit que les entrees respectent le schema",
+   "question_en": "How can you guarantee a tool's inputs always match your schema exactly?",
+   "options": [
+    { "key": "A", "text_en": "Lower the temperature to zero on every tool request." },
+    { "key": "B", "text_en": "Add more input_examples until Claude stops erring." },
+    { "key": "C", "text_en": "Set strict to true on the tool definition." },
+    { "key": "D", "text_en": "Validate the inputs yourself after Claude returns them." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc : « Set strict: true on your tool definitions to enable schema validation », ce qui « guarantees that tool inputs will always match your schema exactly, preventing missing parameters and type mismatches ».",
+   "distractors_fr": {
+    "A": "Une température basse réduit l'aléa mais ne garantit pas la conformité au schéma.",
+    "B": "Des exemples aident, mais seul `strict: true` garantit la conformité stricte des entrées.",
+    "D": "Valider soi-même après coup détecte les erreurs, mais ne les empêche pas comme le fait `strict`."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  },
+  {
+   "id": "TLI-018",
+   "domain": "Tools and MCPs",
+   "subdomain": "Tool Implementation",
+   "weight": 4.4,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "L API integre les outils aux messages user/assistant, sans role tool dedie",
+   "question_en": "How does the Claude API represent tool calls in the conversation?",
+   "options": [
+    { "key": "A", "text_en": "Through a dedicated tool role separate from user and assistant." },
+    { "key": "B", "text_en": "Through function-call objects kept outside the messages array." },
+    { "key": "C", "text_en": "Through a special endpoint that bypasses the messages format." },
+    { "key": "D", "text_en": "As tool_use and tool_result blocks inside user/assistant messages." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc note la différence avec d'autres API : « the Claude API integrates tools directly into the user and assistant message structure », sans rôle `tool` ou `function` séparé.",
+   "distractors_fr": {
+    "A": "Justement, l'API Claude n'utilise pas de rôle `tool` dédié : tout passe par `user`/`assistant`.",
+    "B": "Les appels d'outils ne sont pas des objets hors du tableau `messages` : ce sont des blocs dans les messages.",
+    "C": "Il n'y a pas d'endpoint spécial : les outils s'intègrent au format `messages` habituel."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+  }
+ ]
+}

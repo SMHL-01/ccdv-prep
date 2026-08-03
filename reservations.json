@@ -30,7 +30,7 @@
     "AI Application Security": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
     "Claude Code": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
     "Systems Life Cycle": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03" },
-    "Cost and Token Management": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
+    "Cost and Token Management": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-03", "note": "gonfle a ~20 questions pour loger 1 factual_magnitude sous le plafond 5%/fichier (decision duo)" },
     "Model Selection and Tradeoffs": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" },
     "Eval, Testing and Debugging": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-03" }
   }

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 317,
+  "nbQuestions": 328,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -37,6 +37,11 @@
       "fichier": "applications-integration_software-engineering-foundations.json",
       "subdomain": "Software Engineering Foundations",
       "nb": 30
+    },
+    {
+      "fichier": "applications-integration_systems-life-cycle.json",
+      "subdomain": "Systems Life Cycle",
+      "nb": 11
     },
     {
       "fichier": "applications-integration_understanding-requirements.json",
@@ -1578,6 +1583,105 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SLC-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_systems-life-cycle.json"
+    },
+    {
+      "id": "SLC-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_systems-life-cycle.json"
     },
     {
       "id": "REQ-001",

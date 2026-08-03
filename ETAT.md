@@ -2,14 +2,14 @@
 
 > Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
 
-**317 / 400 questions** — **79.5 %** du poids de l'examen couvert — **16 / 25** sous-domaines termines.
+**328 / 400 questions** — **82.3 %** du poids de l'examen couvert — **17 / 25** sous-domaines termines.
 
 ## Charge restante
 
 | Qui | Questions a ecrire | Sous-domaines ouverts | Deja ecrites |
 | --- | ---: | ---: | ---: |
 | Said (Claude Pro, quota limite -> petits sous-domaines) | 37 | 5 | 123 |
-| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 43 | 4 | 194 |
+| Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) | 32 | 3 | 205 |
 
 ## Les 25 sous-domaines
 
@@ -29,7 +29,7 @@
 | | Sous-domaine | Ecrites | Cible | Poids | Qui |
 | --- | --- | ---: | ---: | ---: | --- |
 | `[x]` | Understanding Requirements | 14 | 14 | 3.4 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
-| `[?]` | Systems Life Cycle | 0 | 11 | 2.8 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
+| `[x]` | Systems Life Cycle | 11 | 11 | 2.8 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 | `[x]` | Claude API Mechanics | 27 | 27 | 6.8 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 | `[x]` | Software Engineering Foundations <br><sub>ecrit en double le 2026-08-02, fusionne le 2026-08-03 : 21 questions de Said, 9 de Marie-Line</sub> | 30 | 30 | 7.4 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
 | `[x]` | Claude Application Design | 34 | 34 | 8.6 % | Said (Claude Pro, quota limite -> petits sous-domaines) |

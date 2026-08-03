@@ -1162,6 +1162,83 @@
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
   },
   {
+    "id": "SLC-001",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Les quatre etats du cycle de vie d'un modele",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-002",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Comportement d'un modele retire : requetes en echec",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-003",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Un modele deprecie reste fonctionnel avec date de retrait",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-004",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Definition d'un modele legacy",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-005",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Un modele actif est pleinement supporte",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-006",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Notification de retrait par email et documentation",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-007",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Migrer et tester avant la date de retrait",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-008",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Auditer l'usage des modeles deprecies via l'export Console",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-009",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Raison de la depreciation : capacite pour les nouveaux modeles",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-010",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Caracteristiques d'un modele deprecie",
+    "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  {
+    "id": "SLC-011",
+    "fichier": "applications-integration_systems-life-cycle.json",
+    "subdomain": "Systems Life Cycle",
+    "concept": "Compatibilite ascendante au sein d'une version d'API",
+    "doc_ref": "https://platform.claude.com/docs/en/api/versioning"
+  },
+  {
     "id": "REQ-001",
     "fichier": "applications-integration_understanding-requirements.json",
     "subdomain": "Understanding Requirements",

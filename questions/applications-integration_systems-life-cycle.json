@@ -1,0 +1,285 @@
+{
+  "subdomain": "Systems Life Cycle",
+  "domain": "Applications and Integration",
+  "weight": 2.8,
+  "target_questions": 11,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+    "https://platform.claude.com/docs/en/api/versioning"
+  ],
+  "questions": [
+    {
+      "id": "SLC-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Les quatre etats du cycle de vie d'un modele",
+      "question_en": "What are the model lifecycle states Anthropic uses?",
+      "options": [
+        { "key": "A", "text_en": "Active, Legacy, Deprecated, Retired." },
+        { "key": "B", "text_en": "Alpha, Beta, Stable, and Sunset phases." },
+        { "key": "C", "text_en": "Draft, Live, Frozen, Archived." },
+        { "key": "D", "text_en": "New, Current, Old, Removed." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc definit le cycle de vie : « Active [...] Legacy [...] Deprecated [...] Retired. » Ce sont les quatre etats officiels.",
+      "distractors_fr": {
+        "B": "Alpha/Beta/Stable/Sunset n'est pas la terminologie du cycle de vie des modeles Anthropic.",
+        "C": "Draft/Live/Frozen/Archived est invente ; les etats sont Active, Legacy, Deprecated, Retired.",
+        "D": "New/Current/Old/Removed ne correspond pas aux etats definis dans la doc."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Comportement d'un modele retire : requetes en echec",
+      "question_en": "What happens when you send a request to a retired model?",
+      "options": [
+        { "key": "A", "text_en": "It is transparently routed to the newest model." },
+        { "key": "B", "text_en": "It fails; the model is no longer available." },
+        { "key": "C", "text_en": "It runs but returns a deprecation warning only." },
+        { "key": "D", "text_en": "It is queued until the model is reactivated." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc : « Retired: The model is no longer available for use. Requests to retired models will fail. »",
+      "distractors_fr": {
+        "A": "Aucun re-routage automatique : la requete echoue tout simplement.",
+        "C": "Un modele retire ne s'execute plus ; c'est le stade deprecie qui fonctionne encore.",
+        "D": "Les modeles retires ne sont pas reactives ; la requete echoue."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Un modele deprecie reste fonctionnel avec date de retrait",
+      "question_en": "A model is marked 'Deprecated'. What is true?",
+      "options": [
+        { "key": "A", "text_en": "It is already unavailable and every request fails." },
+        { "key": "B", "text_en": "It receives all the latest updates like active models." },
+        { "key": "C", "text_en": "It still works but has a replacement and end date." },
+        { "key": "D", "text_en": "It can never be replaced by a newer model." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc : « Deprecated: The model is still functional but no longer recommended. Anthropic provides a recommended replacement and assigns a retirement date. »",
+      "distractors_fr": {
+        "A": "Un modele deprecie fonctionne encore ; c'est le modele retire qui echoue.",
+        "B": "Justement non : un modele legacy/deprecie ne recoit plus les mises a jour.",
+        "D": "Un remplacement recommande est precisement fourni pour un modele deprecie."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Definition d'un modele legacy",
+      "question_en": "What defines a 'Legacy' model?",
+      "options": [
+        { "key": "A", "text_en": "It has already been retired from the API." },
+        { "key": "B", "text_en": "It is the newest recommended model you should use now." },
+        { "key": "C", "text_en": "It fails all requests until migration." },
+        { "key": "D", "text_en": "It gets no more updates and may be deprecated." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc : « Legacy: The model will no longer receive updates and may be deprecated in the future. »",
+      "distractors_fr": {
+        "A": "Un modele legacy n'est pas encore retire ; il fonctionne toujours.",
+        "B": "Le modele recommande est un modele actif, pas un modele legacy.",
+        "C": "Un modele legacy repond encore ; il n'echoue pas les requetes."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Un modele actif est pleinement supporte",
+      "question_en": "What does 'Active' status mean for a model?",
+      "options": [
+        { "key": "A", "text_en": "It is fully supported and recommended." },
+        { "key": "B", "text_en": "It will fail requests after a grace period." },
+        { "key": "C", "text_en": "It is frozen and receives no support at all." },
+        { "key": "D", "text_en": "It is only available to enterprise customers." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc : « Active: The model is fully supported and recommended for use. »",
+      "distractors_fr": {
+        "B": "Un modele actif ne fait pas echouer les requetes ; c'est le modele retire.",
+        "C": "Actif signifie pleinement supporte, l'oppose de gele sans support.",
+        "D": "Le statut actif ne restreint pas l'acces aux seuls clients enterprise."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Notification de retrait par email et documentation",
+      "question_en": "How are customers informed about an upcoming model retirement?",
+      "options": [
+        { "key": "A", "text_en": "Only through a banner inside the model's responses." },
+        { "key": "B", "text_en": "By email and in the documentation." },
+        { "key": "C", "text_en": "They must poll the status API to find out." },
+        { "key": "D", "text_en": "There is no notice; models vanish without warning." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc : « Impacted customers will always be notified by email and in the documentation. » Un preavis (au moins 60 jours pour les modeles publics) est donne.",
+      "distractors_fr": {
+        "A": "La notification passe par email et la documentation, pas par une banniere dans les reponses.",
+        "C": "Les clients sont notifies activement ; ils n'ont pas a interroger une API de statut.",
+        "D": "Un preavis est bien donne ; les modeles ne disparaissent pas sans avertissement."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Migrer et tester avant la date de retrait",
+      "question_en": "A model you use is deprecated with a retirement date. What is the recommended course?",
+      "options": [
+        { "key": "A", "text_en": "Wait until the retirement date, then switch instantly." },
+        { "key": "B", "text_en": "Keep using it; deprecated models never actually stop." },
+        { "key": "C", "text_en": "Migrate to a replacement and test before that date." },
+        { "key": "D", "text_en": "Downgrade to an older legacy model for stability." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc : « migrate all usage to a suitable replacement before the retirement date » et « consider thorough testing of your applications with the new models well before the retirement date. »",
+      "distractors_fr": {
+        "A": "Attendre la date de retrait pour basculer risque une interruption ; il faut migrer et tester avant.",
+        "B": "Faux : passe la date de retrait, les requetes echouent.",
+        "D": "Revenir a un modele legacy ne fait que reculer le probleme ; il faut migrer vers un modele actif."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Auditer l'usage des modeles deprecies via l'export Console",
+      "question_en": "How can you find where your app still calls deprecated models?",
+      "options": [
+        { "key": "A", "text_en": "Deprecated calls throw an exception you can log." },
+        { "key": "B", "text_en": "The model returns its own deprecation status field." },
+        { "key": "C", "text_en": "Anthropic emails a per-request usage breakdown daily." },
+        { "key": "D", "text_en": "Export the Usage CSV in Console, split by model." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc : « Go to the Usage page in Claude Console. Click Export. Review the downloaded CSV to see usage broken down by API key and model. »",
+      "distractors_fr": {
+        "A": "Les modeles deprecies fonctionnent encore : ils ne levent pas d'exception a logger.",
+        "B": "La reponse du modele ne porte pas un champ de statut de depreciation ; on audite via l'export.",
+        "C": "Anthropic n'envoie pas de ventilation quotidienne par requete ; l'audit se fait par export CSV."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Raison de la depreciation : capacite pour les nouveaux modeles",
+      "question_en": "Why does Anthropic deprecate and retire older models?",
+      "options": [
+        { "key": "A", "text_en": "To ensure capacity for new model releases." },
+        { "key": "B", "text_en": "Because older models cost users nothing to run." },
+        { "key": "C", "text_en": "To force every customer onto the Enterprise plan." },
+        { "key": "D", "text_en": "Because retired models are more accurate than active ones." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc : « Anthropic currently deprecates and retires models to ensure capacity for new model releases. »",
+      "distractors_fr": {
+        "B": "Le cout pour l'utilisateur n'est pas la raison invoquee ; c'est la capacite pour les nouveaux modeles.",
+        "C": "La depreciation ne vise pas a forcer un changement de plan.",
+        "D": "Les modeles retires ne sont pas plus precis ; les modeles actifs sont les plus capables."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Caracteristiques d'un modele deprecie",
+      "question_en": "Select the TWO statements that are true of a deprecated model.",
+      "options": [
+        { "key": "A", "text_en": "It is likely less reliable than an active model." },
+        { "key": "B", "text_en": "It has already stopped serving all requests." },
+        { "key": "C", "text_en": "Anthropic assigns it a retirement date." },
+        { "key": "D", "text_en": "It is automatically upgraded to the active model." }
+      ],
+      "correct": ["A", "C"],
+      "explanation_fr": "La doc : « Deprecated models are likely to be less reliable than active models » et « Anthropic provides a recommended replacement and assigns a retirement date. »",
+      "distractors_fr": {
+        "B": "Un modele deprecie fonctionne toujours ; c'est le modele retire qui cesse de repondre.",
+        "D": "Aucune mise a niveau automatique : la migration vers un modele actif est a la charge du client."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+    },
+    {
+      "id": "SLC-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Compatibilite ascendante au sein d'une version d'API",
+      "question_en": "Within a single Messages API version, select the TWO changes Anthropic may make.",
+      "options": [
+        { "key": "A", "text_en": "Remove existing output parameters." },
+        { "key": "B", "text_en": "Add new optional input parameters." },
+        { "key": "C", "text_en": "Change the meaning of an existing input parameter entirely." },
+        { "key": "D", "text_en": "Add new variants to enum-like output values." }
+      ],
+      "correct": ["B", "D"],
+      "explanation_fr": "La doc versioning : Anthropic preserve les parametres d'entree/sortie existants mais peut « Add additional optional inputs » et « Add new variants to enum-like output values. » D'ou l'interet de coder de facon tolerante aux nouvelles valeurs.",
+      "distractors_fr": {
+        "A": "Au contraire, la doc garantit la preservation des parametres de sortie existants au sein d'une version.",
+        "C": "Le sens des parametres d'entree existants est preserve ; il n'est pas modifie sans nouvelle version."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/versioning"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-02",
-  "nbQuestions": 93,
+  "nbQuestions": 231,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -19,9 +19,39 @@
       "nb": 20
     },
     {
+      "fichier": "applications-integration_claude-api-mechanics.json",
+      "subdomain": "Claude API Mechanics",
+      "nb": 27
+    },
+    {
       "fichier": "applications-integration_claude-application-design.json",
       "subdomain": "Claude Application Design",
       "nb": 34
+    },
+    {
+      "fichier": "applications-integration_software-engineering-foundations.json",
+      "subdomain": "Software Engineering Foundations",
+      "nb": 30
+    },
+    {
+      "fichier": "model-selection-optimization_llm-fundamentals.json",
+      "subdomain": "LLM Fundamentals",
+      "nb": 21
+    },
+    {
+      "fichier": "model-selection-optimization_technical-fundamentals.json",
+      "subdomain": "Technical Fundamentals",
+      "nb": 24
+    },
+    {
+      "fichier": "prompt-context-engineering_prompt-engineering.json",
+      "subdomain": "Prompt Engineering",
+      "nb": 18
+    },
+    {
+      "fichier": "tools-mcps_tool-implementation.json",
+      "subdomain": "Tool Implementation",
+      "nb": 18
     }
   ],
   "questions": [
@@ -557,6 +587,249 @@
       "fichier": "agents-workflows_agent-patterns-and-frameworks.json"
     },
     {
+      "id": "CAM-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-017",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-018",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-019",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-020",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-021",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-022",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-023",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-024",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-025",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-026",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
+      "id": "CAM-027",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_claude-api-mechanics.json"
+    },
+    {
       "id": "CAD-001",
       "domain": "Applications and Integration",
       "subdomain": "Claude Application Design",
@@ -861,6 +1134,1005 @@
       "nature": "judgment",
       "type": "multi",
       "fichier": "applications-integration_claude-application-design.json"
+    },
+    {
+      "id": "SEF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-017",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-018",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-019",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-020",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-021",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-022",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-023",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-024",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-025",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-026",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-027",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-028",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-029",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "SEF-030",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "difficulty": "facile",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "LLF-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-014",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-015",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-016",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-017",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-018",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-019",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-020",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "LLF-021",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_llm-fundamentals.json"
+    },
+    {
+      "id": "TCF-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-014",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-015",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-016",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-017",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-018",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-019",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-020",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-021",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-022",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-023",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "TCF-024",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "model-selection-optimization_technical-fundamentals.json"
+    },
+    {
+      "id": "PRE-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-011",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-012",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-013",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-014",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-015",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-016",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-017",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "PRE-018",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_prompt-engineering.json"
+    },
+    {
+      "id": "TLI-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-011",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-012",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-013",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-014",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-015",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-016",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-017",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
+    },
+    {
+      "id": "TLI-018",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "tools-mcps_tool-implementation.json"
     }
   ]
 }

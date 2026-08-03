@@ -1,0 +1,534 @@
+{
+ "subdomain": "LLM Fundamentals",
+ "domain": "Model Selection and Optimization",
+ "weight": 5.2,
+ "target_questions": 21,
+ "sources_read": [
+  "https://platform.claude.com/docs/en/about-claude/glossary",
+  "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+  "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+ ],
+ "questions": [
+  {
+   "id": "LLF-001",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Definition d un token : plus petite unite (mot, sous-mot, caractere, octet)",
+   "question_en": "In a language model, what is a 'token'?",
+   "options": [
+    { "key": "A", "text_en": "The smallest unit of text: a word, subword, character, or byte." },
+    { "key": "B", "text_en": "A single complete English word, never a partial fragment." },
+    { "key": "C", "text_en": "A fixed block of exactly one hundred characters of input." },
+    { "key": "D", "text_en": "An API credential that authorizes one request to the model." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc définit les tokens comme « the smallest individual units of a language model, and can correspond to words, subwords, characters, or even bytes. » (Pour Claude, un token vaut environ 3,5 caractères anglais.)",
+   "distractors_fr": {
+    "B": "Un token peut être un sous-mot ou un fragment, pas seulement un mot entier.",
+    "C": "Un token n'a pas de taille fixe en caractères : il varie selon le texte et la langue.",
+    "D": "Une clé d'API autorise une requête ; ce n'est pas ce qu'est un token."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-002",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Le texte d entree est encode en tokens avant traitement",
+   "question_en": "What happens to your input text before the model processes it?",
+   "options": [
+    { "key": "A", "text_en": "It is stored verbatim and matched against the training corpus." },
+    { "key": "B", "text_en": "It is translated into English regardless of its source language." },
+    { "key": "C", "text_en": "It is encoded into a series of tokens for the model." },
+    { "key": "D", "text_en": "It is compressed into one embedding vector per request." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc précise : « the text (consisting of a series of characters) is encoded into a series of tokens for the model to process. »",
+   "distractors_fr": {
+    "A": "Le texte n'est pas stocké tel quel ni apparié au corpus d'entraînement : il est tokenisé.",
+    "B": "Aucune traduction systématique en anglais n'a lieu ; les tokens gèrent d'autres langues.",
+    "D": "L'entrée n'est pas réduite à un unique vecteur : elle devient une série de tokens."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-003",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Un modele pre-entraine genere en predisant le token suivant",
+   "question_en": "How does Claude's underlying pretrained model fundamentally generate text?",
+   "options": [
+    { "key": "A", "text_en": "By retrieving the closest matching passage from its training set." },
+    { "key": "B", "text_en": "By predicting the next token from the preceding context." },
+    { "key": "C", "text_en": "By selecting a whole answer from a fixed lookup table." },
+    { "key": "D", "text_en": "By translating an internal logic tree into sentences." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc décrit les modèles autorégressifs de Claude comme « pretrained to predict the next word, given the previous context of text. » La génération est une prédiction du token suivant.",
+   "distractors_fr": {
+    "A": "Le modèle ne récupère pas un passage d'entraînement : il prédit le token suivant, il ne copie pas.",
+    "C": "Il n'existe pas de table de correspondance figée ; la sortie est générée token par token.",
+    "D": "Le modèle ne parcourt pas un arbre logique explicite : il prédit statistiquement le token suivant."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-004",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Pre-entrainement : entrainement initial sur un grand corpus non etiquete",
+   "question_en": "What is 'pretraining' in the model lifecycle?",
+   "options": [
+    { "key": "A", "text_en": "Ranking outputs by human preference to align behavior." },
+    { "key": "B", "text_en": "Further training on a small labeled task-specific set." },
+    { "key": "C", "text_en": "Prompting the model with examples at inference time." },
+    { "key": "D", "text_en": "Initial training on a large unlabeled corpus of text." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc définit le pré-entraînement : « the initial process of training language models on a large unlabeled corpus of text. »",
+   "distractors_fr": {
+    "A": "Classer des sorties selon des préférences humaines décrit le RLHF, pas le pré-entraînement.",
+    "B": "S'entraîner sur un petit jeu étiqueté relève du fine-tuning, pas du pré-entraînement.",
+    "C": "Fournir des exemples à l'inférence est du prompting, pas un entraînement."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-005",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Fine-tuning : poursuite de l entrainement sur des donnees supplementaires",
+   "question_en": "A team wants a model to mimic a domain's patterns via more training data. What is that process?",
+   "options": [
+    { "key": "A", "text_en": "Prompt engineering, done entirely at inference time." },
+    { "key": "B", "text_en": "Pretraining, the model's very first training stage." },
+    { "key": "C", "text_en": "RLHF, ranking outputs to match human preference." },
+    { "key": "D", "text_en": "Fine-tuning, further training on additional data." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc définit le fine-tuning : « further training a pretrained language model using additional data ... causes the model to start representing and mimicking the patterns ... of the fine-tuning dataset. »",
+   "distractors_fr": {
+    "A": "Le prompt engineering agit à l'inférence, sans nouvel entraînement du modèle.",
+    "B": "Le pré-entraînement est l'étape initiale sur un grand corpus, pas l'adaptation à un domaine.",
+    "C": "Le RLHF aligne sur des préférences humaines classées, ce n'est pas l'adaptation par données supplémentaires décrite ici."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-006",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "RLHF : aligner le modele sur des preferences humaines classees",
+   "question_en": "What does RLHF train a pretrained model to do?",
+   "options": [
+    { "key": "A", "text_en": "Encode text into tokens more efficiently at scale." },
+    { "key": "B", "text_en": "Memorize its training corpus for verbatim recall." },
+    { "key": "C", "text_en": "Behave in line with ranked human preferences." },
+    { "key": "D", "text_en": "Expand its context window beyond the default size." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc décrit le RLHF : « a technique used to train a pretrained language model to behave in ways that are consistent with human preferences », via le classement d'exemples de sortie.",
+   "distractors_fr": {
+    "A": "Le RLHF ne concerne pas la tokenisation ni son efficacité.",
+    "B": "Le RLHF n'a pas pour but la mémorisation verbatim du corpus.",
+    "D": "La taille de la fenêtre de contexte est une propriété du modèle, indépendante du RLHF."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-007",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "facile",
+   "concept": "Claude n est pas un modele brut : fine-tuning et RLHF pour etre utile, honnete, inoffensif",
+   "question_en": "Why is Claude described as more than a 'bare' language model?",
+   "options": [
+    { "key": "A", "text_en": "It is fine-tuned and RLHF-trained to be helpful and honest." },
+    { "key": "B", "text_en": "It stores a live fact database it queries per request." },
+    { "key": "C", "text_en": "It never uses pretraining, only the prompt examples given." },
+    { "key": "D", "text_en": "It is retrained entirely from scratch on every new conversation." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc précise : « Claude is not a bare language model; it has already been fine-tuned to be a helpful assistant », et « trained using RLHF to be more helpful, honest, and harmless. »",
+   "distractors_fr": {
+    "B": "Claude n'interroge pas une base de faits en direct ; ses connaissances viennent de l'entraînement (ou du contexte fourni).",
+    "C": "Claude repose bien sur un pré-entraînement, affiné ensuite ; il n'utilise pas que des exemples de prompt.",
+    "D": "Le modèle n'est pas ré-entraîné à chaque conversation : ses poids sont figés à l'inférence."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-008",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Un modele juste pre-entraine ne suit pas naturellement les instructions",
+   "question_en": "Straight after pretraining, before fine-tuning, how do these models behave?",
+   "options": [
+    { "key": "A", "text_en": "They already follow instructions well and act as ready chat assistants." },
+    { "key": "B", "text_en": "They are not inherently good at following instructions." },
+    { "key": "C", "text_en": "They refuse every prompt until RLHF is fully applied." },
+    { "key": "D", "text_en": "They can only output single tokens, never full sentences." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc note : « These pretrained models are not inherently good at answering questions or following instructions, and often require deep skill in prompt engineering. » Fine-tuning et RLHF les rendent utiles.",
+   "distractors_fr": {
+    "A": "C'est justement l'inverse : sans affinage, ils ne suivent pas bien les instructions.",
+    "C": "Ils ne refusent pas tout ; ils sont simplement peu doués pour l'instruction avant affinage.",
+    "D": "Un modèle pré-entraîné génère bien des séquences complètes, token après token."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-009",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "La fenetre de contexte est une memoire de travail, distincte des donnees d entrainement",
+   "question_en": "What does the 'context window' represent for a model?",
+   "options": [
+    { "key": "A", "text_en": "The full corpus of data the model was trained on." },
+    { "key": "B", "text_en": "A permanent long-term memory saved between sessions." },
+    { "key": "C", "text_en": "The list of tools the model is allowed to call." },
+    { "key": "D", "text_en": "A working memory of the text it can reference now." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc oppose la fenêtre de contexte au corpus d'entraînement : elle « represents a 'working memory' for the model », c'est-à-dire tout le texte qu'il peut référencer pour générer sa réponse.",
+   "distractors_fr": {
+    "A": "Le corpus d'entraînement est distinct : la fenêtre de contexte est la mémoire de travail immédiate.",
+    "B": "La fenêtre n'est pas une mémoire persistante entre sessions ; la Messages API est sans état.",
+    "C": "La liste des outils n'est pas la définition de la fenêtre de contexte (même si elle y compte)."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+   "id": "LLF-010",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Tout compte dans la fenetre de contexte, y compris la sortie et les definitions d outils",
+   "question_en": "Which TWO items count toward a request's context window?",
+   "options": [
+    { "key": "A", "text_en": "Your tool definitions sent with the request." },
+    { "key": "B", "text_en": "The model's training data from pretraining." },
+    { "key": "C", "text_en": "The output Claude generates, including its thinking." },
+    { "key": "D", "text_en": "Only the latest user message, not earlier turns." }
+   ],
+   "correct": ["A", "C"],
+   "explanation_fr": "La doc dit : « Everything in the request counts toward the context window: the system prompt, every message ... and your tool definitions. The output Claude generates for the turn, including its extended thinking, counts too. » Donc A et C.",
+   "distractors_fr": {
+    "B": "Les données d'entraînement sont distinctes de la fenêtre de contexte ; elles n'y comptent pas.",
+    "D": "Tous les tours accumulés comptent, pas seulement le dernier message utilisateur."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+   "id": "LLF-011",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Context rot : la precision se degrade quand le nombre de tokens grossit",
+   "question_en": "As a conversation's token count grows large, what happens? Select the TWO accurate statements.",
+   "options": [
+    { "key": "A", "text_en": "Accuracy and recall automatically improve with more tokens." },
+    { "key": "B", "text_en": "Accuracy and recall can degrade, a phenomenon called context rot." },
+    { "key": "C", "text_en": "The window silently drops the system prompt to make room." },
+    { "key": "D", "text_en": "Curating what's in context matters, not just how much fits." }
+   ],
+   "correct": ["B", "D"],
+   "explanation_fr": "La doc avertit : « As token count grows, accuracy and recall degrade, a phenomenon known as context rot. This makes curating what's in context just as important as how much space is available. » Donc B et D.",
+   "distractors_fr": {
+    "A": "Plus de tokens n'améliore pas automatiquement la performance : la précision peut au contraire se dégrader.",
+    "C": "Rien n'indique une suppression silencieuse du prompt système ; c'est la qualité du contexte qui se dégrade."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+   "id": "LLF-012",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_magnitude",
+   "difficulty": "moyen",
+   "concept": "Tailles de fenetre de contexte : 1M pour les modeles recents, 200k pour Sonnet 4.5",
+   "question_en": "What is the context window of the latest Claude Opus and Sonnet models on the API?",
+   "options": [
+    { "key": "A", "text_en": "8k tokens." },
+    { "key": "B", "text_en": "32k tokens." },
+    { "key": "C", "text_en": "200k tokens." },
+    { "key": "D", "text_en": "1M tokens." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc indique que les modèles récents (Opus 5, Opus 4.8, Sonnet 5, etc.) ont « a 1M-token context window », tandis que « Other Claude models, including Claude Sonnet 4.5, have a 200k-token context window. »",
+   "distractors_fr": {
+    "A": "8k est très en deçà des fenêtres actuelles.",
+    "B": "32k ne correspond à aucune fenêtre des modèles Claude visés.",
+    "C": "200k est la fenêtre de modèles plus anciens comme Sonnet 4.5, pas des tout derniers."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+   "id": "LLF-013",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Accumulation progressive : les tours precedents sont conserves integralement",
+   "question_en": "In standard API behavior, what happens to earlier turns as a conversation advances?",
+   "options": [
+    { "key": "A", "text_en": "Each earlier turn is preserved completely in the window." },
+    { "key": "B", "text_en": "Earlier turns are summarized automatically after each reply." },
+    { "key": "C", "text_en": "Only the first and last turns are kept; the middle drops." },
+    { "key": "D", "text_en": "Earlier turns move into training data for the next model." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc décrit l'accumulation progressive : « As the conversation advances through turns, each user message and assistant response accumulates within the context window, and previous turns are preserved completely. »",
+   "distractors_fr": {
+    "B": "Le résumé automatique relève de la compaction côté serveur, pas du comportement standard décrit.",
+    "C": "Aucun tour intermédiaire n'est écarté par défaut : tous sont conservés jusqu'à la limite.",
+    "D": "Les tours d'une conversation ne deviennent pas des données d'entraînement."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  },
+  {
+   "id": "LLF-014",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "La temperature regle l alea : haute pour la diversite, basse pour le determinisme",
+   "question_en": "How does the temperature parameter shape generation? Select the TWO accurate statements.",
+   "options": [
+    { "key": "A", "text_en": "Higher temperature yields more creative, diverse outputs." },
+    { "key": "B", "text_en": "Higher temperature makes outputs more conservative and fixed." },
+    { "key": "C", "text_en": "Temperature sets the maximum number of output tokens." },
+    { "key": "D", "text_en": "Lower temperature yields more deterministic, likely phrasing." }
+   ],
+   "correct": ["A", "D"],
+   "explanation_fr": "La doc dit : « Higher temperatures lead to more creative and diverse outputs ... Lower temperatures result in more conservative and deterministic outputs. » Donc A et D.",
+   "distractors_fr": {
+    "B": "C'est une température basse, pas haute, qui rend la sortie conservatrice et déterministe.",
+    "C": "La longueur maximale de sortie est fixée par `max_tokens`, pas par la température."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-015",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Non-determinisme : meme a temperature 0, les sorties ne sont pas identiques",
+   "question_en": "You set temperature to 0 expecting identical outputs every call. What does the doc say?",
+   "options": [
+    { "key": "A", "text_en": "Outputs become byte-for-byte identical across all calls." },
+    { "key": "B", "text_en": "Results are still not fully deterministic across calls." },
+    { "key": "C", "text_en": "Temperature 0 is rejected with a 400 on every model." },
+    { "key": "D", "text_en": "Only the first call is random; the rest are cached." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc prévient : « Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls. »",
+   "distractors_fr": {
+    "A": "La doc dit exactement le contraire : même à 0, la sortie n'est pas garantie identique.",
+    "C": "Une température de 0 est une valeur valide, pas un motif de 400.",
+    "D": "Il n'y a pas de mise en cache implicite des sorties ; le non-déterminisme persiste d'un appel à l'autre."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-016",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "facile",
+   "concept": "Definition d une hallucination : sortie factuellement fausse ou incoherente",
+   "question_en": "What is a 'hallucination' in an LLM's output?",
+   "options": [
+    { "key": "A", "text_en": "A response that exceeds the requested maximum length." },
+    { "key": "B", "text_en": "A refusal returned when a safety policy is triggered." },
+    { "key": "C", "text_en": "Text that is factually wrong or inconsistent with context." },
+    { "key": "D", "text_en": "A delay before the first output token is produced." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc définit l'hallucination : « text that is factually incorrect or inconsistent with the given context. »",
+   "distractors_fr": {
+    "A": "Dépasser une longueur demandée est un problème de format, pas une hallucination.",
+    "B": "Un refus lié à une politique de sécurité n'est pas une hallucination.",
+    "D": "Le délai avant le premier token est le TTFT, sans rapport avec l'exactitude factuelle."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+   "id": "LLF-017",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Autoriser Claude a dire qu il ne sait pas pour reduire les hallucinations",
+   "question_en": "Which simple prompting move most directly reduces hallucinations?",
+   "options": [
+    { "key": "A", "text_en": "Explicitly let Claude say it doesn't know when unsure." },
+    { "key": "B", "text_en": "Raise the temperature so answers become more varied." },
+    { "key": "C", "text_en": "Ask for the longest, most detailed answer possible." },
+    { "key": "D", "text_en": "Forbid Claude from ever expressing any uncertainty." }
+   ],
+   "correct": ["A"],
+   "explanation_fr": "La doc recommande : « Allow Claude to say 'I don't know' ... Explicitly give Claude permission to admit uncertainty. This simple technique can drastically reduce false information. »",
+   "distractors_fr": {
+    "B": "Augmenter la température accroît l'aléa et n'aide pas à réduire les hallucinations.",
+    "C": "Demander une réponse la plus longue possible pousse au remplissage, pas à l'exactitude.",
+    "D": "Interdire toute incertitude est contre-productif : c'est justement l'aveu d'incertitude qui aide."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+   "id": "LLF-018",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "difficile",
+   "concept": "Rendre une reponse auditable : citer une phrase par affirmation ou la retirer",
+   "question_en": "To make a drafted answer auditable against source documents, what does the guide suggest?",
+   "options": [
+    { "key": "A", "text_en": "Increase max_tokens so that no claim is ever cut off." },
+    { "key": "B", "text_en": "Lower temperature to zero for guaranteed factual output." },
+    { "key": "C", "text_en": "Run the prompt once and trust the first response fully." },
+    { "key": "D", "text_en": "Have Claude cite a supporting quote per claim, or retract it." }
+   ],
+   "correct": ["D"],
+   "explanation_fr": "La doc conseille de rendre la réponse auditable : « having it cite quotes and sources for each of its claims ... If it can't find a quote, it must retract the claim. »",
+   "distractors_fr": {
+    "A": "Augmenter `max_tokens` évite les coupures, mais ne rend pas les affirmations vérifiables.",
+    "B": "Une température de 0 ne garantit pas l'exactitude factuelle et n'ancre pas les affirmations dans les sources.",
+    "C": "Se fier à une seule sortie n'apporte aucune vérification ; il faut ancrer chaque affirmation."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+   "id": "LLF-019",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "Best-of-N : comparer plusieurs sorties d un meme prompt pour reperer les ecarts",
+   "question_en": "What does 'best-of-N' verification involve for spotting hallucinations?",
+   "options": [
+    { "key": "A", "text_en": "Sending one request and accepting its single output." },
+    { "key": "B", "text_en": "Running the same prompt several times and comparing outputs." },
+    { "key": "C", "text_en": "Splitting the prompt into N smaller independent batches." },
+    { "key": "D", "text_en": "Keeping only the N longest sentences from the response." }
+   ],
+   "correct": ["B"],
+   "explanation_fr": "La doc décrit le best-of-N : « Run Claude through the same prompt multiple times and compare the outputs. Inconsistencies across outputs could indicate hallucinations. »",
+   "distractors_fr": {
+    "A": "Une seule requête ne permet aucune comparaison ; le best-of-N repose sur plusieurs exécutions.",
+    "C": "Il ne s'agit pas de découper le prompt en lots, mais de répéter le même prompt.",
+    "D": "Le best-of-N ne trie pas des phrases par longueur : il compare des sorties entières."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  },
+  {
+   "id": "LLF-020",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "multi",
+   "nature": "judgment",
+   "difficulty": "moyen",
+   "concept": "RAG : injecter des documents externes dans le contexte pour depasser les donnees d entrainement",
+   "question_en": "What does Retrieval Augmented Generation (RAG) do? Select the TWO accurate statements.",
+   "options": [
+    { "key": "A", "text_en": "It retrains and updates the model's weights on every single user query." },
+    { "key": "B", "text_en": "It passes retrieved external documents into the context window." },
+    { "key": "C", "text_en": "It lets the model use information beyond its training data." },
+    { "key": "D", "text_en": "It removes the need for any prompt or user query." }
+   ],
+   "correct": ["B", "C"],
+   "explanation_fr": "La doc décrit le RAG : « a language model is augmented with an external knowledge base ... that is passed into the context window », ce qui « allows the model to access and use information beyond its training data. » Donc B et C.",
+   "distractors_fr": {
+    "A": "Le RAG ne ré-entraîne pas les poids : il fournit des documents dans le contexte à l'inférence.",
+    "D": "Le RAG s'appuie sur la requête pour récupérer les documents pertinents ; il ne la supprime pas."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  },
+  {
+   "id": "LLF-021",
+   "domain": "Model Selection and Optimization",
+   "subdomain": "LLM Fundamentals",
+   "weight": 5.2,
+   "type": "single",
+   "nature": "factual_semantic",
+   "difficulty": "moyen",
+   "concept": "Definition d un LLM : modele a nombreux parametres entraine sur de vastes textes",
+   "question_en": "What is a large language model (LLM)?",
+   "options": [
+    { "key": "A", "text_en": "A rules engine mapping fixed inputs to fixed outputs." },
+    { "key": "B", "text_en": "A search index over a curated database of documents." },
+    { "key": "C", "text_en": "A many-parameter model trained on vast amounts of text." },
+    { "key": "D", "text_en": "A translator that only converts text between languages." }
+   ],
+   "correct": ["C"],
+   "explanation_fr": "La doc définit les LLM : « AI language models with many parameters ... trained on vast amounts of text data » capables de générer du texte, répondre, résumer, etc.",
+   "distractors_fr": {
+    "A": "Un LLM n'est pas un moteur de règles déterministe : il génère par prédiction statistique.",
+    "B": "Un LLM n'est pas un index de recherche sur une base de documents.",
+    "D": "La traduction n'est qu'une tâche parmi d'autres ; un LLM n'est pas limité à traduire."
+   },
+   "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+  }
+ ]
+}

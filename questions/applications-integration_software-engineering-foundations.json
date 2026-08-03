@@ -1,0 +1,1183 @@
+{
+  "subdomain": "Software Engineering Foundations",
+  "domain": "Applications and Integration",
+  "weight": 7.4,
+  "target_questions": 30,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/api/errors",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+  ],
+  "questions": [
+    {
+      "id": "SEF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Ce que les SDK officiels reessaient automatiquement",
+      "question_en": "A developer new to the Anthropic SDK asks whether they must write their own retry loop for occasional 529 and connection errors. What is accurate?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Yes; the SDK returns raw errors and never retries anything on your behalf."
+        },
+        {
+          "key": "B",
+          "text_en": "No; the SDK already retries transient failures with exponential backoff."
+        },
+        {
+          "key": "C",
+          "text_en": "Only 400 errors are retried, since those are the most common failure kind."
+        },
+        {
+          "key": "D",
+          "text_en": "Retries happen only when you set an ANTHROPIC_RETRY variable before the call."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc des erreurs est explicite : « The official SDKs automatically retry transient failures (such as connection errors, rate limits, and 5xx server errors) with exponential backoff, twice by default, honoring the `retry-after` header when present. » Il n'est donc pas nécessaire d'écrire sa propre boucle pour ces cas ; on peut au contraire régler ou désactiver ce comportement via l'option de nombre maximal de réessais.",
+      "distractors_fr": {
+        "A": "Faux : les SDK réessaient bien pour vous les échecs transitoires ; ils ne se contentent pas de renvoyer l'erreur brute.",
+        "C": "Les 400 sont justement des erreurs de requête non transitoires : réessayer ne les corrige pas, et ce ne sont pas elles qui sont réessayées.",
+        "D": "Aucune variable `ANTHROPIC_RETRY` ne conditionne les réessais ; ils sont actifs par défaut et se règlent par une option client."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Desactiver ou regler les reessais automatiques via l option maxRetries",
+      "question_en": "A team wraps a non-idempotent billing call around the SDK and wants no automatic retries on that path so a charge is never duplicated. What does the SDK offer?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing; SDK retries are fixed and can only be avoided by dropping the SDK."
+        },
+        {
+          "key": "B",
+          "text_en": "A global flag that turns retries off for every client in the whole process."
+        },
+        {
+          "key": "C",
+          "text_en": "A maxRetries option, set to 0 per request or client, to disable the retries."
+        },
+        {
+          "key": "D",
+          "text_en": "A dry_run option that simulates the call so no real retry ever reaches the API."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc TypeScript indique : « You can use the `maxRetries` option to configure or disable this. » On peut donc poser `maxRetries: 0` au niveau du client ou d'une requête pour désactiver les réessais sur un appel non idempotent, sans abandonner le SDK ni couper les réessais partout. Chaque SDK expose une option de nombre maximal de réessais équivalente.",
+      "distractors_fr": {
+        "A": "Les réessais ne sont pas figés : `maxRetries` les règle ou les coupe. Abandonner le SDK est inutile.",
+        "B": "L'option se pose par client ou par requête ; on n'est pas contraint à un réglage global du processus.",
+        "D": "Il n'existe pas d'option `dry_run` de simulation dans ce contexte ; le levier est `maxRetries`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Attraper les classes d exception typees plutot que filtrer le texte du message",
+      "question_en": "Reviewing error handling, you find code that decides what to do by matching substrings in the error message text. What does the docs recommend instead?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Catch the SDK's typed exception classes rather than string-matching messages."
+        },
+        {
+          "key": "B",
+          "text_en": "Parse the raw JSON body yourself and branch on the string in its type field."
+        },
+        {
+          "key": "C",
+          "text_en": "Match on the HTTP reason phrase, which is more stable than the message body."
+        },
+        {
+          "key": "D",
+          "text_en": "Compare the full message against a hard-coded list you update on each release."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc des erreurs conseille : « Catch the SDK's typed classes rather than string-matching error messages, handling the most specific classes first. » Les valeurs de `message` et de `type` peuvent évoluer avec le versioning ; se caler sur les classes typées du SDK est robuste, filtrer du texte ne l'est pas.",
+      "distractors_fr": {
+        "B": "Rebrancher sur la chaîne `type` du JSON reste du filtrage de texte fragile ; le SDK expose justement des classes typées pour l'éviter.",
+        "C": "La reason phrase HTTP n'est pas le mécanisme prévu ; la doc s'appuie sur les exceptions typées, pas sur le texte du statut.",
+        "D": "Une liste de messages codée en dur casse dès que le libellé change ; la doc prévient que ces valeurs peuvent évoluer."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ordonner les blocs catch du plus specifique au plus general",
+      "question_en": "When catching the SDK's exception hierarchy, in what order does the guide say to place the handlers?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Alphabetically by class name, so the catch order stays easy to scan and audit."
+        },
+        {
+          "key": "B",
+          "text_en": "Broadest base class first, then progressively narrow down to specific ones."
+        },
+        {
+          "key": "C",
+          "text_en": "By HTTP status ascending, so 400 handlers always precede 500 handlers."
+        },
+        {
+          "key": "D",
+          "text_en": "Most specific classes first, before broader base classes catch everything."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc précise « handling the most specific classes first ». Si une classe de base large est attrapée en premier, elle capte tout et les branches spécifiques ne s'exécutent jamais. On traite donc les exceptions les plus précises d'abord, puis les classes de base.",
+      "distractors_fr": {
+        "A": "L'ordre alphabétique ignore la hiérarchie d'héritage ; ce n'est pas le critère.",
+        "B": "Mettre la classe de base d'abord la fait tout capter avant les cas précis : c'est exactement l'erreur à éviter.",
+        "C": "L'ordre par statut HTTP ne reflète pas la spécificité des classes ; la règle porte sur spécifique avant général."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Traiter un 409 conflict en resolvant le conflit avant de reessayer",
+      "question_en": "A request returns 409 conflict_error. Select the TWO statements that correctly describe it and its documented handling.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It always signals a stale API key that the client should rotate first."
+        },
+        {
+          "key": "B",
+          "text_en": "The documented fix is to resolve the conflict, then retry the request."
+        },
+        {
+          "key": "C",
+          "text_en": "It is fatal to the request and can never be recovered by the caller."
+        },
+        {
+          "key": "D",
+          "text_en": "It can mean a value that must stay unique is already in use elsewhere."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "La doc décrit le 409 `conflict_error` : « The request conflicts with the current state of a resource. For example, the resource was modified concurrently, or a value that must be unique is already in use. Resolve the conflict, then retry the request. » Les deux énoncés exacts sont donc B (résoudre puis réessayer) et D (valeur unique déjà prise). Le 409 ne vise ni la clé d'API ni un cas irrécupérable.",
+      "distractors_fr": {
+        "A": "Un problème de clé d'API donne un 401 `authentication_error`, pas un 409 ; le 409 porte sur l'état d'une ressource.",
+        "C": "Le 409 est récupérable : la doc dit de résoudre le conflit puis de réessayer, pas de le traiter comme fatal."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Reagir a un 500 api_error par un reessai avec backoff exponentiel",
+      "question_en": "Your service occasionally gets a 500 api_error from the Claude API. What does the docs say to do?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Fail the whole job immediately, since a 500 means the input was malformed."
+        },
+        {
+          "key": "B",
+          "text_en": "Downgrade to a smaller model, because 500 indicates the model is overloaded."
+        },
+        {
+          "key": "C",
+          "text_en": "Retry with exponential backoff; if it persists, contact support with the request ID."
+        },
+        {
+          "key": "D",
+          "text_en": "Switch the endpoint to the Batch API, the only path that never returns 500."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc décrit le 500 `api_error` comme une erreur interne inattendue et prescrit : « Retry the request with exponential backoff; if the error persists, contact support with the request ID. » Ce n'est pas un problème de format d'entrée (ce serait un 400) ni un signal de surcharge modèle.",
+      "distractors_fr": {
+        "A": "Un format d'entrée invalide donne un 400, pas un 500 ; échouer sans réessayer va à l'encontre de la consigne de backoff.",
+        "B": "La surcharge se signale par 529 `overloaded_error`, pas par 500 ; changer de modèle n'est pas la réponse prévue.",
+        "D": "La Batch API n'est pas immunisée contre les erreurs serveur ; la doc traite le 500 par un réessai avec backoff."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Repondre a un 504 timeout en passant en streaming pour les requetes longues",
+      "question_en": "Long completions intermittently fail with 504 timeout_error. Which change does the docs suggest?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Use the streaming Messages API for long-running requests to avoid the timeout."
+        },
+        {
+          "key": "B",
+          "text_en": "Raise max_tokens sharply so the model finishes before the socket can time out."
+        },
+        {
+          "key": "C",
+          "text_en": "Disable the SDK retries, since retrying a 504 always doubles the total latency."
+        },
+        {
+          "key": "D",
+          "text_en": "Lower the API version header so an older, faster timeout policy is applied."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc du 504 `timeout_error` renvoie explicitement à la streaming Messages API pour les requêtes longues : « Consider using the streaming Messages API for long-running requests. » Le streaming évite qu'une connexion inactive expire pendant une génération longue. Augmenter `max_tokens` sans streaming aggrave au contraire le risque de timeout.",
+      "distractors_fr": {
+        "B": "Un `max_tokens` élevé sans streaming allonge la requête et augmente le risque de timeout ; c'est le contraire du conseil.",
+        "C": "Couper les réessais ne règle pas la cause du 504 ; la doc oriente vers le streaming, pas vers l'abandon des réessais.",
+        "D": "L'en-tête de version d'API ne pilote pas de politique de timeout plus rapide ; ce n'est pas le levier décrit."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Gerer les requetes de plus de dix minutes par streaming ou Batch plutot que par un grand max_tokens",
+      "question_en": "A batch of very long generations must each run well beyond 10 minutes over an unreliable network. What does the docs advise instead of a large max_tokens on a non-streaming call?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Keep non-streaming calls but retry each one five times to outlast the dropouts."
+        },
+        {
+          "key": "B",
+          "text_en": "Open one non-streaming call per item and hold every socket open concurrently."
+        },
+        {
+          "key": "C",
+          "text_en": "Split each generation across several tiny requests joined by stop sequences."
+        },
+        {
+          "key": "D",
+          "text_en": "Use the streaming Messages API, or the Batches API to poll rather than hold a socket."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc « Long requests » recommande, pour les requêtes longues (surtout au-delà de 10 minutes), la streaming Messages API ou la Message Batches API : cette dernière « can help you manage the risk of network issues by allowing you to poll for results rather than requiring an uninterrupted network connection ». On évite de poser un grand `max_tokens` sur un appel non streamé, que certains réseaux coupent sur inactivité.",
+      "distractors_fr": {
+        "A": "Rejouer des appels non streamés n'empêche pas la coupure des connexions inactives ; la doc change de mécanisme (streaming ou Batch).",
+        "B": "Maintenir de nombreux sockets ouverts est précisément le risque décrit ; la Batch API existe pour interroger sans garder de connexion.",
+        "C": "Découper au moyen de stop sequences n'est pas la solution proposée et complique le résultat ; la doc vise streaming ou Batch."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Support navigateur desactive par defaut pour ne pas exposer la cle secrete",
+      "question_en": "A developer instantiates the TypeScript SDK directly in front-end browser code and it refuses to run without an explicit override. Why is that the default?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Browsers cannot parse server-sent events, so streaming would silently break."
+        },
+        {
+          "key": "B",
+          "text_en": "Browser use is off by default to avoid exposing your secret API credentials."
+        },
+        {
+          "key": "C",
+          "text_en": "The SDK bundle is too large for browsers, so it blocks the build to warn you."
+        },
+        {
+          "key": "D",
+          "text_en": "CORS on the API blocks browsers outright, so the SDK refuses to even try."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc TypeScript indique que le support navigateur est « disabled by default to avoid exposing your secret API credentials », et qu'on l'active en posant explicitement `dangerouslyAllowBrowser` à `true`. Le nom même de l'option signale le risque : embarquer une clé secrète dans du code client l'expose à quiconque ouvre la page.",
+      "distractors_fr": {
+        "A": "Le blocage n'a rien à voir avec le parsing des SSE ; il protège la clé secrète.",
+        "C": "La raison n'est pas la taille du bundle mais l'exposition des identifiants secrets.",
+        "D": "Ce n'est pas une question de CORS : le garde-fou vise à ne pas divulguer la clé côté navigateur."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Absence de cle d idempotence a la creation de session impose de dedupliquer soi-meme",
+      "question_en": "A webhook that creates a session sometimes fires twice, and each call creates a separate session. What does the reference say, and what follows for the client?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "There is an idempotency key; set it and duplicate calls collapse into one session."
+        },
+        {
+          "key": "B",
+          "text_en": "The endpoint is idempotent by design, so the duplicate call is a harmless no-op."
+        },
+        {
+          "key": "C",
+          "text_en": "There is no idempotency key; the client must dedupe retries to avoid duplicates."
+        },
+        {
+          "key": "D",
+          "text_en": "Sessions auto-merge server-side when two arrive within the same billing minute."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La référence des sessions est nette : « Each successful request creates a new session. There is no idempotency key. If a webhook caller retries, the endpoint creates multiple sessions. » La déduplication incombe donc au client — par exemple une clé métier ou un journal — puisque le serveur ne collapse pas les doublons. À l'inverse, l'endpoint de résultats de batch, lui, est idempotent et sert à interroger sans risque.",
+      "distractors_fr": {
+        "A": "La doc dit explicitement qu'il n'y a pas de clé d'idempotence sur cette création ; on ne peut pas s'appuyer dessus.",
+        "B": "La création de session n'est pas idempotente : chaque appel crée une session distincte.",
+        "D": "Aucun mécanisme de fusion automatique côté serveur n'est décrit ; c'est au client de dédupliquer."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Interroger un batch en toute securite grace a l idempotence de l endpoint de recuperation",
+      "question_en": "A worker polls a Message Batch every few seconds to learn when it has finished. Why is repeatedly hitting the retrieve endpoint safe here?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "That endpoint is idempotent, so it can be polled for batch completion safely."
+        },
+        {
+          "key": "B",
+          "text_en": "Polling is rate-limit-exempt, so the interval between calls does not matter at all."
+        },
+        {
+          "key": "C",
+          "text_en": "Each poll cancels the previous poll, so only the final request is ever billed."
+        },
+        {
+          "key": "D",
+          "text_en": "The endpoint mutates state on read, which is what advances the batch to ended."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc de récupération d'un batch indique : « This endpoint is idempotent and can be used to poll for Message Batch completion. » Répéter la lecture ne modifie donc rien et sert précisément à attendre l'état `ended`, après quoi on lit les résultats via `results_url`.",
+      "distractors_fr": {
+        "B": "L'idempotence ne veut pas dire exemption de rate limit ; c'est l'absence d'effet de bord qui rend le polling sûr, pas une dispense de quotas.",
+        "C": "Aucun poll n'annule le précédent ; ils sont simplement sans effet sur l'état.",
+        "D": "L'endpoint ne mute pas l'état à la lecture : c'est le traitement du batch, pas le poll, qui le fait passer à `ended`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Une erreur survenue en plein flux SSE apres un 200 ne suit pas la gestion d erreur standard",
+      "question_en": "A streaming request already returned HTTP 200, then fails partway through the stream. Why do the usual status-code error handlers not catch it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The 200 is rolled back to a 5xx retroactively, so a status handler still fires."
+        },
+        {
+          "key": "B",
+          "text_en": "Mid-stream failures raise a 400 on the next request, where they are handled."
+        },
+        {
+          "key": "C",
+          "text_en": "SSE cannot fail once opened, so any later error must be a bug in your parser."
+        },
+        {
+          "key": "D",
+          "text_en": "After a 200, an error arrives as an in-stream error event, not a status code."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc des erreurs prévient : « When receiving a streaming response over server-sent events (SSE), an error can occur after the API returns a 200 response. In that case, error handling doesn't follow these standard mechanisms. » L'erreur arrive alors comme un événement d'erreur dans le flux, qu'il faut traiter en lisant les événements, et non via le code de statut déjà émis (200).",
+      "distractors_fr": {
+        "A": "Un 200 déjà renvoyé n'est pas rétro-transformé en 5xx ; l'erreur vient dans le flux, pas dans le statut.",
+        "B": "L'erreur ne se reporte pas sur un 400 de la requête suivante ; elle survient dans le flux courant.",
+        "C": "Un flux SSE peut échouer après ouverture : la doc décrit précisément ce cas, ce n'est pas un bug de parser."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Preferer la boucle de reessai integree du SDK a une boucle maison",
+      "question_en": "A team hand-writes a retry loop that sleeps a fixed one second between attempts and ignores response headers. What does the SDK do better out of the box?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It suppresses all 429s entirely, so no retry logic is ever needed anywhere."
+        },
+        {
+          "key": "B",
+          "text_en": "It backs off exponentially and honors the retry-after header when present."
+        },
+        {
+          "key": "C",
+          "text_en": "It converts every failure into a success by returning the last cached response."
+        },
+        {
+          "key": "D",
+          "text_en": "It retries indefinitely until the request finally succeeds, with no cap at all."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La boucle maison à délai fixe ignore le signal serveur. Le SDK, lui, applique un backoff exponentiel et respecte l'en-tête `retry-after` quand il est présent — « honoring the `retry-after` header when present » — ce qui espace intelligemment les réessais au lieu d'un délai constant. Il borne aussi le nombre de tentatives (deux par défaut), il ne réessaie pas sans fin.",
+      "distractors_fr": {
+        "A": "Le SDK ne supprime pas les 429 : il les réessaie avec backoff en respectant `retry-after`, il ne les masque pas.",
+        "C": "Le SDK ne fabrique pas un faux succès à partir d'un cache ; il réessaie puis lève l'erreur si elle persiste.",
+        "D": "Les réessais sont bornés (deux par défaut), pas infinis ; c'est réglable via l'option de nombre maximal."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Distinguer un 401 authentication_error d un 403 permission_error pour agir",
+      "question_en": "Requests suddenly fail with 401 authentication_error, not 403. Which diagnosis matches the docs?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The workspace lacks access to the resource; adjust its permissions in the Console."
+        },
+        {
+          "key": "B",
+          "text_en": "The account payment method failed; the call is blocked until billing is fixed."
+        },
+        {
+          "key": "C",
+          "text_en": "The API key itself is the problem, for example malformed, revoked, or expired."
+        },
+        {
+          "key": "D",
+          "text_en": "The endpoint path or a resource ID is wrong, so nothing matched the request."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc distingue clairement : 401 `authentication_error` signale un problème avec la clé d'API elle-même — « malformed, revoked, or expired ». Un 403 `permission_error` viserait un défaut de permission sur la ressource, un 402 un souci de facturation, un 404 un chemin ou identifiant introuvable. Le 401 pointe donc la clé, pas les droits.",
+      "distractors_fr": {
+        "A": "Un défaut d'accès à la ressource est un 403 `permission_error`, pas un 401.",
+        "B": "Un souci de facturation est un 402 `billing_error`, distinct de l'authentification.",
+        "D": "Un chemin ou un identifiant erroné donne un 404 `not_found_error`, pas un 401."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Laisser le SDK gerer les 429 en respectant retry-after plutot que boucler soi-meme",
+      "question_en": "Under bursty load your app hits 429s. You are about to add a manual fixed-delay retry loop on top of the SDK. What is the better first step?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Rely on the SDK, which already retries 429s with backoff, honoring retry-after."
+        },
+        {
+          "key": "B",
+          "text_en": "Catch the 429 and immediately resend the same request with no delay at all."
+        },
+        {
+          "key": "C",
+          "text_en": "Treat 429 as fatal and drop the request, since retrying it is never permitted."
+        },
+        {
+          "key": "D",
+          "text_en": "Rotate to a second API key on each 429 to sidestep the account rate limit."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le SDK réessaie déjà les 429 avec backoff exponentiel en respectant `retry-after`. Empiler une boucle maison à délai fixe par-dessus risque de doubler les tentatives et d'ignorer le signal serveur. Le bon premier réflexe est de s'appuyer sur le comportement intégré (réglable via l'option de nombre maximal), et de lisser la montée en charge en amont.",
+      "distractors_fr": {
+        "B": "Renvoyer aussitôt sans délai aggrave la limite ; le SDK espace au contraire les tentatives selon `retry-after`.",
+        "C": "Un 429 est transitoire et réessayable, pas fatal ; la doc le classe parmi les échecs réessayés.",
+        "D": "Faire tourner les clés pour contourner une limite de compte n'est pas la solution prévue et enfreint l'esprit des quotas."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Joindre le request-id lorsqu on signale une requete en echec au support",
+      "question_en": "You open a support ticket about one failing call. Select the TWO true statements about the request ID used to trace it.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is carried in a request-id header on every API response you receive."
+        },
+        {
+          "key": "B",
+          "text_en": "You should send your API key too, so support can replay the failing call."
+        },
+        {
+          "key": "C",
+          "text_en": "It is available only on streaming responses, never on regular ones."
+        },
+        {
+          "key": "D",
+          "text_en": "It also appears as request_id inside the JSON body of error responses."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "La doc « Request ID » indique que chaque réponse porte un en-tête `request-id` (par exemple `req_...`), et que le même identifiant « appears as the `request_id` field in error response bodies ». Les deux énoncés exacts sont donc A et D. On ne transmet jamais sa clé d'API au support, et l'identifiant n'est pas réservé au streaming.",
+      "distractors_fr": {
+        "B": "On ne partage jamais sa clé d'API, même au support : ce serait exposer un secret. Le `request-id` suffit à tracer la requête.",
+        "C": "Le `request-id` figure sur toutes les réponses, pas seulement les réponses en streaming."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-017",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Risque a surcharger l en-tete anthropic-version envoye par defaut par le SDK",
+      "question_en": "A developer overrides the anthropic-version header the SDK sends by default, to pin an arbitrary date. What does the docs warn about?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing; overriding the version header is the supported way to opt into new fields."
+        },
+        {
+          "key": "B",
+          "text_en": "It may cause incorrect types and other unexpected or undefined SDK behavior."
+        },
+        {
+          "key": "C",
+          "text_en": "It disables retries, because the retry logic is keyed off the version header value."
+        },
+        {
+          "key": "D",
+          "text_en": "It forces every request into the Batch API, ignoring the streaming code path."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le SDK envoie `anthropic-version: 2023-06-01` par défaut. La doc prévient qu'on peut le surcharger par requête, mais que « doing so may result in incorrect types and other unexpected or undefined behavior in the SDK », puisque les types du SDK sont alignés sur la version qu'il cible. Ce n'est pas la voie normale pour activer de nouveaux champs.",
+      "distractors_fr": {
+        "A": "La doc décrit précisément un risque de types incorrects et de comportement indéfini ; ce n'est donc pas anodin.",
+        "C": "L'en-tête de version ne pilote pas la logique de réessais ; celle-ci se règle via l'option de nombre maximal.",
+        "D": "Surcharger la version ne bascule pas les requêtes vers la Batch API ; les deux n'ont aucun lien."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-018",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Role du TCP keep-alive pose par le SDK face aux connexions inactives",
+      "question_en": "The SDK sets a TCP socket keep-alive option when the runtime supports it. What problem does that address?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It encrypts the socket a second time, adding a layer of transport security."
+        },
+        {
+          "key": "B",
+          "text_en": "It compresses request bodies so large payloads fit under the size limit."
+        },
+        {
+          "key": "C",
+          "text_en": "It reduces the impact of idle connection timeouts that some networks impose."
+        },
+        {
+          "key": "D",
+          "text_en": "It pins the connection to one region so latency stays stable between calls."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc explique que le SDK « sets a socket option for TCP keep-alive » et que cela « reduces the impact of idle connection timeouts on some networks ». Certains réseaux coupent les connexions restées inactives ; le keep-alive maintient la connexion vivante pendant l'attente d'une réponse longue. Rien à voir avec le chiffrement, la compression ou l'ancrage régional.",
+      "distractors_fr": {
+        "A": "Le keep-alive ne rechiffre rien ; il maintient la connexion active, la sécurité de transport vient de TLS.",
+        "B": "Il ne compresse pas les corps de requête et n'a aucun effet sur les limites de taille.",
+        "D": "Il ne fixe pas de région ; il empêche seulement la coupure d'une connexion inactive."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-019",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Ce que les SDK client apportent par rapport a un appel HTTP brut",
+      "question_en": "A team debates raw HTTP versus an official client SDK for the Messages API. Select the TWO things the overview says the SDKs provide.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A managed agent loop that runs your tools for you, replacing request handling."
+        },
+        {
+          "key": "B",
+          "text_en": "Guaranteed higher rate limits, since SDK traffic is prioritized over raw calls."
+        },
+        {
+          "key": "C",
+          "text_en": "Idiomatic, type-safe interfaces over the Messages API you call yourself."
+        },
+        {
+          "key": "D",
+          "text_en": "Built-in support for streaming, for retries, and for error handling."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "L'overview décrit les client SDK : « Each SDK provides idiomatic interfaces, type safety, and built-in support for streaming, retries, and error handling. » Les deux bonnes réponses sont C et D. Ce sont des clients de la Messages API : vous envoyez chaque requête. Ils ne fournissent pas de boucle d'agent (rôle de l'Agent SDK ou des Managed Agents), ni des quotas différents.",
+      "distractors_fr": {
+        "A": "La boucle d'agent et l'exécution d'outils relèvent de l'Agent SDK et des Managed Agents, pas des client SDK.",
+        "B": "Aucune priorité de quota n'est accordée au trafic SDK ; les limites tiennent au compte, pas au client."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+    },
+    {
+      "id": "SEF-020",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Un echec de connexion sans code HTTP se presente comme une erreur de connexion dediee",
+      "question_en": "The client cannot reach the API at all: DNS fails, so no HTTP status is ever returned. Which SDK error surfaces?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A BadRequestError, since a request with no response counts as malformed."
+        },
+        {
+          "key": "B",
+          "text_en": "A RateLimitError, because unreachable hosts are treated as throttling events."
+        },
+        {
+          "key": "C",
+          "text_en": "An InternalServerError, mapped from the missing status as a server-side 500."
+        },
+        {
+          "key": "D",
+          "text_en": "A connection error (APIConnectionError), which carries no HTTP status code."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le tableau des erreurs TypeScript associe le cas « N/A » (aucun statut HTTP) à `APIConnectionError` : la librairie lève une sous-classe d'`APIError` quand elle ne parvient pas à joindre l'API. Un échec DNS n'a pas de statut, donc ce n'est ni un 400, ni un 429, ni un 500 — c'est une erreur de connexion, et elle fait partie des cas réessayés par défaut.",
+      "distractors_fr": {
+        "A": "Un 400 `BadRequestError` suppose une réponse reçue ; ici aucune réponse n'arrive, c'est une erreur de connexion.",
+        "B": "Un `RateLimitError` correspond à un 429 renvoyé par l'API ; un hôte injoignable n'est pas un throttling.",
+        "C": "Un `InternalServerError` mappe un statut ≥ 500 réellement reçu ; sans réponse, le cas est `APIConnectionError`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-021",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Type d erreur associe au code 400",
+      "question_en": "In the Claude API error format, which error type does HTTP 400 carry?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "invalid_request_error, an issue with the request's format or content."
+        },
+        {
+          "key": "B",
+          "text_en": "rate_limit_error, meaning the account has exceeded a usage limit."
+        },
+        {
+          "key": "C",
+          "text_en": "overloaded_error, meaning the API is temporarily saturated by traffic."
+        },
+        {
+          "key": "D",
+          "text_en": "not_found_error, meaning the requested resource does not exist."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc associe le 400 à `invalid_request_error` : « There was an issue with the format or content of your request. » Ce type couvre aussi d'autres 4XX non listés. Le `rate_limit_error` est un 429, l'`overloaded_error` un 529, le `not_found_error` un 404.",
+      "distractors_fr": {
+        "B": "`rate_limit_error` est le type du 429, pas du 400.",
+        "C": "`overloaded_error` est le type du 529, une saturation temporaire, pas un 400.",
+        "D": "`not_found_error` est le type du 404, une ressource introuvable, pas un 400."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-022",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Type d erreur associe au code 429",
+      "question_en": "Which error type does the Claude API return with HTTP 429?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "billing_error, an issue with your billing or payment information on file."
+        },
+        {
+          "key": "B",
+          "text_en": "rate_limit_error, meaning your account has hit a rate limit."
+        },
+        {
+          "key": "C",
+          "text_en": "permission_error, meaning the key lacks access to the resource."
+        },
+        {
+          "key": "D",
+          "text_en": "timeout_error, meaning the request timed out while it was processing."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc associe le 429 à `rate_limit_error` : « Your account has hit a rate limit. » Le `billing_error` est un 402, le `permission_error` un 403, le `timeout_error` un 504.",
+      "distractors_fr": {
+        "A": "`billing_error` est le type du 402, lié au paiement, pas du 429.",
+        "C": "`permission_error` est le type du 403, un défaut de droits, pas du 429.",
+        "D": "`timeout_error` est le type du 504, un dépassement de délai, pas du 429."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-023",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Type d erreur associe au code 402",
+      "question_en": "A request fails with HTTP 402. Which error type and cause does that map to?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "not_found_error, meaning an endpoint path or resource ID was wrong."
+        },
+        {
+          "key": "B",
+          "text_en": "authentication_error, meaning the API key is malformed or revoked."
+        },
+        {
+          "key": "C",
+          "text_en": "billing_error, an issue with your billing or payment information."
+        },
+        {
+          "key": "D",
+          "text_en": "conflict_error, meaning the resource state changed underneath you."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc associe le 402 à `billing_error` : « There's an issue with your billing or payment information. » On vérifie alors les informations de paiement dans la Console. L'`authentication_error` est un 401, le `not_found_error` un 404, le `conflict_error` un 409.",
+      "distractors_fr": {
+        "A": "`not_found_error` est le type du 404, pas du 402.",
+        "B": "`authentication_error` est le type du 401, lié à la clé, pas à la facturation.",
+        "D": "`conflict_error` est le type du 409, un conflit d'état, pas un souci de paiement."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-024",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Type d erreur associe au code 404 et action a mener",
+      "question_en": "A call returns HTTP 404 not_found_error. What does the docs say to check?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Your payment details, since 404 signals a lapsed subscription on the account."
+        },
+        {
+          "key": "B",
+          "text_en": "Your rate-limit budget, since 404 means the per-minute quota was exhausted."
+        },
+        {
+          "key": "C",
+          "text_en": "Your API key validity, since 404 means the key was revoked or has expired."
+        },
+        {
+          "key": "D",
+          "text_en": "The endpoint path and any resource IDs in the request URL for mistakes."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc décrit le 404 `not_found_error` : « The requested resource was not found. Check the endpoint path and any resource IDs in the request URL. » Ce n'est ni un problème de paiement (402), ni de quota (429), ni de clé (401) : on inspecte le chemin et les identifiants de la requête.",
+      "distractors_fr": {
+        "A": "Un souci de paiement est un 402 `billing_error`, pas un 404.",
+        "B": "Un dépassement de quota est un 429 `rate_limit_error`, pas un 404.",
+        "C": "Une clé révoquée ou expirée donne un 401 `authentication_error`, pas un 404."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-025",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Les noms de classes d exception different selon le langage du SDK",
+      "question_en": "A polyglot team asks whether the SDK exception class names are identical across languages. What does the docs state?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Class names and namespaces differ by language; a 404 is NotFoundError in Python."
+        },
+        {
+          "key": "B",
+          "text_en": "All SDKs share one identical class name, AnthropicError, in every language."
+        },
+        {
+          "key": "C",
+          "text_en": "Only Python raises typed exceptions; other SDKs return the raw JSON body."
+        },
+        {
+          "key": "D",
+          "text_en": "The names match, but only the Go SDK exposes the HTTP status on the error."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc dit que les SDK lèvent des exceptions typées « instead of returning raw JSON, and the class names and namespaces differ by language ». Elle illustre avec le 404 : `anthropic.NotFoundError` en Python, `Anthropic::Errors::NotFoundError` en Ruby, `com.anthropic.errors.NotFoundException` en Java, et une valeur unique `*anthropic.Error` en Go (on branche sur `StatusCode`). Les noms ne sont donc pas identiques d'un langage à l'autre.",
+      "distractors_fr": {
+        "B": "Il n'existe pas un nom unique `AnthropicError` partout ; les noms et namespaces varient par langage.",
+        "C": "Tous les SDK officiels lèvent des exceptions typées, pas seulement Python ; aucun ne renvoie le JSON brut par défaut.",
+        "D": "Les noms diffèrent bien selon le langage ; ce n'est pas propre au Go, même si le Go branche sur `StatusCode`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-026",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Classe d exception TypeScript associee au statut 422",
+      "question_en": "In the TypeScript SDK's status-to-error table, which class corresponds to HTTP 422?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "ConflictError, the class the SDK raises for a 409 status response."
+        },
+        {
+          "key": "B",
+          "text_en": "UnprocessableEntityError, the class the SDK raises for a 422 response."
+        },
+        {
+          "key": "C",
+          "text_en": "PermissionDeniedError, the class the SDK raises for a 403 response."
+        },
+        {
+          "key": "D",
+          "text_en": "InternalServerError, the class the SDK raises for any status >= 500."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le tableau du SDK TypeScript associe 422 à `UnprocessableEntityError`. Les autres lignes citées portent d'autres statuts : 409 → `ConflictError`, 403 → `PermissionDeniedError`, ≥ 500 → `InternalServerError`.",
+      "distractors_fr": {
+        "A": "`ConflictError` correspond au 409, pas au 422.",
+        "C": "`PermissionDeniedError` correspond au 403, pas au 422.",
+        "D": "`InternalServerError` couvre les statuts ≥ 500, pas le 422."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-027",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Conditions d erreur reessayees par defaut par le SDK TypeScript",
+      "question_en": "Per the TypeScript SDK, select the TWO conditions that are retried automatically by default.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A 429 Rate Limit response returned by the API under load."
+        },
+        {
+          "key": "B",
+          "text_en": "A 400 Bad Request caused by a malformed request body."
+        },
+        {
+          "key": "C",
+          "text_en": "A connection error from a transient network connectivity problem."
+        },
+        {
+          "key": "D",
+          "text_en": "A 404 Not Found caused by a wrong resource ID in the URL."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Le SDK TypeScript réessaie par défaut : « Connection errors... 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors. » Le 429 et les erreurs de connexion en font partie (A et C). Les 400 et 404 sont des erreurs de requête non transitoires : réessayer ne les corrige pas, elles ne sont pas réessayées.",
+      "distractors_fr": {
+        "B": "Un 400 vient d'une requête malformée : la rejouer telle quelle échoue pareil, donc le SDK ne la réessaie pas.",
+        "D": "Un 404 signale un identifiant ou un chemin erroné ; c'est à corriger, pas à réessayer, et le SDK ne le réessaie pas."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "SEF-028",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Proprietes vraies du comportement de reessai automatique des SDK",
+      "question_en": "Select the TWO statements that match how the official SDKs retry by default.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "They retry indefinitely until the request finally succeeds on its own."
+        },
+        {
+          "key": "B",
+          "text_en": "They retry twice by default, using a short exponential backoff."
+        },
+        {
+          "key": "C",
+          "text_en": "They honor the retry-after response header whenever it is present."
+        },
+        {
+          "key": "D",
+          "text_en": "They retry 400 and 404 responses, since those are transient too."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La doc précise que les SDK réessaient « twice by default » avec un backoff exponentiel court, et « honoring the `retry-after` header when present ». Ce sont B et C. Le nombre de tentatives est borné (pas infini), et les 400/404 ne sont pas transitoires : ils ne sont pas réessayés.",
+      "distractors_fr": {
+        "A": "Les réessais sont bornés à deux par défaut, réglables via l'option de nombre maximal ; ils ne sont pas infinis.",
+        "D": "Les 400 et 404 sont des erreurs de requête non transitoires, exclues des réessais automatiques."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-029",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Pratiques cote client pour les requetes tres longues",
+      "question_en": "For requests that may run beyond 10 minutes, select the TWO practices the docs recommend on the client side.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Use the streaming Messages API rather than a long non-streaming call."
+        },
+        {
+          "key": "B",
+          "text_en": "Set a very large max_tokens on a plain non-streaming request and wait."
+        },
+        {
+          "key": "C",
+          "text_en": "Use the Batches API to poll for results instead of holding one socket open."
+        },
+        {
+          "key": "D",
+          "text_en": "Disable TCP keep-alive so idle sockets close and free resources faster."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La doc « Long requests » recommande le streaming Messages API et la Batches API (qui permet d'interroger les résultats au lieu de maintenir une connexion) pour les requêtes longues, surtout au-delà de 10 minutes. Ce sont A et C. Poser un grand `max_tokens` sans streaming est justement déconseillé, et le keep-alive est activé pour aider, pas désactivé.",
+      "distractors_fr": {
+        "B": "Un grand `max_tokens` sur un appel non streamé est le scénario que la doc met en garde : certains réseaux coupent la connexion inactive.",
+        "D": "Le SDK pose le keep-alive pour réduire l'effet des coupures de connexions inactives ; le désactiver aggrave le problème."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "SEF-030",
+      "domain": "Applications and Integration",
+      "subdomain": "Software Engineering Foundations",
+      "weight": 7.4,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "facile",
+      "concept": "Nombre de reessais automatiques par defaut dans les SDK",
+      "question_en": "By default, how many times do the official SDKs automatically retry a transient failure before giving up?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Zero times; retries are opt-in and off unless you configure maxRetries."
+        },
+        {
+          "key": "B",
+          "text_en": "Twice, using a short exponential backoff between the attempts."
+        },
+        {
+          "key": "C",
+          "text_en": "Five times, matching the default across most HTTP client libraries."
+        },
+        {
+          "key": "D",
+          "text_en": "Indefinitely, until the retry-after header finally reports zero."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc indique que les SDK réessaient les échecs transitoires « twice by default », avec un backoff exponentiel court. Le nombre par défaut est donc deux, réglable ou désactivable via l'option de nombre maximal de réessais.",
+      "distractors_fr": {
+        "A": "Les réessais sont actifs par défaut, pas en opt-in : le défaut est deux, pas zéro.",
+        "C": "Le défaut documenté est deux, pas cinq.",
+        "D": "Les réessais sont bornés à deux par défaut, pas infinis ; `retry-after` espace les tentatives, il ne les prolonge pas sans fin."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    }
+  ]
+}

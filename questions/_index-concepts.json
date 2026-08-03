@@ -1162,6 +1162,104 @@
     "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/middleware"
   },
   {
+    "id": "REQ-001",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Definir les criteres de succes avant de concevoir les evaluations",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-002",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Attributs d'un bon critere de succes : mesurable et atteignable",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-003",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Critere specifique plutot que vague",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-004",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Rendre mesurable un objectif flou comme la surete",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-005",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Fixer une cible atteignable a partir de benchmarks",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-006",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Pertinence d'un critere selon la finalite de l'application",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-007",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Diagnostiquer les attributs manquants d'un critere faible",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-008",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Criteres de succes courants : fidelite a la tache et latence",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-009",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Critere de coherence : entrees similaires, reponses similaires",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-010",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Evaluation multidimensionnelle sur plusieurs criteres",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-011",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Un critere n'est pas toujours resolu par le prompt engineering",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+  },
+  {
+    "id": "REQ-012",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Critere de fidelite a la tache incluant les cas limites",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-013",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Latence et prix comme contraintes operationnelles",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
+    "id": "REQ-014",
+    "fichier": "applications-integration_understanding-requirements.json",
+    "subdomain": "Understanding Requirements",
+    "concept": "Critere de preservation de la vie privee",
+    "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  },
+  {
     "id": "LLF-001",
     "fichier": "model-selection-optimization_llm-fundamentals.json",
     "subdomain": "LLM Fundamentals",

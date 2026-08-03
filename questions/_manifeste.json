@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 278,
+  "nbQuestions": 292,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -37,6 +37,11 @@
       "fichier": "applications-integration_software-engineering-foundations.json",
       "subdomain": "Software Engineering Foundations",
       "nb": 30
+    },
+    {
+      "fichier": "applications-integration_understanding-requirements.json",
+      "subdomain": "Understanding Requirements",
+      "nb": 14
     },
     {
       "fichier": "model-selection-optimization_llm-fundamentals.json",
@@ -1563,6 +1568,132 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "applications-integration_software-engineering-foundations.json"
+    },
+    {
+      "id": "REQ-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
+    },
+    {
+      "id": "REQ-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "applications-integration_understanding-requirements.json"
     },
     {
       "id": "LLF-001",

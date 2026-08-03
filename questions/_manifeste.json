@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 373,
+  "nbQuestions": 379,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -97,6 +97,11 @@
       "fichier": "security-safety_claude-hooks.json",
       "subdomain": "Claude Hooks",
       "nb": 4
+    },
+    {
+      "fichier": "security-safety_identity-secrets-and-key-management.json",
+      "subdomain": "Identity, Secrets and Key Management",
+      "nb": 6
     },
     {
       "fichier": "tools-mcps_agentic-customization.json",
@@ -3160,6 +3165,60 @@
       "nature": "factual_semantic",
       "type": "single",
       "fichier": "security-safety_claude-hooks.json"
+    },
+    {
+      "id": "ISK-001",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
+    },
+    {
+      "id": "ISK-002",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
+    },
+    {
+      "id": "ISK-003",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
+    },
+    {
+      "id": "ISK-004",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
+    },
+    {
+      "id": "ISK-005",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
+    },
+    {
+      "id": "ISK-006",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "security-safety_identity-secrets-and-key-management.json"
     },
     {
       "id": "AGC-001",

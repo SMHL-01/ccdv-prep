@@ -2373,6 +2373,48 @@
     "doc_ref": "https://code.claude.com/docs/en/hooks"
   },
   {
+    "id": "ISK-001",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "Choisir entre cle statique et federation d identite selon l environnement",
+    "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+  },
+  {
+    "id": "ISK-002",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "L expiration d une cle est figee a la creation et une cle expiree ne revit pas",
+    "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+  },
+  {
+    "id": "ISK-003",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "Ce que la federation d identite retire, et ce qu elle ne garantit pas",
+    "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+  },
+  {
+    "id": "ISK-004",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "Nature d un apiKeyHelper et en-tetes dans lesquels sa valeur part",
+    "doc_ref": "https://code.claude.com/docs/en/llm-gateway-connect"
+  },
+  {
+    "id": "ISK-005",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "Duree de cache par defaut de la sortie d un apiKeyHelper",
+    "doc_ref": "https://code.claude.com/docs/en/llm-gateway-connect"
+  },
+  {
+    "id": "ISK-006",
+    "fichier": "security-safety_identity-secrets-and-key-management.json",
+    "subdomain": "Identity, Secrets and Key Management",
+    "concept": "Une expiration courte ne dispense pas de stocker et revoquer correctement",
+    "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+  },
+  {
     "id": "AGC-001",
     "fichier": "tools-mcps_agentic-customization.json",
     "subdomain": "Agentic Customization",

@@ -14,7 +14,9 @@
  * Ce qui est verifie :
  *   - schema de chaque question et validite du JSON
  *   - repartition par nature (cible 65 / 30 / 5) et par difficulte (25 / 50 / 25)
- *   - plafond strict de 5 % de "factual_magnitude"
+ *   - plafond strict de 5 % de "factual_magnitude", evalue SUR LA BANQUE
+ *     entiere et non fichier par fichier : par fichier il etait inatteignable,
+ *     puisqu'il faut 20 questions pour qu'une seule tienne sous les 5 %.
  *   - repartition des bonnes reponses sur A, B, C, D
  *   - part de questions a reponses multiples (cible 20 %)
  *   - longueur des options : la bonne reponse ne doit pas etre reperable
@@ -205,10 +207,12 @@ function main() {
     console.log('\n  Bonnes reponses :');
     for (const c of CLES) console.log(ligneRepartition(`option ${c}`, a.parCle[c], totalCles, 25));
 
-    const pctMagnitude = pourcent(a.parNature.factual_magnitude || 0, questions.length);
-    if (pctMagnitude > PLAFOND_MAGNITUDE) {
-      anomalies.push(`plafond depasse : ${pctMagnitude.toFixed(1)} % de factual_magnitude (max ${PLAFOND_MAGNITUDE} %)`);
-    }
+    // Le plafond de factual_magnitude s'evalue sur la BANQUE, pas ici : voir la
+    // synthese finale. La contrainte reelle est « pas plus de 5 % de questions
+    // de pur chiffre a l'examen », qui est une propriete globale. L'appliquer
+    // fichier par fichier la rendait inatteignable : a 5 % strict, il faut au
+    // moins 20 questions pour qu'une seule tienne (1/20 = 5,0 %, 1/19 = 5,3 %),
+    // or 17 des 25 sous-domaines pesent moins que ca au blueprint.
 
     if (anomalies.length) {
       console.log(`\n  ${anomalies.length} anomalie(s) :`);
@@ -228,6 +232,12 @@ function main() {
     for (const n of NATURES) console.log(ligneRepartition(n, a.parNature[n] || 0, toutes.length, CIBLES_NATURE[n]));
     console.log('\n  Difficulte :');
     for (const d of DIFFICULTES) console.log(ligneRepartition(d, a.parDifficulte[d] || 0, toutes.length, CIBLES_DIFFICULTE[d]));
+    const pctMagnitude = pourcent(a.parNature.factual_magnitude || 0, toutes.length);
+    console.log(`\n  factual_magnitude : ${a.parNature.factual_magnitude || 0} questions, ${pctMagnitude.toFixed(1)} % (plafond ${PLAFOND_MAGNITUDE} % sur la banque)`);
+    if (pctMagnitude > PLAFOND_MAGNITUDE) {
+      anomaliesGlobales.push(`plafond depasse : ${pctMagnitude.toFixed(1)} % de factual_magnitude (max ${PLAFOND_MAGNITUDE} %)`);
+    }
+
     console.log(`\n  Questions portant sur une API beta : ${a.beta} (plafond ${PLAFOND_BETA})`);
     if (a.beta > PLAFOND_BETA) anomaliesGlobales.push(`plafond beta depasse : ${a.beta} questions (max ${PLAFOND_BETA})`);
 

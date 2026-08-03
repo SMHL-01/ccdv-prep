@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-03",
-  "nbQuestions": 396,
+  "nbQuestions": 406,
   "fichiers": [
     {
       "fichier": "agents-workflows_agent-architecture.json",
@@ -82,6 +82,11 @@
       "fichier": "prompt-context-engineering_context-engineering.json",
       "subdomain": "Context Engineering",
       "nb": 15
+    },
+    {
+      "fichier": "prompt-context-engineering_output-handling.json",
+      "subdomain": "Output Handling",
+      "nb": 10
     },
     {
       "fichier": "prompt-context-engineering_prompt-engineering.json",
@@ -2860,6 +2865,96 @@
       "nature": "judgment",
       "type": "single",
       "fichier": "prompt-context-engineering_context-engineering.json"
+    },
+    {
+      "id": "OUH-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
+    },
+    {
+      "id": "OUH-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "difficile",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "fichier": "prompt-context-engineering_output-handling.json"
     },
     {
       "id": "PRE-001",

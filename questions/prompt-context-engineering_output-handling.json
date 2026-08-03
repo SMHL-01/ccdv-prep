@@ -1,0 +1,260 @@
+{
+  "subdomain": "Output Handling",
+  "domain": "Prompt and Context Engineering",
+  "weight": 2.6,
+  "target_questions": 10,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "https://platform.claude.com/docs/en/api/messages/create"
+  ],
+  "questions": [
+    {
+      "id": "OUH-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Les deux fonctionnalites des sorties structurees et leur independance",
+      "question_en": "A team wants schema-valid tool inputs but keeps Claude's prose reply free-form. What do structured outputs allow here?",
+      "options": [
+        { "key": "A", "text_en": "Nothing: enabling one feature forces the other on in the same call." },
+        { "key": "B", "text_en": "Only JSON outputs exist, so the whole reply has to become JSON." },
+        { "key": "C", "text_en": "Use strict tool use alone; JSON outputs are a separate opt-in." },
+        { "key": "D", "text_en": "Neither applies, since tool inputs are never schema-constrained." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La page présente deux fonctionnalités complémentaires : « **JSON outputs** (`output_config.format`) » pour contraindre la réponse, et « **Strict tool use** (`strict: true`) » pour garantir la validation du nom et des entrées d'outil. Et surtout : « You can use these features independently or together in the same request. »",
+      "distractors_fr": {
+        "A": "Les deux fonctionnalités sont indépendantes : activer l'une n'entraîne jamais l'autre.",
+        "B": "Les sorties JSON ne sont que la moitié du dispositif ; la validation stricte des outils existe séparément.",
+        "D": "C'est exactement l'objet de `strict: true` : garantir que le nom et les entrées de l'outil respectent le schéma."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Les proprietes requises sortent avant les optionnelles quel que soit le schema",
+      "question_en": "A parser depends on fields arriving in schema order, but optional fields keep surfacing last. What does the documentation say?",
+      "options": [
+        { "key": "A", "text_en": "Required properties come first, so mark them all required if order matters." },
+        { "key": "B", "text_en": "Ordering is random per request, so no schema layout can ever fix it." },
+        { "key": "C", "text_en": "Order follows the alphabet, so rename the fields to force a sequence." },
+        { "key": "D", "text_en": "Order follows the schema exactly, so the parser must have a bug in it." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La règle est énoncée avec sa parade : « properties in objects maintain their defined ordering from your schema, with one important caveat: **required properties appear first, followed by optional properties** », puis « If property order in the output is important to your application, mark all properties as required, or account for this reordering in your parsing logic. »",
+      "distractors_fr": {
+        "B": "L'ordre n'a rien d'aléatoire : il est déterministe, requis d'abord puis optionnels, chacun dans l'ordre du schéma.",
+        "C": "Aucun tri alphabétique n'intervient ; renommer les champs ne changerait rien au regroupement requis / optionnels.",
+        "D": "L'ordre du schéma n'est respecté qu'à l'intérieur de chaque groupe : la partition requis / optionnels passe avant."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "La casse des valeurs d enum n est pas garantie par les sorties structurees",
+      "question_en": "A switch on an enum value silently falls through on some responses, though no error is ever raised. What is the likely cause?",
+      "options": [
+        { "key": "A", "text_en": "The enum was dropped by the SDK, which strips unsupported keywords." },
+        { "key": "B", "text_en": "The response was truncated, so the value arrived only partly written." },
+        { "key": "C", "text_en": "A refusal replaced the value, which is why the branch never matched." },
+        { "key": "D", "text_en": "Enum capitalization is not guaranteed, so compare values case-insensitively." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "C'est un piège documenté : « Structured outputs don't guarantee the capitalization of string `enum` and `const` values: Claude may return a value that differs from your schema only in capitalization, typically in the first letter of a word following a space. » Et surtout : « The response completes normally, with no error and no special `stop_reason`. » D'où la consigne : comparer sans tenir compte de la casse, et éviter les valeurs qui ne diffèrent que par elle.",
+      "distractors_fr": {
+        "A": "Le mot-clé `enum` fait partie des fonctionnalités prises en charge ; les SDK ne retirent que les fonctionnalités non supportées.",
+        "B": "Une troncature se signale par `stop_reason: \"max_tokens\"` ; ici la réponse se termine normalement.",
+        "C": "Un refus se signale par `stop_reason: \"refusal\"` ; l'énoncé précise qu'aucune erreur ni signal particulier n'apparaît."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Les deux cas ou une sortie structuree ne respecte pas le schema demande",
+      "question_en": "Structured outputs are enabled, yet a response fails schema validation. Select the TWO documented causes.",
+      "options": [
+        { "key": "A", "text_en": "A network retry, which replays only part of the original response body." },
+        { "key": "B", "text_en": "A safety refusal, which takes precedence over the schema constraints." },
+        { "key": "C", "text_en": "A cache miss on the grammar, which disables constrained decoding once." },
+        { "key": "D", "text_en": "Hitting max_tokens, which cuts the response off before it is complete." }
+      ],
+      "correct": ["B", "D"],
+      "explanation_fr": "La section « Invalid outputs » ne retient que ces deux scénarios. Sur le refus : statut 200, `stop_reason: \"refusal\"`, tokens facturés, et « the output may not match your schema because the refusal message takes precedence over schema constraints ». Sur la limite : `stop_reason: \"max_tokens\"`, « the output may be incomplete and not match your schema », à corriger en relançant avec un `max_tokens` plus élevé.",
+      "distractors_fr": {
+        "A": "Aucun rejeu réseau n'est évoqué comme cause de non-conformité ; ce n'est pas un des deux cas documentés.",
+        "C": "Un défaut de cache de grammaire ne coûte que de la latence à la première requête : le décodage contraint reste actif."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ce qui invalide le cache de grammaire compilee et ce qui le laisse intact",
+      "question_en": "A team reworks the descriptions of its strict tools, leaving every schema shape untouched. What happens to the compiled grammar cache?",
+      "options": [
+        { "key": "A", "text_en": "It is invalidated, since any field edit recompiles the whole grammar." },
+        { "key": "B", "text_en": "It is invalidated, because descriptions are themselves part of the schema." },
+        { "key": "C", "text_en": "It survives: changing only name or description does not invalidate it." },
+        { "key": "D", "text_en": "It survives, and even a structural change would be absorbed silently." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La liste d'invalidation est précise : le cache tombe si l'on change « The JSON schema structure » ou « The set of tools in your request », mais « Changing only `name` or `description` fields does not invalidate the cache ». Les grammaires compilées sont conservées 24 heures à compter de la dernière utilisation.",
+      "distractors_fr": {
+        "A": "L'exception est justement là : les champs `name` et `description` sont explicitement exclus des causes d'invalidation.",
+        "B": "Ces champs n'entrent pas dans la structure compilée en grammaire, d'où leur exclusion.",
+        "D": "Une modification de la structure du schéma, elle, invalide bel et bien le cache."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Ce que renvoie l API lorsqu une sequence d arret personnalisee est rencontree",
+      "question_en": "A request passes three custom stop_sequences and the model generates one of them. What does the response carry?",
+      "options": [
+        { "key": "A", "text_en": "stop_reason of stop_sequence, and stop_sequence holds the matched text." },
+        { "key": "B", "text_en": "stop_reason of end_turn, the custom sequence being a natural stop point." },
+        { "key": "C", "text_en": "stop_reason of max_tokens, since the sequence truncates the generation." },
+        { "key": "D", "text_en": "stop_reason of stop_sequence, and the index of the sequence in the array." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La référence du endpoint le dit en une phrase : « If the model encounters one of the custom sequences, the response `stop_reason` value will be `\"stop_sequence\"` and the response `stop_sequence` value will contain the matched stop sequence. » Le champ porte donc la chaîne elle-même, pas sa position.",
+      "distractors_fr": {
+        "B": "`end_turn` correspond à un point d'arrêt naturel du modèle, pas au déclenchement d'une séquence que vous avez fournie.",
+        "C": "`max_tokens` signale un dépassement du budget de sortie demandé ou du maximum du modèle, sans rapport avec les séquences d'arrêt.",
+        "D": "Le champ `stop_sequence` est typé chaîne et contient la séquence rencontrée ; aucun index n'est renvoyé."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+    },
+    {
+      "id": "OUH-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Contraintes de schema JSON acceptees ou refusees par les sorties structurees",
+      "question_en": "A schema is rejected with a 400 error under structured outputs. Select the TWO statements about the supported subset.",
+      "options": [
+        { "key": "A", "text_en": "Recursive schemas are supported as long as the depth stays under ten." },
+        { "key": "B", "text_en": "additionalProperties must be set to false on objects, and to nothing else." },
+        { "key": "C", "text_en": "Numerical constraints such as minimum and maximum are not supported." },
+        { "key": "D", "text_en": "String constraints like minLength are supported, unlike array constraints." }
+      ],
+      "correct": ["B", "C"],
+      "explanation_fr": "La liste des fonctionnalités prises en charge mentionne « `required` and `additionalProperties` (must be set to `false` for objects) », tandis que la liste des non supportées inclut « Numerical constraints (such as `minimum`, `maximum`, `multipleOf`) ». Employer une fonctionnalité non supportée renvoie une erreur 400 détaillée.",
+      "distractors_fr": {
+        "A": "Les schémas récursifs figurent en tête des fonctionnalités non supportées, quelle que soit leur profondeur.",
+        "D": "L'inverse : `minLength` et `maxLength` ne sont pas supportés, alors que `minItems` l'est pour les seules valeurs 0 et 1."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "OUH-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Distinguer un budget de sortie epuise d une fenetre de contexte depassee",
+      "question_en": "Two long runs end differently: one on max_tokens, the other on model_context_window_exceeded. What separates them?",
+      "options": [
+        { "key": "A", "text_en": "The first ran out of budget; the second was stopped by a safety filter." },
+        { "key": "B", "text_en": "The first invoked a tool mid-answer; the second paused a long-running turn." },
+        { "key": "C", "text_en": "The first hit a custom stop sequence; the second hit the natural end of turn." },
+        { "key": "D", "text_en": "The first hit the requested output cap; the second filled the context window." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La liste des `stop_reason` sépare bien les deux : « `\"max_tokens\"`: we exceeded the requested `max_tokens` or the model's maximum » et « `\"model_context_window_exceeded\"`: we exceeded the model's context window ». Le premier porte sur le budget de sortie demandé, le second sur la fenêtre de contexte du modèle.",
+      "distractors_fr": {
+        "A": "Une intervention des classifieurs de sécurité se signale par `\"refusal\"`, qui est une valeur distincte des deux citées.",
+        "B": "L'appel d'outil correspond à `\"tool_use\"`, et la mise en pause d'un tour long à `\"pause_turn\"`.",
+        "C": "Ce sont respectivement `\"stop_sequence\"` et `\"end_turn\"`, deux autres valeurs de la même liste."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+    },
+    {
+      "id": "OUH-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Conduite a tenir devant un tour interrompu par une mise en pause",
+      "question_en": "A long agentic run comes back with stop_reason set to pause_turn. What does the documentation say to do?",
+      "options": [
+        { "key": "A", "text_en": "Send the response back as-is in a new request to let the model continue." },
+        { "key": "B", "text_en": "Reset the conversation entirely, as you would after a safety refusal." },
+        { "key": "C", "text_en": "Raise max_tokens and start the turn again from the original prompt." },
+        { "key": "D", "text_en": "Treat it as an error and surface a failure message to your own user." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La définition de la valeur porte la conduite à tenir : « `\"pause_turn\"`: we paused a long-running turn. You may provide the response back as-is in a subsequent request to let the model continue. » Rien n'est perdu et rien n'est à recommencer.",
+      "distractors_fr": {
+        "B": "La réinitialisation du contexte est la parade au `stop_reason: \"refusal\"`, pas à une mise en pause.",
+        "C": "Le tour n'a pas buté sur le budget de sortie : relancer depuis le début jetterait le travail déjà produit.",
+        "D": "Ce n'est pas une erreur mais un point de reprise prévu par l'API, avec une réponse réutilisable telle quelle."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+    },
+    {
+      "id": "OUH-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "difficile",
+      "concept": "Les trois limites explicites de complexite des schemas stricts",
+      "question_en": "Which set of explicit complexity limits applies to a request using strict schemas?",
+      "options": [
+        { "key": "A", "text_en": "10 strict tools, 50 optional parameters, 8 parameters with union types." },
+        { "key": "B", "text_en": "20 strict tools, 24 optional parameters, 16 parameters with union types." },
+        { "key": "C", "text_en": "24 strict tools, 20 optional parameters, 32 parameters with union types." },
+        { "key": "D", "text_en": "64 strict tools, 16 optional parameters, 24 parameters with union types." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le tableau des limites explicites donne : 20 outils marqués `strict: true` par requête, 24 paramètres optionnels au total, et 16 paramètres à type union (`anyOf` ou tableau de types). Ces plafonds portent sur le cumul de tous les schémas stricts d'une même requête : quatre outils à six paramètres optionnels atteignent déjà la limite de 24.",
+      "distractors_fr": {
+        "A": "Aucune de ces trois valeurs ne figure au tableau ; le plafond d'outils stricts est de 20, pas de 10.",
+        "C": "Les deux premières valeurs sont interverties : 20 outils et 24 paramètres optionnels, et non l'inverse.",
+        "D": "Les paramètres à type union sont plafonnés à 16, parce que leur coût de compilation croît de façon exponentielle."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    }
+  ]
+}

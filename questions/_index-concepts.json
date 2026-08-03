@@ -2128,6 +2128,76 @@
     "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-editing"
   },
   {
+    "id": "OUH-001",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Les deux fonctionnalites des sorties structurees et leur independance",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-002",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Les proprietes requises sortent avant les optionnelles quel que soit le schema",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-003",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "La casse des valeurs d enum n est pas garantie par les sorties structurees",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-004",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Les deux cas ou une sortie structuree ne respecte pas le schema demande",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-005",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Ce qui invalide le cache de grammaire compilee et ce qui le laisse intact",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-006",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Ce que renvoie l API lorsqu une sequence d arret personnalisee est rencontree",
+    "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+  },
+  {
+    "id": "OUH-007",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Contraintes de schema JSON acceptees ou refusees par les sorties structurees",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
+    "id": "OUH-008",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Distinguer un budget de sortie epuise d une fenetre de contexte depassee",
+    "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+  },
+  {
+    "id": "OUH-009",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Conduite a tenir devant un tour interrompu par une mise en pause",
+    "doc_ref": "https://platform.claude.com/docs/en/api/messages/create"
+  },
+  {
+    "id": "OUH-010",
+    "fichier": "prompt-context-engineering_output-handling.json",
+    "subdomain": "Output Handling",
+    "concept": "Les trois limites explicites de complexite des schemas stricts",
+    "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+  },
+  {
     "id": "PRE-001",
     "fichier": "prompt-context-engineering_prompt-engineering.json",
     "subdomain": "Prompt Engineering",

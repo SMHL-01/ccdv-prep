@@ -22,22 +22,27 @@
       "difficulty": "moyen",
       "concept": "Niveau d abstraction des clients SDK face aux outils d agent",
       "question_en": "A team must place the client SDKs against Claude Code and the Agent SDK. Which TWO statements match the documentation?",
+      "question_fr": "Une équipe doit situer les SDK client par rapport à Claude Code et à l'Agent SDK. Quelles DEUX affirmations correspondent à la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The client SDKs are Messages API clients: you send each request yourself."
+          "text_en": "The client SDKs are Messages API clients: you send each request yourself.",
+          "text_fr": "Les SDK client sont des clients de la Messages API : vous envoyez vous-même chaque requête."
         },
         {
           "key": "B",
-          "text_en": "The client SDKs run the agent loop for you and execute tool calls."
+          "text_en": "The client SDKs run the agent loop for you and execute tool calls.",
+          "text_fr": "Les SDK client exécutent la boucle d'agent à votre place et lancent les appels d'outils."
         },
         {
           "key": "C",
-          "text_en": "Claude Code and the Agent SDK work higher up, providing the agent loop."
+          "text_en": "Claude Code and the Agent SDK work higher up, providing the agent loop.",
+          "text_fr": "Claude Code et l'Agent SDK opèrent à un niveau supérieur, en fournissant la boucle d'agent."
         },
         {
           "key": "D",
-          "text_en": "The Agent SDK is a thin wrapper published over the client SDKs."
+          "text_en": "The Agent SDK is a thin wrapper published over the client SDKs.",
+          "text_fr": "L'Agent SDK est une fine surcouche publiée au-dessus des SDK client."
         }
       ],
       "correct": [
@@ -45,6 +50,10 @@
         "C"
       ],
       "explanation_fr": "La page d'aperçu trace la frontière : « The CLI, client SDKs, and libraries are for calling the Claude API yourself: you send each request and handle each response. Claude Code, the Claude Agent SDK, and Claude Managed Agents work at a higher level, providing the agent loop, tool execution, and runtime. » Les SDK client sont décrits comme des clients Messages API pour sept langages, avec des interfaces idiomatiques, la sûreté de typage et la prise en charge intégrée du streaming, des réessais et de la gestion d'erreurs.",
+      "citations_fr": [
+        "Le CLI, les SDK client et les bibliothèques servent à appeler vous-même la Claude API : vous envoyez chaque requête et traitez chaque réponse. Claude Code, le Claude Agent SDK et les Claude Managed Agents opèrent à un niveau supérieur, en fournissant la boucle d'agent, l'exécution des outils et le runtime."
+      ],
+      "principe_fr": "L'écosystème Anthropic s'organise en couches d'abstraction : en bas, des clients HTTP typés qui vous laissent la responsabilité de la boucle requête/réponse ; en haut, des runtimes d'agent qui pilotent eux-mêmes la boucle, l'exécution des outils et l'état. Pour classer un produit, demandez-vous qui décide d'envoyer le prochain message : si c'est votre code, vous êtes dans la couche client ; si c'est le produit, vous êtes dans la couche agent.",
       "distractors_fr": {
         "B": "C'est exactement ce que les SDK client ne font pas : la boucle d'agent et l'exécution des outils relèvent du niveau supérieur.",
         "D": "L'Agent SDK n'est pas présenté comme une surcouche des SDK client, mais comme un outillage d'un autre niveau, qui fournit la boucle et le runtime."
@@ -61,28 +70,37 @@
       "difficulty": "facile",
       "concept": "Reessais deja fournis par le SDK officiel",
       "question_en": "A developer is about to write a retry wrapper around every SDK call, with exponential backoff. What does the official SDK already do?",
+      "question_fr": "Un développeur s'apprête à écrire une surcouche de réessai autour de chaque appel du SDK, avec backoff exponentiel. Que fait déjà le SDK officiel ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It retries transient failures twice by default, with a short exponential backoff."
+          "text_en": "It retries transient failures twice by default, with a short exponential backoff.",
+          "text_fr": "Il réessaie les échecs transitoires deux fois par défaut, avec un court backoff exponentiel."
         },
         {
           "key": "B",
-          "text_en": "It retries indefinitely until the request succeeds or the caller cancels it."
+          "text_en": "It retries indefinitely until the request succeeds or the caller cancels it.",
+          "text_fr": "Il réessaie indéfiniment jusqu'à ce que la requête aboutisse ou que l'appelant l'annule."
         },
         {
           "key": "C",
-          "text_en": "It raises immediately on any failure, retries being left to the application."
+          "text_en": "It raises immediately on any failure, retries being left to the application.",
+          "text_fr": "Il lève une erreur immédiatement à tout échec, les réessais étant laissés à l'application."
         },
         {
           "key": "D",
-          "text_en": "It retries only when the caller opts in by passing a retry policy object."
+          "text_en": "It retries only when the caller opts in by passing a retry policy object.",
+          "text_fr": "Il ne réessaie que si l'appelant le demande en passant un objet de politique de réessai."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La page d'erreurs le dit pour tous les SDK : « The official SDKs automatically retry transient failures (such as connection errors, rate limits, and 5xx server errors) with exponential backoff, twice by default, honoring the retry-after header when present. » Écrire sa propre couche de réessai par-dessus revient donc à multiplier les tentatives sans le savoir. Chaque client accepte une option de nombre maximal de réessais pour régler ou désactiver ce comportement.",
+      "citations_fr": [
+        "Les SDK officiels réessaient automatiquement les échecs transitoires (comme les erreurs de connexion, les limites de débit et les erreurs serveur 5xx) avec un backoff exponentiel, deux fois par défaut, en respectant l'en-tête retry-after lorsqu'il est présent."
+      ],
+      "principe_fr": "Avant d'ajouter une logique de fiabilité, vérifiez ce que la bibliothèque fait déjà : superposer vos réessais à ceux du SDK multiplie les tentatives réelles et peut aggraver la limitation de débit. La bonne démarche est de régler le comportement intégré via ses options plutôt que de l'enrober.",
       "distractors_fr": {
         "B": "Le nombre de tentatives est borné à deux par défaut, précisément pour ne pas transformer une panne durable en boucle infinie.",
         "C": "C'est l'inverse : le réessai est actif par défaut, et c'est au développeur de le désactiver s'il ne le veut pas.",
@@ -100,22 +118,27 @@
       "difficulty": "moyen",
       "concept": "Categories d erreurs reessayees automatiquement par le client",
       "question_en": "Which TWO of the following are retried automatically by the Python and TypeScript SDKs by default?",
+      "question_fr": "Parmi les cas suivants, lesquels DEUX sont réessayés automatiquement par défaut par les SDK Python et TypeScript ?",
       "options": [
         {
           "key": "A",
-          "text_en": "429 Rate Limit responses returned by the API."
+          "text_en": "429 Rate Limit responses returned by the API.",
+          "text_fr": "Les réponses 429 Rate Limit renvoyées par l'API."
         },
         {
           "key": "B",
-          "text_en": "Connection errors caused by a network problem."
+          "text_en": "Connection errors caused by a network problem.",
+          "text_fr": "Les erreurs de connexion dues à un problème réseau."
         },
         {
           "key": "C",
-          "text_en": "400 Bad Request responses on a malformed body."
+          "text_en": "400 Bad Request responses on a malformed body.",
+          "text_fr": "Les réponses 400 Bad Request sur un corps de requête malformé."
         },
         {
           "key": "D",
-          "text_en": "401 Authentication errors from an expired key."
+          "text_en": "401 Authentication errors from an expired key.",
+          "text_fr": "Les erreurs d'authentification 401 dues à une clé expirée."
         }
       ],
       "correct": [
@@ -123,6 +146,10 @@
         "B"
       ],
       "explanation_fr": "Les deux SDK donnent la même liste : « Connection errors (for example, because of a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors are all retried by default. » Le critère est la transience : une erreur qui a des chances de disparaître d'elle-même est réessayée, une erreur qui vient de la requête ou des identifiants ne l'est pas.",
+      "citations_fr": [
+        "Les erreurs de connexion (par exemple à cause d'un problème de connectivité réseau), 408 Request Timeout, 409 Conflict, 429 Rate Limit et les erreurs internes >=500 sont toutes réessayées par défaut."
+      ],
+      "principe_fr": "Le critère de réessai automatique est la transience : une erreur susceptible de disparaître à l'identique de requête est réessayée, une erreur causée par la requête elle-même ou par les identifiants ne l'est pas. Réessayer un 400 ou un 401 ne peut que reproduire l'échec, donc ces classes sont remontées immédiatement à l'appelant.",
       "distractors_fr": {
         "C": "Un 400 vient du format ou du contenu de la requête. Réessayer à l'identique redonnerait le même résultat : c'est le code appelant qu'il faut corriger.",
         "D": "Un 401 signale une clé malformée, révoquée ou expirée. Aucun réessai ne peut y remédier tant que les identifiants ne sont pas changés."
@@ -139,28 +166,37 @@
       "difficulty": "moyen",
       "concept": "Prise en compte de l en-tete retry-after par les SDK",
       "question_en": "The API returns a 429 carrying a retry-after header. How do the official SDKs treat that header?",
+      "question_fr": "L'API renvoie un 429 accompagné d'un en-tête retry-after. Comment les SDK officiels traitent-ils cet en-tête ?",
       "options": [
         {
           "key": "A",
-          "text_en": "They ignore it and apply their own exponential backoff schedule instead."
+          "text_en": "They ignore it and apply their own exponential backoff schedule instead.",
+          "text_fr": "Ils l'ignorent et appliquent à la place leur propre calendrier de backoff exponentiel."
         },
         {
           "key": "B",
-          "text_en": "They honor it when it is present, rather than backing off blindly."
+          "text_en": "They honor it when it is present, rather than backing off blindly.",
+          "text_fr": "Ils le respectent lorsqu'il est présent, plutôt que d'attendre à l'aveugle."
         },
         {
           "key": "C",
-          "text_en": "They surface it to the caller but never act on it without an opt-in."
+          "text_en": "They surface it to the caller but never act on it without an opt-in.",
+          "text_fr": "Ils l'exposent à l'appelant mais n'agissent jamais dessus sans activation explicite."
         },
         {
           "key": "D",
-          "text_en": "They treat it as fatal and stop retrying for the rest of the session."
+          "text_en": "They treat it as fatal and stop retrying for the rest of the session.",
+          "text_fr": "Ils le considèrent comme fatal et cessent tout réessai pour le reste de la session."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La formule est explicite : les SDK réessaient « with exponential backoff, twice by default, honoring the retry-after header when present ». C'est la bonne pratique côté client : quand le serveur indique lui-même quand revenir, cette valeur vaut mieux qu'un calcul local, puisqu'elle reflète l'état réel de la fenêtre de limitation.",
+      "citations_fr": [
+        "avec un backoff exponentiel, deux fois par défaut, en respectant l'en-tête retry-after lorsqu'il est présent"
+      ],
+      "principe_fr": "Quand le serveur indique lui-même le délai d'attente, cette information est plus fiable qu'une heuristique locale, car elle reflète l'état réel de la fenêtre de limitation. Un client bien conçu traite donc le backoff calculé comme un repli, utilisé seulement en l'absence d'indication du serveur.",
       "distractors_fr": {
         "A": "Le backoff exponentiel est le comportement par défaut en l'absence d'indication du serveur ; quand retry-after est là, il prime.",
         "C": "Aucun opt-in n'est nécessaire : le respect de l'en-tête fait partie du comportement de réessai livré par défaut.",
@@ -178,28 +214,37 @@
       "difficulty": "moyen",
       "concept": "Desactiver ou regler les reessais automatiques via l option maxRetries",
       "question_en": "A team wraps a non-idempotent billing call around the SDK and wants no automatic retries on that path so a charge is never duplicated. What does the SDK offer?",
+      "question_fr": "Une équipe encapsule un appel de facturation non idempotent avec le SDK et ne veut aucun réessai automatique sur ce chemin, pour qu'un débit ne soit jamais dupliqué. Que propose le SDK ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Nothing; SDK retries are fixed and can only be avoided by dropping the SDK."
+          "text_en": "Nothing; SDK retries are fixed and can only be avoided by dropping the SDK.",
+          "text_fr": "Rien ; les réessais du SDK sont figés et ne peuvent être évités qu'en abandonnant le SDK."
         },
         {
           "key": "B",
-          "text_en": "A global flag that turns retries off for every client in the whole process."
+          "text_en": "A global flag that turns retries off for every client in the whole process.",
+          "text_fr": "Un indicateur global qui désactive les réessais pour tous les clients du processus entier."
         },
         {
           "key": "C",
-          "text_en": "A maxRetries option, set to 0 per request or client, to disable the retries."
+          "text_en": "A maxRetries option, set to 0 per request or client, to disable the retries.",
+          "text_fr": "Une option maxRetries, mise à 0 par requête ou par client, pour désactiver les réessais."
         },
         {
           "key": "D",
-          "text_en": "A dry_run option that simulates the call so no real retry ever reaches the API."
+          "text_en": "A dry_run option that simulates the call so no real retry ever reaches the API.",
+          "text_fr": "Une option dry_run qui simule l'appel afin qu'aucun réessai réel n'atteigne l'API."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc TypeScript indique : « You can use the `maxRetries` option to configure or disable this. » On peut donc poser `maxRetries: 0` au niveau du client ou d'une requête pour désactiver les réessais sur un appel non idempotent, sans abandonner le SDK ni couper les réessais partout. Chaque SDK expose une option de nombre maximal de réessais équivalente.",
+      "citations_fr": [
+        "Vous pouvez utiliser l'option `maxRetries` pour configurer ou désactiver ce comportement."
+      ],
+      "principe_fr": "Les comportements de fiabilité par défaut doivent rester réglables à la granularité de l'appel, car l'idempotence est une propriété du chemin de code, pas du processus. Cherchez donc une option configurable au niveau du client et surchargeable par requête, plutôt qu'un interrupteur global ou un contournement de la bibliothèque.",
       "distractors_fr": {
         "A": "Les réessais ne sont pas figés : `maxRetries` les règle ou les coupe. Abandonner le SDK est inutile.",
         "B": "L'option se pose par client ou par requête ; on n'est pas contraint à un réglage global du processus.",
@@ -217,28 +262,37 @@
       "difficulty": "moyen",
       "concept": "Distinguer un 401 authentication_error d un 403 permission_error pour agir",
       "question_en": "Requests suddenly fail with 401 authentication_error, not 403. Which diagnosis matches the docs?",
+      "question_fr": "Les requêtes échouent soudainement avec un 401 authentication_error, et non un 403. Quel diagnostic correspond à la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The workspace lacks access to the resource; adjust its permissions in the Console."
+          "text_en": "The workspace lacks access to the resource; adjust its permissions in the Console.",
+          "text_fr": "L'espace de travail n'a pas accès à la ressource ; ajustez ses permissions dans la Console."
         },
         {
           "key": "B",
-          "text_en": "The account payment method failed; the call is blocked until billing is fixed."
+          "text_en": "The account payment method failed; the call is blocked until billing is fixed.",
+          "text_fr": "Le moyen de paiement du compte a échoué ; l'appel est bloqué jusqu'à régularisation."
         },
         {
           "key": "C",
-          "text_en": "The API key itself is the problem, for example malformed, revoked, or expired."
+          "text_en": "The API key itself is the problem, for example malformed, revoked, or expired.",
+          "text_fr": "La clé d'API elle-même pose problème, par exemple malformée, révoquée ou expirée."
         },
         {
           "key": "D",
-          "text_en": "The endpoint path or a resource ID is wrong, so nothing matched the request."
+          "text_en": "The endpoint path or a resource ID is wrong, so nothing matched the request.",
+          "text_fr": "Le chemin de l'endpoint ou un identifiant de ressource est erroné, donc rien ne correspond."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc distingue clairement : 401 `authentication_error` signale un problème avec la clé d'API elle-même — « malformed, revoked, or expired ». Un 403 `permission_error` viserait un défaut de permission sur la ressource, un 402 un souci de facturation, un 404 un chemin ou identifiant introuvable. Le 401 pointe donc la clé, pas les droits.",
+      "citations_fr": [
+        "malformée, révoquée ou expirée"
+      ],
+      "principe_fr": "Les codes de statut HTTP forment une taxonomie de diagnostic : 401 met en cause l'identité présentée, 403 les droits d'une identité pourtant valide, 402 la facturation et 404 l'existence de la ressource visée. Lire le code avant de chercher la cause évite d'aller inspecter les permissions quand c'est la clé qui est en défaut.",
       "distractors_fr": {
         "A": "Un défaut d'accès à la ressource est un 403 `permission_error`, pas un 401.",
         "B": "Un souci de facturation est un 402 `billing_error`, distinct de l'authentification.",
@@ -256,28 +310,37 @@
       "difficulty": "moyen",
       "concept": "Type d erreur associe au code 402",
       "question_en": "A request fails with HTTP 402. Which error type and cause does that map to?",
+      "question_fr": "Une requête échoue avec un HTTP 402. À quel type d'erreur et à quelle cause cela correspond-il ?",
       "options": [
         {
           "key": "A",
-          "text_en": "not_found_error, meaning an endpoint path or resource ID was wrong."
+          "text_en": "not_found_error, meaning an endpoint path or resource ID was wrong.",
+          "text_fr": "not_found_error : le chemin de l'endpoint ou l'identifiant de la ressource était erroné."
         },
         {
           "key": "B",
-          "text_en": "authentication_error, meaning the API key is malformed or revoked."
+          "text_en": "authentication_error, meaning the API key is malformed or revoked.",
+          "text_fr": "authentication_error : la clé d'API est mal formée ou révoquée."
         },
         {
           "key": "C",
-          "text_en": "billing_error, an issue with your billing or payment information."
+          "text_en": "billing_error, an issue with your billing or payment information.",
+          "text_fr": "billing_error : un problème avec vos informations de facturation ou de paiement."
         },
         {
           "key": "D",
-          "text_en": "conflict_error, meaning the resource state changed underneath you."
+          "text_en": "conflict_error, meaning the resource state changed underneath you.",
+          "text_fr": "conflict_error : l'état de la ressource a changé entre-temps."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc associe le 402 à `billing_error` : « There's an issue with your billing or payment information. » On vérifie alors les informations de paiement dans la Console. L'`authentication_error` est un 401, le `not_found_error` un 404, le `conflict_error` un 409.",
+      "citations_fr": [
+        "Un problème affecte vos informations de facturation ou de paiement."
+      ],
+      "principe_fr": "Chaque code HTTP de l'API correspond à un type d'erreur nommé et stable : 400 invalid_request_error, 401 authentication_error, 402 billing_error, 404 not_found_error, 409 conflict_error, 429 rate_limit_error, 500 api_error, 529 overloaded_error. Retenir cette table permet de router le traitement sans deviner à partir du texte du message.",
       "distractors_fr": {
         "A": "`not_found_error` est le type du 404, pas du 402.",
         "B": "`authentication_error` est le type du 401, lié à la clé, pas à la facturation.",
@@ -295,28 +358,39 @@
       "difficulty": "moyen",
       "concept": "Distinguer une limite propre au compte d une surcharge globale",
       "question_en": "A service starts seeing 529 responses although its own traffic has not changed. What does that code indicate, compared with a 429?",
+      "question_fr": "Un service commence à recevoir des réponses 529 alors que son propre trafic n'a pas changé. Qu'indique ce code, par rapport à un 429 ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The account exceeded its quota, whereas a 429 is a transient network fault."
+          "text_en": "The account exceeded its quota, whereas a 429 is a transient network fault.",
+          "text_fr": "Le compte a dépassé son quota, alors qu'un 429 signale une panne réseau passagère."
         },
         {
           "key": "B",
-          "text_en": "The request body was too large, whereas a 429 counts calls per minute."
+          "text_en": "The request body was too large, whereas a 429 counts calls per minute.",
+          "text_fr": "Le corps de la requête était trop volumineux, alors qu'un 429 compte les appels par minute."
         },
         {
           "key": "C",
-          "text_en": "The API is temporarily overloaded, whereas a 429 is the account's own limit."
+          "text_en": "The API is temporarily overloaded, whereas a 429 is the account's own limit.",
+          "text_fr": "L'API est temporairement surchargée, alors qu'un 429 correspond à la limite propre au compte."
         },
         {
           "key": "D",
-          "text_en": "The model was retired, whereas a 429 reports a burst above the ceiling."
+          "text_en": "The model was retired, whereas a 429 reports a burst above the ceiling.",
+          "text_fr": "Le modèle a été retiré, alors qu'un 429 signale un pic au-dessus du plafond."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "529 est overloaded_error : « The API is temporarily overloaded », et l'avertissement précise que ces erreurs « can occur when the API experiences high traffic across all users » — donc indépendamment de votre propre trafic. 429 est rate_limit_error : « Your account has hit a rate limit », c'est-à-dire une limite qui vous est propre. La nuance à retenir : une hausse brutale de votre usage peut aussi produire des 429 à cause des limites d'accélération, d'où le conseil de monter en charge progressivement.",
+      "citations_fr": [
+        "L'API est temporairement surchargée",
+        "peuvent survenir lorsque l'API subit un trafic élevé sur l'ensemble des utilisateurs",
+        "Votre compte a atteint une limite de débit"
+      ],
+      "principe_fr": "Distinguez les erreurs qui découlent de votre propre consommation de celles qui viennent de l'état du service : un 429 se corrige en lissant ou réduisant votre trafic, un 529 ne se corrige que par une nouvelle tentative avec backoff. Un même symptôme (appels refusés) peut donc avoir une cause interne ou externe, et la conduite à tenir n'est pas la même.",
       "distractors_fr": {
         "A": "C'est inversé, et les deux moitiés sont fausses : 529 est la surcharge globale, et 429 une limite de compte, pas une panne réseau.",
         "B": "Le dépassement de taille de requête est un 413 request_too_large, sans rapport avec l'un ou l'autre de ces deux codes.",
@@ -334,28 +408,37 @@
       "difficulty": "moyen",
       "concept": "Portee du type invalid_request_error au dela du code 400",
       "question_en": "An integration branches on the error type field. What does the documentation say about the reach of invalid_request_error?",
+      "question_fr": "Une intégration aiguille son traitement selon le champ de type d'erreur. Que dit la documentation sur la portée de invalid_request_error ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is reserved for 400, every other 4xx code carrying its own distinct type."
+          "text_en": "It is reserved for 400, every other 4xx code carrying its own distinct type.",
+          "text_fr": "Il est réservé au 400, chaque autre code 4xx portant son propre type distinct."
         },
         {
           "key": "B",
-          "text_en": "It is returned for any 4xx, the status code alone telling the cases apart."
+          "text_en": "It is returned for any 4xx, the status code alone telling the cases apart.",
+          "text_fr": "Il est renvoyé pour tout 4xx, le code de statut seul permettant de distinguer les cas."
         },
         {
           "key": "C",
-          "text_en": "It appears only on validation of the messages array, never on other fields."
+          "text_en": "It appears only on validation of the messages array, never on other fields.",
+          "text_fr": "Il n'apparaît qu'à la validation du tableau messages, jamais sur d'autres champs."
         },
         {
           "key": "D",
-          "text_en": "It maps to 400 but may also cover other 4xx codes not listed on the page."
+          "text_en": "It maps to 400 but may also cover other 4xx codes not listed on the page.",
+          "text_fr": "Il correspond au 400 mais peut aussi couvrir d'autres codes 4xx non listés dans la page."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "L'entrée 400 le précise : « invalid_request_error: There was an issue with the format or content of your request. This error type may also be used for other 4XX status codes not listed in this section. » La liste des codes est donc énumérative mais pas exhaustive, ce que confirme la politique de versionnage citée plus bas : les valeurs de ces objets peuvent s'étendre, et les valeurs de type peuvent croître avec le temps. Un aiguillage exhaustif sur le type doit donc prévoir un cas par défaut.",
+      "citations_fr": [
+        "invalid_request_error : le format ou le contenu de votre requête posait problème. Ce type d'erreur peut aussi être utilisé pour d'autres codes de statut 4XX non listés dans cette section."
+      ],
+      "principe_fr": "Les listes de valeurs énumérées dans la documentation d'API sont indicatives, pas fermées : les types d'erreur, les stop_reason et les champs des objets peuvent s'enrichir sans changement de version majeure. Tout aiguillage sur une valeur textuelle doit donc comporter une branche par défaut qui dégrade proprement au lieu de planter.",
       "distractors_fr": {
         "A": "C'est précisément ce que la page dément : le type peut aussi servir pour d'autres codes 4XX qui ne figurent pas dans la section.",
         "B": "Les codes 401, 403, 404, 409, 413 et 429 ont chacun leur propre type nommé. invalid_request_error ne les recouvre pas.",
@@ -373,22 +456,27 @@
       "difficulty": "moyen",
       "concept": "Traiter un 409 conflict en resolvant le conflit avant de reessayer",
       "question_en": "A request returns 409 conflict_error. Select the TWO statements that correctly describe it and its documented handling.",
+      "question_fr": "Une requête renvoie un 409 conflict_error. Choisissez les DEUX affirmations qui le décrivent correctement, ainsi que son traitement documenté.",
       "options": [
         {
           "key": "A",
-          "text_en": "It always signals a stale API key that the client should rotate first."
+          "text_en": "It always signals a stale API key that the client should rotate first.",
+          "text_fr": "Il signale toujours une clé d'API périmée que le client doit d'abord renouveler."
         },
         {
           "key": "B",
-          "text_en": "The documented fix is to resolve the conflict, then retry the request."
+          "text_en": "The documented fix is to resolve the conflict, then retry the request.",
+          "text_fr": "Le correctif documenté est de résoudre le conflit, puis de réessayer la requête."
         },
         {
           "key": "C",
-          "text_en": "It is fatal to the request and can never be recovered by the caller."
+          "text_en": "It is fatal to the request and can never be recovered by the caller.",
+          "text_fr": "Il est fatal à la requête et ne peut jamais être rattrapé par l'appelant."
         },
         {
           "key": "D",
-          "text_en": "It can mean a value that must stay unique is already in use elsewhere."
+          "text_en": "It can mean a value that must stay unique is already in use elsewhere.",
+          "text_fr": "Il peut signifier qu'une valeur devant rester unique est déjà utilisée ailleurs."
         }
       ],
       "correct": [
@@ -396,6 +484,10 @@
         "D"
       ],
       "explanation_fr": "La doc décrit le 409 `conflict_error` : « The request conflicts with the current state of a resource. For example, the resource was modified concurrently, or a value that must be unique is already in use. Resolve the conflict, then retry the request. » Les deux énoncés exacts sont donc B (résoudre puis réessayer) et D (valeur unique déjà prise). Le 409 ne vise ni la clé d'API ni un cas irrécupérable.",
+      "citations_fr": [
+        "La requête entre en conflit avec l'état actuel d'une ressource. Par exemple, la ressource a été modifiée simultanément, ou une valeur devant être unique est déjà utilisée. Résolvez le conflit, puis réessayez la requête."
+      ],
+      "principe_fr": "Une erreur se classe selon qu'elle est réessayable telle quelle, réessayable après action, ou définitive. Un 529 ou un 500 se réessaient à l'identique avec backoff ; un 409 se réessaie seulement après avoir corrigé la cause du conflit ; un 400 ou un 401 exige un changement de requête ou de credential. Cette grille dicte la logique de retry.",
       "distractors_fr": {
         "A": "Un problème de clé d'API donne un 401 `authentication_error`, pas un 409 ; le 409 porte sur l'état d'une ressource.",
         "C": "Le 409 est récupérable : la doc dit de résoudre le conflit puis de réessayer, pas de le traiter comme fatal."
@@ -412,28 +504,37 @@
       "difficulty": "facile",
       "concept": "Conduite a tenir face a une erreur 500 persistante",
       "question_en": "A 500 api_error keeps recurring after several retries. What does the documentation tell you to do?",
+      "question_fr": "Une erreur 500 api_error se reproduit après plusieurs nouvelles tentatives. Que demande de faire la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Switch to another model, the error pointing to that model's capacity."
+          "text_en": "Switch to another model, the error pointing to that model's capacity.",
+          "text_fr": "Basculer sur un autre modèle, l'erreur pointant vers la capacité de ce modèle."
         },
         {
           "key": "B",
-          "text_en": "Halve the request size, a 500 usually meaning the payload was too big."
+          "text_en": "Halve the request size, a 500 usually meaning the payload was too big.",
+          "text_fr": "Diviser par deux la taille de la requête, un 500 signifiant généralement une charge utile trop grosse."
         },
         {
           "key": "C",
-          "text_en": "Contact support with the request ID, once backoff has failed to clear it."
+          "text_en": "Contact support with the request ID, once backoff has failed to clear it.",
+          "text_fr": "Contacter le support avec le request ID, une fois que le backoff n'a pas suffi."
         },
         {
           "key": "D",
-          "text_en": "Rotate the API key, the error meaning the credential became invalid."
+          "text_en": "Rotate the API key, the error meaning the credential became invalid.",
+          "text_fr": "Renouveler la clé d'API, l'erreur signifiant que le credential est devenu invalide."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "L'entrée 500 donne la marche à suivre en deux temps : « An unexpected error has occurred internal to Anthropic's systems. Retry the request with exponential backoff; if the error persists, contact support with the request ID. » Le request ID est justement conçu pour cela : chaque réponse porte un en-tête request-id, et la même valeur figure dans le corps des réponses d'erreur.",
+      "citations_fr": [
+        "Une erreur inattendue s'est produite à l'intérieur des systèmes d'Anthropic. Réessayez la requête avec un backoff exponentiel ; si l'erreur persiste, contactez le support avec le request ID."
+      ],
+      "principe_fr": "Pour toute erreur côté serveur, la marche à suivre est en deux temps : d'abord un backoff exponentiel, ensuite l'escalade si le problème persiste. Conservez systématiquement le request-id renvoyé dans les en-têtes et dans le corps des erreurs : c'est la seule référence qui permet au support de retrouver l'appel.",
       "distractors_fr": {
         "A": "Un 500 est une erreur interne, sans lien avec le modèle demandé. La saturation, elle, se signale par un 529.",
         "B": "Une requête trop volumineuse donne un 413 request_too_large, avec un plafond documenté par endpoint.",
@@ -451,28 +552,37 @@
       "difficulty": "facile",
       "concept": "Attraper les classes d exception typees plutot que filtrer le texte du message",
       "question_en": "Reviewing error handling, you find code that decides what to do by matching substrings in the error message text. What does the docs recommend instead?",
+      "question_fr": "En relisant la gestion des erreurs, vous trouvez du code qui décide de la suite en cherchant des sous-chaînes dans le texte du message d'erreur. Que recommande la documentation à la place ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Catch the SDK's typed exception classes rather than string-matching messages."
+          "text_en": "Catch the SDK's typed exception classes rather than string-matching messages.",
+          "text_fr": "Attraper les classes d'exception typées du SDK plutôt que filtrer le texte des messages."
         },
         {
           "key": "B",
-          "text_en": "Parse the raw JSON body yourself and branch on the string in its type field."
+          "text_en": "Parse the raw JSON body yourself and branch on the string in its type field.",
+          "text_fr": "Analyser soi-même le corps JSON brut et aiguiller sur la chaîne de son champ type."
         },
         {
           "key": "C",
-          "text_en": "Match on the HTTP reason phrase, which is more stable than the message body."
+          "text_en": "Match on the HTTP reason phrase, which is more stable than the message body.",
+          "text_fr": "Filtrer sur la reason phrase HTTP, plus stable que le corps du message."
         },
         {
           "key": "D",
-          "text_en": "Compare the full message against a hard-coded list you update on each release."
+          "text_en": "Compare the full message against a hard-coded list you update on each release.",
+          "text_fr": "Comparer le message complet à une liste codée en dur que vous mettez à jour à chaque version."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc des erreurs conseille : « Catch the SDK's typed classes rather than string-matching error messages, handling the most specific classes first. » Les valeurs de `message` et de `type` peuvent évoluer avec le versioning ; se caler sur les classes typées du SDK est robuste, filtrer du texte ne l'est pas.",
+      "citations_fr": [
+        "Attrapez les classes typées du SDK plutôt que de filtrer le texte des messages d'erreur, en traitant d'abord les classes les plus spécifiques."
+      ],
+      "principe_fr": "Appuyez la logique d'erreur sur le contrat le plus stable disponible : classes typées du SDK, puis code de statut, puis champ type — jamais le texte libre du message, qui peut changer sans préavis. Et ordonnez les branches du plus spécifique au plus général, sinon un cas large capte les cas particuliers.",
       "distractors_fr": {
         "B": "Rebrancher sur la chaîne `type` du JSON reste du filtrage de texte fragile ; le SDK expose justement des classes typées pour l'éviter.",
         "C": "La reason phrase HTTP n'est pas le mécanisme prévu ; la doc s'appuie sur les exceptions typées, pas sur le texte du statut.",
@@ -490,28 +600,37 @@
       "difficulty": "difficile",
       "concept": "Ordre des blocs de capture dans une hierarchie d exceptions",
       "question_en": "A handler catches APIError first, then RateLimitError in a later block. What is the practical consequence?",
+      "question_fr": "Un gestionnaire capture APIError d'abord, puis RateLimitError dans un bloc ultérieur. Quelle en est la conséquence pratique ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The rate-limit block is dead code, the base class having caught it first."
+          "text_en": "The rate-limit block is dead code, the base class having caught it first.",
+          "text_fr": "Le bloc de limite de débit est du code mort, la classe de base l'ayant capturé en premier."
         },
         {
           "key": "B",
-          "text_en": "Both blocks run in turn, the SDK re-raising after the first one returns."
+          "text_en": "Both blocks run in turn, the SDK re-raising after the first one returns.",
+          "text_fr": "Les deux blocs s'exécutent tour à tour, le SDK relançant l'erreur après le retour du premier."
         },
         {
           "key": "C",
-          "text_en": "The SDK reorders the blocks so the most specific one always wins."
+          "text_en": "The SDK reorders the blocks so the most specific one always wins.",
+          "text_fr": "Le SDK réordonne les blocs pour que le plus spécifique gagne toujours."
         },
         {
           "key": "D",
-          "text_en": "The code fails to compile, the two classes being mutually exclusive."
+          "text_en": "The code fails to compile, the two classes being mutually exclusive.",
+          "text_fr": "Le code ne compile pas, les deux classes étant mutuellement exclusives."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La consigne « handling the most specific classes first » découle de la hiérarchie : les erreurs typées dérivent d'APIError, dont RateLimitError est une sous-classe. Capturer la classe de base d'abord absorbe donc tout, et le bloc spécifique placé ensuite ne s'exécute jamais. C'est un piège classique en Python comme en TypeScript, et la raison pour laquelle chaque page de SDK documente sa hiérarchie complète.",
+      "citations_fr": [
+        "en traitant d'abord les classes les plus spécifiques"
+      ],
+      "principe_fr": "Dans toute hiérarchie d'exceptions, le premier bloc dont le type correspond gagne : capturer une classe de base avant ses sous-classes rend les blocs suivants inatteignables. La règle générale est donc d'ordonner du plus spécifique au plus général. Cela vaut aussi pour décider quelles erreurs sont réessayables : c'est le type précis, non la classe parente, qui porte l'information utile.",
       "distractors_fr": {
         "B": "Une exception n'est traitée que par le premier bloc qui correspond. Rien n'est relevé automatiquement derrière lui.",
         "C": "Aucun réordonnancement n'a lieu : l'ordre des blocs est celui que vous écrivez, et c'est bien pour cela que la documentation le rappelle.",
@@ -529,28 +648,37 @@
       "difficulty": "difficile",
       "concept": "Les noms de classes d exception different selon le langage du SDK",
       "question_en": "A polyglot team asks whether the SDK exception class names are identical across languages. What does the docs state?",
+      "question_fr": "Une équipe multi-langages demande si les noms de classes d'exception des SDK sont identiques d'un langage à l'autre. Que dit la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Class names and namespaces differ by language; a 404 is NotFoundError in Python."
+          "text_en": "Class names and namespaces differ by language; a 404 is NotFoundError in Python.",
+          "text_fr": "Les noms de classes et les espaces de noms diffèrent selon le langage ; un 404 est NotFoundError en Python."
         },
         {
           "key": "B",
-          "text_en": "All SDKs share one identical class name, AnthropicError, in every language."
+          "text_en": "All SDKs share one identical class name, AnthropicError, in every language.",
+          "text_fr": "Tous les SDK partagent un même nom de classe, AnthropicError, dans tous les langages."
         },
         {
           "key": "C",
-          "text_en": "Only Python raises typed exceptions; other SDKs return the raw JSON body."
+          "text_en": "Only Python raises typed exceptions; other SDKs return the raw JSON body.",
+          "text_fr": "Seul Python lève des exceptions typées ; les autres SDK renvoient le corps JSON brut."
         },
         {
           "key": "D",
-          "text_en": "The names match, but only the Go SDK exposes the HTTP status on the error."
+          "text_en": "The names match, but only the Go SDK exposes the HTTP status on the error.",
+          "text_fr": "Les noms concordent, mais seul le SDK Go expose le statut HTTP sur l'erreur."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc dit que les SDK lèvent des exceptions typées « instead of returning raw JSON, and the class names and namespaces differ by language ». Elle illustre avec le 404 : `anthropic.NotFoundError` en Python, `Anthropic::Errors::NotFoundError` en Ruby, `com.anthropic.errors.NotFoundException` en Java, et une valeur unique `*anthropic.Error` en Go (on branche sur `StatusCode`). Les noms ne sont donc pas identiques d'un langage à l'autre.",
+      "citations_fr": [
+        "au lieu de renvoyer du JSON brut, et les noms de classes et les espaces de noms diffèrent selon le langage"
+      ],
+      "principe_fr": "Les SDK exposent la même sémantique d'erreurs HTTP, mais chacun l'habille selon les conventions de son langage : nommage, espaces de noms, voire modèle unique avec inspection du statut comme en Go. Retenez le concept d'erreur (404, 429, 500) plutôt qu'un nom de classe précis, et vérifiez la hiérarchie propre à chaque SDK avant de porter du code.",
       "distractors_fr": {
         "B": "Il n'existe pas un nom unique `AnthropicError` partout ; les noms et namespaces varient par langage.",
         "C": "Tous les SDK officiels lèvent des exceptions typées, pas seulement Python ; aucun ne renvoie le JSON brut par défaut.",
@@ -568,28 +696,37 @@
       "difficulty": "moyen",
       "concept": "Un echec de connexion sans code HTTP se presente comme une erreur de connexion dediee",
       "question_en": "The client cannot reach the API at all: DNS fails, so no HTTP status is ever returned. Which SDK error surfaces?",
+      "question_fr": "Le client ne peut pas joindre l'API du tout : la résolution DNS échoue, donc aucun statut HTTP n'est renvoyé. Quelle erreur du SDK apparaît ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A BadRequestError, since a request with no response counts as malformed."
+          "text_en": "A BadRequestError, since a request with no response counts as malformed.",
+          "text_fr": "Un BadRequestError, puisqu'une requête sans réponse compte comme mal formée."
         },
         {
           "key": "B",
-          "text_en": "A RateLimitError, because unreachable hosts are treated as throttling events."
+          "text_en": "A RateLimitError, because unreachable hosts are treated as throttling events.",
+          "text_fr": "Un RateLimitError, car les hôtes injoignables sont traités comme des cas de bridage."
         },
         {
           "key": "C",
-          "text_en": "An InternalServerError, mapped from the missing status as a server-side 500."
+          "text_en": "An InternalServerError, mapped from the missing status as a server-side 500.",
+          "text_fr": "Un InternalServerError, le statut manquant étant traduit en 500 côté serveur."
         },
         {
           "key": "D",
-          "text_en": "A connection error (APIConnectionError), which carries no HTTP status code."
+          "text_en": "A connection error (APIConnectionError), which carries no HTTP status code.",
+          "text_fr": "Une erreur de connexion (APIConnectionError), qui ne porte aucun code de statut HTTP."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Le tableau des erreurs TypeScript associe le cas « N/A » (aucun statut HTTP) à `APIConnectionError` : la librairie lève une sous-classe d'`APIError` quand elle ne parvient pas à joindre l'API. Un échec DNS n'a pas de statut, donc ce n'est ni un 400, ni un 429, ni un 500 — c'est une erreur de connexion, et elle fait partie des cas réessayés par défaut.",
+      "citations_fr": [
+        "N/A"
+      ],
+      "principe_fr": "Distinguez les erreurs de transport des erreurs applicatives : s'il n'y a pas de réponse HTTP, il ne peut pas y avoir de code de statut, et le SDK expose alors une erreur de connexion dédiée. Ces échecs réseau sont généralement réessayés automatiquement, contrairement aux 4xx qui signalent un problème dans votre requête.",
       "distractors_fr": {
         "A": "Un 400 `BadRequestError` suppose une réponse reçue ; ici aucune réponse n'arrive, c'est une erreur de connexion.",
         "B": "Un `RateLimitError` correspond à un 429 renvoyé par l'API ; un hôte injoignable n'est pas un throttling.",
@@ -607,28 +744,37 @@
       "difficulty": "difficile",
       "concept": "Une erreur survenue en plein flux SSE apres un 200 ne suit pas la gestion d erreur standard",
       "question_en": "A streaming request already returned HTTP 200, then fails partway through the stream. Why do the usual status-code error handlers not catch it?",
+      "question_fr": "Une requête en streaming a déjà renvoyé un HTTP 200, puis échoue en cours de flux. Pourquoi les gestionnaires d'erreurs habituels fondés sur le code de statut ne l'attrapent-ils pas ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The 200 is rolled back to a 5xx retroactively, so a status handler still fires."
+          "text_en": "The 200 is rolled back to a 5xx retroactively, so a status handler still fires.",
+          "text_fr": "Le 200 est rétroactivement transformé en 5xx, donc un gestionnaire de statut se déclenche quand même."
         },
         {
           "key": "B",
-          "text_en": "Mid-stream failures raise a 400 on the next request, where they are handled."
+          "text_en": "Mid-stream failures raise a 400 on the next request, where they are handled.",
+          "text_fr": "Les échecs en cours de flux lèvent un 400 sur la requête suivante, où ils sont traités."
         },
         {
           "key": "C",
-          "text_en": "SSE cannot fail once opened, so any later error must be a bug in your parser."
+          "text_en": "SSE cannot fail once opened, so any later error must be a bug in your parser.",
+          "text_fr": "Un flux SSE ne peut plus échouer une fois ouvert : toute erreur ultérieure vient de votre parseur."
         },
         {
           "key": "D",
-          "text_en": "After a 200, an error arrives as an in-stream error event, not a status code."
+          "text_en": "After a 200, an error arrives as an in-stream error event, not a status code.",
+          "text_fr": "Après un 200, une erreur arrive comme un événement d'erreur dans le flux, pas comme un code de statut."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La doc des erreurs prévient : « When receiving a streaming response over server-sent events (SSE), an error can occur after the API returns a 200 response. In that case, error handling doesn't follow these standard mechanisms. » L'erreur arrive alors comme un événement d'erreur dans le flux, qu'il faut traiter en lisant les événements, et non via le code de statut déjà émis (200).",
+      "citations_fr": [
+        "Lors de la réception d'une réponse en streaming via server-sent events (SSE), une erreur peut survenir après que l'API a renvoyé une réponse 200. Dans ce cas, la gestion des erreurs ne suit pas ces mécanismes standard."
+      ],
+      "principe_fr": "Le code de statut n'est émis qu'une fois, à l'ouverture de la réponse : tout ce qui échoue ensuite doit être signalé dans le canal de données lui-même. En streaming, il faut donc deux chemins de gestion d'erreur : un pour l'établissement de la requête, un pour les événements d'erreur reçus pendant la lecture du flux.",
       "distractors_fr": {
         "A": "Un 200 déjà renvoyé n'est pas rétro-transformé en 5xx ; l'erreur vient dans le flux, pas dans le statut.",
         "B": "L'erreur ne se reporte pas sur un 400 de la requête suivante ; elle survient dans le flux courant.",
@@ -646,22 +792,27 @@
       "difficulty": "moyen",
       "concept": "Mesures recommandees pour des requetes de plus de dix minutes",
       "question_en": "A job issues requests expected to run well past ten minutes. Which TWO measures does the documentation recommend?",
+      "question_fr": "Un traitement émet des requêtes censées durer bien plus de dix minutes. Quelles DEUX mesures la documentation recommande-t-elle ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Split the prompt across several accounts to spread the load out."
+          "text_en": "Split the prompt across several accounts to spread the load out.",
+          "text_fr": "Répartir le prompt sur plusieurs comptes pour étaler la charge."
         },
         {
           "key": "B",
-          "text_en": "Use the Message Batches API and poll for results when they are ready."
+          "text_en": "Use the Message Batches API and poll for results when they are ready.",
+          "text_fr": "Utiliser la Message Batches API et interroger les résultats quand ils sont prêts."
         },
         {
           "key": "C",
-          "text_en": "Disable the SDK's retries so a slow call is never sent a second time."
+          "text_en": "Disable the SDK's retries so a slow call is never sent a second time.",
+          "text_fr": "Désactiver les réessais du SDK pour qu'un appel lent ne soit jamais envoyé deux fois."
         },
         {
           "key": "D",
-          "text_en": "Use the streaming Messages API rather than one long blocking call."
+          "text_en": "Use the streaming Messages API rather than one long blocking call.",
+          "text_fr": "Utiliser la Messages API en streaming plutôt qu'un seul appel bloquant long."
         }
       ],
       "correct": [
@@ -669,6 +820,11 @@
         "D"
       ],
       "explanation_fr": "L'avertissement de la section « Long requests » nomme les deux voies : « Consider using the streaming Messages API or Message Batches API for long-running requests, especially those over 10 minutes. » L'argument diffère pour chacune : le streaming évite qu'une connexion reste inactive assez longtemps pour être coupée, et les lots suppriment carrément la dépendance à une connexion ininterrompue, puisqu'on interroge les résultats plus tard.",
+      "citations_fr": [
+        "Long requests",
+        "Envisagez d'utiliser la Messages API en streaming ou la Message Batches API pour les requêtes de longue durée, en particulier celles de plus de 10 minutes."
+      ],
+      "principe_fr": "Une requête HTTP longue et silencieuse est fragile : proxys et équilibreurs coupent les connexions inactives. Deux stratégies existent donc : maintenir un trafic continu (streaming), ou supprimer la dépendance à une connexion ouverte en découplant soumission et récupération (traitement par lots). Choisissez selon que vous avez besoin des jetons au fur et à mesure ou seulement du résultat final.",
       "distractors_fr": {
         "A": "Répartir sur plusieurs comptes ne change rien à la durée d'une requête donnée, et sort du cadre documenté.",
         "C": "Couper les réessais masque un symptôme sans traiter la cause : la requête restera trop longue pour la connexion qui la porte."
@@ -685,22 +841,27 @@
       "difficulty": "moyen",
       "concept": "Plafonds de taille de requete par type d endpoint",
       "question_en": "A pipeline uploads large documents. Which pairing of endpoint and maximum request size is correct?",
+      "question_fr": "Un pipeline téléverse de gros documents. Quelle association endpoint / taille maximale de requête est correcte ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Messages API 256 MB, Files API 32 MB, Batch API 500 MB."
+          "text_en": "Messages API 256 MB, Files API 32 MB, Batch API 500 MB.",
+          "text_fr": "Messages API 256 Mo, Files API 32 Mo, Batch API 500 Mo."
         },
         {
           "key": "B",
-          "text_en": "Messages API 32 MB, Batch API 256 MB, Files API 500 MB."
+          "text_en": "Messages API 32 MB, Batch API 256 MB, Files API 500 MB.",
+          "text_fr": "Messages API 32 Mo, Batch API 256 Mo, Files API 500 Mo."
         },
         {
           "key": "C",
-          "text_en": "Messages API 500 MB, Batch API 32 MB, Files API 256 MB."
+          "text_en": "Messages API 500 MB, Batch API 32 MB, Files API 256 MB.",
+          "text_fr": "Messages API 500 Mo, Batch API 32 Mo, Files API 256 Mo."
         },
         {
           "key": "D",
-          "text_en": "Every endpoint shares one 32 MB ceiling, without exception."
+          "text_en": "Every endpoint shares one 32 MB ceiling, without exception.",
+          "text_fr": "Tous les endpoints partagent un plafond unique de 32 Mo, sans exception."
         }
       ],
       "correct": [
@@ -724,22 +885,27 @@
       "difficulty": "facile",
       "concept": "Comportement par defaut des delais d attente des clients",
       "question_en": "A team is reviewing the timeout behaviour of the client SDKs. Which TWO statements are correct?",
+      "question_fr": "Une équipe examine le comportement des délais d'attente des SDK clients. Quelles DEUX affirmations sont correctes ?",
       "options": [
         {
           "key": "A",
-          "text_en": "By default a request will time out after ten minutes have passed."
+          "text_en": "By default a request will time out after ten minutes have passed.",
+          "text_fr": "Par défaut, une requête expire au bout de dix minutes."
         },
         {
           "key": "B",
-          "text_en": "A request that times out is not retried, to avoid double billing."
+          "text_en": "A request that times out is not retried, to avoid double billing.",
+          "text_fr": "Une requête qui expire n'est pas réessayée, pour éviter une double facturation."
         },
         {
           "key": "C",
-          "text_en": "A timed-out request is retried twice, like transient faults."
+          "text_en": "A timed-out request is retried twice, like transient faults.",
+          "text_fr": "Une requête expirée est réessayée deux fois, comme les erreurs transitoires."
         },
         {
           "key": "D",
-          "text_en": "Timeouts cannot be configured once the client has been built."
+          "text_en": "Timeouts cannot be configured once the client has been built.",
+          "text_fr": "Les délais d'attente ne peuvent plus être configurés une fois le client construit."
         }
       ],
       "correct": [
@@ -747,6 +913,11 @@
         "C"
       ],
       "explanation_fr": "Les deux SDK annoncent la même valeur : « By default requests time out after 10 minutes », réglable par une option timeout au niveau du client ou de la requête. Et ils ajoutent la même note, facile à manquer : « Note that requests that time out are retried twice by default. » Un délai mal réglé se paie donc en double, puisque chaque tentative consomme une génération.",
+      "citations_fr": [
+        "Par défaut, les requêtes expirent au bout de 10 minutes",
+        "Notez que les requêtes qui expirent sont réessayées deux fois par défaut."
+      ],
+      "principe_fr": "Un délai d'attente ne s'évalue jamais seul : il faut toujours le lire avec la politique de reprise qui l'accompagne. Comme une expiration est traitée comme une panne transitoire, elle déclenche des tentatives supplémentaires, chacune consommant une génération complète côté serveur. Réduire un délai sur des requêtes longues multiplie donc le coût au lieu de le limiter.",
       "distractors_fr": {
         "B": "C'est l'inverse : l'expiration compte comme une panne transitoire et déclenche les réessais par défaut, ce qui peut se révéler coûteux.",
         "D": "L'option timeout se règle au niveau du client comme au niveau de la requête, et accepte en Python un flottant ou un objet httpx.Timeout."
@@ -763,28 +934,37 @@
       "difficulty": "difficile",
       "concept": "Delai calcule dynamiquement par le SDK TypeScript",
       "question_en": "A non-streaming TypeScript call sets a large max_tokens. What does the SDK do about the default timeout?",
+      "question_fr": "Un appel TypeScript sans streaming fixe un max_tokens élevé. Que fait le SDK du délai d'attente par défaut ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It keeps the flat ten minutes, large generations having to stream."
+          "text_en": "It keeps the flat ten minutes, large generations having to stream.",
+          "text_fr": "Il conserve les dix minutes fixes, les générations longues devant passer par le streaming."
         },
         {
           "key": "B",
-          "text_en": "It computes one from max_tokens, up to sixty minutes at the ceiling."
+          "text_en": "It computes one from max_tokens, up to sixty minutes at the ceiling.",
+          "text_fr": "Il en calcule un à partir de max_tokens, jusqu'à soixante minutes au plafond."
         },
         {
           "key": "C",
-          "text_en": "It drops the timeout entirely and waits for the server to respond."
+          "text_en": "It drops the timeout entirely and waits for the server to respond.",
+          "text_fr": "Il supprime totalement le délai et attend la réponse du serveur."
         },
         {
           "key": "D",
-          "text_en": "It rejects the call outright, large budgets requiring streaming."
+          "text_en": "It rejects the call outright, large budgets requiring streaming.",
+          "text_fr": "Il rejette l'appel d'emblée, les budgets élevés exigeant le streaming."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Le SDK TypeScript se distingue ici du Python : « if you have specified a large max_tokens value and are not streaming, the default timeout will be calculated dynamically [...] which will result in a timeout up to 60 minutes, scaled by the max_tokens parameter, unless overridden at the request or client level. » Le SDK Python, lui, garde un défaut fixe de dix minutes et lève une ValueError si une requête non diffusée est estimée plus longue.",
+      "citations_fr": [
+        "si vous avez spécifié une valeur max_tokens élevée et que vous n'utilisez pas le streaming, le délai d'attente par défaut sera calculé dynamiquement [...] ce qui aboutit à un délai pouvant aller jusqu'à 60 minutes, proportionnel au paramètre max_tokens, sauf remplacement au niveau de la requête ou du client."
+      ],
+      "principe_fr": "Les SDK partagent la plupart des valeurs par défaut, mais pas toutes : certaines divergences d'implémentation existent entre Python et TypeScript. Ici, TypeScript adapte le délai à la taille du budget de sortie, tandis que Python garde un plafond fixe et refuse l'appel jugé trop long. Vérifiez donc toujours la référence du SDK que vous utilisez plutôt que de généraliser depuis l'autre.",
       "distractors_fr": {
         "A": "Le délai fixe de dix minutes est le défaut Python. En TypeScript, il est mis à l'échelle par max_tokens quand on ne diffuse pas.",
         "C": "Aucun SDK ne supprime le délai : ce serait le meilleur moyen de bloquer indéfiniment sur une connexion coupée en silence.",
@@ -802,28 +982,38 @@
       "difficulty": "difficile",
       "concept": "Cout cache d un delai trop court sur une generation longue",
       "question_en": "A team lowers the client timeout to two minutes to fail fast on a long non-streaming call. What actually happens?",
+      "question_fr": "Une équipe abaisse le délai d'attente du client à deux minutes pour échouer vite sur un appel long sans streaming. Que se passe-t-il réellement ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The call fails once after two minutes, exactly as the team intended."
+          "text_en": "The call fails once after two minutes, exactly as the team intended.",
+          "text_fr": "L'appel échoue une seule fois après deux minutes, exactement comme prévu."
         },
         {
           "key": "B",
-          "text_en": "The timeout is clamped up to the ten-minute default and ignored."
+          "text_en": "The timeout is clamped up to the ten-minute default and ignored.",
+          "text_fr": "Le délai est relevé jusqu'au défaut de dix minutes et donc ignoré."
         },
         {
           "key": "C",
-          "text_en": "The server aborts the generation at the same moment the client does."
+          "text_en": "The server aborts the generation at the same moment the client does.",
+          "text_fr": "Le serveur interrompt la génération au même instant que le client."
         },
         {
           "key": "D",
-          "text_en": "The client cuts the connection and retries twice, billing each attempt."
+          "text_en": "The client cuts the connection and retries twice, billing each attempt.",
+          "text_fr": "Le client coupe la connexion et réessaye deux fois, chaque tentative étant facturée."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Deux faits se combinent pour produire un piège coûteux. D'abord : « An expected request latency longer than the timeout for a non-streaming request will result in the client terminating the connection and retrying without receiving a response. » Ensuite : « requests that time out are retried twice by default ». Une génération plus longue que le délai est donc lancée trois fois au total, facturée à chaque fois, sans qu'aucune réponse ne parvienne jamais. Sur des requêtes longues, la solution est le streaming ou les lots, pas un délai plus court.",
+      "citations_fr": [
+        "Une latence de requête attendue supérieure au délai d'attente, pour une requête sans streaming, amène le client à fermer la connexion et à réessayer sans avoir reçu de réponse.",
+        "les requêtes qui expirent sont réessayées deux fois par défaut"
+      ],
+      "principe_fr": "Le client et le serveur n'ont pas la même vue : couper la connexion côté client n'annule pas le travail déjà lancé côté serveur, qui reste facturé. Combiné aux reprises automatiques, un délai trop court transforme un appel long en plusieurs générations payées sans jamais recevoir de résultat. La bonne réponse à une latence élevée est le streaming ou le traitement par lots, pas un délai plus agressif.",
       "distractors_fr": {
         "A": "Ce serait vrai si l'expiration était terminale. Elle ne l'est pas : elle figure parmi les pannes que le SDK réessaie.",
         "B": "Le délai que vous posez est respecté ; c'est bien cela qui déclenche l'abandon prématuré et les réessais.",
@@ -841,28 +1031,37 @@
       "difficulty": "moyen",
       "concept": "Option de socket posee par le SDK contre les coupures de connexion inactive",
       "question_en": "Idle connections are dropped by a corporate network before long responses arrive. What do the SDKs already set to reduce this?",
+      "question_fr": "Un réseau d'entreprise coupe les connexions inactives avant l'arrivée des réponses longues. Que positionnent déjà les SDK pour réduire ce problème ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A chunked encoding header that forces the proxy to keep the socket."
+          "text_en": "A chunked encoding header that forces the proxy to keep the socket.",
+          "text_fr": "Un en-tête d'encodage par blocs qui force le proxy à conserver la socket."
         },
         {
           "key": "B",
-          "text_en": "An HTTP/2 ping frame sent by the API on a fixed interval."
+          "text_en": "An HTTP/2 ping frame sent by the API on a fixed interval.",
+          "text_fr": "Une trame ping HTTP/2 envoyée par l'API à intervalle fixe."
         },
         {
           "key": "C",
-          "text_en": "A heartbeat request issued on a second connection in parallel."
+          "text_en": "A heartbeat request issued on a second connection in parallel.",
+          "text_fr": "Une requête de battement de cœur émise en parallèle sur une seconde connexion."
         },
         {
           "key": "D",
-          "text_en": "A TCP socket keep-alive, which a custom HTTP client can override."
+          "text_en": "A TCP socket keep-alive, which a custom HTTP client can override.",
+          "text_fr": "Un keep-alive de socket TCP, qu'un client HTTP personnalisé peut écraser."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Les deux SDK posent la même option : « The SDK sets a TCP socket keep-alive option to reduce the impact of idle connection timeouts on some networks. » Le point d'attention est la suite : en Python, cela peut être écrasé en passant un http_client personnalisé ; en TypeScript, en configurant un proxy sur mesure. Autrement dit, remplacer le client HTTP fait perdre ce réglage si on ne le repose pas.",
+      "citations_fr": [
+        "Le SDK positionne une option de keep-alive sur la socket TCP afin de réduire l'impact des expirations de connexion inactive sur certains réseaux."
+      ],
+      "principe_fr": "Les SDK appliquent des réglages réseau par défaut qui font partie de leur valeur ajoutée, pas seulement l'authentification et la sérialisation. Dès que vous remplacez la couche de transport — client HTTP personnalisé, proxy sur mesure — vous héritez de la responsabilité de reposer ces réglages. Considérez toute substitution d'infrastructure comme une perte potentielle de comportements implicites.",
       "distractors_fr": {
         "B": "Aucun ping applicatif de ce genre n'est décrit. Le mécanisme documenté opère au niveau du socket TCP.",
         "C": "Une connexion parallèle ne maintiendrait pas la connexion inactive qui porte la réponse.",
@@ -880,28 +1079,37 @@
       "difficulty": "moyen",
       "concept": "Interroger un batch en toute securite grace a l idempotence de l endpoint de recuperation",
       "question_en": "A worker polls a Message Batch every few seconds to learn when it has finished. Why is repeatedly hitting the retrieve endpoint safe here?",
+      "question_fr": "Un worker interroge un Message Batch toutes les quelques secondes pour savoir quand il est terminé. Pourquoi appeler répétitivement l'endpoint de récupération est-il sûr ici ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The endpoint mutates state on read, which is what advances the batch to ended."
+          "text_en": "The endpoint mutates state on read, which is what advances the batch to ended.",
+          "text_fr": "L'endpoint modifie l'état à la lecture, et c'est ce qui fait passer le batch à ended."
         },
         {
           "key": "B",
-          "text_en": "Polling is rate-limit-exempt, so the interval between calls does not matter at all."
+          "text_en": "Polling is rate-limit-exempt, so the interval between calls does not matter at all.",
+          "text_fr": "L'interrogation est exemptée des limites de débit, l'intervalle entre appels n'a donc aucune importance."
         },
         {
           "key": "C",
-          "text_en": "Each poll cancels the previous poll, so only the final request is ever billed."
+          "text_en": "Each poll cancels the previous poll, so only the final request is ever billed.",
+          "text_fr": "Chaque interrogation annule la précédente, seule la dernière requête est facturée."
         },
         {
           "key": "D",
-          "text_en": "That endpoint is idempotent, so it can be polled for batch completion safely."
+          "text_en": "That endpoint is idempotent, so it can be polled for batch completion safely.",
+          "text_fr": "Cet endpoint est idempotent, il peut donc être interrogé sans risque pour détecter la fin du batch."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La doc de récupération d'un batch indique : « This endpoint is idempotent and can be used to poll for Message Batch completion. » Répéter la lecture ne modifie donc rien et sert précisément à attendre l'état `ended`, après quoi on lit les résultats via `results_url`.",
+      "citations_fr": [
+        "Cet endpoint est idempotent et peut être utilisé pour interroger l'achèvement d'un Message Batch."
+      ],
+      "principe_fr": "Une lecture idempotente peut être répétée sans effet de bord : c'est ce qui autorise le polling comme motif d'attente d'un traitement asynchrone. Le cycle typique est donc : créer le travail, interroger l'état jusqu'à un état terminal, puis récupérer les résultats via l'URL fournie. L'idempotence ne dispense toutefois pas de respecter les limites de débit avec un intervalle raisonnable.",
       "distractors_fr": {
         "B": "L'idempotence ne veut pas dire exemption de rate limit ; c'est l'absence d'effet de bord qui rend le polling sûr, pas une dispense de quotas.",
         "C": "Aucun poll n'annule le précédent ; ils sont simplement sans effet sur l'état.",
@@ -919,22 +1127,27 @@
       "difficulty": "facile",
       "concept": "Ou trouver l identifiant de requete pour un ticket de support",
       "question_en": "An operator needs the identifier to quote in a support ticket. Which TWO statements about the request ID are correct?",
+      "question_fr": "Un opérateur a besoin de l'identifiant à indiquer dans un ticket de support. Quelles DEUX affirmations sur le request ID sont correctes ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is issued only for failed calls, successful ones carrying no such ID."
+          "text_en": "It is issued only for failed calls, successful ones carrying no such ID.",
+          "text_fr": "Il n'est émis que pour les appels en échec, les appels réussis n'en portant aucun."
         },
         {
           "key": "B",
-          "text_en": "It must be generated by the client and sent on the way out."
+          "text_en": "It must be generated by the client and sent on the way out.",
+          "text_fr": "Il doit être généré par le client et envoyé avec la requête."
         },
         {
           "key": "C",
-          "text_en": "Every API response carries it in a request-id response header."
+          "text_en": "Every API response carries it in a request-id response header.",
+          "text_fr": "Toute réponse de l'API le transporte dans un en-tête de réponse request-id."
         },
         {
           "key": "D",
-          "text_en": "Python and TypeScript expose it as a _request_id property."
+          "text_en": "Python and TypeScript expose it as a _request_id property.",
+          "text_fr": "Python et TypeScript l'exposent via une propriété _request_id."
         }
       ],
       "correct": [
@@ -942,6 +1155,11 @@
         "D"
       ],
       "explanation_fr": "Deux faits se combinent : « Every API response includes a unique request-id header » et, côté SDK, « All object responses in the SDK provide a _request_id property which is added from the request-id response header ». La même valeur apparaît dans le champ request_id du corps des réponses d'erreur. Détail utile en Python : contrairement aux autres attributs préfixés d'un souligné, _request_id est public.",
+      "citations_fr": [
+        "Chaque réponse de l'API inclut un en-tête request-id unique",
+        "Tous les objets de réponse du SDK fournissent une propriété _request_id, renseignée depuis l'en-tête de réponse request-id"
+      ],
+      "principe_fr": "La traçabilité côté API repose sur un identifiant généré par le serveur et exposé de façon uniforme : en-tête HTTP sur toutes les réponses, propriété sur les objets du SDK, et champ dans le corps des erreurs. Consignez-le systématiquement dans vos journaux, car c'est la clé qui permet au support de retrouver un appel précis. Ne le confondez pas avec une clé d'idempotence, que le client fournirait lui-même.",
       "distractors_fr": {
         "A": "Toutes les réponses en portent un, succès compris. C'est ce qui permet de tracer une requête qui a réussi mais dont le résultat surprend.",
         "B": "L'identifiant est émis par l'API, pas par le client. Il arrive en en-tête de réponse."
@@ -958,28 +1176,37 @@
       "difficulty": "difficile",
       "concept": "Choisir le bon identifiant de requete sur Claude Platform on AWS",
       "question_en": "On Claude Platform on AWS a response carries two identifiers. Which one goes where?",
+      "question_fr": "Sur Claude Platform on AWS, une réponse porte deux identifiants. Lequel sert à quoi ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Both are interchangeable, either one resolving a lookup on either side."
+          "text_en": "Both are interchangeable, either one resolving a lookup on either side.",
+          "text_fr": "Les deux sont interchangeables, chacun permettant une recherche des deux côtés."
         },
         {
           "key": "B",
-          "text_en": "x-amzn-requestid for CloudTrail lookups, request-id for Anthropic support."
+          "text_en": "x-amzn-requestid for CloudTrail lookups, request-id for Anthropic support.",
+          "text_fr": "x-amzn-requestid pour les recherches CloudTrail, request-id pour le support Anthropic."
         },
         {
           "key": "C",
-          "text_en": "request-id for CloudTrail lookups, x-amzn-requestid for Anthropic support."
+          "text_en": "request-id for CloudTrail lookups, x-amzn-requestid for Anthropic support.",
+          "text_fr": "request-id pour les recherches CloudTrail, x-amzn-requestid pour le support Anthropic."
         },
         {
           "key": "D",
-          "text_en": "Only x-amzn-requestid exists there, the Anthropic one being dropped."
+          "text_en": "Only x-amzn-requestid exists there, the Anthropic one being dropped.",
+          "text_fr": "Seul x-amzn-requestid existe dans ce cas, celui d'Anthropic étant supprimé."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La règle est donnée avec la hiérarchie entre les deux : l'identifiant AWS (x-amzn-requestid) est le principal, indexé dans CloudTrail ; l'identifiant Anthropic (request-id) est le secondaire. « Use the AWS request ID for CloudTrail lookups and the Anthropic request ID for Anthropic support tickets. » En pratique, il faut passer par l'accesseur de réponse brute du SDK pour lire l'en-tête AWS.",
+      "citations_fr": [
+        "Utilisez l'identifiant de requête AWS pour les recherches CloudTrail et l'identifiant de requête Anthropic pour les tickets de support Anthropic."
+      ],
+      "principe_fr": "Quand une requête traverse deux plateformes, chacune émet son propre identifiant de corrélation, et chaque identifiant n'est indexé que dans les journaux de la plateforme qui l'a créé. La règle de diagnostic est donc de conserver les deux et de présenter à chaque interlocuteur celui qu'il peut effectivement retrouver. L'identifiant du fournisseur d'infrastructure exige souvent de lire les en-têtes de la réponse brute via l'accesseur dédié du SDK.",
       "distractors_fr": {
         "A": "Chaque identifiant n'a de sens que dans le système qui l'a émis : CloudTrail n'indexe pas le request-id d'Anthropic.",
         "C": "Les deux rôles sont inversés. C'est l'identifiant AWS qui est indexé dans CloudTrail.",
@@ -997,28 +1224,37 @@
       "difficulty": "facile",
       "concept": "Parcourir toutes les pages d une methode de liste",
       "question_en": "Code calls a list method and processes only what the first response returned. What does the SDK offer instead?",
+      "question_fr": "Un code appelle une méthode de liste et ne traite que ce que la première réponse a renvoyé. Que propose le SDK à la place ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A page size large enough that a single call always returns everything."
+          "text_en": "A page size large enough that a single call always returns everything.",
+          "text_fr": "Une taille de page assez grande pour qu'un seul appel renvoie toujours tout."
         },
         {
           "key": "B",
-          "text_en": "Auto-pagination: iterate with for and the SDK walks every page for you."
+          "text_en": "Auto-pagination: iterate with for and the SDK walks every page for you.",
+          "text_fr": "La pagination automatique : une boucle for et le SDK parcourt toutes les pages."
         },
         {
           "key": "C",
-          "text_en": "A server-side cursor that replays the list from the start on each call."
+          "text_en": "A server-side cursor that replays the list from the start on each call.",
+          "text_fr": "Un curseur côté serveur qui rejoue la liste depuis le début à chaque appel."
         },
         {
           "key": "D",
-          "text_en": "A callback fired once per page, which the caller has to register first."
+          "text_en": "A callback fired once per page, which the caller has to register first.",
+          "text_fr": "Un callback déclenché une fois par page, que l'appelant doit d'abord enregistrer."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Les méthodes de liste de l'API Claude sont paginées, et les SDK exposent une itération transparente : « You can use the for syntax to iterate through items across all pages », avec l'équivalent asynchrone. Pour un contrôle plus fin, les méthodes has_next_page(), next_page_info() et get_next_page() permettent de travailler page par page. Ne lire que la première réponse revient donc à ignorer silencieusement une partie des données.",
+      "citations_fr": [
+        "Vous pouvez utiliser la syntaxe for pour itérer sur les éléments de toutes les pages"
+      ],
+      "principe_fr": "Toute méthode de liste d'une API est présumée paginée : une réponse unique ne représente qu'une fenêtre sur l'ensemble. Les SDK offrent deux niveaux d'accès, une itération automatique qui masque les pages et des primitives explicites de type has_next_page / get_next_page pour un contrôle fin. Traiter uniquement la première réponse ne provoque aucune erreur, ce qui rend l'oubli silencieux et donc dangereux.",
       "distractors_fr": {
         "A": "Aucune taille de page ne garantit l'exhaustivité : la pagination existe justement parce qu'un jeu de résultats peut dépasser n'importe quel plafond.",
         "C": "Un curseur qui recommencerait à chaque appel ne paginerait rien ; la pagination avance au contraire dans la liste.",
@@ -1036,28 +1272,37 @@
       "difficulty": "moyen",
       "concept": "En-tete de version envoye par defaut et risque a l ecraser",
       "question_en": "A developer plans to set the anthropic-version header by hand on every SDK call. What does the documentation say?",
+      "question_fr": "Un développeur prévoit de définir lui-même l'en-tête anthropic-version sur chaque appel du SDK. Que dit la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is required on each call, the SDK sending no version of its own."
+          "text_en": "It is required on each call, the SDK sending no version of its own.",
+          "text_fr": "Il est obligatoire à chaque appel, le SDK n'envoyant aucune version de lui-même."
         },
         {
           "key": "B",
-          "text_en": "It is rejected when set by hand, the SDK owning the header outright."
+          "text_en": "It is rejected when set by hand, the SDK owning the header outright.",
+          "text_fr": "Il est rejeté s'il est défini manuellement, le SDK ayant l'exclusivité de cet en-tête."
         },
         {
           "key": "C",
-          "text_en": "The SDK sends it already; overriding risks wrong types and odd behaviour."
+          "text_en": "The SDK sends it already; overriding risks wrong types and odd behaviour.",
+          "text_fr": "Le SDK l'envoie déjà ; l'écraser risque de produire des types incorrects et des comportements étranges."
         },
         {
           "key": "D",
-          "text_en": "It only applies to raw HTTP calls, being ignored when an SDK is used."
+          "text_en": "It only applies to raw HTTP calls, being ignored when an SDK is used.",
+          "text_fr": "Il ne concerne que les appels HTTP bruts et est ignoré lorsqu'un SDK est utilisé."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "Les deux SDK envoient automatiquement l'en-tête anthropic-version, positionné à 2023-06-01. L'écrasement reste possible, par des en-têtes par défaut sur le client ou au coup par coup, mais la documentation l'assortit d'un avertissement : « Overriding default headers may result in incorrect types and other unexpected or undefined behavior in the SDK. » Le SDK est en effet typé pour la version qu'il annonce.",
+      "citations_fr": [
+        "L'écrasement des en-têtes par défaut peut entraîner des types incorrects et d'autres comportements inattendus ou indéfinis dans le SDK."
+      ],
+      "principe_fr": "Un SDK est compilé et typé pour une version d'API donnée qu'il annonce lui-même dans ses en-têtes par défaut. Redéfinir manuellement ces en-têtes est techniquement autorisé mais désolidarise le contrat réseau du contrat de types local. Règle générale : laissez au SDK les en-têtes qu'il gère, et ne surchargez que ceux qui relèvent vraiment de votre application.",
       "distractors_fr": {
         "A": "L'en-tête est envoyé automatiquement : c'est justement ce qui dispense d'y penser à chaque appel.",
         "B": "L'écrasement est possible, la documentation explique comment le faire. Elle met simplement en garde contre ses effets.",
@@ -1075,28 +1320,37 @@
       "difficulty": "facile",
       "concept": "Statut du navigateur comme environnement d execution du SDK TypeScript",
       "question_en": "Why does the TypeScript SDK refuse to run in a web browser unless a flag is set?",
+      "question_fr": "Pourquoi le SDK TypeScript refuse-t-il de s'exécuter dans un navigateur sans activation explicite d'une option ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Browsers cannot open the server-sent event streams the SDK relies on."
+          "text_en": "Browsers cannot open the server-sent event streams the SDK relies on.",
+          "text_fr": "Les navigateurs ne peuvent pas ouvrir les flux server-sent events sur lesquels le SDK repose."
         },
         {
           "key": "B",
-          "text_en": "The bundle is too large for browsers, so a slimmer build is required."
+          "text_en": "The bundle is too large for browsers, so a slimmer build is required.",
+          "text_fr": "Le bundle est trop volumineux pour un navigateur, une version allégée est requise."
         },
         {
           "key": "C",
-          "text_en": "It is off by default to avoid exposing your secret API credentials."
+          "text_en": "It is off by default to avoid exposing your secret API credentials.",
+          "text_fr": "C'est désactivé par défaut pour éviter d'exposer vos identifiants d'API secrets."
         },
         {
           "key": "D",
-          "text_en": "Browser support was removed, and the flag only restores a legacy path."
+          "text_en": "Browser support was removed, and the flag only restores a legacy path.",
+          "text_fr": "La prise en charge du navigateur a été retirée, l'option ne rétablissant qu'un chemin historique."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La liste des environnements pris en charge le formule ainsi : « Web browsers: disabled by default to avoid exposing your secret API credentials. Enable browser support by explicitly setting dangerouslyAllowBrowser to true. » Le nom même de l'option porte l'avertissement : faire tourner le SDK dans une page revient à livrer la clé d'API à quiconque ouvre les outils de développement. La parade habituelle est un service intermédiaire qui détient la clé.",
+      "citations_fr": [
+        "Navigateurs web : désactivé par défaut pour éviter d'exposer vos identifiants d'API secrets. Activez la prise en charge du navigateur en définissant explicitement dangerouslyAllowBrowser à true."
+      ],
+      "principe_fr": "Tout code exécuté côté client est lisible par l'utilisateur : une clé d'API embarquée dans une page est une clé publiée. Les SDK verrouillent donc par défaut les environnements non fiables et n'offrent qu'une option au nom volontairement dissuasif pour lever le garde-fou. L'architecture correcte place un service intermédiaire qui détient le secret et relaie les appels.",
       "distractors_fr": {
         "A": "Les navigateurs savent parfaitement consommer un flux SSE ; ce n'est pas une limite technique qui motive le refus.",
         "B": "La taille du paquet n'est pas en cause. Le SDK vise d'ailleurs Cloudflare Workers et Vercel Edge Runtime, deux cibles contraintes.",
@@ -1114,22 +1368,27 @@
       "difficulty": "difficile",
       "concept": "Structure d execution d un middleware autour de l appel a next",
       "question_en": "A middleware is added to log outgoing requests and incoming responses. Which TWO statements about the hook are correct?",
+      "question_fr": "Un middleware est ajouté pour journaliser les requêtes sortantes et les réponses entrantes. Quelles DEUX affirmations sur ce hook sont correctes ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Code before the next call runs on the way out to the API."
+          "text_en": "Code before the next call runs on the way out to the API.",
+          "text_fr": "Le code placé avant l'appel à next s'exécute sur le trajet aller vers l'API."
         },
         {
           "key": "B",
-          "text_en": "Code after the next call runs on the way back with the response."
+          "text_en": "Code after the next call runs on the way back with the response.",
+          "text_fr": "Le code placé après l'appel à next s'exécute sur le trajet retour, avec la réponse."
         },
         {
           "key": "C",
-          "text_en": "A middleware may read the request but never replace it."
+          "text_en": "A middleware may read the request but never replace it.",
+          "text_fr": "Un middleware peut lire la requête mais jamais la remplacer."
         },
         {
           "key": "D",
-          "text_en": "A middleware runs only on failures, successes bypassing the chain."
+          "text_en": "A middleware runs only on failures, successes bypassing the chain.",
+          "text_fr": "Un middleware ne s'exécute qu'en cas d'échec, les succès contournant la chaîne."
         }
       ],
       "correct": [
@@ -1137,6 +1396,10 @@
         "B"
       ],
       "explanation_fr": "Le fonctionnement tient en une phrase : « Call next to forward the request to the rest of the chain (or directly to the SDK core if this is the last middleware), and return its response. Anything before the next call runs on the way out; anything after runs on the way back. » Cette symétrie fait du middleware l'endroit naturel des préoccupations transversales que cite la page : journalisation, réessais sur mesure, annotation de requête, repli sur refus.",
+      "citations_fr": [
+        "Appelez next pour transmettre la requête au reste de la chaîne (ou directement au coeur du SDK s'il s'agit du dernier middleware), et renvoyez sa réponse. Tout ce qui précède l'appel à next s'exécute à l'aller ; tout ce qui le suit s'exécute au retour."
+      ],
+      "principe_fr": "Un middleware est une fonction enveloppante : l'appel à next coupe son corps en deux moitiés, l'une sur le trajet aller, l'autre sur le trajet retour. Cette structure en oignon permet de mesurer, modifier ou remplacer la requête avant, et d'inspecter ou transformer la réponse après, avec le même état local. C'est pourquoi les préoccupations transversales — journalisation, réessais, annotation, repli — s'y implantent naturellement.",
       "distractors_fr": {
         "C": "Le remplacement est explicitement prévu : « Each middleware can inspect or replace the request before calling next(), and the response after next() returns. »",
         "D": "La chaîne s'exécute sur toutes les requêtes. Elle enveloppe l'appel, elle ne se déclenche pas sur erreur."
@@ -1153,28 +1416,38 @@
       "difficulty": "difficile",
       "concept": "Place du client HTTP personnalise par rapport a la chaine de middleware",
       "question_en": "A team supplies a custom HTTP client for proxy and TLS settings, and also registers middleware. How do the two combine?",
+      "question_fr": "Une équipe fournit un client HTTP personnalisé pour ses réglages de proxy et de TLS, et enregistre aussi des middlewares. Comment les deux se combinent-ils ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The custom client replaces the default and receives requests after middleware."
+          "text_en": "The custom client replaces the default and receives requests after middleware.",
+          "text_fr": "Le client personnalisé remplace celui par défaut et reçoit les requêtes après les middlewares."
         },
         {
           "key": "B",
-          "text_en": "The custom client sits before the chain, so middleware never sees the request."
+          "text_en": "The custom client sits before the chain, so middleware never sees the request.",
+          "text_fr": "Le client personnalisé se place avant la chaîne, si bien que les middlewares ne voient jamais la requête."
         },
         {
           "key": "C",
-          "text_en": "Both HTTP clients stay active, the SDK choosing per request between them."
+          "text_en": "Both HTTP clients stay active, the SDK choosing per request between them.",
+          "text_fr": "Les deux clients HTTP restent actifs, le SDK choisissant entre eux requête par requête."
         },
         {
           "key": "D",
-          "text_en": "Supplying a custom client disables middleware, the two being incompatible."
+          "text_en": "Supplying a custom client disables middleware, the two being incompatible.",
+          "text_fr": "Fournir un client personnalisé désactive les middlewares, les deux étant incompatibles."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La page pose les deux moitiés de la réponse : « Only one HTTP client is used per SDK client; setting it replaces the default » et « The custom HTTP client receives requests after all middleware has run. » L'ordre est donc net : votre chaîne de middleware s'exécute d'abord, puis la requête, éventuellement modifiée, part par le transport que vous avez fourni. Corollaire à connaître : remplacer le client fait perdre les réglages par défaut, d'où l'usage de DefaultHttpxClient plutôt que d'un httpx.Client brut.",
+      "citations_fr": [
+        "Un seul client HTTP est utilisé par client SDK ; le définir remplace celui par défaut",
+        "Le client HTTP personnalisé reçoit les requêtes après l'exécution de tous les middlewares."
+      ],
+      "principe_fr": "Il faut distinguer les couches : les middlewares sont une chaîne de transformation logique, le client HTTP est le transport terminal qui exécute effectivement l'appel. Le transport est unique et remplaçable, il se situe toujours en aval de la chaîne complète. Comme le remplacer écrase aussi les réglages par défaut (timeouts, réessais, en-têtes), on part de la classe d'aide fournie par le SDK plutôt que d'un client HTTP nu.",
       "distractors_fr": {
         "B": "L'ordre est inverse : le middleware court en premier, ce qui lui permet précisément d'annoter ou de remplacer la requête avant son départ.",
         "C": "Un seul client HTTP est utilisé par client SDK : en fournir un remplace le défaut, il ne s'y ajoute pas.",

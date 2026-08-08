@@ -31,28 +31,37 @@
       "difficulty": "moyen",
       "concept": "Choisir entre Agent SDK, CLI, Client SDK et Managed Agents",
       "question_en": "A team is building a research agent in TypeScript. They want the tool loop, context management and built-in file tools handled for them, but the agent must run inside their own Node service, on infrastructure they operate. Which building block fits?",
+      "question_fr": "Une équipe construit un agent de recherche en TypeScript. Elle veut que la boucle d'outils, la gestion du contexte et les outils de fichiers intégrés soient pris en charge pour elle, mais l'agent doit s'exécuter dans son propre service Node, sur une infrastructure qu'elle exploite. Quel composant convient ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The Claude Code CLI, driven as a terminal program, the supported way to embed an agent in a service."
+          "text_en": "The Claude Code CLI, driven as a terminal program, the supported way to embed an agent in a service.",
+          "text_fr": "Le CLI Claude Code, piloté comme un programme de terminal, la façon supportée d'intégrer un agent dans un service."
         },
         {
           "key": "B",
-          "text_en": "The Agent SDK, a library that runs the agent loop inside your own process in Python or TypeScript."
+          "text_en": "The Agent SDK, a library that runs the agent loop inside your own process in Python or TypeScript.",
+          "text_fr": "L'Agent SDK, une bibliothèque qui exécute la boucle d'agent dans votre propre processus, en Python ou en TypeScript."
         },
         {
           "key": "C",
-          "text_en": "The Client SDK, which exposes the Messages API and leaves you to implement the tool loop yourself."
+          "text_en": "The Client SDK, which exposes the Messages API and leaves you to implement the tool loop yourself.",
+          "text_fr": "Le Client SDK, qui expose la Messages API et vous laisse implémenter vous-même la boucle d'outils."
         },
         {
           "key": "D",
-          "text_en": "Managed Agents, the hosted REST API where Anthropic runs both the agent harness and its sandbox."
+          "text_en": "Managed Agents, the hosted REST API where Anthropic runs both the agent harness and its sandbox.",
+          "text_fr": "Managed Agents, l'API REST hébergée où Anthropic exécute à la fois le harnais de l'agent et son bac à sable."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La page d'accueil du SDK donne un tableau de décision à quatre entrées. L'Agent SDK est la ligne « construire un agent sans écrire soi-même la boucle d'outils » : c'est une bibliothèque, elle tourne dans votre propre processus, en Python ou en TypeScript. Les deux exigences de l'équipe — ne pas réécrire la boucle, mais garder le processus chez soi — ne se recoupent que là.",
+      "citations_fr": [
+        "construire un agent sans écrire soi-même la boucle d'outils"
+      ],
+      "principe_fr": "Le choix entre les quatre composants se décide sur deux axes : qui écrit la boucle d'outils, et où tourne le processus. Le Client SDK vous laisse tout écrire ; l'Agent SDK fournit la boucle mais s'exécute chez vous ; Managed Agents fournit la boucle et l'exécute chez Anthropic ; le CLI est une interface terminal, pilotable en sous-processus. Identifiez d'abord la contrainte d'hébergement, elle élimine généralement la moitié des options.",
       "distractors_fr": {
         "A": "Le CLI est décrit comme l'interface terminal, faite pour le développement interactif et les tâches ponctuelles. On peut le piloter en sous-processus, mais c'est le recours des langages non supportés, pas le choix par défaut d'un service Node.",
         "C": "Le Client SDK donne un accès direct à l'API Anthropic, pas à Claude Code : « You implement the tool loop yourself ». C'est exactement le travail que l'équipe veut éviter.",
@@ -70,28 +79,37 @@
       "difficulty": "facile",
       "concept": "Piloter la meme boucle d agent depuis un langage non supporte par le SDK",
       "question_en": "A Go team wants the same agent loop the Agent SDK provides, but the SDK ships as a library for Python and TypeScript only. What does the documentation tell them to do?",
+      "question_fr": "Une équipe Go veut la même boucle d'agent que celle fournie par l'Agent SDK, mais le SDK est livré comme bibliothèque pour Python et TypeScript uniquement. Que recommande la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Rewrite the orchestration in Go on the Messages API; no other supported path exists for them."
+          "text_en": "Rewrite the orchestration in Go on the Messages API; no other supported path exists for them.",
+          "text_fr": "Réécrire l'orchestration en Go sur la Messages API ; aucune autre voie supportée n'existe pour eux."
         },
         {
           "key": "B",
-          "text_en": "Call the beta Agents endpoints from Go, which expose the Agent SDK loop as a plain REST service."
+          "text_en": "Call the beta Agents endpoints from Go, which expose the Agent SDK loop as a plain REST service.",
+          "text_fr": "Appeler les endpoints Agents en bêta depuis Go, qui exposent la boucle de l'Agent SDK comme un simple service REST."
         },
         {
           "key": "C",
-          "text_en": "Run the Claude Code CLI as a subprocess with `-p` and `--output-format json`, and parse its output."
+          "text_en": "Run the Claude Code CLI as a subprocess with `-p` and `--output-format json`, and parse its output.",
+          "text_fr": "Lancer le CLI Claude Code comme sous-processus avec `-p` et `--output-format json`, et analyser sa sortie."
         },
         {
           "key": "D",
-          "text_en": "Wrap the Python SDK behind a small HTTP service, the documented bridge for other languages."
+          "text_en": "Wrap the Python SDK behind a small HTTP service, the documented bridge for other languages.",
+          "text_fr": "Encapsuler le SDK Python derrière un petit service HTTP, le pont documenté pour les autres langages."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La page d'accueil du SDK le dit en une phrase : « To drive the same agent loop from another language, run the CLI as a subprocess with the `-p` flag and `--output-format json`. » Le binaire du CLI est d'ailleurs déjà embarqué dans les paquets Python et TypeScript, ce qui montre que c'est bien lui qui exécute la boucle.",
+      "citations_fr": [
+        "Pour piloter la même boucle d'agent depuis un autre langage, lancez le CLI comme sous-processus avec le drapeau `-p` et `--output-format json`."
+      ],
+      "principe_fr": "Le CLI et les SDK ne sont pas des produits concurrents : le CLI est le moteur, et les paquets Python et TypeScript l'embarquent. Dès qu'un langage n'a pas de bibliothèque officielle, le pont supporté est donc le sous-processus en mode non interactif avec une sortie structurée, plutôt que de réimplémenter la boucle.",
       "distractors_fr": {
         "A": "Réécrire la boucle sur la Messages API reste possible, mais c'est précisément ce que le SDK évite. La doc propose un chemin qui conserve la boucle, les outils et la gestion du contexte.",
         "B": "Les endpoints Agents en beta relèvent de Managed Agents, un produit distinct où Anthropic héberge l'agent et le bac à sable. Ce n'est pas une exposition REST de l'Agent SDK.",
@@ -109,28 +127,37 @@
       "difficulty": "moyen",
       "concept": "Un sous-processus par session, et cwd a passer explicitement a chaque query",
       "question_en": "An SDK service handles several user sessions at once inside one container. Each session should work on its own checkout, but the team sees sessions overwriting each other's files. What does the subprocess model say to do?",
+      "question_fr": "Un service basé sur le SDK gère plusieurs sessions utilisateur simultanément dans un seul conteneur. Chaque session devrait travailler sur son propre checkout, mais l'équipe observe des sessions qui écrasent mutuellement leurs fichiers. Que prescrit le modèle de sous-processus ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Pass `cwd` on every `query()` call: subprocesses inherit the app's working directory by default."
+          "text_en": "Pass `cwd` on every `query()` call: subprocesses inherit the app's working directory by default.",
+          "text_fr": "Passer `cwd` à chaque appel de `query()` : par défaut, les sous-processus héritent du répertoire de travail de l'application."
         },
         {
           "key": "B",
-          "text_en": "Serialise the sessions behind a queue: the SDK supports one subprocess per container process."
+          "text_en": "Serialise the sessions behind a queue: the SDK supports one subprocess per container process.",
+          "text_fr": "Sérialiser les sessions derrière une file : le SDK ne supporte qu'un sous-processus par processus de conteneur."
         },
         {
           "key": "C",
-          "text_en": "Set a distinct `sessionId` per user; the SDK derives an isolated working directory from that ID."
+          "text_en": "Set a distinct `sessionId` per user; the SDK derives an isolated working directory from that ID.",
+          "text_fr": "Définir un `sessionId` distinct par utilisateur ; le SDK en dérive un répertoire de travail isolé."
         },
         {
           "key": "D",
-          "text_en": "Mount one shared volume for all sessions and let file checkpointing revert conflicting edits."
+          "text_en": "Mount one shared volume for all sessions and let file checkpointing revert conflicting edits.",
+          "text_fr": "Monter un volume partagé pour toutes les sessions et laisser le checkpointing de fichiers annuler les modifications conflictuelles."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La page d'hébergement décrit le modèle : un appel à `query()` engendre un sous-processus `claude` qui possède un shell, un répertoire de travail et ses transcriptions sur disque. Une session égale un sous-processus, et « by default they all inherit your application's working directory ». D'où la consigne : passer `cwd` à chaque appel dès que les sessions ont besoin de systèmes de fichiers séparés.",
+      "citations_fr": [
+        "par défaut, ils héritent tous du répertoire de travail de votre application"
+      ],
+      "principe_fr": "Une session du SDK correspond à un sous-processus doté de son shell, de son répertoire de travail et de ses transcriptions sur disque. L'identifiant de session isole l'historique conversationnel, pas le système de fichiers : l'isolation du disque est une décision explicite de l'appelant, via `cwd`. Raisonnez toujours séparément sur l'état conversationnel et sur l'état du système de fichiers.",
       "distractors_fr": {
         "B": "Rien ne limite le conteneur à un sous-processus : la concurrence sur un hôte est bornée par la RAM, la doc donne même une formule pour calculer le nombre d'agents par hôte.",
         "C": "L'identifiant de session sert à retrouver la transcription, pas à fabriquer un répertoire de travail. Le `cwd` est l'entrée qui détermine où l'agent lit et écrit.",
@@ -148,28 +175,37 @@
       "difficulty": "difficile",
       "concept": "Un SessionStore ne reproduit que les transcriptions, pas la memoire ni l espace de travail",
       "question_en": "A hosted agent mirrors transcripts to S3 through a `SessionStore` adapter. After a redeploy, sessions resume with their history intact, but the project's CLAUDE.md conventions are gone and so are the files the agent had written. Why?",
+      "question_fr": "Un agent hébergé réplique ses transcriptions vers S3 via un adaptateur `SessionStore`. Après un redéploiement, les sessions reprennent avec leur historique intact, mais les conventions du CLAUDE.md du projet ont disparu, ainsi que les fichiers que l'agent avait écrits. Pourquoi ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The adapter implements `append` but not `listSubkeys`, so everything outside the main key is lost."
+          "text_en": "The adapter implements `append` but not `listSubkeys`, so everything outside the main key is lost.",
+          "text_fr": "L'adaptateur implémente `append` mais pas `listSubkeys`, donc tout ce qui est en dehors de la clé principale est perdu."
         },
         {
           "key": "B",
-          "text_en": "Mirroring is best effort, so a `mirror_error` quietly dropped the memory and workspace entries."
+          "text_en": "Mirroring is best effort, so a `mirror_error` quietly dropped the memory and workspace entries.",
+          "text_fr": "La réplication se fait au mieux : un `mirror_error` a silencieusement écarté les entrées de mémoire et d'espace de travail."
         },
         {
           "key": "C",
-          "text_en": "Resuming replays the transcript from scratch, which drops every entry written after compaction."
+          "text_en": "Resuming replays the transcript from scratch, which drops every entry written after compaction.",
+          "text_fr": "La reprise rejoue la transcription depuis le début, ce qui écarte toute entrée écrite après une compaction."
         },
         {
           "key": "D",
-          "text_en": "A `SessionStore` mirrors transcripts only; memory files and workspace artefacts need their own store."
+          "text_en": "A `SessionStore` mirrors transcripts only; memory files and workspace artefacts need their own store.",
+          "text_fr": "Un `SessionStore` ne réplique que les transcriptions ; les fichiers mémoire et les artefacts d'espace de travail exigent leur propre stockage."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Trois états vivent sur le disque du conteneur : les transcriptions de session, les fichiers mémoire CLAUDE.md et les artefacts du répertoire de travail. Aucun ne survit à un redémarrage. Le `SessionStore` n'en couvre qu'un : « `SessionStore` mirrors transcripts, not CLAUDE.md memory files or other working-directory artifacts. » Le reste demande un volume monté ou une synchronisation vers un stockage objet.",
+      "citations_fr": [
+        "`SessionStore` réplique les transcriptions, pas les fichiers mémoire CLAUDE.md ni les autres artefacts du répertoire de travail."
+      ],
+      "principe_fr": "Sur une infrastructure éphémère, énumérez les états qui vivent sur disque et demandez pour chacun qui le persiste : transcriptions, fichiers mémoire, artefacts produits. Chaque mécanisme de persistance a un périmètre précis ; il ne faut pas déduire d'une reprise réussie de l'historique que le reste a survécu.",
       "distractors_fr": {
         "A": "`listSubkeys` ne concerne que les transcriptions de subagents pendant la reprise. Ni CLAUDE.md ni les fichiers produits par l'agent ne transitent par des sous-clés.",
         "B": "Un `mirror_error` est justement bruyant : le SDK le journalise et l'émet comme message dans l'itérateur. Et il ne porterait de toute façon que sur des lots de transcription.",
@@ -187,28 +223,37 @@
       "difficulty": "moyen",
       "concept": "resume par identifiant plutot que continue des qu il y a plusieurs conversations",
       "question_en": "A support product runs one long conversation per customer on a shared pool of containers, and sets `continue: true` on each turn. Customers start seeing answers that quote another customer's earlier thread. What is the fix?",
+      "question_fr": "Un produit de support exécute une longue conversation par client sur un pool partagé de conteneurs, et positionne `continue: true` à chaque tour. Des clients commencent à voir des réponses qui citent le fil antérieur d'un autre client. Quel est le correctif ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Keep `continue: true` and give every customer its own `CLAUDE_CONFIG_DIR` inside the container."
+          "text_en": "Keep `continue: true` and give every customer its own `CLAUDE_CONFIG_DIR` inside the container.",
+          "text_fr": "Conserver `continue: true` et donner à chaque client son propre `CLAUDE_CONFIG_DIR` dans le conteneur."
         },
         {
           "key": "B",
-          "text_en": "Capture each customer's session ID and pass it to `resume` instead of continuing the last session."
+          "text_en": "Capture each customer's session ID and pass it to `resume` instead of continuing the last session.",
+          "text_fr": "Enregistrer l'identifiant de session de chaque client et le passer à `resume` au lieu de reprendre la dernière session."
         },
         {
           "key": "C",
-          "text_en": "Set `persistSession: false` so nothing reaches the disk and no foreign thread can be picked up."
+          "text_en": "Set `persistSession: false` so nothing reaches the disk and no foreign thread can be picked up.",
+          "text_fr": "Mettre `persistSession: false` pour que rien n'atteigne le disque et qu'aucun fil étranger ne puisse être repris."
         },
         {
           "key": "D",
-          "text_en": "Fork the session on every turn, so each customer's turn starts from a copy of its own history."
+          "text_en": "Fork the session on every turn, so each customer's turn starts from a copy of its own history.",
+          "text_fr": "Forker la session à chaque tour, afin que le tour de chaque client démarre depuis une copie de son propre historique."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "`continue` et `resume` reprennent tous deux une session existante ; ils diffèrent par la façon de la retrouver. `continue` prend la session la plus récente du répertoire courant — parfait quand l'application ne mène qu'une conversation à la fois. `resume` prend un identifiant précis, et la doc le dit obligatoire « when you have multiple sessions (for example, one per user in a multi-user app) ». Un pool partagé avec `continue` fait exactement ce que décrivent les clients.",
+      "citations_fr": [
+        "lorsque vous avez plusieurs sessions (par exemple, une par utilisateur dans une application multi-utilisateurs)"
+      ],
+      "principe_fr": "`continue` et `resume` font la même chose mais désignent la session différemment : l'un implicitement, par récence dans le répertoire courant, l'autre explicitement, par identifiant. Toute reprise implicite devient ambiguë dès que plusieurs conversations coexistent sur la même machine. Règle générale : au-delà d'une conversation, l'application doit stocker et fournir l'identifiant elle-même.",
       "distractors_fr": {
         "A": "`CLAUDE_CONFIG_DIR` déplace la configuration globale et le dossier des projets, mais garder `continue` revient toujours à demander « la dernière session », ce qui reste le mauvais critère de sélection.",
         "C": "`persistSession: false` supprime la persistance : la session n'existe que le temps de l'appel. Chaque tour repartirait de zéro, ce qui détruit la conversation au lieu de l'isoler.",
@@ -226,28 +271,37 @@
       "difficulty": "difficile",
       "concept": "Une reprise qui repart a zero vient d un repertoire de travail different",
       "question_en": "A CI job resumes a session by ID and gets a brand-new conversation with no history, even though the ID is correct and the transcript file was restored onto the runner. What should the team check first?",
+      "question_fr": "Un job de CI reprend une session par identifiant et obtient une conversation entièrement neuve, sans historique, alors que l'identifiant est correct et que le fichier de transcription a été restauré sur le runner. Que doit vérifier l'équipe en premier ?",
       "options": [
         {
           "key": "A",
-          "text_en": "That the ID came from the init message; IDs read off the result message are not resumable."
+          "text_en": "That the ID came from the init message; IDs read off the result message are not resumable.",
+          "text_fr": "Que l'identifiant provient du message init ; les identifiants lus sur le message result ne sont pas reprenables."
         },
         {
           "key": "B",
-          "text_en": "That the job runs under the same API key, since transcripts belong to the key that wrote them."
+          "text_en": "That the job runs under the same API key, since transcripts belong to the key that wrote them.",
+          "text_fr": "Que le job s'exécute avec la même clé API, puisque les transcriptions appartiennent à la clé qui les a écrites."
         },
         {
           "key": "C",
-          "text_en": "That `cwd` matches the original run: transcripts live under an encoding of the working directory."
+          "text_en": "That `cwd` matches the original run: transcripts live under an encoding of the working directory.",
+          "text_fr": "Que `cwd` correspond à l'exécution initiale : les transcriptions sont rangées sous un encodage du répertoire de travail."
         },
         {
           "key": "D",
-          "text_en": "That the file was restored before the SDK import, which reads the projects directory only once."
+          "text_en": "That the file was restored before the SDK import, which reads the projects directory only once.",
+          "text_fr": "Que le fichier a été restauré avant l'import du SDK, qui ne lit le répertoire projects qu'une seule fois."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc nomme la cause la plus fréquente : « If a `resume` call returns a fresh session instead of the expected history, the most common cause is a mismatched `cwd`. » Les sessions sont rangées sous `~/.claude/projects/<encoded-cwd>/*.jsonl`, où `<encoded-cwd>` est le répertoire absolu dont chaque caractère non alphanumérique est remplacé par un tiret. Lancé depuis un autre répertoire, le SDK cherche au mauvais endroit.",
+      "citations_fr": [
+        "Si un appel `resume` renvoie une session neuve au lieu de l'historique attendu, la cause la plus fréquente est un `cwd` qui ne correspond pas."
+      ],
+      "principe_fr": "La résolution d'une session combine deux informations : l'identifiant et le répertoire de travail, car le chemin de stockage encode ce dernier. Un identifiant valide reste donc introuvable s'il est cherché depuis un autre répertoire. Chaque fois qu'un état est indexé par un chemin dérivé de l'environnement, la portabilité entre machines exige de reproduire cet environnement, pas seulement le fichier.",
       "distractors_fr": {
         "A": "L'identifiant est lisible sur le message de résultat, présent quel que soit le succès de la requête, et en TypeScript aussi plus tôt sur le message système d'init. Les deux sont valables.",
         "B": "Rien ne rattache une transcription à une clé d'API : c'est un fichier JSONL local, adressé par le répertoire de travail et l'identifiant de session.",
@@ -265,28 +319,37 @@
       "difficulty": "facile",
       "concept": "Un fork branche la conversation, jamais le systeme de fichiers",
       "question_en": "An agent forks a session to try a second refactoring strategy. The team expects the original run's files to stay untouched, but the working tree now holds the fork's edits. What does forking actually branch?",
+      "question_fr": "Un agent fait un fork de session pour tester une seconde stratégie de refactoring. L'équipe s'attend à ce que les fichiers de l'exécution d'origine restent intacts, mais l'arborescence de travail contient désormais les modifications du fork. Que branche réellement un fork ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The conversation history only; file edits are real, and reverting them needs file checkpointing."
+          "text_en": "The conversation history only; file edits are real, and reverting them needs file checkpointing.",
+          "text_fr": "L'historique de conversation uniquement ; les modifications de fichiers sont réelles, et les annuler exige le file checkpointing."
         },
         {
           "key": "B",
-          "text_en": "The conversation and the working directory, so this behaviour points to a corrupted fork."
+          "text_en": "The conversation and the working directory, so this behaviour points to a corrupted fork.",
+          "text_fr": "La conversation et le répertoire de travail, donc ce comportement révèle un fork corrompu."
         },
         {
           "key": "C",
-          "text_en": "Nothing on its own: a fork takes effect only once it is paired with `resume` on the new ID."
+          "text_en": "Nothing on its own: a fork takes effect only once it is paired with `resume` on the new ID.",
+          "text_fr": "Rien en soi : un fork ne prend effet qu'une fois associé à `resume` sur le nouvel identifiant."
         },
         {
           "key": "D",
-          "text_en": "The working directory only; conversation history stays shared between fork and original."
+          "text_en": "The working directory only; conversation history stays shared between fork and original.",
+          "text_fr": "Le répertoire de travail uniquement ; l'historique de conversation reste partagé entre le fork et l'original."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "Le fork crée une session neuve qui démarre sur une copie de l'historique, l'original restant inchangé. Mais la doc encadre la portée : « Forking branches the conversation history, not the filesystem. If a forked agent edits files, those changes are real and visible to any session working in the same directory. » Pour brancher et annuler des fichiers, l'outil est le file checkpointing.",
+      "citations_fr": [
+        "Le fork branche l'historique de conversation, pas le système de fichiers. Si un agent forké modifie des fichiers, ces changements sont réels et visibles par toute session travaillant dans le même répertoire."
+      ],
+      "principe_fr": "Distinguez toujours l'état conversationnel de l'état du monde extérieur. Les mécanismes de branchement du SDK (fork, resume) n'agissent que sur le transcript ; tout effet de bord sur le disque, la base de données ou le réseau est irréversible de ce point de vue. Pour isoler ou annuler des effets de bord, il faut un mécanisme dédié : checkpointing de fichiers, répertoires de travail distincts ou conteneurisation.",
       "distractors_fr": {
         "B": "Le comportement observé est le comportement documenté, pas une anomalie. Les sessions persistent la conversation, pas le système de fichiers.",
         "C": "Le fork produit immédiatement une session avec son propre identifiant. `resume` sert ensuite à revenir sur l'une ou l'autre branche, il ne conditionne pas la création.",
@@ -304,28 +367,34 @@
       "difficulty": "difficile",
       "concept": "Ecriture double : le miroir est au mieux-effort, le disque local fait foi",
       "question_en": "An agent runs with a Redis `SessionStore`. Redis becomes unreachable for two minutes while a long query is in flight. What does the SDK do with the transcript batches produced during the outage?",
+      "question_fr": "Un agent fonctionne avec un `SessionStore` Redis. Redis devient inaccessible pendant deux minutes alors qu'une requête longue est en cours. Que fait le SDK des lots de transcription produits pendant la panne ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It buffers them in memory and holds the agent loop until the store accepts the pending batches."
+          "text_en": "It buffers them in memory and holds the agent loop until the store accepts the pending batches.",
+          "text_fr": "Il les met en tampon en mémoire et suspend la boucle de l'agent jusqu'à ce que le store accepte les lots en attente."
         },
         {
           "key": "B",
-          "text_en": "It ends the query with a store error, since a partial transcript would be inconsistent on resume."
+          "text_en": "It ends the query with a store error, since a partial transcript would be inconsistent on resume.",
+          "text_fr": "Il termine la requête sur une erreur de store, car une transcription partielle serait incohérente à la reprise."
         },
         {
           "key": "C",
-          "text_en": "It stops mirroring that session and replays every dropped batch once the store answers again."
+          "text_en": "It stops mirroring that session and replays every dropped batch once the store answers again.",
+          "text_fr": "Il cesse de recopier cette session et rejoue tous les lots perdus dès que le store répond à nouveau."
         },
         {
           "key": "D",
-          "text_en": "It retries a batch three times at most, drops it, emits `mirror_error` and continues the query."
+          "text_en": "It retries a batch three times at most, drops it, emits `mirror_error` and continues the query.",
+          "text_fr": "Il réessaie un lot trois fois au maximum, l'abandonne, émet `mirror_error` et poursuit la requête."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "L'architecture est en écriture double : le sous-processus écrit d'abord sur le disque local, puis le SDK recopie chaque lot vers le store. Le miroir est explicitement au mieux-effort — trois tentatives au total avec une courte attente, sauf pour un appel en timeout qui n'est pas rejoué ; ensuite le lot est abandonné, un message `{ type: \"system\", subtype: \"mirror_error\" }` est émis dans l'itérateur et la requête continue. La transcription locale reste durable, donc une panne du store n'interrompt pas l'agent.",
+      "principe_fr": "Quand une architecture comporte une source de vérité durable et une copie secondaire, la copie est généralement au mieux-effort : son échec est signalé mais ne bloque pas le chemin critique. Cherchez donc toujours quel composant fait foi ; c'est lui seul qui peut faire échouer l'opération. Les défaillances du miroir se manifestent par des messages d'erreur observables, non par une interruption.",
       "distractors_fr": {
         "A": "Rien ne bloque la boucle : le principe affiché est qu'une panne du store ne doit ni interrompre l'agent ni perdre de données localement.",
         "B": "L'échec du miroir n'échoue pas la requête. C'est précisément parce que le disque local fait foi que le SDK peut se permettre de continuer.",
@@ -343,22 +412,27 @@
       "difficulty": "difficile",
       "concept": "Isolation multi-locataire dans un conteneur partage",
       "question_en": "One container serves several tenants with the Agent SDK. Select the THREE options that keep one tenant's project context out of another tenant's session.",
+      "question_fr": "Un même conteneur sert plusieurs locataires avec l'Agent SDK. Choisissez les TROIS options qui empêchent le contexte projet d'un locataire d'apparaître dans la session d'un autre.",
       "options": [
         {
           "key": "A",
-          "text_en": "Pass an empty `settingSources` array so no filesystem settings or CLAUDE.md files are loaded."
+          "text_en": "Pass an empty `settingSources` array so no filesystem settings or CLAUDE.md files are loaded.",
+          "text_fr": "Passer un tableau `settingSources` vide pour ne charger aucun réglage du système de fichiers ni fichier CLAUDE.md."
         },
         {
           "key": "B",
-          "text_en": "Set `persistSession: false` so that no session transcript is written to the container's disk."
+          "text_en": "Set `persistSession: false` so that no session transcript is written to the container's disk.",
+          "text_fr": "Définir `persistSession: false` pour qu'aucune transcription de session ne soit écrite sur le disque du conteneur."
         },
         {
           "key": "C",
-          "text_en": "Set `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, since auto memory loads whatever `settingSources` says."
+          "text_en": "Set `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, since auto memory loads whatever `settingSources` says.",
+          "text_fr": "Définir `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, puisque la mémoire automatique charge ce que dit `settingSources`."
         },
         {
           "key": "D",
-          "text_en": "Point `CLAUDE_CONFIG_DIR` at a per-tenant directory and pass a per-tenant `cwd` on each query."
+          "text_en": "Point `CLAUDE_CONFIG_DIR` at a per-tenant directory and pass a per-tenant `cwd` on each query.",
+          "text_fr": "Faire pointer `CLAUDE_CONFIG_DIR` vers un répertoire par locataire et passer un `cwd` par locataire à chaque requête."
         }
       ],
       "correct": [
@@ -367,6 +441,7 @@
         "D"
       ],
       "explanation_fr": "Par défaut le SDK lit les réglages et les fichiers CLAUDE.md du système de fichiers, ce qui fait fuiter le contexte d'un locataire vers un autre dans un conteneur partagé. La doc liste les parades : `settingSources: []` pour ne charger aucun réglage, `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` parce que la mémoire automatique s'injecte dans le prompt système indépendamment de `settingSources`, `CLAUDE_CONFIG_DIR` par locataire pour ne pas partager `~/.claude.json`, et un répertoire de travail par locataire passé explicitement.",
+      "principe_fr": "L'isolation multi-locataire se raisonne en énumérant toutes les sources de contexte implicite : réglages de fichiers, mémoire automatique, répertoire de configuration global, répertoire de travail. Chacune doit être neutralisée ou cloisonnée séparément, car désactiver l'une n'entraîne pas les autres. Attention aux options plausibles qui traitent la persistance ou la confidentialité des données plutôt que l'origine du contexte injecté.",
       "distractors_fr": {
         "B": "`persistSession: false` empêche d'écrire la transcription, ce qui supprime la reprise sans rien isoler : les réglages, CLAUDE.md et la mémoire automatique continueraient de charger le contexte d'un autre locataire."
       },
@@ -382,28 +457,37 @@
       "difficulty": "moyen",
       "concept": "Aucun delai maximum de session : borner par maxTurns",
       "question_en": "A self-hosted agent has been working for six hours on a task nobody expected to run that long. The team wants an upper bound on how much work a single run can do. What does the SDK actually offer them?",
+      "question_fr": "Un agent auto-hébergé travaille depuis six heures sur une tâche que personne n'imaginait aussi longue. L'équipe veut plafonner la quantité de travail qu'une seule exécution peut effectuer. Que propose réellement le SDK ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A per-session wall-clock deadline, configured through `sessionTimeoutMs` in the hosting options."
+          "text_en": "A per-session wall-clock deadline, configured through `sessionTimeoutMs` in the hosting options.",
+          "text_fr": "Une échéance en temps réel par session, configurée via `sessionTimeoutMs` dans les options d'hébergement."
         },
         {
           "key": "B",
-          "text_en": "A dollar budget set on the container, past which the SDK terminates the running subprocess."
+          "text_en": "A dollar budget set on the container, past which the SDK terminates the running subprocess.",
+          "text_fr": "Un budget en dollars fixé sur le conteneur, au-delà duquel le SDK arrête le sous-processus en cours."
         },
         {
           "key": "C",
-          "text_en": "`maxTurns` in `Options`: there is no top-level session timeout, so bound the tool round trips."
+          "text_en": "`maxTurns` in `Options`: there is no top-level session timeout, so bound the tool round trips.",
+          "text_fr": "`maxTurns` dans `Options` : il n'existe aucun timeout de session global, donc on borne les allers-retours d'outils."
         },
         {
           "key": "D",
-          "text_en": "An idle watchdog that ends any session whose subprocess stops producing output for a while."
+          "text_en": "An idle watchdog that ends any session whose subprocess stops producing output for a while.",
+          "text_fr": "Un chien de garde d'inactivité qui met fin à toute session dont le sous-processus cesse de produire de la sortie."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "Le tableau des limitations connues de l'hébergement ouvre sur celle-ci : « No top-level session timeout — a session does not time out on its own. Set `maxTurns` in `Options` to bound how many tool-use round trips the agent takes before stopping. » L'unité de bornage est donc le nombre d'allers-retours d'outils, pas la durée.",
+      "citations_fr": [
+        "Aucun timeout de session global — une session n'expire pas d'elle-même. Définissez `maxTurns` dans `Options` pour borner le nombre d'allers-retours d'utilisation d'outils avant que l'agent s'arrête."
+      ],
+      "principe_fr": "Quand vous cherchez un garde-fou, identifiez d'abord l'unité que le SDK sait réellement mesurer. Ici la boucle agentique se compte en tours d'outils, pas en secondes ni en dollars ; les bornes disponibles suivent cette unité. Les options évoquant un délai en temps réel ou un budget monétaire sont des inventions plausibles à écarter.",
       "distractors_fr": {
         "A": "Aucun délai de session n'existe, et c'est justement ce que la doc signale comme limitation à contourner.",
         "B": "Un résultat peut se terminer en `error_max_budget_usd`, mais ce budget se règle sur la requête ; ce n'est pas un plafond posé sur le conteneur qui tuerait le sous-processus.",
@@ -421,22 +505,27 @@
       "difficulty": "facile",
       "concept": "Migration du Claude Code SDK vers le Claude Agent SDK en Python",
       "question_en": "A Python codebase still imports `claude_code_sdk` and builds `ClaudeCodeOptions`. Beyond installing the new distribution, select the TWO code changes moving to the Claude Agent SDK requires.",
+      "question_fr": "Une base de code Python importe encore `claude_code_sdk` et construit des `ClaudeCodeOptions`. Au-delà de l'installation de la nouvelle distribution, choisissez les DEUX changements de code exigés par le passage au Claude Agent SDK.",
       "options": [
         {
           "key": "A",
-          "text_en": "Keep the old imports, which the new package re-exports for one deprecation cycle."
+          "text_en": "Keep the old imports, which the new package re-exports for one deprecation cycle.",
+          "text_fr": "Conserver les anciens imports, que le nouveau paquet réexporte pendant un cycle de dépréciation."
         },
         {
           "key": "B",
-          "text_en": "Rename the imported module from `claude_code_sdk` to `claude_agent_sdk` across the code."
+          "text_en": "Rename the imported module from `claude_code_sdk` to `claude_agent_sdk` across the code.",
+          "text_fr": "Renommer le module importé de `claude_code_sdk` en `claude_agent_sdk` dans tout le code."
         },
         {
           "key": "C",
-          "text_en": "Nothing else in code: the old distribution forwards to the new one when it is imported."
+          "text_en": "Nothing else in code: the old distribution forwards to the new one when it is imported.",
+          "text_fr": "Rien d'autre dans le code : l'ancienne distribution redirige vers la nouvelle à l'import."
         },
         {
           "key": "D",
-          "text_en": "Rename the options type from `ClaudeCodeOptions` to `ClaudeAgentOptions` at each call site."
+          "text_en": "Rename the options type from `ClaudeCodeOptions` to `ClaudeAgentOptions` at each call site.",
+          "text_fr": "Renommer le type d'options de `ClaudeCodeOptions` en `ClaudeAgentOptions` à chaque appel."
         }
       ],
       "correct": [
@@ -460,28 +549,37 @@
       "difficulty": "moyen",
       "concept": "Le prompt systeme de Claude Code n est plus applique par defaut dans le SDK",
       "question_en": "After moving a coding assistant from `claude -p` to the Agent SDK, the agent still answers correctly but ignores the code style rules and terminal-friendly tone it used to follow. Nothing else changed. What happened?",
+      "question_fr": "Après le passage d'un assistant de code de `claude -p` à l'Agent SDK, l'agent répond toujours correctement mais ignore les règles de style de code et le ton adapté au terminal qu'il respectait avant. Rien d'autre n'a changé. Que s'est-il passé ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Setting sources now default to none, so `.claude/settings.json` no longer reaches the agent."
+          "text_en": "Setting sources now default to none, so `.claude/settings.json` no longer reaches the agent.",
+          "text_fr": "Les setting sources sont désormais vides par défaut, donc `.claude/settings.json` n'atteint plus l'agent."
         },
         {
           "key": "B",
-          "text_en": "The bundled CLI binary is pinned to the package version, which reverted the prompt to an older one."
+          "text_en": "The bundled CLI binary is pinned to the package version, which reverted the prompt to an older one.",
+          "text_fr": "Le binaire CLI embarqué est figé à la version du paquet, ce qui a ramené le prompt à une version plus ancienne."
         },
         {
           "key": "C",
-          "text_en": "The SDK no longer sends Claude Code's system prompt by default; set the `claude_code` preset."
+          "text_en": "The SDK no longer sends Claude Code's system prompt by default; set the `claude_code` preset.",
+          "text_fr": "Le SDK n'envoie plus le prompt système de Claude Code par défaut ; appliquez le préréglage `claude_code`."
         },
         {
           "key": "D",
-          "text_en": "CLAUDE.md is injected as project context, not into the system prompt, so it lost its priority."
+          "text_en": "CLAUDE.md is injected as project context, not into the system prompt, so it lost its priority.",
+          "text_fr": "CLAUDE.md est injecté comme contexte projet et non dans le prompt système, il a donc perdu sa priorité."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "C'est une rupture annoncée du SDK : « The SDK no longer uses Claude Code's system prompt by default. » Sans `systemPrompt`, le SDK applique un prompt minimal qui couvre l'appel d'outils mais laisse de côté les consignes de style, de ton et de contexte du répertoire — alors que `claude -p` envoie le prompt complet. Pour retrouver le comportement du CLI, on demande le préréglage `claude_code`, éventuellement avec `append`.",
+      "citations_fr": [
+        "Le SDK n'utilise plus le prompt système de Claude Code par défaut."
+      ],
+      "principe_fr": "Un SDK conçu pour des agents génériques ne peut pas présumer des comportements propres à un produit particulier : ses valeurs par défaut sont donc minimales, et il faut demander explicitement les préréglages. Face à une perte de comportement après migration, demandez-vous quelle valeur par défaut implicite du CLI a disparu. La distinction utile est celle entre prompt système (ton, style, consignes) et sources de réglages (fichiers du projet) : elles se configurent séparément.",
       "distractors_fr": {
         "A": "Ce défaut a été changé en v0.1.0 puis rétabli : omettre `settingSources` charge de nouveau les réglages utilisateur, projet et locaux, comme le CLI. Aucune action de migration n'est requise là-dessus.",
         "B": "Le binaire embarqué est bien épinglé à la version du paquet, mais cela règle la version du CLI exécuté, pas le prompt système envoyé par le SDK.",
@@ -499,22 +597,27 @@
       "difficulty": "moyen",
       "concept": "Ce que le mode message unique ne permet pas, face au mode entree en flux",
       "question_en": "A lambda handler drives the agent with single message input rather than streaming input. Select the TWO capabilities that mode does not provide.",
+      "question_fr": "Un handler lambda pilote l'agent avec une entrée en message unique plutôt qu'en flux. Sélectionnez les DEUX capacités que ce mode n'offre pas.",
       "options": [
         {
           "key": "A",
-          "text_en": "Attaching an image directly to a message for the agent to analyse during that same exchange."
+          "text_en": "Attaching an image directly to a message for the agent to analyse during that same exchange.",
+          "text_fr": "Joindre une image directement à un message pour que l'agent l'analyse au cours du même échange."
         },
         {
           "key": "B",
-          "text_en": "Returning a final result message carrying the session ID and the run's estimated total cost."
+          "text_en": "Returning a final result message carrying the session ID and the run's estimated total cost.",
+          "text_fr": "Renvoyer un message de résultat final portant l'identifiant de session et le coût total estimé de l'exécution."
         },
         {
           "key": "C",
-          "text_en": "Interrupting the agent in real time, or queueing further messages while a turn is in flight."
+          "text_en": "Interrupting the agent in real time, or queueing further messages while a turn is in flight.",
+          "text_fr": "Interrompre l'agent en temps réel, ou mettre d'autres messages en file pendant qu'un tour est en cours."
         },
         {
           "key": "D",
-          "text_en": "Reaching an earlier conversation's context, which such a call obtains through the `resume` option."
+          "text_en": "Reaching an earlier conversation's context, which such a call obtains through the `resume` option.",
+          "text_fr": "Accéder au contexte d'une conversation antérieure, qu'un tel appel obtient via l'option `resume`."
         }
       ],
       "correct": [
@@ -522,6 +625,7 @@
         "C"
       ],
       "explanation_fr": "La doc oppose deux modes d'entrée. Le mode flux, recommandé, fait de l'agent un processus long qui accepte les interruptions, les images et la file de messages. Le mode message unique est plus simple mais l'encadré d'avertissement liste ce qu'il ne supporte pas : pièces jointes image, mise en file dynamique, interruption temps réel et conversations multi-tours naturelles. Il reste le bon choix pour une réponse unique en environnement sans état, typiquement une lambda.",
+      "principe_fr": "Le choix du mode d'entrée découle du cycle de vie du processus. Une entrée en flux fait de l'agent un processus long, ce qui est la condition pour tout ce qui est bidirectionnel : interruption, file de messages, pièces jointes, tours successifs naturels. Le message unique convient aux environnements sans état, où l'on veut une réponse et rien d'autre ; la reprise de contexte, elle, passe par la session persistée et reste disponible dans les deux modes.",
       "distractors_fr": {
         "B": "Le message de résultat est émis dans les deux modes : c'est lui qui porte l'identifiant de session et l'estimation de coût, y compris lorsque la requête se termine en erreur.",
         "D": "Le mode message unique est précisément décrit comme utilisant « session state and resuming » : il peut reprendre une session par son identifiant."
@@ -538,28 +642,37 @@
       "difficulty": "moyen",
       "concept": "total_cost_usd est une estimation cliente, pas une donnee de facturation",
       "question_en": "A billing team wants to charge customers for the agent runs they trigger, and plans to read `total_cost_usd` off each result message to compute the invoice. What should they be told?",
+      "question_fr": "Une équipe facturation veut faire payer aux clients les exécutions d'agent qu'ils déclenchent, et prévoit de lire `total_cost_usd` sur chaque message de résultat pour calculer la facture. Que faut-il leur répondre ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is authoritative for the call but excludes subagents, so add `modelUsage` before invoicing."
+          "text_en": "It is authoritative for the call but excludes subagents, so add `modelUsage` before invoicing.",
+          "text_fr": "Le champ fait foi pour l'appel mais exclut les subagents : ajoutez `modelUsage` avant de facturer."
         },
         {
           "key": "B",
-          "text_en": "It is authoritative once a run ends successfully; only error results carry an estimate instead."
+          "text_en": "It is authoritative once a run ends successfully; only error results carry an estimate instead.",
+          "text_fr": "Le champ fait foi dès qu'une exécution se termine correctement ; seuls les résultats en erreur portent une estimation."
         },
         {
           "key": "C",
-          "text_en": "It is exact but delayed, so hold the invoice until the nightly usage report has been published."
+          "text_en": "It is exact but delayed, so hold the invoice until the nightly usage report has been published.",
+          "text_fr": "Le champ est exact mais différé : attendez la publication du rapport d'usage nocturne avant de facturer."
         },
         {
           "key": "D",
-          "text_en": "It is a client-side estimate from a bundled price table; bill from the Usage and Cost API instead."
+          "text_en": "It is a client-side estimate from a bundled price table; bill from the Usage and Cost API instead.",
+          "text_fr": "C'est une estimation calculée côté client à partir d'une table de prix embarquée ; facturez depuis l'Usage and Cost API."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "L'avertissement est explicite : `total_cost_usd` et `costUSD` sont des estimations calculées localement à partir d'une table de prix embarquée à la compilation. Elles dérivent dès que les tarifs changent, que la version installée ne connaît pas un modèle, ou qu'une règle de facturation échappe au client. La doc conclut : « Do not bill end users or trigger financial decisions from these fields » et renvoie vers l'Usage and Cost API ou la page Usage de la Console.",
+      "citations_fr": [
+        "Do not bill end users or trigger financial decisions from these fields"
+      ],
+      "principe_fr": "Distinguez toujours une donnée d'observabilité d'une donnée de facturation. Les coûts calculés côté client reposent sur une table de prix figée à la compilation : ils servent à surveiller un ordre de grandeur, pas à engager de l'argent. Toute décision financière doit s'appuyer sur une source d'autorité côté serveur, ici l'Usage and Cost API ou la page Usage de la Console.",
       "distractors_fr": {
         "A": "Le champ inclut au contraire les subagents. C'est `usage` qui les exclut ; l'objection porte sur la nature estimative du chiffre, pas sur son périmètre.",
         "B": "Le champ est une estimation quel que soit l'issue, et il est présent aussi bien sur un résultat réussi que sur un résultat en erreur.",
@@ -577,28 +690,37 @@
       "difficulty": "difficile",
       "concept": "usage exclut les subagents, model_usage les compte",
       "question_en": "An orchestrator spawns several subagents per run. The team sums the `usage` field of each result message and finds the total sits far below what the console reports. Which field should they read for whole-tree accounting?",
+      "question_fr": "Un orchestrateur lance plusieurs subagents par exécution. L'équipe additionne le champ `usage` de chaque message de résultat et trouve un total très inférieur à ce que rapporte la console. Quel champ doit-elle lire pour comptabiliser l'arbre entier ?",
       "options": [
         {
           "key": "A",
-          "text_en": "`total_cost_usd`, the only field reporting token counts as well as the estimated dollar amount."
+          "text_en": "`total_cost_usd`, the only field reporting token counts as well as the estimated dollar amount.",
+          "text_fr": "`total_cost_usd`, seul champ à rapporter à la fois les décomptes de tokens et le montant estimé en dollars."
         },
         {
           "key": "B",
-          "text_en": "The per-step `usage` on each assistant message, which alone carries the nested subagent turns."
+          "text_en": "The per-step `usage` on each assistant message, which alone carries the nested subagent turns.",
+          "text_fr": "Le champ `usage` par pas sur chaque message assistant, seul à porter les tours imbriqués des subagents."
         },
         {
           "key": "C",
-          "text_en": "`usage` on the init system message, which is emitted once the whole agent tree has finished."
+          "text_en": "`usage` on the init system message, which is emitted once the whole agent tree has finished.",
+          "text_fr": "Le champ `usage` du message système init, émis une fois que tout l'arbre d'agents a terminé."
         },
         {
           "key": "D",
-          "text_en": "`modelUsage` (`model_usage`), which counts subagent requests and breaks them down per model."
+          "text_en": "`modelUsage` (`model_usage`), which counts subagent requests and breaks them down per model.",
+          "text_fr": "`modelUsage` (`model_usage`), qui compte les requêtes des subagents et les ventile par modèle."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Le tableau des champs du message de résultat distingue trois périmètres face aux subagents : `usage` les exclut, car il ne compte que la boucle de premier niveau ; `total_cost_usd` les inclut ; `modelUsage` (`model_usage` en Python) les inclut et les ventile par modèle. La doc tranche : utiliser `modelUsage` pour compter l'arbre entier, « the `usage` field undercounts as soon as nesting occurs ».",
+      "citations_fr": [
+        "the `usage` field undercounts as soon as nesting occurs"
+      ],
+      "principe_fr": "Chaque champ de télémétrie a un périmètre implicite : boucle de premier niveau, ou arbre complet incluant les appels imbriqués. Dès qu'une architecture délègue à des subagents, il faut vérifier lequel des champs agrège la descendance avant d'en faire une somme. La règle générale : ne comparez jamais deux champs de périmètres différents, et choisissez celui qui ventile par modèle si vous devez rapprocher vos chiffres de ceux de la console.",
       "distractors_fr": {
         "A": "`total_cost_usd` inclut bien les subagents, mais c'est un montant estimé en dollars, pas un décompte de jetons, et il ne détaille rien par modèle.",
         "B": "L'usage par étape porte sur les messages assistant de la boucle principale ; il ne fait pas remonter les jetons consommés à l'intérieur des subagents.",
@@ -616,28 +738,37 @@
       "difficulty": "moyen",
       "concept": "Dedupliquer par identifiant de message quand les outils sont appeles en parallele",
       "question_en": "A dashboard adds up the token counts on every assistant message. On runs where Claude calls several tools at once, it reports roughly double the tokens the result message shows. What explains the gap?",
+      "question_fr": "Un tableau de bord additionne les décomptes de tokens de chaque message assistant. Sur les exécutions où Claude appelle plusieurs outils à la fois, il rapporte environ le double des tokens indiqués par le message de résultat. Qu'est-ce qui explique l'écart ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Parallel tool calls are billed once per branch, and the result message only reports one branch."
+          "text_en": "Parallel tool calls are billed once per branch, and the result message only reports one branch.",
+          "text_fr": "Les appels d'outils parallèles sont facturés une fois par branche, et le message de résultat n'en rapporte qu'une."
         },
         {
           "key": "B",
-          "text_en": "Messages of one turn share the same nested message ID and usage; deduplicate on that ID."
+          "text_en": "Messages of one turn share the same nested message ID and usage; deduplicate on that ID.",
+          "text_fr": "Les messages d'un même tour partagent le même identifiant de message imbriqué et le même usage : dédupliquez sur cet identifiant."
         },
         {
           "key": "C",
-          "text_en": "Tool results carry usage of their own, which the result message excludes but a dashboard adds."
+          "text_en": "Tool results carry usage of their own, which the result message excludes but a dashboard adds.",
+          "text_fr": "Les résultats d'outils portent leur propre usage, que le message de résultat exclut mais qu'un tableau de bord additionne."
         },
         {
           "key": "D",
-          "text_en": "Cache reads are reported on every message, so one cached prefix gets counted many times over."
+          "text_en": "Cache reads are reported on every message, so one cached prefix gets counted many times over.",
+          "text_fr": "Les lectures de cache sont rapportées sur chaque message, donc un même préfixe mis en cache est compté de nombreuses fois."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Un pas de la boucle produit un ou plusieurs messages assistant. Quand Claude appelle plusieurs outils dans le même tour, tous ces messages partagent le même identifiant imbriqué et portent des données d'usage identiques. La doc met en garde deux fois : « Always deduplicate by ID to get accurate per-step token counts. » Sans cela, on additionne le même pas autant de fois qu'il y avait d'outils.",
+      "citations_fr": [
+        "Always deduplicate by ID to get accurate per-step token counts."
+      ],
+      "principe_fr": "Un pas de la boucle agentique ne correspond pas forcément à un seul message : les appels d'outils parallèles produisent plusieurs messages qui répliquent les mêmes données d'usage. Toute agrégation doit donc se faire par unité logique — l'identifiant de message — et non par événement reçu. C'est le réflexe général face à un flux d'événements : dédupliquer sur une clé stable avant de sommer.",
       "distractors_fr": {
         "A": "L'appel parallèle d'outils n'est pas facturé par branche : c'est un seul pas de requête, répété dans le flux de messages.",
         "C": "Les résultats d'outils remontent dans des messages utilisateur et ne portent pas de compteur d'usage propre.",
@@ -655,28 +786,34 @@
       "difficulty": "moyen",
       "concept": "Sorties structurees d agent : outputFormat et validation par le SDK",
       "question_en": "An agent must search a codebase and then hand a typed object to a downstream service. The team asks for JSON in the prompt and parses the reply, which fails now and then. What does the SDK offer for this?",
+      "question_fr": "Un agent doit parcourir une base de code puis transmettre un objet typé à un service en aval. L'équipe demande du JSON dans le prompt et analyse la réponse, ce qui échoue de temps en temps. Que propose le SDK pour ce cas ?",
       "options": [
         {
           "key": "A",
-          "text_en": "`outputFormat` with a JSON Schema: the SDK validates the result and re-prompts on a mismatch."
+          "text_en": "`outputFormat` with a JSON Schema: the SDK validates the result and re-prompts on a mismatch.",
+          "text_fr": "`outputFormat` avec un JSON Schema : le SDK valide le résultat et relance le prompt en cas d'écart."
         },
         {
           "key": "B",
-          "text_en": "A `strict` flag on the query that forbids any output other than JSON at the model's own level."
+          "text_en": "A `strict` flag on the query that forbids any output other than JSON at the model's own level.",
+          "text_fr": "Un indicateur `strict` sur la requête, qui interdit toute sortie autre que du JSON au niveau du modèle lui-même."
         },
         {
           "key": "C",
-          "text_en": "A parsing helper that repairs malformed JSON returned by the agent before your code reads it."
+          "text_en": "A parsing helper that repairs malformed JSON returned by the agent before your code reads it.",
+          "text_fr": "Un utilitaire d'analyse qui répare le JSON malformé renvoyé par l'agent avant que votre code ne le lise."
         },
         {
           "key": "D",
-          "text_en": "A `stop_sequences` list that ends the turn on the closing brace and so guarantees valid objects."
+          "text_en": "A `stop_sequences` list that ends the turn on the closing brace and so guarantees valid objects.",
+          "text_fr": "Une liste `stop_sequences` qui termine le tour à l'accolade fermante et garantit ainsi des objets valides."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "Les sorties structurées laissent l'agent utiliser tous les outils dont il a besoin, puis rendent un JSON validé contre un schéma. On passe le schéma par `outputFormat` en TypeScript ou `output_format` en Python, avec `type: \"json_schema\"` ; le SDK valide et redemande en cas d'écart, et le champ `structured_output` du message de résultat porte les données. Zod ou Pydantic peuvent générer le schéma, à convertir en draft-07, la version que valide le SDK.",
+      "principe_fr": "Demander un format dans le prompt reste une consigne, jamais une garantie. Pour obtenir un contrat exploitable par un service en aval, il faut déplacer la contrainte du prompt vers le SDK : un schéma déclaré, une validation automatique et une relance en cas d'écart. L'agent conserve alors la liberté d'utiliser ses outils pendant le travail, et seule la sortie finale est contrainte.",
       "distractors_fr": {
         "B": "Il n'y a pas de drapeau `strict` sur la requête de l'Agent SDK : la garantie passe par un schéma, validé côté SDK avec réessais.",
         "C": "Aucun réparateur de JSON n'est fourni. Si la validation échoue dans la limite de réessais, le résultat est une erreur, à lire dans la liste `errors`.",
@@ -694,28 +831,37 @@
       "difficulty": "facile",
       "concept": "Choisir un motif d hebergement selon le cycle de vie des sessions",
       "question_en": "An agent handles support threads whose messages arrive days apart, and sits idle in between. The team wants containers to spin down while idle without losing the thread. Which hosting pattern is that?",
+      "question_fr": "Un agent traite des fils de support dont les messages arrivent à plusieurs jours d'intervalle, et reste inactif entre-temps. L'équipe veut que les conteneurs s'éteignent pendant l'inactivité sans perdre le fil. De quel motif d'hébergement s'agit-il ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Ephemeral sessions: one container per task, destroyed on completion and recreated on the next."
+          "text_en": "Ephemeral sessions: one container per task, destroyed on completion and recreated on the next.",
+          "text_fr": "Sessions éphémères : un conteneur par tâche, détruit à l'achèvement et recréé à la tâche suivante."
         },
         {
           "key": "B",
-          "text_en": "Hybrid sessions: ephemeral containers that hydrate from a `SessionStore` and persist back to it."
+          "text_en": "Hybrid sessions: ephemeral containers that hydrate from a `SessionStore` and persist back to it.",
+          "text_fr": "Sessions hybrides : des conteneurs éphémères qui s'hydratent depuis un `SessionStore` et y persistent en retour."
         },
         {
           "key": "C",
-          "text_en": "Long-running sessions: one persistent container holding every open thread in memory at once."
+          "text_en": "Long-running sessions: one persistent container holding every open thread in memory at once.",
+          "text_fr": "Sessions longues : un unique conteneur persistant qui garde tous les fils ouverts en mémoire simultanément."
         },
         {
           "key": "D",
-          "text_en": "Multi-agent container: several SDK subprocesses sharing a container and a working directory."
+          "text_en": "Multi-agent container: several SDK subprocesses sharing a container and a working directory.",
+          "text_fr": "Conteneur multi-agents : plusieurs sous-processus SDK partageant un conteneur et un répertoire de travail."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Les quatre motifs d'hébergement se distinguent par la durée de vie du conteneur face à celle des sessions. Le motif hybride vise exactement ce cas : « sessions that span many interactions but sit idle between them ». Le conteneur s'éteint pendant l'inactivité et se réveille au retour de l'utilisateur, en réhydratant la transcription depuis un `SessionStore`. La doc insiste : sans store, éteindre le conteneur perd la transcription, donc le store est requis, pas optionnel.",
+      "citations_fr": [
+        "sessions that span many interactions but sit idle between them"
+      ],
+      "principe_fr": "Le motif d'hébergement se choisit en comparant deux durées de vie : celle de la session et celle du conteneur. Quand elles coïncident, un conteneur éphémère ou persistant suffit ; quand la session survit largement au conteneur, il faut externaliser l'état dans un store et réhydrater à la reprise. Le corollaire est qu'un stockage de transcription n'est plus une option mais une dépendance du motif.",
       "distractors_fr": {
         "A": "Le motif éphémère est fait pour les tâches ponctuelles : le conteneur meurt à la fin de la tâche et l'utilisateur ne revient pas dessus.",
         "C": "Le motif à sessions longues garde des conteneurs allumés en permanence, ce qui est justement ce que l'équipe veut éviter pendant les périodes d'inactivité.",
@@ -733,22 +879,27 @@
       "difficulty": "difficile",
       "concept": "Frontiere de donnees d un bac a sable auto-heberge de Managed Agents",
       "question_en": "A bank runs Managed Agents sessions in self-hosted sandboxes to keep regulated data on its own network. Select the TWO statements about that boundary that are correct.",
+      "question_fr": "Une banque exécute des sessions Managed Agents dans des bacs à sable auto-hébergés pour garder les données réglementées sur son propre réseau. Choisissez les DEUX affirmations correctes à propos de cette frontière.",
       "options": [
         {
           "key": "A",
-          "text_en": "The model itself now runs on the bank's hardware, which is what keeps the data on its network."
+          "text_en": "The model itself now runs on the bank's hardware, which is what keeps the data on its network.",
+          "text_fr": "Le modèle lui-même tourne désormais sur le matériel de la banque, et c'est ce qui maintient les données sur son réseau."
         },
         {
           "key": "B",
-          "text_en": "Tool inputs and outputs still reach Anthropic's control plane, so Claude can decide what follows."
+          "text_en": "Tool inputs and outputs still reach Anthropic's control plane, so Claude can decide what follows.",
+          "text_fr": "Les entrées et sorties d'outils atteignent toujours le plan de contrôle d'Anthropic, afin que Claude puisse décider de la suite."
         },
         {
           "key": "C",
-          "text_en": "The filesystem the agent reads and writes, and its network egress, stay on the bank's own hosts."
+          "text_en": "The filesystem the agent reads and writes, and its network egress, stay on the bank's own hosts.",
+          "text_fr": "Le système de fichiers que l'agent lit et écrit, ainsi que son egress réseau, restent sur les hôtes de la banque."
         },
         {
           "key": "D",
-          "text_en": "Self-hosting implies MCP tunnels, since such a session can no longer reach a public MCP server."
+          "text_en": "Self-hosting implies MCP tunnels, since such a session can no longer reach a public MCP server.",
+          "text_fr": "L'auto-hébergement implique des tunnels MCP, puisqu'une telle session ne peut plus atteindre un serveur MCP public."
         }
       ],
       "correct": [
@@ -756,6 +907,10 @@
         "C"
       ],
       "explanation_fr": "L'auto-hébergement déplace l'exécution des outils, pas l'orchestration : « Self-hosted sandboxes keep the orchestration on Anthropic's side but move tool execution into infrastructure you control. » Le système de fichiers, les processus lancés et l'egress réseau restent chez le client. En revanche, les entrées et sorties d'outils continuent de remonter vers le plan de contrôle d'Anthropic, où tourne le modèle, pour qu'il puisse décider de la suite : c'est la limite exacte du périmètre, décrite dans le modèle de sécurité.",
+      "citations_fr": [
+        "Les bacs à sable auto-hébergés laissent l'orchestration du côté d'Anthropic mais déplacent l'exécution des outils dans une infrastructure que vous contrôlez."
+      ],
+      "principe_fr": "Dans une architecture d'agent managée, il faut distinguer deux plans : l'orchestration (le modèle qui décide de l'action suivante) et l'exécution (le processus qui réalise l'action). Auto-héberger un bac à sable ne déplace que le second : fichiers, processus et egress réseau passent chez vous, mais les entrées et sorties d'outils doivent toujours remonter au modèle, sinon il ne pourrait plus raisonner. Le périmètre de confidentialité s'arrête donc au contenu qui n'est jamais envoyé au modèle.",
       "distractors_fr": {
         "A": "Le modèle continue de tourner côté Anthropic. L'auto-hébergement ne rapatrie que l'exécution des outils.",
         "D": "Les deux mécanismes sont indépendants : une session en bac à sable auto-hébergé peut utiliser des serveurs MCP publics ou tunnelisés, et une session en sandbox cloud peut atteindre un MCP privé via un tunnel."
@@ -772,28 +927,37 @@
       "difficulty": "facile",
       "concept": "Un environnement Managed Agents partage, un bac a sable isole par session",
       "question_en": "A team creates one Managed Agents cloud environment and starts thirty sessions against it. They worry the sessions will read each other's files. What actually happens?",
+      "question_fr": "Une équipe crée un seul environnement cloud Managed Agents et lance trente sessions dessus. Elle craint que les sessions ne lisent mutuellement leurs fichiers. Que se passe-t-il réellement ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Each session gets an isolated sandbox, a fresh Linux container, though they share the environment."
+          "text_en": "Each session gets an isolated sandbox, a fresh Linux container, though they share the environment.",
+          "text_fr": "Chaque session obtient un bac à sable isolé, un conteneur Linux neuf, même si elles partagent l'environnement."
         },
         {
           "key": "B",
-          "text_en": "Sessions share the environment's filesystem, so isolation requires one environment per session."
+          "text_en": "Sessions share the environment's filesystem, so isolation requires one environment per session.",
+          "text_fr": "Les sessions partagent le système de fichiers de l'environnement ; l'isolation exige donc un environnement par session."
         },
         {
           "key": "C",
-          "text_en": "The first session locks the environment, and the others queue until the shared sandbox is free."
+          "text_en": "The first session locks the environment, and the others queue until the shared sandbox is free.",
+          "text_fr": "La première session verrouille l'environnement et les autres attendent en file que le bac à sable partagé se libère."
         },
         {
           "key": "D",
-          "text_en": "Files are shared inside an agent version, so pinning distinct versions is what isolates them."
+          "text_en": "Files are shared inside an agent version, so pinning distinct versions is what isolates them.",
+          "text_fr": "Les fichiers sont partagés au sein d'une version d'agent : épingler des versions distinctes est ce qui les isole."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "Un environnement décrit la configuration du bac à sable où tourne l'agent ; on le crée une fois et on référence son identifiant à chaque session. La doc lève l'ambiguïté : « Multiple sessions can share the same environment, but each session gets its own isolated sandbox (a fresh Linux container). » Le partage porte sur la configuration, pas sur le système de fichiers.",
+      "citations_fr": [
+        "Plusieurs sessions peuvent partager le même environnement, mais chaque session obtient son propre bac à sable isolé (un conteneur Linux neuf)."
+      ],
+      "principe_fr": "Un environnement est une définition de configuration, pas une ressource d'exécution partagée. Le raisonnement général : ce que l'on réutilise, c'est le gabarit (image, dépendances, réseau autorisé) ; ce qui est instancié par session, c'est le conteneur et son système de fichiers. Chercher l'isolation en multipliant les environnements est donc inutile, et coûteux en maintenance.",
       "distractors_fr": {
         "B": "Aucun système de fichiers n'est partagé entre sessions d'un même environnement, et rien n'oblige à multiplier les environnements pour isoler.",
         "C": "Un environnement n'est pas une ressource exclusive : plusieurs sessions tournent en parallèle, chacune dans son conteneur.",
@@ -811,22 +975,27 @@
       "difficulty": "moyen",
       "concept": "Plafond de deploiements planifies et gigue appliquee aux executions",
       "question_en": "A platform team plans one scheduled Managed Agents deployment per customer. They need the documented ceiling, and an explanation for runs that do not fire exactly on the scheduled minute. Which pair of figures is right?",
+      "question_fr": "Une équipe plateforme prévoit un déploiement Managed Agents planifié par client. Elle a besoin du plafond documenté, et d'une explication pour les exécutions qui ne démarrent pas exactement à la minute prévue. Quelle paire de valeurs est correcte ?",
       "options": [
         {
           "key": "A",
-          "text_en": "100 deployments per organisation, and jitter of up to 5 % of the interval between two runs."
+          "text_en": "100 deployments per organisation, and jitter of up to 5 % of the interval between two runs.",
+          "text_fr": "100 déploiements par organisation, et une gigue allant jusqu'à 5 % de l'intervalle entre deux exécutions."
         },
         {
           "key": "B",
-          "text_en": "1,000 deployments per organisation, and jitter of up to 50 % of that interval, capped at an hour."
+          "text_en": "1,000 deployments per organisation, and jitter of up to 50 % of that interval, capped at an hour.",
+          "text_fr": "1 000 déploiements par organisation, et une gigue allant jusqu'à 50 % de cet intervalle, plafonnée à une heure."
         },
         {
           "key": "C",
-          "text_en": "100 deployments per workspace, and a fixed jitter of 60 seconds applied to every scheduled run."
+          "text_en": "100 deployments per workspace, and a fixed jitter of 60 seconds applied to every scheduled run.",
+          "text_fr": "100 déploiements par workspace, et une gigue fixe de 60 secondes appliquée à chaque exécution planifiée."
         },
         {
           "key": "D",
-          "text_en": "1,000 deployments per organisation, and jitter of up to 15 % of that interval, capped at 9 minutes."
+          "text_en": "1,000 deployments per organisation, and jitter of up to 15 % of that interval, capped at 9 minutes.",
+          "text_fr": "1 000 déploiements par organisation, et une gigue allant jusqu'à 15 % de cet intervalle, plafonnée à 9 minutes."
         }
       ],
       "correct": [

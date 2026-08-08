@@ -59,8 +59,9 @@ REGLES DE TRADUCTION
 2. NE TRADUIS JAMAIS les identifiants techniques, noms d'evenements, de champs, de parametres, d'outils, de codes ni de valeurs litterales. Ils restent tels quels, en anglais : PreToolUse, PostToolUse, SessionStart, stop_reason, max_tokens, budget_tokens, tool_use, tool_result, acceptEdits, dontAsk, plan, permissionDecision, updatedInput, cache_control, ephemeral, input_schema, defer_loading, mcp_toolset, agent_toolset, end_turn, pause_turn, refusal, thinking, effort, xhigh, allowed_hosts, environment_variable, CLAUDE.md, SKILL.md, etc. Dans le doute, laisse en anglais.
 3. Les termes de metier qui ont un usage francais etabli se traduisent : hook reste « hook », mais tool = outil, prompt = prompt, token = jeton uniquement quand il s'agit d'une unite de facturation, sinon token. Agent = agent. Context window = fenetre de contexte. Rate limit = limite de debit. Sandbox = bac a sable. Prefill = prefixe de reponse.
 4. Registre : vouvoiement, phrases courtes, ton neutre et technique. Pas de tournure scolaire (« Dans cet exercice… »), pas de reformulation de l'enonce.
-5. Typographie : apostrophe DROITE ('), jamais l'apostrophe typographique. Espace simple avant ? ! : ; — pas d'espace insecable. Guillemets francais « » uniquement si l'original en a.
-6. Aucune traduction ne doit etre plus longue que le double de l'originale.
+5. ACCENTUATION. Le francais que tu produis est accentue normalement : é è ê à â î ô û ù ç. « dépréciée », « s'exécute », « découle », « règle générale », « paramètre ». Ce prompt-ci est rédigé sans accents pour des raisons internes au dépôt — ne calque pas ce registre, il ne s'applique pas à ta sortie. Seuls les identifiants techniques de la règle 2 restent tels quels. Une sortie non accentuée s'afficherait dans l'application juste à côté d'explications accentuées, et l'écart sauterait aux yeux ; elle produirait aussi de vraies fautes, puisque l'accord se perd avec l'accent (« est déprécié » au lieu de « est dépréciée »).
+6. Typographie : apostrophe DROITE ('), jamais l'apostrophe typographique. Espace simple avant ? ! : ; — pas d'espace insecable. Guillemets francais « » uniquement si l'original en a.
+7. Aucune traduction ne doit etre plus longue que le double de l'originale.
 
 CITATIONS DE DOCUMENTATION
 

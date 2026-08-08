@@ -23,28 +23,39 @@
       "difficulty": "moyen",
       "concept": "Qui tient le plan : subagents, skills, agent teams ou workflow",
       "question_en": "A team wants a codebase-wide bug sweep over hundreds of files, with the orchestration itself codified as something they can read and rerun on demand. Which approach holds the plan the way they need?",
+      "question_fr": "Une équipe veut un balayage de bugs sur l'ensemble d'un dépôt, portant sur des centaines de fichiers, avec l'orchestration elle-même codifiée sous une forme lisible et rejouable à la demande. Quelle approche porte le plan comme ils en ont besoin ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Skills: the instructions Claude follows are reusable, and results stay in the context window."
+          "text_en": "Skills: the instructions Claude follows are reusable, and results stay in the context window.",
+          "text_fr": "Skills : les instructions que Claude suit sont réutilisables, et les résultats restent dans la fenêtre de contexte."
         },
         {
           "key": "B",
-          "text_en": "Dynamic workflows: a script holds the loop, and the orchestration itself is what repeats."
+          "text_en": "Dynamic workflows: a script holds the loop, and the orchestration itself is what repeats.",
+          "text_fr": "Dynamic workflows : un script porte la boucle, et c'est l'orchestration elle-même qui se répète."
         },
         {
           "key": "C",
-          "text_en": "Agent teams: a lead supervises peer sessions, and the shared task list records the plan."
+          "text_en": "Agent teams: a lead supervises peer sessions, and the shared task list records the plan.",
+          "text_fr": "Agent teams : un chef supervise des sessions pairs, et la liste de tâches partagée consigne le plan."
         },
         {
           "key": "D",
-          "text_en": "Subagents: Claude decides turn by turn what to spawn, and each result returns to it."
+          "text_en": "Subagents: Claude decides turn by turn what to spawn, and each result returns to it.",
+          "text_fr": "Subagents : Claude décide tour par tour ce qu'il lance, et chaque résultat lui revient."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Le tableau « When to use a workflow » oppose les quatre primitives sur un seul axe : qui décide de ce qui tourne ensuite. Pour les subagents, les skills et les agent teams, c'est Claude ou l'agent chef, tour par tour ; pour un workflow, c'est le script. La colonne « What's repeatable » achève de trancher : la définition du travailleur pour un subagent, les instructions pour un skill, la définition d'équipe pour une team — mais pour un workflow, « the orchestration itself ». C'est exactement ce que l'équipe demande : le plan codifié, lisible et rejouable.",
+      "citations_fr": [
+        "When to use a workflow",
+        "What's repeatable",
+        "the orchestration itself"
+      ],
+      "principe_fr": "Pour choisir entre subagents, skills, agent teams et workflows, posez deux questions : qui décide de ce qui s'exécute ensuite, et qu'est-ce qui est réutilisable d'un run à l'autre. Tant que c'est Claude ou un agent chef qui décide tour par tour, l'orchestration est improvisée et non rejouable. Seul un workflow déplace la décision dans du code, ce qui rend l'enchaînement lui-même lisible, versionnable et relançable à l'identique.",
       "distractors_fr": {
         "A": "Un skill est un jeu d'instructions que Claude suit : c'est encore Claude qui décide tour par tour, et les résultats intermédiaires atterrissent dans sa fenêtre de contexte. Ce qui se répète, ce sont les instructions, pas l'orchestration.",
         "C": "Une agent team met un agent chef à la tête de sessions pairs coordonnées par une liste de tâches partagée. Le chef décide tour par tour ; l'échelle documentée est « a handful of long-running peers », pas des centaines de fichiers.",
@@ -62,28 +73,37 @@
       "difficulty": "moyen",
       "concept": "Ou vivent les resultats intermediaires pendant un workflow",
       "question_en": "During a dynamic workflow run, where do the subagents' intermediate results live, and what ends up reaching the main conversation?",
+      "question_fr": "Pendant l'exécution d'un dynamic workflow, où vivent les résultats intermédiaires des subagents, et qu'est-ce qui parvient finalement à la conversation principale ?",
       "options": [
         {
           "key": "A",
-          "text_en": "In Claude's context as they arrive, so the conversation can steer the run turn by turn."
+          "text_en": "In Claude's context as they arrive, so the conversation can steer the run turn by turn.",
+          "text_fr": "Dans le contexte de Claude au fil de leur arrivée, pour que la conversation puisse piloter le run tour par tour."
         },
         {
           "key": "B",
-          "text_en": "In the shared task list the agents claim from, which the conversation reads at the end."
+          "text_en": "In the shared task list the agents claim from, which the conversation reads at the end.",
+          "text_fr": "Dans la liste de tâches partagée où les agents se servent, que la conversation lit à la fin."
         },
         {
           "key": "C",
-          "text_en": "In script variables held by the runtime, so only the final answer reaches Claude."
+          "text_en": "In script variables held by the runtime, so only the final answer reaches Claude.",
+          "text_fr": "Dans des variables du script tenues par le runtime, si bien que seule la réponse finale parvient à Claude."
         },
         {
           "key": "D",
-          "text_en": "In the session transcript, which the runtime replays into the conversation at the end."
+          "text_en": "In the session transcript, which the runtime replays into the conversation at the end.",
+          "text_fr": "Dans le transcript de session, que le runtime rejoue dans la conversation à la fin."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "C'est la propriété qui distingue un workflow des trois autres primitives : « A workflow script holds the loop, the branching, and the intermediate results itself, so Claude's context holds only the final answer. » Le runtime exécute le script dans un environnement isolé, séparé de la conversation, et c'est précisément ce qui permet à un run de dépasser ce qu'une fenêtre de contexte peut tenir.",
+      "citations_fr": [
+        "A workflow script holds the loop, the branching, and the intermediate results itself, so Claude's context holds only the final answer."
+      ],
+      "principe_fr": "La question à se poser pour chaque primitive est : quelles données transitent par la fenêtre de contexte. Toute approche où les résultats intermédiaires reviennent dans la conversation voit son passage à l'échelle borné par la taille du contexte. Un workflow contourne cette borne en gardant l'état dans le script, hors conversation, et n'y injecte que la sortie finale — c'est ce qui permet de traiter des volumes que le contexte ne pourrait pas tenir.",
       "distractors_fr": {
         "A": "C'est le comportement des subagents et des skills : « every result lands in a context window ». Un workflow est justement conçu pour l'éviter, et le run tourne en arrière-plan sans entrée utilisateur en cours de route.",
         "B": "La liste de tâches partagée est le mécanisme des agent teams, pas des workflows. Dans un workflow, les résultats intermédiaires vivent dans des variables de script.",
@@ -101,28 +121,40 @@
       "difficulty": "facile",
       "concept": "Communication entre travailleurs : agent teams contre subagents",
       "question_en": "What distinguishes agent teams from subagents in the way the workers communicate with each other?",
+      "question_fr": "Qu'est-ce qui distingue les agent teams des subagents dans la façon dont les travailleurs communiquent entre eux ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Teammates message each other directly; subagents report only to the agent that spawned them."
+          "text_en": "Teammates message each other directly; subagents report only to the agent that spawned them.",
+          "text_fr": "Les coéquipiers s'écrivent directement ; les subagents ne rendent compte qu'à l'agent qui les a lancés."
         },
         {
           "key": "B",
-          "text_en": "Teammates report only to the lead; subagents message each other through the main agent."
+          "text_en": "Teammates report only to the lead; subagents message each other through the main agent.",
+          "text_fr": "Les coéquipiers ne rendent compte qu'au chef ; les subagents s'écrivent via l'agent principal."
         },
         {
           "key": "C",
-          "text_en": "Both message each other directly, but only teammates share a task list to coordinate."
+          "text_en": "Both message each other directly, but only teammates share a task list to coordinate.",
+          "text_fr": "Les deux s'écrivent directement, mais seuls les coéquipiers partagent une liste de tâches pour se coordonner."
         },
         {
           "key": "D",
-          "text_en": "Neither can reach the other workers; both report back to the session that spawned them."
+          "text_en": "Neither can reach the other workers; both report back to the session that spawned them.",
+          "text_fr": "Ni l'un ni l'autre ne peut joindre les autres travailleurs ; tous rendent compte à la session qui les a lancés."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "Le tableau de comparaison est explicite sur la ligne « Communication » : les subagents « report results back to the main agent only », les coéquipiers « message each other directly ». C'est le critère de choix que la page met en avant : « Choose based on whether your workers need to communicate with each other. » S'y ajoute que l'on peut aussi parler directement à un coéquipier sans passer par le chef.",
+      "citations_fr": [
+        "Communication",
+        "report results back to the main agent only",
+        "message each other directly",
+        "Choose based on whether your workers need to communicate with each other."
+      ],
+      "principe_fr": "Les subagents forment une topologie en étoile : toute information passe par l'agent principal, ce qui convient à des sous-tâches indépendantes dont on n'attend qu'un résultat. Les agent teams forment un graphe de pairs qui s'écrivent directement, utile quand une découverte d'un travailleur doit modifier le travail d'un autre en cours de route. Le besoin de communication latérale est donc le critère de choix.",
       "distractors_fr": {
         "B": "C'est l'inverse exact. Ce sont les subagents qui ne remontent qu'à l'agent principal ; les coéquipiers, eux, s'adressent des messages directement, par nom, via leur boîte aux lettres.",
         "C": "Les subagents ne communiquent pas entre eux : chacun travaille dans son propre contexte et rend un résumé à l'appelant. La liste partagée est bien propre aux teams, mais la première moitié de l'énoncé est fausse.",
@@ -140,22 +172,27 @@
       "difficulty": "moyen",
       "concept": "Motifs de delegation cites pour la coordination multiagent",
       "question_en": "The multiagent orchestration guide names the delegation patterns that work well. Which TWO of the following does it list?",
+      "question_fr": "Le guide d'orchestration multiagent nomme les motifs de délégation qui fonctionnent bien. Lesquels DEUX figurent dans cette liste ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Parallelization: fan out independent subtasks, then have the coordinator synthesize."
+          "text_en": "Parallelization: fan out independent subtasks, then have the coordinator synthesize.",
+          "text_fr": "Parallélisation : éclater des sous-tâches indépendantes, puis laisser le coordinateur synthétiser."
         },
         {
           "key": "B",
-          "text_en": "Compaction: fold each agent's thread back into the coordinator as its context fills."
+          "text_en": "Compaction: fold each agent's thread back into the coordinator as its context fills.",
+          "text_fr": "Compaction : replier le fil de chaque agent dans le coordinateur à mesure que son contexte se remplit."
         },
         {
           "key": "C",
-          "text_en": "Specialization: route to agents with domain-focused prompts and tools of their own."
+          "text_en": "Specialization: route to agents with domain-focused prompts and tools of their own.",
+          "text_fr": "Spécialisation : router vers des agents dotés de prompts et d'outils ciblés sur un domaine."
         },
         {
           "key": "D",
-          "text_en": "Replication: run one subtask on several agents and keep the most frequent answer."
+          "text_en": "Replication: run one subtask on several agents and keep the most frequent answer.",
+          "text_fr": "Réplication : exécuter une même sous-tâche sur plusieurs agents et retenir la réponse la plus fréquente."
         }
       ],
       "correct": [
@@ -163,6 +200,10 @@
         "C"
       ],
       "explanation_fr": "La section « What to delegate » énumère trois motifs qui fonctionnent bien : la parallélisation (éclater des sous-tâches indépendantes — chercher dans plusieurs sources, analyser des fichiers séparés — et laisser le coordinateur synthétiser), la spécialisation (router vers des agents à prompt système et outils ciblés, un agent sécurité ou un agent documentation, plutôt que de charger un agent unique de toutes les capacités) et l'escalade (consulter un agent ou un modèle plus capable pour un sous-ensemble de sous-tâches complexes).",
+      "citations_fr": [
+        "What to delegate"
+      ],
+      "principe_fr": "Les motifs de délégation reconnus reposent sur une raison structurelle de déléguer : l'indépendance des sous-tâches (parallélisation), la divergence des compétences ou des outils requis (spécialisation), ou l'écart de capacité nécessaire sur une fraction du travail (escalade). Les faux motifs invoquent en général un problème de gestion de contexte ou un vote de majorité, qui ne sont pas des raisons de découper le travail.",
       "distractors_fr": {
         "B": "La compaction existe bien dans la plateforme, mais comme technique de gestion de contexte, pas comme motif de délégation multiagent. Ici, chaque agent tourne dans son propre fil isolé : le contexte n'est justement pas partagé.",
         "D": "Le vote majoritaire entre copies n'est pas un motif cité par cette page. Le troisième motif de la liste est l'escalade : consulter un agent ou un modèle plus capable pour les sous-tâches complexes."
@@ -179,28 +220,37 @@
       "difficulty": "moyen",
       "concept": "Profondeur de delegation d un coordinateur multiagent",
       "question_en": "A coordinator's roster references an agent that itself declares a multiagent roster. What does the API do?",
+      "question_fr": "Le roster d'un coordinateur référence un agent qui déclare lui-même un roster multiagent. Que fait l'API ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It ignores the nested roster at runtime, and the referenced agent runs without delegating."
+          "text_en": "It ignores the nested roster at runtime, and the referenced agent runs without delegating.",
+          "text_fr": "Elle ignore le roster imbriqué à l'exécution, et l'agent référencé s'exécute sans déléguer."
         },
         {
           "key": "B",
-          "text_en": "It flattens the nested agents into the coordinator's roster, up to the 20-agent maximum."
+          "text_en": "It flattens the nested agents into the coordinator's roster, up to the 20-agent maximum.",
+          "text_fr": "Elle aplatit les agents imbriqués dans le roster du coordinateur, jusqu'au maximum de 20 agents."
         },
         {
           "key": "C",
-          "text_en": "It allows the delegation, but every nested thread counts twice against the thread ceiling."
+          "text_en": "It allows the delegation, but every nested thread counts twice against the thread ceiling.",
+          "text_fr": "Elle autorise la délégation, mais chaque fil imbriqué compte double dans le plafond de fils."
         },
         {
           "key": "D",
-          "text_en": "It fails the create or update request: a coordinator delegates to one level of agents."
+          "text_en": "It fails the create or update request: a coordinator delegates to one level of agents.",
+          "text_fr": "Elle fait échouer la requête de création ou de mise à jour : un coordinateur délègue à un seul niveau d'agents."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La règle est posée telle quelle : « The coordinator can only delegate to one level of agents; referencing an agent that has its own multiagent.agents roster fails the create or update request with a validation error. » L'échec est donc à la création ou à la mise à jour du coordinateur, pas à l'exécution. La limite de 20 agents distincts dans le roster est une contrainte distincte, qui n'a rien à voir avec la profondeur.",
+      "citations_fr": [
+        "The coordinator can only delegate to one level of agents; referencing an agent that has its own multiagent.agents roster fails the create or update request with a validation error."
+      ],
+      "principe_fr": "Distinguez les contraintes validées à la configuration de celles appliquées à l'exécution : une structure interdite, comme une délégation imbriquée, est rejetée dès la création ou la mise à jour par une erreur de validation, alors qu'un plafond quantitatif se constate pendant le run. Distinguez aussi les limites de profondeur des limites de largeur : le nombre d'agents autorisés dans un roster ne dit rien du nombre de niveaux de délégation permis.",
       "distractors_fr": {
         "A": "Rien n'est ignoré silencieusement : la requête est rejetée avec une erreur de validation, ce qui rend le problème visible à la configuration plutôt qu'à l'exécution.",
         "B": "Aucun aplatissement n'a lieu. Le plafond de 20 agents porte sur le nombre d'entrées distinctes du roster, sachant que le coordinateur peut appeler plusieurs copies de chacune.",
@@ -218,28 +268,37 @@
       "difficulty": "facile",
       "concept": "Revue en parallele : une lentille distincte par relecteur",
       "question_en": "In the parallel code review example, why does the prompt give each teammate a distinct lens instead of the same brief?",
+      "question_fr": "Dans l'exemple de revue de code en parallèle, pourquoi le prompt donne-t-il à chaque coéquipier une lentille distincte au lieu du même brief ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Because a shared brief would make teammates claim the same items from the task list."
+          "text_en": "Because a shared brief would make teammates claim the same items from the task list.",
+          "text_fr": "Parce qu'un brief commun amènerait les coéquipiers à réclamer les mêmes éléments de la liste de tâches."
         },
         {
           "key": "B",
-          "text_en": "Because teammates cannot read one pull request at the same time without conflicting."
+          "text_en": "Because teammates cannot read one pull request at the same time without conflicting.",
+          "text_fr": "Parce que les coéquipiers ne peuvent pas lire une même pull request en même temps sans conflit."
         },
         {
           "key": "C",
-          "text_en": "Because one reviewer drifts toward a single kind of issue, leaving the others thin."
+          "text_en": "Because one reviewer drifts toward a single kind of issue, leaving the others thin.",
+          "text_fr": "Parce qu'un relecteur unique dérive vers un seul type de problème, laissant les autres peu couverts."
         },
         {
           "key": "D",
-          "text_en": "Because the lead can only synthesize findings that arrive tagged with a category."
+          "text_en": "Because the lead can only synthesize findings that arrive tagged with a category.",
+          "text_fr": "Parce que le chef ne peut synthétiser que des constats arrivant étiquetés par catégorie."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "Le raisonnement de l'exemple est donné en une phrase : « A single reviewer tends to gravitate toward one type of issue at a time. Splitting review criteria into independent domains means security, performance, and test coverage all get thorough attention simultaneously. » Assigner une lentille distincte n'est pas un simple partage de charge : c'est ce qui empêche les trois angles de se recouvrir, chaque relecteur partant du même diff avec un filtre différent.",
+      "citations_fr": [
+        "A single reviewer tends to gravitate toward one type of issue at a time. Splitting review criteria into independent domains means security, performance, and test coverage all get thorough attention simultaneously."
+      ],
+      "principe_fr": "Paralléliser ne consiste pas seulement à répartir un volume de travail : il faut aussi partitionner le point de vue. Quand plusieurs agents attaquent le même matériau avec le même brief, leurs sorties se recouvrent et les angles négligés le restent. Donner à chacun un critère exclusif garantit une couverture complète et rend les constats plus faciles à agréger.",
       "distractors_fr": {
         "A": "La liste de tâches gère déjà la concurrence par verrouillage de fichier ; ce n'est pas ce que la lentille distincte cherche à résoudre.",
         "B": "Lire le même diff en parallèle ne pose aucun problème : le conflit documenté porte sur l'écriture, et se règle en partitionnant les fichiers, pas la revue.",
@@ -257,28 +316,37 @@
       "difficulty": "difficile",
       "concept": "Structure de debat contradictoire contre l ancrage",
       "question_en": "In the competing-hypotheses example, what mechanism makes the surviving theory more likely to be the real root cause?",
+      "question_fr": "Dans l'exemple des hypothèses concurrentes, quel mécanisme rend la théorie survivante plus susceptible d'être la véritable cause racine ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The lead assigns hypotheses in order, so each theory builds on the previous finding."
+          "text_en": "The lead assigns hypotheses in order, so each theory builds on the previous finding.",
+          "text_fr": "Le lead attribue les hypothèses dans l'ordre, si bien que chaque théorie s'appuie sur la découverte précédente."
         },
         {
           "key": "B",
-          "text_en": "Investigators actively try to disprove each other, so anchoring cannot take hold."
+          "text_en": "Investigators actively try to disprove each other, so anchoring cannot take hold.",
+          "text_fr": "Les enquêteurs cherchent activement à se réfuter mutuellement, ce qui empêche l'ancrage de s'installer."
         },
         {
           "key": "C",
-          "text_en": "Each investigator runs in its own worktree, so no theory is polluted by another's edits."
+          "text_en": "Each investigator runs in its own worktree, so no theory is polluted by another's edits.",
+          "text_fr": "Chaque enquêteur travaille dans son propre worktree, donc aucune théorie n'est polluée par les modifications d'une autre."
         },
         {
           "key": "D",
-          "text_en": "The teammates vote, and the theory with the most votes is reported back to the lead."
+          "text_en": "The teammates vote, and the theory with the most votes is reported back to the lead.",
+          "text_fr": "Les coéquipiers votent, et la théorie la plus votée est rapportée au lead."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "L'exemple nomme le mécanisme et le mal qu'il traite : « The debate structure is the key mechanism here. Sequential investigation suffers from anchoring: once one theory is explored, subsequent investigation is biased toward it. With multiple independent investigators actively trying to disprove each other, the theory that survives is much more likely to be the actual root cause. » Le prompt rend donc les coéquipiers explicitement adversariaux : chacun doit non seulement défendre sa théorie mais attaquer celles des autres.",
+      "citations_fr": [
+        "La structure de débat est le mécanisme clé ici. Une investigation séquentielle souffre de l'ancrage : dès qu'une théorie est explorée, l'investigation suivante est biaisée en sa faveur. Avec plusieurs enquêteurs indépendants qui cherchent activement à se réfuter mutuellement, la théorie qui survit a beaucoup plus de chances d'être la véritable cause racine."
+      ],
+      "principe_fr": "L'investigation séquentielle est vulnérable à l'ancrage : la première piste explorée oriente toutes les suivantes. Paralléliser ne suffit pas à corriger ce biais ; il faut rendre les explorateurs adversariaux, chacun devant attaquer les hypothèses des autres. La valeur du résultat vient alors de la sélection par réfutation, non de la simple accumulation d'avis.",
       "distractors_fr": {
         "A": "C'est exactement le contraire : l'enquête séquentielle est le défaut que le motif corrige, parce qu'une fois une théorie explorée, la suite est biaisée en sa faveur.",
         "C": "Les agent teams n'isolent pas les coéquipiers dans des worktrees ; la page recommande de partitionner les fichiers. Et une enquête ne modifie de toute façon rien.",
@@ -296,28 +364,38 @@
       "difficulty": "moyen",
       "concept": "Forme d un script de workflow sauvegarde",
       "question_en": "You open a saved workflow script under .claude/workflows/ to read what Claude generated. What structure do you find?",
+      "question_fr": "Vous ouvrez un script de workflow sauvegardé sous .claude/workflows/ pour lire ce que Claude a généré. Quelle structure trouvez-vous ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A meta block, then a JavaScript body where agent() spawns one and pipeline() maps a list."
+          "text_en": "A meta block, then a JavaScript body where agent() spawns one and pipeline() maps a list.",
+          "text_fr": "Un bloc meta, puis un corps JavaScript où agent() lance un subagent et pipeline() parcourt une liste."
         },
         {
           "key": "B",
-          "text_en": "A YAML frontmatter block with a tools allowlist, then a Markdown prompt for each phase."
+          "text_en": "A YAML frontmatter block with a tools allowlist, then a Markdown prompt for each phase.",
+          "text_fr": "Un bloc de frontmatter YAML avec une liste d'outils autorisés, puis un prompt Markdown pour chaque phase."
         },
         {
           "key": "C",
-          "text_en": "A JSON object listing the phases, which the runtime interprets without running a script."
+          "text_en": "A JSON object listing the phases, which the runtime interprets without running a script.",
+          "text_fr": "Un objet JSON listant les phases, que le runtime interprète sans exécuter de script."
         },
         {
           "key": "D",
-          "text_en": "A shell script that starts one claude -p process per item and collects their output."
+          "text_en": "A shell script that starts one claude -p process per item and collects their output.",
+          "text_fr": "Un script shell qui démarre un processus claude -p par élément et collecte leurs sorties."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La page décrit le fichier sauvegardé : « the file in .claude/workflows/ holds a meta block followed by a script body that orchestrates subagents » et « The body is plain JavaScript with top-level await. agent() spawns one subagent and pipeline() runs one per item in a list. » Le script est donc du vrai code exécuté par le runtime, ce qui est précisément ce qui déplace le plan hors de la fenêtre de contexte.",
+      "citations_fr": [
+        "le fichier dans .claude/workflows/ contient un bloc meta suivi d'un corps de script qui orchestre des subagents",
+        "Le corps est du JavaScript ordinaire avec await au niveau supérieur. agent() lance un subagent et pipeline() en exécute un par élément d'une liste."
+      ],
+      "principe_fr": "Un workflow sauvegardé est du code exécutable, pas une description déclarative. C'est ce qui permet de sortir le plan d'orchestration de la fenêtre de contexte : le runtime exécute le script, et seuls les résultats des subagents reviennent dans le contexte. Distinguez ce format des fichiers Markdown à frontmatter, qui servent aux skills, commandes et définitions de subagents.",
       "distractors_fr": {
         "B": "Le couple frontmatter YAML plus corps Markdown est la forme d'une définition de subagent dans .claude/agents/, pas d'un workflow. Un workflow est un script.",
         "C": "Le fichier n'est pas déclaratif : le runtime exécute un programme JavaScript, avec ses boucles et ses branchements, ce qui est tout l'intérêt du motif.",
@@ -335,28 +413,37 @@
       "difficulty": "difficile",
       "concept": "Ce qu une reprise rejoue apres un arret en plein fan-out",
       "question_en": "A script starts agents A, B, C and D in that order. You stop the run while B is still going; C and D had already finished. What runs again on resume?",
+      "question_fr": "Un script lance les agents A, B, C et D dans cet ordre. Vous arrêtez l'exécution alors que B tourne encore ; C et D avaient déjà terminé. Que réexécute la reprise ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Only B, since A, C and D finished and every completed agent's result is cached."
+          "text_en": "Only B, since A, C and D finished and every completed agent's result is cached.",
+          "text_fr": "B seulement, puisque A, C et D ont terminé et que le résultat de tout agent achevé est mis en cache."
         },
         {
           "key": "B",
-          "text_en": "A and B, since replay restarts at the beginning of the phase that was interrupted."
+          "text_en": "A and B, since replay restarts at the beginning of the phase that was interrupted.",
+          "text_fr": "A et B, puisque le rejeu redémarre au début de la phase interrompue."
         },
         {
           "key": "C",
-          "text_en": "Nothing at all: the run picks up where B stopped and keeps B's partial output."
+          "text_en": "Nothing at all: the run picks up where B stopped and keeps B's partial output.",
+          "text_fr": "Rien du tout : l'exécution reprend là où B s'est arrêté et conserve la sortie partielle de B."
         },
         {
           "key": "D",
-          "text_en": "B, C and D, since caching stops at the first agent that had not finished."
+          "text_en": "B, C and D, since caching stops at the first agent that had not finished.",
+          "text_fr": "B, C et D, puisque le cache s'arrête au premier agent qui n'avait pas terminé."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Deux règles décident, et c'est la seconde qui surprend : « Replay follows the order agents started. Cached results stop at the first agent that didn't finish, and every agent that started after that one runs again, even if it completed. » B n'avait pas fini, donc B repart ; C et D ont démarré après B, donc ils repartent aussi malgré leur achèvement. Seul A, démarré avant B, revient du cache. La documentation prend exactement cet exemple.",
+      "citations_fr": [
+        "Le rejeu suit l'ordre de démarrage des agents. Les résultats en cache s'arrêtent au premier agent qui n'a pas terminé, et tout agent démarré après celui-là est réexécuté, même s'il était achevé."
+      ],
+      "principe_fr": "Le cache de reprise n'est pas indexé sur l'achèvement individuel mais sur l'ordre de démarrage : il forme un préfixe. Tout ce qui a démarré après le premier agent inachevé est invalidé, achevé ou non. Pour raisonner sur une reprise, cherchez donc le premier agent non terminé dans l'ordre de lancement, puis considérez tout ce qui suit comme perdu.",
       "distractors_fr": {
         "A": "Ce serait le cas si le cache était purement par agent. Mais le rejeu suit l'ordre de démarrage : tout ce qui a démarré après le premier agent inachevé est réexécuté, achevé ou non.",
         "B": "Le rejeu ne raisonne pas par phase mais par ordre de démarrage des agents. A revient du cache même si B, dans la même phase, doit repartir.",
@@ -374,28 +461,37 @@
       "difficulty": "difficile",
       "concept": "Granularite du fan-out et progression preservee a la reprise",
       "question_en": "Given how a stopped run replays, which script shape preserves the most completed work when a run is interrupted?",
+      "question_fr": "Compte tenu du mode de rejeu d'une exécution arrêtée, quelle forme de script préserve le plus de travail achevé en cas d'interruption ?",
       "options": [
         {
           "key": "A",
-          "text_en": "One long-running agent per phase, so a single cached result covers that whole phase."
+          "text_en": "One long-running agent per phase, so a single cached result covers that whole phase.",
+          "text_fr": "Un agent unique de longue durée par phase, pour qu'un seul résultat en cache couvre toute la phase."
         },
         {
           "key": "B",
-          "text_en": "A script that starts its agents in the order their results are needed downstream."
+          "text_en": "A script that starts its agents in the order their results are needed downstream.",
+          "text_fr": "Un script qui démarre ses agents dans l'ordre où leurs résultats seront nécessaires en aval."
         },
         {
           "key": "C",
-          "text_en": "A fan-out over many small agents, so less work sits behind the first unfinished one."
+          "text_en": "A fan-out over many small agents, so less work sits behind the first unfinished one.",
+          "text_fr": "Un fan-out sur de nombreux petits agents, pour que moins de travail se trouve derrière le premier agent inachevé."
         },
         {
           "key": "D",
-          "text_en": "A script that pauses between phases, because a planned pause is always cached."
+          "text_en": "A script that pauses between phases, because a planned pause is always cached.",
+          "text_fr": "Un script qui marque une pause entre les phases, car une pause planifiée est toujours mise en cache."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La documentation tire elle-même la conséquence de la règle de rejeu : « A workflow that fans work out across many small agents therefore preserves more progress than one long agent. » Un agent long a toutes les chances d'être en cours au moment de l'arrêt, et il repart alors de zéro ; beaucoup de petits agents, au contraire, ont pour la plupart déjà rendu leur résultat, et le point de reprise se situe plus loin.",
+      "citations_fr": [
+        "Un workflow qui répartit le travail sur de nombreux petits agents préserve donc davantage de progression qu'un seul agent long."
+      ],
+      "principe_fr": "La granularité du fan-out détermine le coût d'une interruption. Un agent long a une forte probabilité d'être en cours au moment de l'arrêt, et tout son travail est alors perdu ; de nombreux petits agents ont majoritairement déjà rendu leur résultat. Découper finement est donc une stratégie de résilience, pas seulement de parallélisme.",
       "distractors_fr": {
         "A": "C'est la forme la plus fragile : un agent encore en cours n'est pas sauvegardé, donc un agent long interrompu perd tout son travail et redémarre entièrement.",
         "B": "L'ordre de démarrage détermine ce qui est rejoué, mais l'ordonner sur les dépendances ne réduit pas la perte : c'est la granularité des agents qui la réduit.",
@@ -413,22 +509,27 @@
       "difficulty": "moyen",
       "concept": "Empecher deux travailleurs paralleles d ecraser les memes fichiers",
       "question_en": "Parallel workers must not overwrite each other's files. Which TWO measures does the documentation actually prescribe?",
+      "question_fr": "Des travailleurs parallèles ne doivent pas écraser mutuellement leurs fichiers. Quelles DEUX mesures la documentation prescrit-elle réellement ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Agent teams put each teammate in its own worktree as soon as the team is formed."
+          "text_en": "Agent teams put each teammate in its own worktree as soon as the team is formed.",
+          "text_fr": "Les agent teams placent chaque coéquipier dans son propre worktree dès la formation de l'équipe."
         },
         {
           "key": "B",
-          "text_en": "Give subagents and the sessions you run yourself a separate checkout via worktrees."
+          "text_en": "Give subagents and the sessions you run yourself a separate checkout via worktrees.",
+          "text_fr": "Donner aux subagents et aux sessions que vous lancez vous-même un checkout distinct via des worktrees."
         },
         {
           "key": "C",
-          "text_en": "Rely on the runtime to serialize edits, since one agent holds the write lock at a time."
+          "text_en": "Rely on the runtime to serialize edits, since one agent holds the write lock at a time.",
+          "text_fr": "Compter sur le runtime pour sérialiser les modifications, puisqu'un seul agent détient le verrou d'écriture à la fois."
         },
         {
           "key": "D",
-          "text_en": "Partition the work in an agent team so each teammate owns a different set of files."
+          "text_en": "Partition the work in an agent team so each teammate owns a different set of files.",
+          "text_fr": "Partitionner le travail dans une agent team pour que chaque coéquipier possède un ensemble de fichiers distinct."
         }
       ],
       "correct": [
@@ -436,6 +537,13 @@
         "D"
       ],
       "explanation_fr": "La page « Run agents in parallel » sépare les deux cas. Pour les subagents et les sessions que vous lancez vous-même : « Isolate the work with worktrees. Subagents and sessions you run yourself can each use a separate worktree. » Pour les équipes, l'isolation n'existe pas : « Agent teams don't isolate teammates in worktrees, so partition the work so each teammate owns a different set of files. » La bonne pratique des agent teams le redit : « Two teammates editing the same file leads to overwrites. »",
+      "citations_fr": [
+        "Run agents in parallel",
+        "Isolez le travail avec des worktrees. Les subagents et les sessions que vous lancez vous-même peuvent chacun utiliser un worktree distinct.",
+        "Les agent teams n'isolent pas les coéquipiers dans des worktrees, il faut donc partitionner le travail pour que chaque coéquipier possède un ensemble de fichiers distinct.",
+        "Deux coéquipiers qui modifient le même fichier provoquent des écrasements."
+      ],
+      "principe_fr": "L'isolation d'exécution et le partitionnement du travail sont deux réponses distinctes au même risque, et leur applicabilité dépend du mécanisme de parallélisme. Là où un checkout séparé est possible (subagents, sessions lancées manuellement), les worktrees suppriment le conflit à la racine. Là où les travailleurs partagent le même répertoire (agent teams), la seule protection est organisationnelle : attribuer explicitement des fichiers disjoints.",
       "distractors_fr": {
         "A": "C'est précisément ce que les agent teams ne font pas. C'est l'agent view qui déplace automatiquement chaque session dépêchée dans son propre worktree.",
         "C": "Aucun verrou d'écriture global n'existe entre agents. Le verrouillage de fichier documenté sert à réserver une tâche dans la liste partagée, pas à protéger le code source."
@@ -452,28 +560,38 @@
       "difficulty": "moyen",
       "concept": "Taille d equipe et charge de taches recommandees",
       "question_en": "What starting team size and task load does the agent teams guide recommend for most workflows?",
+      "question_fr": "Quelle taille d'équipe de départ et quelle charge de tâches le guide des agent teams recommande-t-il pour la plupart des workflows ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Three to five teammates, with five or six tasks each to keep everyone productive."
+          "text_en": "Three to five teammates, with five or six tasks each to keep everyone productive.",
+          "text_fr": "Trois à cinq coéquipiers, avec cinq ou six tâches chacun pour que tout le monde reste productif."
         },
         {
           "key": "B",
-          "text_en": "Ten to twelve teammates, with two tasks each so nobody waits on a long assignment."
+          "text_en": "Ten to twelve teammates, with two tasks each so nobody waits on a long assignment.",
+          "text_fr": "Dix à douze coéquipiers, avec deux tâches chacun pour que personne n'attende une affectation longue."
         },
         {
           "key": "C",
-          "text_en": "One teammate per file being changed, each with a single task, to avoid all conflicts."
+          "text_en": "One teammate per file being changed, each with a single task, to avoid all conflicts.",
+          "text_fr": "Un coéquipier par fichier modifié, avec une seule tâche chacun, pour éviter tout conflit."
         },
         {
           "key": "D",
-          "text_en": "Two teammates, with as many tasks as needed, since coordination cost grows quickly."
+          "text_en": "Two teammates, with as many tasks as needed, since coordination cost grows quickly.",
+          "text_fr": "Deux coéquipiers, avec autant de tâches que nécessaire, car le coût de coordination croît vite."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La page donne les deux chiffres ensemble : « Start with 3-5 teammates for most workflows. This balances parallel work with manageable coordination » et « Having 5-6 tasks per teammate keeps everyone productive without excessive context switching. » Elle en donne même l'application : quinze tâches indépendantes appellent trois coéquipiers. Trois raisons bornent la montée en charge : le coût en jetons croît linéairement, la coordination s'alourdit, et les rendements décroissent.",
+      "citations_fr": [
+        "Commencez avec 3 à 5 coéquipiers pour la plupart des workflows. Cela équilibre le travail parallèle et une coordination gérable",
+        "Cinq à six tâches par coéquipier maintiennent tout le monde productif sans changements de contexte excessifs."
+      ],
+      "principe_fr": "Le dimensionnement d'une équipe d'agents résulte d'un compromis, pas d'une maximisation : plus de coéquipiers signifie plus de jetons consommés, plus de coordination et des rendements décroissants. Retenez donc de raisonner en divisant le nombre de tâches par la charge cible et de plafonner l'effectif, plutôt que d'ouvrir un agent par unité de travail.",
       "distractors_fr": {
         "B": "Trop de coéquipiers pour trop peu de tâches chacun : la page prévient des rendements décroissants et note que « Three focused teammates often outperform five scattered ones ».",
         "C": "Une tâche par coéquipier tombe dans le travers « too small » : le coût de coordination dépasse alors le bénéfice de la parallélisation.",
@@ -491,28 +609,34 @@
       "difficulty": "facile",
       "concept": "Ou le mot-cle ultracode vaut opt-in a une orchestration",
       "question_en": "Where does the ultracode keyword actually opt a task into a dynamic workflow?",
+      "question_fr": "Où le mot-clé ultracode fait-il réellement basculer une tâche dans un workflow dynamique ?",
       "options": [
         {
           "key": "A",
-          "text_en": "In any prompt the session receives, a relayed webhook payload counting like the rest."
+          "text_en": "In any prompt the session receives, a relayed webhook payload counting like the rest.",
+          "text_fr": "Dans n'importe quel prompt reçu par la session, une charge utile de webhook relayée comptant comme le reste."
         },
         {
           "key": "B",
-          "text_en": "In a prompt passed with -p, non-interactive runs being where large sweeps pay off."
+          "text_en": "In a prompt passed with -p, non-interactive runs being where large sweeps pay off.",
+          "text_fr": "Dans un prompt passé avec -p, les exécutions non interactives étant celles où les grands balayages sont rentables."
         },
         {
           "key": "C",
-          "text_en": "In a scheduled task prompt, so a recurring job can orchestrate without a human there."
+          "text_en": "In a scheduled task prompt, so a recurring job can orchestrate without a human there.",
+          "text_fr": "Dans le prompt d'une tâche planifiée, afin qu'un job récurrent puisse orchestrer sans humain présent."
         },
         {
           "key": "D",
-          "text_en": "In a prompt you type yourself, or one an SDK app stamps as human input; nowhere else."
+          "text_en": "In a prompt you type yourself, or one an SDK app stamps as human input; nowhere else.",
+          "text_fr": "Dans un prompt que vous tapez vous-même, ou qu'une application SDK marque comme entrée humaine ; nulle part ailleurs."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Le mot-clé n'est un opt-in que dans un prompt que vous tapez vous-même : à l'invite interactive, dans un panneau d'extension IDE, dans un client Remote Control, ou dans une application Agent SDK qui marque l'entrée clavier avec un origin { kind: \"human\" }. La page énumère ensuite les routes où il ne déclenche rien : un prompt passé avec -p, un prompt envoyé par une application SDK sans ce marquage, un prompt de tâche planifiée, et une charge utile de webhook ou un commentaire de pull request relayé dans la conversation.",
+      "principe_fr": "Un déclencheur de comportement autonome n'est reconnu que s'il vient d'une origine humaine attestée : saisie interactive, panneau IDE, client Remote Control, ou entrée explicitement marquée origin { kind: \"human\" } par une application SDK. Les canaux automatisés — -p, tâches planifiées, webhooks, commentaires relayés — sont volontairement exclus, car un contenu externe pourrait sinon s'octroyer lui-même une autonomie élargie. Règle générale : plus une capacité est puissante, plus la chaîne de consentement qui y mène doit être humaine et vérifiable.",
       "distractors_fr": {
         "A": "C'était le comportement d'avant la v2.1.210, et c'est justement ce qui a été resserré : un webhook ou un commentaire de pull request relayé ne déclenche plus de workflow.",
         "B": "Un prompt passé avec -p figure explicitement dans la liste des routes qui ne déclenchent pas de workflow. Les workflows restent disponibles en mode non interactif, mais pas via ce mot-clé.",
@@ -530,28 +654,37 @@
       "difficulty": "difficile",
       "concept": "Statut de la consigne de taille face a un prompt qui demande plus",
       "question_en": "A project sets the dynamic workflow size guideline to small. A later prompt asks for an exhaustive audit of the repository. What governs the agent count?",
+      "question_fr": "Un projet fixe la consigne de taille des workflows dynamiques à small. Un prompt ultérieur demande un audit exhaustif du dépôt. Qu'est-ce qui gouverne le nombre d'agents ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The guideline caps the run below five agents, and the rest of the work is dropped."
+          "text_en": "The guideline caps the run below five agents, and the rest of the work is dropped.",
+          "text_fr": "La consigne plafonne l'exécution sous cinq agents, et le reste du travail est abandonné."
         },
         {
           "key": "B",
-          "text_en": "The guideline is advice, so a prompt calling for another scale still overrides it."
+          "text_en": "The guideline is advice, so a prompt calling for another scale still overrides it.",
+          "text_fr": "La consigne est un conseil : un prompt qui appelle une autre échelle prévaut donc encore sur elle."
         },
         {
           "key": "C",
-          "text_en": "The guideline is inert once set in a settings file; only /config values reach Claude."
+          "text_en": "The guideline is inert once set in a settings file; only /config values reach Claude.",
+          "text_fr": "La consigne est inerte dès lors qu'elle est posée dans un fichier de réglages ; seules les valeurs de /config atteignent Claude."
         },
         {
           "key": "D",
-          "text_en": "The guideline replaces the runtime caps, so the run may pass the concurrency limit."
+          "text_en": "The guideline replaces the runtime caps, so the run may pass the concurrency limit.",
+          "text_fr": "La consigne remplace les plafonds du runtime, l'exécution peut donc dépasser la limite de concurrence."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La consigne de taille est transmise à Claude comme un conseil : « Claude Code sends the guideline to Claude as advice, not a cap, so a prompt that calls for a different scale still overrides it. » Elle oriente le dimensionnement par défaut — moins de 5 agents pour small, moins de 15 pour medium, moins de 50 pour large — sans jamais l'imposer. Ce qui borne réellement un run, ce sont les plafonds du runtime : 16 agents concurrents et 1 000 agents au total.",
+      "citations_fr": [
+        "Claude Code transmet la consigne à Claude comme un conseil, pas comme un plafond : un prompt qui appelle une autre échelle prévaut donc encore sur elle."
+      ],
+      "principe_fr": "Distinguez deux natures de contraintes : les consignes envoyées au modèle, qui orientent son jugement et restent surmontables par une instruction plus précise, et les plafonds appliqués par le runtime, qui sont infranchissables quoi que demande le prompt. Une préférence de configuration relève presque toujours de la première catégorie. Pour garantir une borne dure, il faut chercher le mécanisme d'exécution, pas le texte adressé au modèle.",
       "distractors_fr": {
         "A": "La consigne ne coupe pas le travail : elle n'est qu'un conseil de dimensionnement, et un prompt qui appelle une autre échelle l'emporte.",
         "C": "C'est l'inverse de la précédence documentée : à partir de la v2.1.219, une valeur posée dans un fichier de réglages prime sur /config, dont Claude Code masque alors la ligne.",
@@ -569,28 +702,34 @@
       "difficulty": "facile",
       "concept": "Quand preferer Claude a un classifieur ML pour le routage",
       "question_en": "Which situation is given as an indicator to route support tickets with Claude rather than a traditional ML classifier?",
+      "question_fr": "Quelle situation est citée comme indicateur en faveur du routage des tickets de support par Claude plutôt que par un classifieur ML traditionnel ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The routing categories are likely to evolve, and relabeling training data is costly."
+          "text_en": "The routing categories are likely to evolve, and relabeling training data is costly.",
+          "text_fr": "Les catégories de routage risquent d'évoluer, et réétiqueter les données d'entraînement coûte cher."
         },
         {
           "key": "B",
-          "text_en": "Ticket volume is high enough that per-ticket inference cost is the leading concern."
+          "text_en": "Ticket volume is high enough that per-ticket inference cost is the leading concern.",
+          "text_fr": "Le volume de tickets est tel que le coût d'inférence par ticket devient la préoccupation première."
         },
         {
           "key": "C",
-          "text_en": "The routing rules are a fixed lookup table that has not changed in several years."
+          "text_en": "The routing rules are a fixed lookup table that has not changed in several years.",
+          "text_fr": "Les règles de routage forment une table de correspondance figée, inchangée depuis plusieurs années."
         },
         {
           "key": "D",
-          "text_en": "A large labeled corpus exists already, and the classes are stable and well separated."
+          "text_en": "A large labeled corpus exists already, and the classes are stable and well separated.",
+          "text_fr": "Un grand corpus étiqueté existe déjà, et les classes sont stables et bien séparées."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "Le guide énumère les indicateurs qui font pencher vers un LLM, et celui-ci en fait partie : une fois une approche ML classique établie, la changer est laborieux et gourmand en données, alors que Claude s'adapte à des définitions de classes nouvelles ou modifiées sans réétiquetage massif. Les autres indicateurs vont dans le même sens : peu de données étiquetées, du texte non structuré, des règles sémantiques, un besoin d'explication, des cas limites, du multilingue sans modèle par langue.",
+      "principe_fr": "Le choix entre LLM et classifieur classique se joue sur la stabilité et la nature du problème. Un LLM se justifie quand les définitions bougent, que les données étiquetées manquent, que l'entrée est du texte libre, que les règles sont sémantiques ou qu'il faut une justification. Un modèle dédié reste préférable quand les classes sont fixes, bien étiquetées et que le coût unitaire ou la latence dominent.",
       "distractors_fr": {
         "B": "Le coût d'inférence par ticket n'est pas un indicateur cité. Les critères listés portent sur la nature du problème de classification, pas sur son économie unitaire.",
         "C": "Des règles figées et purement tabulaires sont le cas où une approche classique suffit : le guide vante l'adaptabilité de Claude quand les catégories bougent.",
@@ -608,28 +747,37 @@
       "difficulty": "difficile",
       "concept": "Ou reside le consentement permanent d un mode orchestration",
       "question_en": "In the orchestration mode example, where does the standing consent to fan out without asking first actually live?",
+      "question_fr": "Dans l'exemple de mode orchestration, où réside réellement le consentement permanent à distribuer le travail sans demander au préalable ?",
       "options": [
         {
           "key": "A",
-          "text_en": "In the top-level system field, rewritten each time the mode is switched on or off."
+          "text_en": "In the top-level system field, rewritten each time the mode is switched on or off.",
+          "text_fr": "Dans le champ system de premier niveau, réécrit chaque fois que le mode est activé ou désactivé."
         },
         {
           "key": "B",
-          "text_en": "In an API parameter that lifts effort above the levels the Effort page documents."
+          "text_en": "In an API parameter that lifts effort above the levels the Effort page documents.",
+          "text_fr": "Dans un paramètre d'API qui pousse effort au-delà des niveaux documentés par la page Effort."
         },
         {
           "key": "C",
-          "text_en": "In the orchestration tool's description, which carries the behavioral contract."
+          "text_en": "In the orchestration tool's description, which carries the behavioral contract.",
+          "text_fr": "Dans la description de l'outil d'orchestration, qui porte le contrat comportemental."
         },
         {
           "key": "D",
-          "text_en": "In the first user message, rewritten so the consent sits at the head of the context."
+          "text_en": "In the first user message, rewritten so the consent sits at the head of the context.",
+          "text_fr": "Dans le premier message user, réécrit pour que le consentement figure en tête de contexte."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "Le mode se construit de trois pièces documentées : un niveau d'effort, un rappel envoyé en message système en cours de conversation, et le consentement permanent placé dans la description de l'outil d'orchestration. C'est là que réside le contrat : « The Workflow tool carries the real behavioral contract: the opt-in rule, the standing consent that applies while the mode is on, granularity guidance for sizing the fan-out, and the quality patterns the model can reach for. » Les rappels, eux, sont courts à dessein et pointent vers cette description.",
+      "citations_fr": [
+        "L'outil Workflow porte le véritable contrat comportemental : la règle d'opt-in, le consentement permanent valable tant que le mode est actif, les conseils de granularité pour dimensionner la distribution, et les patrons de qualité auxquels le modèle peut recourir."
+      ],
+      "principe_fr": "La description d'un outil n'est pas de la documentation décorative : elle fait partie du prompt et constitue l'endroit naturel pour inscrire les règles d'usage durables de cet outil. Les rappels envoyés en cours de conversation restent volontairement brefs et renvoient à ce contrat. Règle générale : placez les contrats comportementaux là où ils sont attachés à la capacité qu'ils régissent, plutôt que dispersés dans des messages qui se réécrivent.",
       "distractors_fr": {
         "A": "Le champ system de premier niveau ne change jamais, et c'est délibéré : « The top-level system field never changes, so the cached prefix stays intact. » Le basculement passe par des messages système en cours de conversation.",
         "B": "Le mode n'est pas un paramètre d'API, et il n'existe aucun niveau caché au-dessus de ceux de la page Effort : « There is no hidden level above the ones on that page. »",
@@ -647,28 +795,37 @@
       "difficulty": "moyen",
       "concept": "Comportement par defaut d un verificateur dans une vague de verification",
       "question_en": "In the verification wave of the orchestration example, how is each verifier told to behave when it cannot settle a claim?",
+      "question_fr": "Dans la vague de vérification de l'exemple d'orchestration, quel comportement est prescrit à chaque vérificateur lorsqu'il ne parvient pas à trancher une affirmation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "To rerun the original subagent, so the claim is derived a second time before a verdict."
+          "text_en": "To rerun the original subagent, so the claim is derived a second time before a verdict.",
+          "text_fr": "Relancer le sous-agent d'origine, afin que l'affirmation soit dérivée une seconde fois avant tout verdict."
         },
         {
           "key": "B",
-          "text_en": "To let the claim through, an unverified claim not being the same thing as a wrong one."
+          "text_en": "To let the claim through, an unverified claim not being the same thing as a wrong one.",
+          "text_fr": "Laisser passer l'affirmation, une affirmation non vérifiée n'étant pas la même chose qu'une affirmation fausse."
         },
         {
           "key": "C",
-          "text_en": "To escalate to the orchestrator, which decides whether the source supports the claim."
+          "text_en": "To escalate to the orchestrator, which decides whether the source supports the claim.",
+          "text_fr": "Escalader vers l'orchestrateur, qui décide si la source appuie l'affirmation."
         },
         {
           "key": "D",
-          "text_en": "To default to refuted, each verifier re-deriving the claims from the source itself."
+          "text_en": "To default to refuted, each verifier re-deriving the claims from the source itself.",
+          "text_fr": "Se rabattre par défaut sur « réfutée », chaque vérificateur redérivant les affirmations depuis la source elle-même."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La seconde vague réemprunte le même chemin de sous-agent pour tenter de réfuter chaque résultat : « every verifier re-derives the claims from the source, defaulting to refuted when uncertain ». Le doute joue donc contre l'affirmation, et non en sa faveur. Le résultat d'origine et son verdict sont tous deux renvoyés à l'orchestrateur, qui les pèse ensemble plutôt que de recevoir un simple filtre déjà appliqué.",
+      "citations_fr": [
+        "chaque vérificateur redérive les affirmations depuis la source, et se rabat sur « réfutée » en cas d'incertitude"
+      ],
+      "principe_fr": "Dans une chaîne de vérification, le sens du doute est une décision de conception. Faire jouer l'incertitude contre l'affirmation évite qu'un résultat non confirmé se voie promu au rang de fait par simple absence de contradiction. Notez aussi que le vérificateur ne filtre pas : il renvoie le résultat et son verdict à l'orchestrateur, qui garde l'arbitrage final.",
       "distractors_fr": {
         "A": "La vague de vérification ne rejoue pas la sous-tâche d'origine : elle redérive les affirmations depuis la source, ce qui est un contrôle indépendant et non une répétition.",
         "B": "C'est l'inverse du défaut retenu ici. Laisser passer ce qui n'a pas pu être vérifié est précisément ce que le motif cherche à empêcher.",
@@ -686,28 +843,37 @@
       "difficulty": "moyen",
       "concept": "Journal adresse par contenu pour rendre un fan-out rejouable",
       "question_en": "Why does the orchestration example hash each subagent prompt into a local journal before dispatching the subtask?",
+      "question_fr": "Pourquoi l'exemple d'orchestration hache-t-il chaque prompt de sous-agent dans un journal local avant d'envoyer la sous-tâche ?",
       "options": [
         {
           "key": "A",
-          "text_en": "To cap the fan-out, a repeated hash counting only once against the total budget."
+          "text_en": "To cap the fan-out, a repeated hash counting only once against the total budget.",
+          "text_fr": "Pour plafonner la distribution, un hachage répété ne comptant qu'une fois dans le budget total."
         },
         {
           "key": "B",
-          "text_en": "To make reruns idempotent: a recorded result comes back instead of being recomputed."
+          "text_en": "To make reruns idempotent: a recorded result comes back instead of being recomputed.",
+          "text_fr": "Pour rendre les relances idempotentes : un résultat enregistré est renvoyé au lieu d'être recalculé."
         },
         {
           "key": "C",
-          "text_en": "To keep prompts out of the context window, which then holds only their digests."
+          "text_en": "To keep prompts out of the context window, which then holds only their digests.",
+          "text_fr": "Pour garder les prompts hors de la fenêtre de contexte, qui ne contient plus que leurs empreintes."
         },
         {
           "key": "D",
-          "text_en": "To deduplicate the subtasks inside one fan-out wave before any are dispatched."
+          "text_en": "To deduplicate the subtasks inside one fan-out wave before any are dispatched.",
+          "text_fr": "Pour dédupliquer les sous-tâches d'une même vague de distribution avant tout envoi."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "Le raisonnement est économique : « A fan-out that spawns dozens of subagents is expensive to restart from scratch. A small content-addressed journal makes it idempotent: before dispatching a subagent, look up the SHA-256 of its prompt in a local JSON file, and return the recorded result if one exists. » On peut donc interrompre puis relancer : seules les sous-tâches jamais terminées sont recalculées.",
+      "citations_fr": [
+        "Une distribution qui engendre des dizaines de sous-agents coûte cher à reprendre de zéro. Un petit journal adressé par contenu la rend idempotente : avant d'envoyer un sous-agent, cherchez le SHA-256 de son prompt dans un fichier JSON local, et renvoyez le résultat enregistré s'il en existe un."
+      ],
+      "principe_fr": "Toute exécution longue et coûteuse doit être conçue pour être reprise, pas seulement lancée. Un journal adressé par contenu — clé = hachage de l'entrée, valeur = résultat — transforme une opération coûteuse en opération idempotente : relancer ne recalcule que ce qui n'avait jamais abouti. Le hachage de l'entrée sert d'identité stable de la sous-tâche, indépendante de l'ordre ou du moment d'exécution.",
       "distractors_fr": {
         "A": "Le plafonnement est assuré par MAX_CONCURRENT et MAX_TOTAL_SUBTASKS, pas par le journal. La page note d'ailleurs qu'un vrai harnais ajouterait un budget suivi sur toute la session.",
         "C": "Le journal est un fichier JSON local, sans effet sur la fenêtre de contexte : c'est un cache de résultats, pas une technique de compression du contexte.",

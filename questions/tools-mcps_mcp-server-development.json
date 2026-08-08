@@ -19,14 +19,37 @@
       "difficulty": "facile",
       "concept": "Un client MCP est instancie par serveur, le host les coordonne",
       "question_en": "An editor acting as an MCP host connects to a Sentry server and then to a filesystem server. How many MCP clients does it end up with?",
+      "question_fr": "Un éditeur jouant le rôle de host MCP se connecte à un serveur Sentry puis à un serveur de fichiers. Combien de clients MCP possède-t-il au final ?",
       "options": [
-        { "key": "A", "text_en": "One, reused for both servers since the host owns the connection." },
-        { "key": "B", "text_en": "One per tool exposed, so the count follows the tools discovered." },
-        { "key": "C", "text_en": "Two, because the host creates one MCP client for each server." },
-        { "key": "D", "text_en": "None, as a host talks to servers directly without a client layer." }
+        {
+          "key": "A",
+          "text_en": "One, reused for both servers since the host owns the connection.",
+          "text_fr": "Un seul, réutilisé pour les deux serveurs puisque le host détient la connexion."
+        },
+        {
+          "key": "B",
+          "text_en": "One per tool exposed, so the count follows the tools discovered.",
+          "text_fr": "Un par outil exposé : le nombre suit donc les outils découverts."
+        },
+        {
+          "key": "C",
+          "text_en": "Two, because the host creates one MCP client for each server.",
+          "text_fr": "Deux, car le host crée un client MCP pour chaque serveur."
+        },
+        {
+          "key": "D",
+          "text_en": "None, as a host talks to servers directly without a client layer.",
+          "text_fr": "Aucun : un host dialogue directement avec les serveurs, sans couche cliente."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "L'architecture est explicite : « The MCP host accomplishes this by creating one MCP client for each MCP server. Each MCP client maintains a dedicated connection with its corresponding MCP server. » L'exemple donné est exactement celui-ci : VS Code instancie un client pour Sentry, puis un second pour le serveur de fichiers.",
+      "citations_fr": [
+        "Le host MCP y parvient en créant un client MCP pour chaque serveur MCP. Chaque client MCP maintient une connexion dédiée avec le serveur MCP correspondant."
+      ],
+      "principe_fr": "L'architecture MCP repose sur une relation un-à-un entre client et serveur : le host est le coordinateur, mais il instancie un client distinct par serveur, chacun tenant sa propre connexion. Le nombre de clients suit donc le nombre de serveurs connectés, jamais le nombre d'outils, de ressources ou de prompts découverts.",
       "distractors_fr": {
         "A": "Chaque client maintient une connexion dédiée à son serveur ; il n'y a pas de client mutualisé au niveau du host.",
         "B": "Le découpage se fait par serveur, pas par outil : un serveur exposant dix outils reste servi par un seul client.",
@@ -44,14 +67,39 @@
       "difficulty": "moyen",
       "concept": "Ce qui distingue le transport stdio du transport Streamable HTTP",
       "question_en": "A team must pick a transport for a server that several remote users will share. Select the TWO statements that match the documentation.",
+      "question_fr": "Une équipe doit choisir un transport pour un serveur que plusieurs utilisateurs distants partageront. Choisissez les DEUX affirmations conformes à la documentation.",
       "options": [
-        { "key": "A", "text_en": "Streamable HTTP suits remote servers and typically serves many clients." },
-        { "key": "B", "text_en": "Stdio scales to many remote clients once a port is exposed for it." },
-        { "key": "C", "text_en": "Streamable HTTP forbids bearer tokens, so keys must go in the body." },
-        { "key": "D", "text_en": "Stdio runs between local processes, with no network overhead at all." }
+        {
+          "key": "A",
+          "text_en": "Streamable HTTP suits remote servers and typically serves many clients.",
+          "text_fr": "Streamable HTTP convient aux serveurs distants et sert typiquement de nombreux clients."
+        },
+        {
+          "key": "B",
+          "text_en": "Stdio scales to many remote clients once a port is exposed for it.",
+          "text_fr": "stdio passe à l'échelle pour de nombreux clients distants dès qu'un port lui est exposé."
+        },
+        {
+          "key": "C",
+          "text_en": "Streamable HTTP forbids bearer tokens, so keys must go in the body.",
+          "text_fr": "Streamable HTTP interdit les bearer tokens : les clés doivent passer dans le corps de la requête."
+        },
+        {
+          "key": "D",
+          "text_en": "Stdio runs between local processes, with no network overhead at all.",
+          "text_fr": "stdio fonctionne entre processus locaux, sans aucune surcharge réseau."
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "Deux phrases de l'architecture : « Local MCP servers that use the STDIO transport typically serve a single MCP client, whereas remote MCP servers that use the Streamable HTTP transport will typically serve many MCP clients », et pour stdio « direct process communication between local processes on the same machine, providing optimal performance with no network overhead ».",
+      "citations_fr": [
+        "Les serveurs MCP locaux qui utilisent le transport STDIO servent typiquement un seul client MCP, tandis que les serveurs MCP distants qui utilisent le transport Streamable HTTP servent typiquement de nombreux clients MCP",
+        "communication directe entre processus locaux sur la même machine, offrant des performances optimales sans surcharge réseau"
+      ],
+      "principe_fr": "Le choix du transport découle de la topologie de déploiement : stdio suppose un serveur local lancé comme sous-processus, donc un client unique et aucune latence réseau ; Streamable HTTP suppose un serveur accessible par le réseau, donc plusieurs clients simultanés et un besoin d'authentification. On ne transforme pas stdio en transport distant en ouvrant un port.",
       "distractors_fr": {
         "B": "Stdio passe par les flux d'entrée et de sortie standard de processus locaux : il n'y a pas de port à exposer, et il sert typiquement un client unique.",
         "C": "L'inverse : le transport HTTP « supports standard HTTP authentication methods including bearer tokens, API keys, and custom headers », et MCP recommande OAuth."
@@ -68,14 +116,37 @@
       "difficulty": "difficile",
       "concept": "MCP est sans etat : chaque requete porte elle-meme sa version et ses capacites",
       "question_en": "A developer plans to store negotiated capabilities in server memory after a first handshake, then rely on them for later calls. Why does that design not hold?",
+      "question_fr": "Un développeur prévoit de stocker en mémoire serveur les capacités négociées après un premier handshake, puis de s'en servir pour les appels suivants. Pourquoi ce choix ne tient-il pas ?",
       "options": [
-        { "key": "A", "text_en": "Capabilities live only in the client, which never discloses them at all." },
-        { "key": "B", "text_en": "MCP is stateless: each request carries its own version and capabilities." },
-        { "key": "C", "text_en": "The handshake result expires after a fixed idle window on the server." },
-        { "key": "D", "text_en": "Servers may not read capabilities, which the transport strips en route." }
+        {
+          "key": "A",
+          "text_en": "Capabilities live only in the client, which never discloses them at all.",
+          "text_fr": "Les capacités n'existent que côté client, qui ne les divulgue jamais."
+        },
+        {
+          "key": "B",
+          "text_en": "MCP is stateless: each request carries its own version and capabilities.",
+          "text_fr": "MCP est sans état : chaque requête porte sa propre version et ses capacités."
+        },
+        {
+          "key": "C",
+          "text_en": "The handshake result expires after a fixed idle window on the server.",
+          "text_fr": "Le résultat du handshake expire après une durée d'inactivité fixe sur le serveur."
+        },
+        {
+          "key": "D",
+          "text_en": "Servers may not read capabilities, which the transport strips en route.",
+          "text_fr": "Les serveurs n'ont pas le droit de lire les capacités, que le transport supprime en route."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La spécification 2026-07-28 est explicite : « MCP is a stateless protocol. Every request carries the protocol version and the capabilities relevant to that request in its `_meta` field, so the server can process each request on its own. » Il n'y a donc aucun état de session à conserver entre deux requêtes ; les serveurs annoncent versions et capacités via la requête obligatoire `server/discover`, dont la réponse est généralement cachable.",
+      "citations_fr": [
+        "MCP est un protocole sans état. Chaque requête porte la version du protocole et les capacités pertinentes pour cette requête dans son champ `_meta`, afin que le serveur puisse traiter chaque requête indépendamment."
+      ],
+      "principe_fr": "Dans un protocole sans état, aucune information négociée ne survit d'une requête à l'autre : tout ce dont le serveur a besoin voyage avec la requête elle-même. Cela permet la montée en charge horizontale, puisque n'importe quelle instance peut répondre sans mémoire partagée. La découverte, elle, se fait par une requête dédiée dont la réponse est cachable côté client.",
       "distractors_fr": {
         "A": "Les capacités circulent bel et bien : elles voyagent dans le champ `_meta` de chaque requête, et le client s'y identifie sauf configuration contraire.",
         "C": "Il n'y a pas de fenêtre d'inactivité à surveiller, puisqu'il n'y a pas d'état de session à faire expirer.",
@@ -93,14 +164,37 @@
       "difficulty": "moyen",
       "concept": "Les trois primitives qu un serveur expose et leur role respectif",
       "question_en": "A server wraps a database. Which mapping of MCP server primitives to that server's offerings is correct?",
+      "question_fr": "Un serveur encapsule une base de données. Quelle association entre primitives serveur MCP et éléments exposés est correcte ?",
       "options": [
-        { "key": "A", "text_en": "Tools for the schema, resources for queries, prompts for the transport." },
-        { "key": "B", "text_en": "Tools for the schema, prompts for queries, resources for permissions." },
-        { "key": "C", "text_en": "Resources for queries, prompts for the schema, tools for few-shot text." },
-        { "key": "D", "text_en": "Tools for queries, resources for the schema, prompts for few-shot text." }
+        {
+          "key": "A",
+          "text_en": "Tools for the schema, resources for queries, prompts for the transport.",
+          "text_fr": "Tools pour le schéma, resources pour les requêtes, prompts pour le transport."
+        },
+        {
+          "key": "B",
+          "text_en": "Tools for the schema, prompts for queries, resources for permissions.",
+          "text_fr": "Tools pour le schéma, prompts pour les requêtes, resources pour les permissions."
+        },
+        {
+          "key": "C",
+          "text_en": "Resources for queries, prompts for the schema, tools for few-shot text.",
+          "text_fr": "Resources pour les requêtes, prompts pour le schéma, tools pour les exemples few-shot."
+        },
+        {
+          "key": "D",
+          "text_en": "Tools for queries, resources for the schema, prompts for few-shot text.",
+          "text_fr": "Tools pour les requêtes, resources pour le schéma, prompts pour les exemples few-shot."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "L'exemple de la doc est mot pour mot celui-ci : « consider an MCP server that provides context about a database. It can expose tools for querying the database, a resource that contains the schema of the database, and a prompt that includes few-shot examples for interacting with the tools. » Tools = actions exécutables, resources = données de contexte, prompts = gabarits réutilisables.",
+      "citations_fr": [
+        "prenons un serveur MCP qui fournit du contexte sur une base de données. Il peut exposer des tools pour interroger la base, une resource contenant le schéma de la base, et un prompt incluant des exemples few-shot pour interagir avec les tools."
+      ],
+      "principe_fr": "Les trois primitives serveur se distinguent par leur nature : les tools sont des actions exécutables déclenchées par le modèle, les resources sont des données de contexte en lecture, et les prompts sont des gabarits d'interaction réutilisables déclenchés par l'utilisateur. Pour classer un élément, demandez-vous s'il agit, s'il informe, ou s'il guide la formulation.",
       "distractors_fr": {
         "A": "Inversion : interroger la base est une action, donc un tool ; le schéma est une donnée de contexte, donc une resource. Le transport n'est pas une primitive.",
         "B": "Les prompts sont des gabarits d'interaction, pas un canal d'exécution de requêtes, et les permissions ne relèvent d'aucune des trois primitives.",
@@ -118,14 +212,39 @@
       "difficulty": "moyen",
       "concept": "Primitives client depreciees en 2026-07-28 et solutions de remplacement",
       "question_en": "A server author targets protocol version 2026-07-28 and wants an LLM completion plus debug logs. Select the TWO statements that apply.",
+      "question_fr": "L'auteur d'un serveur cible la version de protocole 2026-07-28 et souhaite obtenir une complétion de LLM ainsi que des journaux de débogage. Choisissez les DEUX affirmations applicables.",
       "options": [
-        { "key": "A", "text_en": "Sampling is the supported route, and logging still ships log messages." },
-        { "key": "B", "text_en": "Sampling is deprecated; new servers call an LLM provider API directly." },
-        { "key": "C", "text_en": "Logging is deprecated; write to stderr on stdio, or use OpenTelemetry." },
-        { "key": "D", "text_en": "Elicitation replaces both, since it can also return model completions." }
+        {
+          "key": "A",
+          "text_en": "Sampling is the supported route, and logging still ships log messages.",
+          "text_fr": "Sampling est la voie prise en charge, et logging transmet toujours les messages de journal."
+        },
+        {
+          "key": "B",
+          "text_en": "Sampling is deprecated; new servers call an LLM provider API directly.",
+          "text_fr": "Sampling est déprécié : les nouveaux serveurs appellent directement l'API d'un fournisseur de LLM."
+        },
+        {
+          "key": "C",
+          "text_en": "Logging is deprecated; write to stderr on stdio, or use OpenTelemetry.",
+          "text_fr": "Logging est déprécié : écrivez sur stderr en stdio, ou utilisez OpenTelemetry."
+        },
+        {
+          "key": "D",
+          "text_en": "Elicitation replaces both, since it can also return model completions.",
+          "text_fr": "Elicitation remplace les deux, puisqu'elle peut aussi renvoyer des complétions de modèle."
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "La liste des primitives client marque les deux comme dépréciées à partir de la version `2026-07-28`. Pour sampling : « New implementations should integrate directly with LLM provider APIs. » Pour logging : « New implementations should log to `stderr` (stdio transport) or use OpenTelemetry. » Seule elicitation reste une primitive client vivante.",
+      "citations_fr": [
+        "Les nouvelles implémentations doivent s'intégrer directement aux API des fournisseurs de LLM.",
+        "Les nouvelles implémentations doivent écrire leurs journaux sur `stderr` (transport stdio) ou utiliser OpenTelemetry."
+      ],
+      "principe_fr": "Quand une primitive de protocole est dépréciée, la documentation indique presque toujours le mécanisme externe qui la remplace plutôt qu'une autre primitive du protocole. Retenez la direction du remplacement : on sort du protocole vers l'écosystème standard (API du fournisseur, stderr, OpenTelemetry). Elicitation reste la seule primitive client encore vivante, et elle sert à demander une saisie à l'utilisateur, pas à appeler un modèle.",
       "distractors_fr": {
         "A": "C'est l'état antérieur du protocole : les deux primitives sont explicitement marquées dépréciées depuis `2026-07-28`.",
         "D": "Elicitation sert à demander une information ou une confirmation à l'utilisateur via `elicitation/create` ; elle ne renvoie aucune complétion de modèle."
@@ -142,14 +261,37 @@
       "difficulty": "difficile",
       "concept": "Un serveur stdio ne doit jamais ecrire sur la sortie standard",
       "question_en": "A Python MCP server on the stdio transport works alone but breaks under a host, right after debug print() calls were added. What is the cause?",
+      "question_fr": "Un serveur MCP Python sur le transport stdio fonctionne isolément mais casse sous un host, juste après l'ajout d'appels print() de débogage. Quelle est la cause ?",
       "options": [
-        { "key": "A", "text_en": "print() writes to stdout, which corrupts the JSON-RPC message stream." },
-        { "key": "B", "text_en": "print() is synchronous, so it starves the server's asynchronous loop." },
-        { "key": "C", "text_en": "Hosts cap server output, and the extra lines cross that size ceiling." },
-        { "key": "D", "text_en": "Debug output must be JSON, so plain strings fail the schema check." }
+        {
+          "key": "A",
+          "text_en": "print() writes to stdout, which corrupts the JSON-RPC message stream.",
+          "text_fr": "print() écrit sur stdout, ce qui corrompt le flux de messages JSON-RPC."
+        },
+        {
+          "key": "B",
+          "text_en": "print() is synchronous, so it starves the server's asynchronous loop.",
+          "text_fr": "print() est synchrone, ce qui prive de temps la boucle asynchrone du serveur."
+        },
+        {
+          "key": "C",
+          "text_en": "Hosts cap server output, and the extra lines cross that size ceiling.",
+          "text_fr": "Les hosts plafonnent la sortie du serveur, et les lignes ajoutées dépassent cette limite de taille."
+        },
+        {
+          "key": "D",
+          "text_en": "Debug output must be JSON, so plain strings fail the schema check.",
+          "text_fr": "La sortie de débogage doit être du JSON : les chaînes brutes échouent à la validation de schéma."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le guide de construction d'un serveur met en garde noir sur blanc : « For STDIO-based servers: Never write to stdout. Writing to stdout will corrupt the JSON-RPC messages and break your server. The `print()` function writes to stdout by default, so keep it out of a STDIO server entirely. » Sur un serveur HTTP, en revanche, écrire sur la sortie standard ne gêne pas.",
+      "citations_fr": [
+        "Pour les serveurs basés sur STDIO : n'écrivez jamais sur stdout. Écrire sur stdout corrompt les messages JSON-RPC et casse votre serveur. La fonction `print()` écrit sur stdout par défaut, donc bannissez-la entièrement d'un serveur STDIO."
+      ],
+      "principe_fr": "En transport stdio, la sortie standard est le canal du protocole lui-même : tout octet qui n'est pas un message JSON-RPC valide casse la communication. Le débogage doit donc passer par stderr, un fichier ou un système de traces. La règle est propre au transport : sur HTTP, la sortie standard reste libre.",
       "distractors_fr": {
         "B": "Le problème n'est pas de concurrence : c'est le canal lui-même, stdout, qui transporte les messages JSON-RPC et se retrouve pollué.",
         "C": "Aucun plafond de volume n'est en cause ; une seule ligne parasite sur stdout suffit à casser le flux.",
@@ -167,14 +309,37 @@
       "difficulty": "facile",
       "concept": "Convention de nommage des outils MCP cote Claude Code",
       "question_en": "A server registered as \"github\" exposes a list_issues tool. Under what name does Claude Code expose it?",
+      "question_fr": "Un serveur enregistré sous le nom \"github\" expose un outil list_issues. Sous quel nom Claude Code l'expose-t-il ?",
       "options": [
-        { "key": "A", "text_en": "github.list_issues, the server name and tool joined by a dot." },
-        { "key": "B", "text_en": "list_issues@github, the tool first and the server after an at sign." },
-        { "key": "C", "text_en": "mcp__github__list_issues, with double underscores around the server." },
-        { "key": "D", "text_en": "mcp:github/list_issues, a scheme, the server, then a path segment." }
+        {
+          "key": "A",
+          "text_en": "github.list_issues, the server name and tool joined by a dot.",
+          "text_fr": "github.list_issues, le nom du serveur et l'outil reliés par un point."
+        },
+        {
+          "key": "B",
+          "text_en": "list_issues@github, the tool first and the server after an at sign.",
+          "text_fr": "list_issues@github, l'outil d'abord et le serveur après une arobase."
+        },
+        {
+          "key": "C",
+          "text_en": "mcp__github__list_issues, with double underscores around the server.",
+          "text_fr": "mcp__github__list_issues, avec des doubles tirets bas autour du serveur."
+        },
+        {
+          "key": "D",
+          "text_en": "mcp:github/list_issues, a scheme, the server, then a path segment.",
+          "text_fr": "mcp:github/list_issues, un schéma, le serveur, puis un segment de chemin."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La convention est donnée telle quelle : « MCP tools follow the naming pattern `mcp__<server-name>__<tool-name>`. For example, a GitHub server named `\"github\"` with a `list_issues` tool becomes `mcp__github__list_issues`. » C'est ce nom qu'il faut employer pour accorder une permission d'outil.",
+      "citations_fr": [
+        "Les outils MCP suivent le modèle de nommage `mcp__<server-name>__<tool-name>`. Par exemple, un serveur GitHub nommé `\"github\"` doté d'un outil `list_issues` devient `mcp__github__list_issues`."
+      ],
+      "principe_fr": "Les outils importés depuis un serveur MCP sont systématiquement préfixés et qualifiés par le nom du serveur, afin d'éviter toute collision entre deux serveurs exposant un outil homonyme. C'est ce nom complet, et non le nom court déclaré par le serveur, qui sert de référence partout où l'on désigne un outil : règles de permission, listes d'autorisation, hooks.",
       "distractors_fr": {
         "A": "Le point n'est pas le séparateur retenu ; le motif documenté encadre le nom du serveur par des doubles soulignés.",
         "B": "L'ordre est inverse de la convention : le serveur précède l'outil, et aucune arobase n'intervient.",
@@ -192,14 +357,37 @@
       "difficulty": "moyen",
       "concept": "Plafond de l attente de connexion aux serveurs MCP au demarrage",
       "question_en": "Startup is set to wait for MCP servers by disabling non-blocking connection. How long can that wait last by default?",
+      "question_fr": "Le démarrage est configuré pour attendre les serveurs MCP en désactivant la connexion non bloquante. Combien de temps cette attente peut-elle durer par défaut ?",
       "options": [
-        { "key": "A", "text_en": "Up to 1 second, after which pending servers are dropped outright." },
-        { "key": "B", "text_en": "Up to 5 seconds, and pending servers keep connecting in background." },
-        { "key": "C", "text_en": "Up to 30 seconds, the same deadline the first model call uses." },
-        { "key": "D", "text_en": "There is no cap: startup waits until every server has answered." }
+        {
+          "key": "A",
+          "text_en": "Up to 1 second, after which pending servers are dropped outright.",
+          "text_fr": "Jusqu'à 1 seconde, après quoi les serveurs en attente sont purement abandonnés."
+        },
+        {
+          "key": "B",
+          "text_en": "Up to 5 seconds, and pending servers keep connecting in background.",
+          "text_fr": "Jusqu'à 5 secondes, et les serveurs en attente poursuivent leur connexion en arrière-plan."
+        },
+        {
+          "key": "C",
+          "text_en": "Up to 30 seconds, the same deadline the first model call uses.",
+          "text_fr": "Jusqu'à 30 secondes, la même échéance que celle du premier appel au modèle."
+        },
+        {
+          "key": "D",
+          "text_en": "There is no cap: startup waits until every server has answered.",
+          "text_fr": "Il n'y a pas de plafond : le démarrage attend que chaque serveur ait répondu."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "« To restore a bounded startup wait for every server, set the `MCP_CONNECTION_NONBLOCKING` environment variable to `0`. The wait is capped at 5 seconds by `MCP_CONNECT_TIMEOUT_MS`, and servers still pending at that deadline keep connecting in the background. » Le champ `alwaysLoad: true` sur un serveur donné s'aligne sur la même échéance de 5 secondes.",
+      "citations_fr": [
+        "Pour rétablir une attente de démarrage bornée pour chaque serveur, définissez la variable d'environnement `MCP_CONNECTION_NONBLOCKING` à `0`. L'attente est plafonnée à 5 secondes par `MCP_CONNECT_TIMEOUT_MS`, et les serveurs encore en attente à cette échéance poursuivent leur connexion en arrière-plan."
+      ],
+      "principe_fr": "Une échéance de connexion borne le temps d'attente au démarrage, elle n'annule pas la connexion : les serveurs qui dépassent le délai continuent de s'initialiser en arrière-plan et deviennent disponibles plus tard. Distinguez donc toujours « ne plus bloquer le démarrage » de « abandonner la ressource ».",
       "distractors_fr": {
         "A": "Ni la durée ni le comportement : aucun serveur n'est abandonné à l'échéance, ceux qui restent en attente poursuivent leur connexion en arrière-plan.",
         "C": "Trente secondes n'apparaît nulle part comme plafond de connexion ; la valeur documentée est de cinq secondes.",

@@ -1,411 +1,745 @@
 {
- "subdomain": "Configuration Management",
- "domain": "Applications and Integration",
- "weight": 4.1,
- "target_questions": 16,
- "sources_read": [
-  "https://code.claude.com/docs/en/settings",
-  "https://code.claude.com/docs/en/memory",
-  "https://code.claude.com/docs/en/permissions",
-  "https://code.claude.com/docs/en/mcp"
- ],
- "questions": [
-  {
-   "id": "CFG-001",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Les quatre portees de configuration : Managed, User, Project, Local",
-   "question_en": "Claude Code configuration is organized into which set of scopes?",
-   "options": [
-    { "key": "A", "text_en": "Managed, User, Project, and Local." },
-    { "key": "B", "text_en": "Global, Session, Cache, and Backup." },
-    { "key": "C", "text_en": "Admin, Developer, Guest, and Anonymous." },
-    { "key": "D", "text_en": "System, Network, Terminal, and Model." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc décrit un système de portées à quatre niveaux : Managed, User, Project et Local, chacune avec un emplacement et un périmètre de partage différents.",
-   "distractors_fr": {
-    "B": "Ces noms ne correspondent pas aux portées de configuration de Claude Code.",
-    "C": "Il n'existe pas de portées « Admin/Developer/Guest » dans Claude Code.",
-    "D": "Ces termes ne désignent pas les portées de configuration."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-002",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Emplacements des settings : utilisateur ~/.claude vs projet .claude",
-   "question_en": "Where do user-scope settings live, applying across all your projects?",
-   "options": [
-    { "key": "A", "text_en": "In .claude/settings.json at the repository root." },
-    { "key": "B", "text_en": "In ~/.claude/settings.json in your home directory." },
-    { "key": "C", "text_en": "In .claude/settings.local.json at the repository root." },
-    { "key": "D", "text_en": "In a managed-settings.json under a system directory." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : « User settings are defined in ~/.claude/settings.json and apply to all projects. »",
-   "distractors_fr": {
-    "A": "`.claude/settings.json` est la portée Project (partagée via git), pas la portée User.",
-    "C": "`.claude/settings.local.json` est la portée Local (personnelle au dépôt), pas User.",
-    "D": "`managed-settings.json` relève de la portée Managed déployée par l'IT."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-003",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "settings.local.json : reglages personnels non versionnes",
-   "question_en": "You want a setting that stays on your machine and out of version control. Which file?",
-   "options": [
-    { "key": "A", "text_en": "`.claude/settings.json`, which is committed and shared with the team." },
-    { "key": "B", "text_en": "`~/.claude/CLAUDE.md`, your user memory file." },
-    { "key": "C", "text_en": "`.claude/settings.local.json`, which Claude Code gitignores." },
-    { "key": "D", "text_en": "`managed-settings.json`, deployed by your IT department." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : `.claude/settings.local.json` sert aux réglages « that are not checked in, useful for personal preferences », et Claude Code l'ajoute aux exclusions git quand il y écrit.",
-   "distractors_fr": {
-    "A": "`.claude/settings.json` est justement versionné et partagé avec l'équipe : l'inverse du besoin.",
-    "B": "`CLAUDE.md` porte des instructions, pas des réglages de configuration, et le fichier user est partagé sur toutes tes machines si tu le synchronises.",
-    "D": "`managed-settings.json` est déployé par l'IT à l'échelle de l'organisation, pas un réglage machine personnel."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-004",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Ordre de priorite des portees de configuration",
-   "question_en": "The same setting is defined in Managed, Project, and User scopes. Which value applies?",
-   "options": [
-    { "key": "A", "text_en": "The User value, as the base default for everything." },
-    { "key": "B", "text_en": "The Project value, since it sits closest to the actual code." },
-    { "key": "C", "text_en": "Whichever scope defined the setting most recently." },
-    { "key": "D", "text_en": "The Managed value; it can't be overridden by others." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc classe les priorités : Managed (le plus haut, « can't be overridden by anything »), puis arguments CLI, Local, Project, et User (le plus bas). Managed l'emporte donc.",
-   "distractors_fr": {
-    "A": "User est la priorité la plus basse : elle ne s'applique que si rien d'autre ne définit le réglage.",
-    "B": "Project l'emporte sur User mais pas sur Managed ; la proximité du code ne joue pas.",
-    "C": "La priorité ne dépend pas de la date de modification mais de la portée."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-005",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "facile",
-   "concept": "La portee Managed ne peut etre surchargee par personne",
-   "question_en": "What is special about the Managed configuration scope?",
-   "options": [
-    { "key": "A", "text_en": "It has the highest priority and can't be overridden." },
-    { "key": "B", "text_en": "It only applies inside a single git repository." },
-    { "key": "C", "text_en": "It is the fallback used only when nothing else specifies it." },
-    { "key": "D", "text_en": "It is stored in the user's home directory." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc : Managed est prioritaire et « cannot be overridden by user or project settings » — conçu pour les politiques de sécurité imposées à toute l'organisation.",
-   "distractors_fr": {
-    "B": "Managed s'applique à l'échelle de la machine ou de l'organisation, pas à un seul dépôt.",
-    "C": "Le repli quand rien n'est défini est la portée User, pas Managed.",
-    "D": "Managed est déployé dans des répertoires système ou via MDM, pas dans le home de l'utilisateur."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-006",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Portees partagees avec l equipe : Project et Managed",
-   "question_en": "Which TWO configuration scopes are shared with other people, not just you?",
-   "options": [
-    { "key": "A", "text_en": "User scope, from your home directory." },
-    { "key": "B", "text_en": "Project scope, committed to the repository." },
-    { "key": "C", "text_en": "Local scope, in settings.local.json." },
-    { "key": "D", "text_en": "Managed scope, deployed by your IT team." }
-   ],
-   "correct": ["B", "D"],
-   "explanation_fr": "Dans la table des portées, seules Project (« committed to git ») et Managed (« deployed by IT ») sont marquées « Shared with team? Yes ». User et Local ne le sont pas.",
-   "distractors_fr": {
-    "A": "La portée User n'affecte que toi, sur tous tes projets : non partagée.",
-    "C": "La portée Local (settings.local.json) n'est pas versionnée : elle ne concerne que toi."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-007",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "Contenu de ~/.claude.json : session OAuth, serveurs MCP user/local, etat par projet",
-   "question_en": "What does the ~/.claude.json file primarily hold?",
-   "options": [
-    { "key": "A", "text_en": "The project's committed team settings and hooks." },
-    { "key": "B", "text_en": "Managed policies deployed by the organization's IT." },
-    { "key": "C", "text_en": "Your OAuth session, user/local MCP servers, and project state." },
-    { "key": "D", "text_en": "The complete transcript of every past Claude Code session you ran." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : `~/.claude.json` « contains your OAuth session, MCP server configurations for user and local scopes, per-project state (allowed tools, trust settings), and various caches. »",
-   "distractors_fr": {
-    "A": "Les réglages d'équipe versionnés vivent dans `.claude/settings.json`, pas dans `~/.claude.json`.",
-    "B": "Les politiques Managed sont déployées dans des répertoires système, pas dans `~/.claude.json`.",
-    "D": "`~/.claude.json` ne stocke pas les transcriptions de session."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/settings"
-  },
-  {
-   "id": "CFG-008",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "CLAUDE.md est charge comme contexte a chaque session, pas comme config imposee",
-   "question_en": "How does Claude Code treat the instructions in a CLAUDE.md file?",
-   "options": [
-    { "key": "A", "text_en": "As enforced configuration that strictly hard-blocks any disallowed action." },
-    { "key": "B", "text_en": "As context loaded each session, which Claude may not always follow." },
-    { "key": "C", "text_en": "As a one-time setup script run only on the first launch." },
-    { "key": "D", "text_en": "As managed policy that overrides the user's own settings." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : les CLAUDE.md « are loaded at the start of every conversation. Claude treats them as context, not enforced configuration », et les suit d'autant mieux qu'ils sont concis et précis.",
-   "distractors_fr": {
-    "A": "CLAUDE.md n'est pas de la configuration imposée : pour bloquer une action, il faut un hook PreToolUse.",
-    "C": "CLAUDE.md est rechargé à chaque session, ce n'est pas un script exécuté une seule fois.",
-    "D": "CLAUDE.md ne surcharge pas les réglages ; c'est du contexte que Claude peut ne pas suivre."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/memory"
-  },
-  {
-   "id": "CFG-009",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Emplacements d un CLAUDE.md de projet : ./CLAUDE.md ou ./.claude/CLAUDE.md",
-   "question_en": "Where can a project-level CLAUDE.md file be placed?",
-   "options": [
-    { "key": "A", "text_en": "Only in the user's ~/.claude directory." },
-    { "key": "B", "text_en": "Only inside a managed system directory." },
-    { "key": "C", "text_en": "In ./CLAUDE.md or ./.claude/CLAUDE.md." },
-    { "key": "D", "text_en": "In ./CLAUDE.local.md, which git ignores." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc : « A project CLAUDE.md can be stored in either ./CLAUDE.md or ./.claude/CLAUDE.md », partagé avec l'équipe via le contrôle de version.",
-   "distractors_fr": {
-    "A": "`~/.claude/CLAUDE.md` est le CLAUDE.md de portée User, pas celui du projet.",
-    "B": "Le répertoire système héberge le CLAUDE.md de politique Managed, pas celui du projet.",
-    "D": "`CLAUDE.local.md` est la variante locale personnelle, distincte du CLAUDE.md de projet partagé."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/memory"
-  },
-  {
-   "id": "CFG-010",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Pour bloquer reellement une action : hook PreToolUse, pas CLAUDE.md",
-   "question_en": "You need to guarantee Claude never runs a certain action, no matter what it decides. What works?",
-   "options": [
-    { "key": "A", "text_en": "Add a strongly worded 'never do X' rule to CLAUDE.md." },
-    { "key": "B", "text_en": "Put the instruction in your user-scope CLAUDE.md file." },
-    { "key": "C", "text_en": "Repeat the instruction in both CLAUDE.md and the prompt." },
-    { "key": "D", "text_en": "Use a PreToolUse hook, which the harness enforces." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc : « To block an action regardless of what Claude decides, use a PreToolUse hook instead » — CLAUDE.md n'est que du contexte, pas une contrainte dure.",
-   "distractors_fr": {
-    "A": "Une règle dans CLAUDE.md reste du contexte : Claude peut ne pas la suivre, elle ne bloque rien.",
-    "B": "Changer la portée du CLAUDE.md n'en fait pas une contrainte imposée.",
-    "C": "Répéter l'instruction augmente l'adhérence mais ne garantit toujours pas le blocage."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/memory"
-  },
-  {
-   "id": "CFG-011",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Evaluation des regles de permission : deny, puis ask, puis allow",
-   "question_en": "In what order does Claude Code evaluate permission rules?",
-   "options": [
-    { "key": "A", "text_en": "Deny first, then ask, then allow; first match decides." },
-    { "key": "B", "text_en": "Allow first, then ask, then deny; the last match decides." },
-    { "key": "C", "text_en": "By specificity: the narrowest matching rule always takes priority." },
-    { "key": "D", "text_en": "Alphabetically by tool name, then by rule length." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc : « Rules are evaluated in order: deny, then ask, then allow. The first match in that order determines the outcome, and rule specificity doesn't change the order. »",
-   "distractors_fr": {
-    "B": "L'ordre est deny → ask → allow, et c'est le premier match qui décide, pas le dernier.",
-    "C": "La spécificité ne change pas l'ordre : un deny large l'emporte sur un allow plus précis.",
-    "D": "L'évaluation ne se fait pas par ordre alphabétique."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/permissions"
-  },
-  {
-   "id": "CFG-012",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Regle deny nue vs portee : retirer l outil du contexte ou bloquer des appels",
-   "question_en": "Select the TWO accurate statements about deny rules.",
-   "options": [
-    { "key": "A", "text_en": "A bare tool name like `Bash` removes the tool from Claude's context." },
-    { "key": "B", "text_en": "A bare tool name merely prints a warning yet still lets the tool run freely." },
-    { "key": "C", "text_en": "A scoped rule like `Bash(rm *)` blocks only matching calls." },
-    { "key": "D", "text_en": "A scoped rule disables the entire tool across every possible command." }
-   ],
-   "correct": ["A", "C"],
-   "explanation_fr": "La doc : « A bare tool name like Bash removes the tool from Claude's context entirely », tandis qu'« A scoped rule like Bash(rm *) leaves the tool available and blocks matching calls when Claude attempts them. »",
-   "distractors_fr": {
-    "B": "Un deny sur le nom nu ne se contente pas d'avertir : il retire complètement l'outil du contexte.",
-    "D": "Une règle à spécificateur ne désactive pas tout l'outil : elle ne bloque que les appels correspondants."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/permissions"
-  },
-  {
-   "id": "CFG-013",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Les regles de permission sont appliquees par Claude Code, pas par le modele",
-   "question_en": "Who actually enforces permission rules?",
-   "options": [
-    { "key": "A", "text_en": "The model itself, based on your CLAUDE.md instructions." },
-    { "key": "B", "text_en": "Claude Code itself, independent of the prompt." },
-    { "key": "C", "text_en": "The prompt, which the model reads and obeys." },
-    { "key": "D", "text_en": "The Anthropic API, on the server side." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : « Permission rules are enforced by Claude Code, not by the model. Instructions in your prompt or CLAUDE.md shape what Claude tries to do, but they don't change what Claude Code allows. »",
-   "distractors_fr": {
-    "A": "Le modèle décide de ce qu'il tente, mais l'application des règles revient à Claude Code, pas au modèle.",
-    "C": "Le prompt oriente l'intention mais n'applique aucune règle de permission.",
-    "D": "L'API ne gère pas les permissions d'outils de Claude Code : c'est le client qui les applique."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/permissions"
-  },
-  {
-   "id": "CFG-014",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "multi",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "Portees MCP stockees dans ~/.claude.json : local et user",
-   "question_en": "Which TWO MCP server scopes are stored inside ~/.claude.json?",
-   "options": [
-    { "key": "A", "text_en": "The local scope, private to you in one project." },
-    { "key": "B", "text_en": "The project scope, written to .mcp.json in the repo." },
-    { "key": "C", "text_en": "The managed scope, deployed by your IT department." },
-    { "key": "D", "text_en": "The user scope, active across all of your projects." }
-   ],
-   "correct": ["A", "D"],
-   "explanation_fr": "La doc situe le scope `local` dans `~/.claude.json` (sous l'entrée du projet) et le scope `user` dans `~/.claude.json` (clé `mcpServers`). Le scope `project`, lui, vit dans `.mcp.json`.",
-   "distractors_fr": {
-    "B": "Le scope `project` est écrit dans `.mcp.json` à la racine du dépôt, pas dans `~/.claude.json`.",
-    "C": "Le MCP managé est déployé séparément (managed-mcp.json), pas dans `~/.claude.json`."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/mcp"
-  },
-  {
-   "id": "CFG-015",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "bypassPermissions : environnements isoles, rm -rf / invite quand meme",
-   "question_en": "What is true about bypassPermissions mode?",
-   "options": [
-    { "key": "A", "text_en": "It removes every single prompt, including the one for `rm -rf /`." },
-    { "key": "B", "text_en": "It is the recommended default for everyday coding." },
-    { "key": "C", "text_en": "It suits isolated environments; `rm -rf /` still prompts." },
-    { "key": "D", "text_en": "It only skips prompts for read-only file operations." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc recommande `bypassPermissions` « only in isolated environments like containers or VMs », et précise que les suppressions visant la racine ou le home, comme `rm -rf /`, invitent quand même « as a circuit breaker ».",
-   "distractors_fr": {
-    "A": "Un garde-fou subsiste : `rm -rf /` (et `rm -rf ~`) déclenche toujours une invite.",
-    "B": "La doc met en garde contre son usage hors environnements isolés : ce n'est pas un défaut recommandé.",
-    "D": "Le mode saute la plupart des invites, pas seulement pour des opérations en lecture seule."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/permissions"
-  },
-  {
-   "id": "CFG-016",
-   "domain": "Applications and Integration",
-   "subdomain": "Configuration Management",
-   "weight": 4.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": ".mcp.json : serveurs MCP partages avec tous ceux qui clonent le depot",
-   "question_en": "You add an MCP server at project scope in .mcp.json. Who gets it?",
-   "options": [
-    { "key": "A", "text_en": "Only you, and only inside this one project." },
-    { "key": "B", "text_en": "Everyone who clones the project repository." },
-    { "key": "C", "text_en": "All your projects, but nobody else on the team." },
-    { "key": "D", "text_en": "Only administrators with managed settings access." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc : le scope `project`, stocké dans `.mcp.json` à la racine, est « Available to: Everyone who clones the project. »",
-   "distractors_fr": {
-    "A": "« Seulement toi, seulement ce projet » décrit le scope `local`, pas `project`.",
-    "C": "« Tous tes projets, mais toi seul » décrit le scope `user`, pas `project`.",
-    "D": "Le scope `project` s'adresse à tous les cloneurs du dépôt, pas seulement aux administrateurs."
-   },
-   "doc_ref": "https://code.claude.com/docs/en/mcp"
-  }
- ]
+  "subdomain": "Configuration Management",
+  "domain": "Applications and Integration",
+  "weight": 4.1,
+  "target_questions": 16,
+  "sources_read": [
+    "https://code.claude.com/docs/en/settings",
+    "https://code.claude.com/docs/en/memory",
+    "https://code.claude.com/docs/en/permissions",
+    "https://code.claude.com/docs/en/mcp"
+  ],
+  "questions": [
+    {
+      "id": "CFG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Les quatre portees de configuration : Managed, User, Project, Local",
+      "question_en": "Claude Code configuration is organized into which set of scopes?",
+      "question_fr": "La configuration de Claude Code s'organise selon quel ensemble de portées ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Managed, User, Project, and Local.",
+          "text_fr": "Managed, User, Project et Local."
+        },
+        {
+          "key": "B",
+          "text_en": "Global, Session, Cache, and Backup.",
+          "text_fr": "Global, Session, Cache et Backup."
+        },
+        {
+          "key": "C",
+          "text_en": "Admin, Developer, Guest, and Anonymous.",
+          "text_fr": "Admin, Developer, Guest et Anonymous."
+        },
+        {
+          "key": "D",
+          "text_en": "System, Network, Terminal, and Model.",
+          "text_fr": "System, Network, Terminal et Model."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc décrit un système de portées à quatre niveaux : Managed, User, Project et Local, chacune avec un emplacement et un périmètre de partage différents.",
+      "principe_fr": "La configuration de Claude Code suit une hiérarchie de portées allant du plus contraignant au plus personnel : une politique imposée par l'organisation (Managed), des préférences valables pour tous vos projets (User), des réglages partagés par le dépôt (Project), et des réglages propres à votre machine (Local). Chaque portée correspond à un emplacement de fichier distinct et à un périmètre de partage distinct ; retenir ces deux axes suffit à déduire où placer un réglage donné.",
+      "distractors_fr": {
+        "B": "Ces noms ne correspondent pas aux portées de configuration de Claude Code.",
+        "C": "Il n'existe pas de portées « Admin/Developer/Guest » dans Claude Code.",
+        "D": "Ces termes ne désignent pas les portées de configuration."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Emplacements des settings : utilisateur ~/.claude vs projet .claude",
+      "question_en": "Where do user-scope settings live, applying across all your projects?",
+      "question_fr": "Où se trouvent les réglages de portée utilisateur, ceux qui s'appliquent à tous vos projets ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In .claude/settings.json at the repository root.",
+          "text_fr": "Dans .claude/settings.json à la racine du dépôt."
+        },
+        {
+          "key": "B",
+          "text_en": "In ~/.claude/settings.json in your home directory.",
+          "text_fr": "Dans ~/.claude/settings.json dans votre répertoire personnel."
+        },
+        {
+          "key": "C",
+          "text_en": "In .claude/settings.local.json at the repository root.",
+          "text_fr": "Dans .claude/settings.local.json à la racine du dépôt."
+        },
+        {
+          "key": "D",
+          "text_en": "In a managed-settings.json under a system directory.",
+          "text_fr": "Dans un managed-settings.json placé dans un répertoire système."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : « User settings are defined in ~/.claude/settings.json and apply to all projects. »",
+      "citations_fr": [
+        "Les réglages utilisateur sont définis dans ~/.claude/settings.json et s'appliquent à tous les projets."
+      ],
+      "principe_fr": "L'emplacement d'un fichier de configuration révèle sa portée : ce qui vit dans le répertoire personnel (~/.claude) vous suit d'un projet à l'autre, ce qui vit dans .claude à la racine du dépôt ne concerne que ce dépôt. Ce raisonnement par emplacement permet de retrouver la bonne portée sans mémoriser de liste.",
+      "distractors_fr": {
+        "A": "`.claude/settings.json` est la portée Project (partagée via git), pas la portée User.",
+        "C": "`.claude/settings.local.json` est la portée Local (personnelle au dépôt), pas User.",
+        "D": "`managed-settings.json` relève de la portée Managed déployée par l'IT."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "settings.local.json : reglages personnels non versionnes",
+      "question_en": "You want a setting that stays on your machine and out of version control. Which file?",
+      "question_fr": "Vous voulez un réglage qui reste sur votre machine et hors du contrôle de version. Quel fichier ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`.claude/settings.json`, which is committed and shared with the team.",
+          "text_fr": "`.claude/settings.json`, qui est versionné et partagé avec l'équipe."
+        },
+        {
+          "key": "B",
+          "text_en": "`~/.claude/CLAUDE.md`, your user memory file.",
+          "text_fr": "`~/.claude/CLAUDE.md`, votre fichier de mémoire utilisateur."
+        },
+        {
+          "key": "C",
+          "text_en": "`.claude/settings.local.json`, which Claude Code gitignores.",
+          "text_fr": "`.claude/settings.local.json`, que Claude Code ajoute au gitignore."
+        },
+        {
+          "key": "D",
+          "text_en": "`managed-settings.json`, deployed by your IT department.",
+          "text_fr": "`managed-settings.json`, déployé par votre service informatique."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : `.claude/settings.local.json` sert aux réglages « that are not checked in, useful for personal preferences », et Claude Code l'ajoute aux exclusions git quand il y écrit.",
+      "citations_fr": [
+        "qui ne sont pas versionnés, utiles pour les préférences personnelles"
+      ],
+      "principe_fr": "Le suffixe .local dans un nom de fichier de configuration signale par convention un réglage non versionné : il vaut pour le projet courant mais reste sur votre machine. C'est la portée à choisir dès qu'un réglage est spécifique au dépôt mais ne doit pas être imposé aux collègues.",
+      "distractors_fr": {
+        "A": "`.claude/settings.json` est justement versionné et partagé avec l'équipe : l'inverse du besoin.",
+        "B": "`CLAUDE.md` porte des instructions, pas des réglages de configuration, et le fichier user est partagé sur toutes tes machines si tu le synchronises.",
+        "D": "`managed-settings.json` est déployé par l'IT à l'échelle de l'organisation, pas un réglage machine personnel."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Ordre de priorite des portees de configuration",
+      "question_en": "The same setting is defined in Managed, Project, and User scopes. Which value applies?",
+      "question_fr": "Le même réglage est défini dans les portées Managed, Project et User. Quelle valeur s'applique ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The User value, as the base default for everything.",
+          "text_fr": "La valeur User, comme valeur de base par défaut pour tout."
+        },
+        {
+          "key": "B",
+          "text_en": "The Project value, since it sits closest to the actual code.",
+          "text_fr": "La valeur Project, puisqu'elle est la plus proche du code réel."
+        },
+        {
+          "key": "C",
+          "text_en": "Whichever scope defined the setting most recently.",
+          "text_fr": "Celle de la portée qui a défini le réglage le plus récemment."
+        },
+        {
+          "key": "D",
+          "text_en": "The Managed value; it can't be overridden by others.",
+          "text_fr": "La valeur Managed ; elle ne peut être surchargée par les autres."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc classe les priorités : Managed (le plus haut, « can't be overridden by anything »), puis arguments CLI, Local, Project, et User (le plus bas). Managed l'emporte donc.",
+      "citations_fr": [
+        "ne peut être surchargée par quoi que ce soit"
+      ],
+      "principe_fr": "Les portées forment une chaîne de priorité fixe, indépendante de l'ordre ou de la date d'écriture : Managed, puis les arguments CLI, puis Local, puis Project, puis User. La logique est que plus une portée est contrainte par l'organisation, plus elle domine ; plus elle est générique et personnelle, plus elle sert de simple valeur de repli.",
+      "distractors_fr": {
+        "A": "User est la priorité la plus basse : elle ne s'applique que si rien d'autre ne définit le réglage.",
+        "B": "Project l'emporte sur User mais pas sur Managed ; la proximité du code ne joue pas.",
+        "C": "La priorité ne dépend pas de la date de modification mais de la portée."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "La portee Managed ne peut etre surchargee par personne",
+      "question_en": "What is special about the Managed configuration scope?",
+      "question_fr": "Qu'y a-t-il de particulier dans la portée de configuration Managed ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It has the highest priority and can't be overridden.",
+          "text_fr": "Elle a la priorité la plus élevée et ne peut pas être surchargée."
+        },
+        {
+          "key": "B",
+          "text_en": "It only applies inside a single git repository.",
+          "text_fr": "Elle ne s'applique qu'à l'intérieur d'un seul dépôt git."
+        },
+        {
+          "key": "C",
+          "text_en": "It is the fallback used only when nothing else specifies it.",
+          "text_fr": "C'est la valeur de repli utilisée seulement si rien d'autre ne la précise."
+        },
+        {
+          "key": "D",
+          "text_en": "It is stored in the user's home directory.",
+          "text_fr": "Elle est stockée dans le répertoire personnel de l'utilisateur."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc : Managed est prioritaire et « cannot be overridden by user or project settings » — conçu pour les politiques de sécurité imposées à toute l'organisation.",
+      "citations_fr": [
+        "ne peut pas être surchargée par les réglages utilisateur ou projet"
+      ],
+      "principe_fr": "Une portée administrée existe pour appliquer des politiques que l'utilisateur ne doit pas pouvoir contourner : sa raison d'être est précisément l'impossibilité de surcharge. Dès qu'une question porte sur une contrainte de sécurité imposée à toute une organisation, cherchez le niveau administré plutôt qu'un réglage projet ou utilisateur.",
+      "distractors_fr": {
+        "B": "Managed s'applique à l'échelle de la machine ou de l'organisation, pas à un seul dépôt.",
+        "C": "Le repli quand rien n'est défini est la portée User, pas Managed.",
+        "D": "Managed est déployé dans des répertoires système ou via MDM, pas dans le home de l'utilisateur."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Portees partagees avec l equipe : Project et Managed",
+      "question_en": "Which TWO configuration scopes are shared with other people, not just you?",
+      "question_fr": "Quelles DEUX portées de configuration sont partagées avec d'autres personnes, et pas seulement avec vous ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "User scope, from your home directory.",
+          "text_fr": "La portée User, depuis votre répertoire personnel."
+        },
+        {
+          "key": "B",
+          "text_en": "Project scope, committed to the repository.",
+          "text_fr": "La portée Project, versionnée dans le dépôt."
+        },
+        {
+          "key": "C",
+          "text_en": "Local scope, in settings.local.json.",
+          "text_fr": "La portée Local, dans settings.local.json."
+        },
+        {
+          "key": "D",
+          "text_en": "Managed scope, deployed by your IT team.",
+          "text_fr": "La portée Managed, déployée par votre service informatique."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Dans la table des portées, seules Project (« committed to git ») et Managed (« deployed by IT ») sont marquées « Shared with team? Yes ». User et Local ne le sont pas.",
+      "citations_fr": [
+        "versionné dans git",
+        "déployé par le service informatique",
+        "Partagé avec l'équipe ? Oui"
+      ],
+      "principe_fr": "Le partage d'une portée découle de son mécanisme de distribution : ce qui est versionné dans le dépôt ou déployé par l'administration atteint d'autres personnes, ce qui reste dans votre répertoire personnel ou dans un fichier ignoré par git ne concerne que vous. Priorité et partage sont deux axes indépendants : une portée peut être très prioritaire sans être partagée, et inversement.",
+      "distractors_fr": {
+        "A": "La portée User n'affecte que toi, sur tous tes projets : non partagée.",
+        "C": "La portée Local (settings.local.json) n'est pas versionnée : elle ne concerne que toi."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Contenu de ~/.claude.json : session OAuth, serveurs MCP user/local, etat par projet",
+      "question_en": "What does the ~/.claude.json file primarily hold?",
+      "question_fr": "Que contient principalement le fichier ~/.claude.json ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The project's committed team settings and hooks.",
+          "text_fr": "Les réglages d'équipe et les hooks versionnés du projet."
+        },
+        {
+          "key": "B",
+          "text_en": "Managed policies deployed by the organization's IT.",
+          "text_fr": "Les politiques managées déployées par le service informatique de l'organisation."
+        },
+        {
+          "key": "C",
+          "text_en": "Your OAuth session, user/local MCP servers, and project state.",
+          "text_fr": "Votre session OAuth, les serveurs MCP de portée user et local, et l'état par projet."
+        },
+        {
+          "key": "D",
+          "text_en": "The complete transcript of every past Claude Code session you ran.",
+          "text_fr": "La transcription complète de toutes vos sessions Claude Code passées."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : `~/.claude.json` « contains your OAuth session, MCP server configurations for user and local scopes, per-project state (allowed tools, trust settings), and various caches. »",
+      "citations_fr": [
+        "contient votre session OAuth, les configurations de serveurs MCP pour les portées user et local, l'état par projet (outils autorisés, réglages de confiance) et divers caches."
+      ],
+      "principe_fr": "Séparez les fichiers d'état machine des fichiers de configuration partagée. ~/.claude.json est un fichier d'état local et personnel (session, caches, décisions par projet), donc jamais versionné ; les réglages destinés à l'équipe vivent dans .claude/settings.json du dépôt. Quand une question porte sur un fichier de configuration, demandez-vous d'abord s'il est personnel ou partagé, et s'il décrit un état ou une intention.",
+      "distractors_fr": {
+        "A": "Les réglages d'équipe versionnés vivent dans `.claude/settings.json`, pas dans `~/.claude.json`.",
+        "B": "Les politiques Managed sont déployées dans des répertoires système, pas dans `~/.claude.json`.",
+        "D": "`~/.claude.json` ne stocke pas les transcriptions de session."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "id": "CFG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "CLAUDE.md est charge comme contexte a chaque session, pas comme config imposee",
+      "question_en": "How does Claude Code treat the instructions in a CLAUDE.md file?",
+      "question_fr": "Comment Claude Code traite-t-il les instructions d'un fichier CLAUDE.md ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "As enforced configuration that strictly hard-blocks any disallowed action.",
+          "text_fr": "Comme une configuration appliquée qui bloque strictement toute action interdite."
+        },
+        {
+          "key": "B",
+          "text_en": "As context loaded each session, which Claude may not always follow.",
+          "text_fr": "Comme du contexte chargé à chaque session, que Claude ne suivra pas toujours."
+        },
+        {
+          "key": "C",
+          "text_en": "As a one-time setup script run only on the first launch.",
+          "text_fr": "Comme un script d'installation exécuté une seule fois au premier lancement."
+        },
+        {
+          "key": "D",
+          "text_en": "As managed policy that overrides the user's own settings.",
+          "text_fr": "Comme une politique managée qui prime sur les réglages de l'utilisateur."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : les CLAUDE.md « are loaded at the start of every conversation. Claude treats them as context, not enforced configuration », et les suit d'autant mieux qu'ils sont concis et précis.",
+      "citations_fr": [
+        "sont chargés au début de chaque conversation. Claude les traite comme du contexte, pas comme une configuration appliquée"
+      ],
+      "principe_fr": "Distinguez deux natures de contrôle : ce qui influence le modèle et ce qui contraint le harnais. Un texte injecté dans le prompt (CLAUDE.md, skill, instruction système) infléchit les probabilités de comportement sans garantie ; seuls les mécanismes exécutés hors du modèle (règles de permission, hooks) offrent une garantie. Choisissez le niveau selon que vous voulez guider ou interdire.",
+      "distractors_fr": {
+        "A": "CLAUDE.md n'est pas de la configuration imposée : pour bloquer une action, il faut un hook PreToolUse.",
+        "C": "CLAUDE.md est rechargé à chaque session, ce n'est pas un script exécuté une seule fois.",
+        "D": "CLAUDE.md ne surcharge pas les réglages ; c'est du contexte que Claude peut ne pas suivre."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "CFG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Emplacements d un CLAUDE.md de projet : ./CLAUDE.md ou ./.claude/CLAUDE.md",
+      "question_en": "Where can a project-level CLAUDE.md file be placed?",
+      "question_fr": "Où peut-on placer un fichier CLAUDE.md de niveau projet ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only in the user's ~/.claude directory.",
+          "text_fr": "Uniquement dans le répertoire ~/.claude de l'utilisateur."
+        },
+        {
+          "key": "B",
+          "text_en": "Only inside a managed system directory.",
+          "text_fr": "Uniquement dans un répertoire système managé."
+        },
+        {
+          "key": "C",
+          "text_en": "In ./CLAUDE.md or ./.claude/CLAUDE.md.",
+          "text_fr": "Dans ./CLAUDE.md ou ./.claude/CLAUDE.md."
+        },
+        {
+          "key": "D",
+          "text_en": "In ./CLAUDE.local.md, which git ignores.",
+          "text_fr": "Dans ./CLAUDE.local.md, que git ignore."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc : « A project CLAUDE.md can be stored in either ./CLAUDE.md or ./.claude/CLAUDE.md », partagé avec l'équipe via le contrôle de version.",
+      "citations_fr": [
+        "Un CLAUDE.md de projet peut être stocké soit dans ./CLAUDE.md, soit dans ./.claude/CLAUDE.md"
+      ],
+      "distractors_fr": {
+        "A": "`~/.claude/CLAUDE.md` est le CLAUDE.md de portée User, pas celui du projet.",
+        "B": "Le répertoire système héberge le CLAUDE.md de politique Managed, pas celui du projet.",
+        "D": "`CLAUDE.local.md` est la variante locale personnelle, distincte du CLAUDE.md de projet partagé."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "CFG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Pour bloquer reellement une action : hook PreToolUse, pas CLAUDE.md",
+      "question_en": "You need to guarantee Claude never runs a certain action, no matter what it decides. What works?",
+      "question_fr": "Vous devez garantir que Claude n'exécutera jamais une certaine action, quelle que soit sa décision. Qu'est-ce qui fonctionne ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Add a strongly worded 'never do X' rule to CLAUDE.md.",
+          "text_fr": "Ajouter dans CLAUDE.md une règle très ferme du type « ne jamais faire X »."
+        },
+        {
+          "key": "B",
+          "text_en": "Put the instruction in your user-scope CLAUDE.md file.",
+          "text_fr": "Placer l'instruction dans votre CLAUDE.md de portée utilisateur."
+        },
+        {
+          "key": "C",
+          "text_en": "Repeat the instruction in both CLAUDE.md and the prompt.",
+          "text_fr": "Répéter l'instruction à la fois dans CLAUDE.md et dans le prompt."
+        },
+        {
+          "key": "D",
+          "text_en": "Use a PreToolUse hook, which the harness enforces.",
+          "text_fr": "Utiliser un hook PreToolUse, que le harnais applique."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc : « To block an action regardless of what Claude decides, use a PreToolUse hook instead » — CLAUDE.md n'est que du contexte, pas une contrainte dure.",
+      "citations_fr": [
+        "Pour bloquer une action indépendamment de ce que Claude décide, utilisez plutôt un hook PreToolUse"
+      ],
+      "principe_fr": "Une garantie ne peut venir que d'un point de contrôle déterministe situé en dehors du modèle. PreToolUse s'exécute avant chaque appel d'outil et peut refuser l'exécution, ce qu'aucune formulation de prompt ne peut assurer. Règle générale : besoin de politique dure, alors hook ou règle deny ; besoin de préférence stylistique, alors CLAUDE.md.",
+      "distractors_fr": {
+        "A": "Une règle dans CLAUDE.md reste du contexte : Claude peut ne pas la suivre, elle ne bloque rien.",
+        "B": "Changer la portée du CLAUDE.md n'en fait pas une contrainte imposée.",
+        "C": "Répéter l'instruction augmente l'adhérence mais ne garantit toujours pas le blocage."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "CFG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Evaluation des regles de permission : deny, puis ask, puis allow",
+      "question_en": "In what order does Claude Code evaluate permission rules?",
+      "question_fr": "Dans quel ordre Claude Code évalue-t-il les règles de permission ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Deny first, then ask, then allow; first match decides.",
+          "text_fr": "D'abord deny, puis ask, puis allow ; la première correspondance décide."
+        },
+        {
+          "key": "B",
+          "text_en": "Allow first, then ask, then deny; the last match decides.",
+          "text_fr": "D'abord allow, puis ask, puis deny ; la dernière correspondance décide."
+        },
+        {
+          "key": "C",
+          "text_en": "By specificity: the narrowest matching rule always takes priority.",
+          "text_fr": "Par spécificité : la règle correspondante la plus étroite prime toujours."
+        },
+        {
+          "key": "D",
+          "text_en": "Alphabetically by tool name, then by rule length.",
+          "text_fr": "Par ordre alphabétique de nom d'outil, puis par longueur de règle."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc : « Rules are evaluated in order: deny, then ask, then allow. The first match in that order determines the outcome, and rule specificity doesn't change the order. »",
+      "citations_fr": [
+        "Les règles sont évaluées dans cet ordre : deny, puis ask, puis allow. La première correspondance dans cet ordre détermine le résultat, et la spécificité d'une règle ne change pas l'ordre."
+      ],
+      "principe_fr": "Les systèmes de permission sont ordonnés par sévérité décroissante, pas par précision. Une règle deny large l'emporte donc sur une règle allow très spécifique : on ne peut pas « rouvrir » par exception ce qui a été interdit. Concevez vos listes en partant de l'interdit, puis élargissez avec ask et allow.",
+      "distractors_fr": {
+        "B": "L'ordre est deny → ask → allow, et c'est le premier match qui décide, pas le dernier.",
+        "C": "La spécificité ne change pas l'ordre : un deny large l'emporte sur un allow plus précis.",
+        "D": "L'évaluation ne se fait pas par ordre alphabétique."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "CFG-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Regle deny nue vs portee : retirer l outil du contexte ou bloquer des appels",
+      "question_en": "Select the TWO accurate statements about deny rules.",
+      "question_fr": "Sélectionnez les DEUX affirmations exactes concernant les règles deny.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A bare tool name like `Bash` removes the tool from Claude's context.",
+          "text_fr": "Un nom d'outil nu comme `Bash` retire l'outil du contexte de Claude."
+        },
+        {
+          "key": "B",
+          "text_en": "A bare tool name merely prints a warning yet still lets the tool run freely.",
+          "text_fr": "Un nom d'outil nu affiche seulement un avertissement mais laisse l'outil s'exécuter librement."
+        },
+        {
+          "key": "C",
+          "text_en": "A scoped rule like `Bash(rm *)` blocks only matching calls.",
+          "text_fr": "Une règle avec portée comme `Bash(rm *)` ne bloque que les appels correspondants."
+        },
+        {
+          "key": "D",
+          "text_en": "A scoped rule disables the entire tool across every possible command.",
+          "text_fr": "Une règle avec portée désactive l'outil entier pour toutes les commandes possibles."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La doc : « A bare tool name like Bash removes the tool from Claude's context entirely », tandis qu'« A scoped rule like Bash(rm *) leaves the tool available and blocks matching calls when Claude attempts them. »",
+      "citations_fr": [
+        "Un nom d'outil nu comme Bash retire entièrement l'outil du contexte de Claude",
+        "Une règle avec portée comme Bash(rm *) laisse l'outil disponible et bloque les appels correspondants lorsque Claude tente de les faire."
+      ],
+      "principe_fr": "La granularité de la règle détermine le moment où elle agit. Un nom d'outil nu agit en amont, à la construction du contexte : l'outil n'existe plus pour le modèle. Une règle avec motif agit au moment de l'appel : l'outil reste visible et utilisable, seuls les appels correspondants sont refusés. Retirer un outil réduit aussi la fenêtre de contexte, filtrer le préserve.",
+      "distractors_fr": {
+        "B": "Un deny sur le nom nu ne se contente pas d'avertir : il retire complètement l'outil du contexte.",
+        "D": "Une règle à spécificateur ne désactive pas tout l'outil : elle ne bloque que les appels correspondants."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "CFG-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Les regles de permission sont appliquees par Claude Code, pas par le modele",
+      "question_en": "Who actually enforces permission rules?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The model itself, based on your CLAUDE.md instructions."
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Code itself, independent of the prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "The prompt, which the model reads and obeys."
+        },
+        {
+          "key": "D",
+          "text_en": "The Anthropic API, on the server side."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : « Permission rules are enforced by Claude Code, not by the model. Instructions in your prompt or CLAUDE.md shape what Claude tries to do, but they don't change what Claude Code allows. »",
+      "distractors_fr": {
+        "A": "Le modèle décide de ce qu'il tente, mais l'application des règles revient à Claude Code, pas au modèle.",
+        "C": "Le prompt oriente l'intention mais n'applique aucune règle de permission.",
+        "D": "L'API ne gère pas les permissions d'outils de Claude Code : c'est le client qui les applique."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "CFG-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "Portees MCP stockees dans ~/.claude.json : local et user",
+      "question_en": "Which TWO MCP server scopes are stored inside ~/.claude.json?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The local scope, private to you in one project."
+        },
+        {
+          "key": "B",
+          "text_en": "The project scope, written to .mcp.json in the repo."
+        },
+        {
+          "key": "C",
+          "text_en": "The managed scope, deployed by your IT department."
+        },
+        {
+          "key": "D",
+          "text_en": "The user scope, active across all of your projects."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "La doc situe le scope `local` dans `~/.claude.json` (sous l'entrée du projet) et le scope `user` dans `~/.claude.json` (clé `mcpServers`). Le scope `project`, lui, vit dans `.mcp.json`.",
+      "distractors_fr": {
+        "B": "Le scope `project` est écrit dans `.mcp.json` à la racine du dépôt, pas dans `~/.claude.json`.",
+        "C": "Le MCP managé est déployé séparément (managed-mcp.json), pas dans `~/.claude.json`."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "id": "CFG-015",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "bypassPermissions : environnements isoles, rm -rf / invite quand meme",
+      "question_en": "What is true about bypassPermissions mode?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It removes every single prompt, including the one for `rm -rf /`."
+        },
+        {
+          "key": "B",
+          "text_en": "It is the recommended default for everyday coding."
+        },
+        {
+          "key": "C",
+          "text_en": "It suits isolated environments; `rm -rf /` still prompts."
+        },
+        {
+          "key": "D",
+          "text_en": "It only skips prompts for read-only file operations."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc recommande `bypassPermissions` « only in isolated environments like containers or VMs », et précise que les suppressions visant la racine ou le home, comme `rm -rf /`, invitent quand même « as a circuit breaker ».",
+      "distractors_fr": {
+        "A": "Un garde-fou subsiste : `rm -rf /` (et `rm -rf ~`) déclenche toujours une invite.",
+        "B": "La doc met en garde contre son usage hors environnements isolés : ce n'est pas un défaut recommandé.",
+        "D": "Le mode saute la plupart des invites, pas seulement pour des opérations en lecture seule."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "CFG-016",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": ".mcp.json : serveurs MCP partages avec tous ceux qui clonent le depot",
+      "question_en": "You add an MCP server at project scope in .mcp.json. Who gets it?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only you, and only inside this one project."
+        },
+        {
+          "key": "B",
+          "text_en": "Everyone who clones the project repository."
+        },
+        {
+          "key": "C",
+          "text_en": "All your projects, but nobody else on the team."
+        },
+        {
+          "key": "D",
+          "text_en": "Only administrators with managed settings access."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc : le scope `project`, stocké dans `.mcp.json` à la racine, est « Available to: Everyone who clones the project. »",
+      "distractors_fr": {
+        "A": "« Seulement toi, seulement ce projet » décrit le scope `local`, pas `project`.",
+        "C": "« Tous tes projets, mais toi seul » décrit le scope `user`, pas `project`.",
+        "D": "Le scope `project` s'adresse à tous les cloneurs du dépôt, pas seulement aux administrateurs."
+      },
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    }
+  ]
 }

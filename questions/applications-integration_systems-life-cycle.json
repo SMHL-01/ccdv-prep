@@ -19,12 +19,26 @@
       "concept": "Les quatre etats du cycle de vie d'un modele",
       "question_en": "What are the model lifecycle states Anthropic uses?",
       "options": [
-        { "key": "A", "text_en": "Active, Legacy, Deprecated, Retired." },
-        { "key": "B", "text_en": "Alpha, Beta, Stable, and Sunset phases." },
-        { "key": "C", "text_en": "Draft, Live, Frozen, Archived." },
-        { "key": "D", "text_en": "New, Current, Old, Removed." }
+        {
+          "key": "A",
+          "text_en": "Active, Legacy, Deprecated, Retired."
+        },
+        {
+          "key": "B",
+          "text_en": "Alpha, Beta, Stable, and Sunset phases."
+        },
+        {
+          "key": "C",
+          "text_en": "Draft, Live, Frozen, Archived."
+        },
+        {
+          "key": "D",
+          "text_en": "New, Current, Old, Removed."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc definit le cycle de vie : « Active [...] Legacy [...] Deprecated [...] Retired. » Ce sont les quatre etats officiels.",
       "distractors_fr": {
         "B": "Alpha/Beta/Stable/Sunset n'est pas la terminologie du cycle de vie des modeles Anthropic.",
@@ -44,12 +58,26 @@
       "concept": "Comportement d'un modele retire : requetes en echec",
       "question_en": "What happens when you send a request to a retired model?",
       "options": [
-        { "key": "A", "text_en": "It is transparently routed to the newest model." },
-        { "key": "B", "text_en": "It fails; the model is no longer available." },
-        { "key": "C", "text_en": "It runs but returns a deprecation warning only." },
-        { "key": "D", "text_en": "It is queued until the model is reactivated." }
+        {
+          "key": "A",
+          "text_en": "It is transparently routed to the newest model."
+        },
+        {
+          "key": "B",
+          "text_en": "It fails; the model is no longer available."
+        },
+        {
+          "key": "C",
+          "text_en": "It runs but returns a deprecation warning only."
+        },
+        {
+          "key": "D",
+          "text_en": "It is queued until the model is reactivated."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc : « Retired: The model is no longer available for use. Requests to retired models will fail. »",
       "distractors_fr": {
         "A": "Aucun re-routage automatique : la requete echoue tout simplement.",
@@ -69,12 +97,26 @@
       "concept": "Un modele deprecie reste fonctionnel avec date de retrait",
       "question_en": "A model is marked 'Deprecated'. What is true?",
       "options": [
-        { "key": "A", "text_en": "It is already unavailable and every request fails." },
-        { "key": "B", "text_en": "It receives all the latest updates like active models." },
-        { "key": "C", "text_en": "It still works but has a replacement and end date." },
-        { "key": "D", "text_en": "It can never be replaced by a newer model." }
+        {
+          "key": "A",
+          "text_en": "It is already unavailable and every request fails."
+        },
+        {
+          "key": "B",
+          "text_en": "It receives all the latest updates like active models."
+        },
+        {
+          "key": "C",
+          "text_en": "It still works but has a replacement and end date."
+        },
+        {
+          "key": "D",
+          "text_en": "It can never be replaced by a newer model."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « Deprecated: The model is still functional but no longer recommended. Anthropic provides a recommended replacement and assigns a retirement date. »",
       "distractors_fr": {
         "A": "Un modele deprecie fonctionne encore ; c'est le modele retire qui echoue.",
@@ -94,12 +136,26 @@
       "concept": "Definition d'un modele legacy",
       "question_en": "What defines a 'Legacy' model?",
       "options": [
-        { "key": "A", "text_en": "It has already been retired from the API." },
-        { "key": "B", "text_en": "It is the newest recommended model you should use now." },
-        { "key": "C", "text_en": "It fails all requests until migration." },
-        { "key": "D", "text_en": "It gets no more updates and may be deprecated." }
+        {
+          "key": "A",
+          "text_en": "It has already been retired from the API."
+        },
+        {
+          "key": "B",
+          "text_en": "It is the newest recommended model you should use now."
+        },
+        {
+          "key": "C",
+          "text_en": "It fails all requests until migration."
+        },
+        {
+          "key": "D",
+          "text_en": "It gets no more updates and may be deprecated."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc : « Legacy: The model will no longer receive updates and may be deprecated in the future. »",
       "distractors_fr": {
         "A": "Un modele legacy n'est pas encore retire ; il fonctionne toujours.",
@@ -119,12 +175,26 @@
       "concept": "Un modele actif est pleinement supporte",
       "question_en": "What does 'Active' status mean for a model?",
       "options": [
-        { "key": "A", "text_en": "It is fully supported and recommended." },
-        { "key": "B", "text_en": "It will fail requests after a grace period." },
-        { "key": "C", "text_en": "It is frozen and receives no support at all." },
-        { "key": "D", "text_en": "It is only available to enterprise customers." }
+        {
+          "key": "A",
+          "text_en": "It is fully supported and recommended."
+        },
+        {
+          "key": "B",
+          "text_en": "It will fail requests after a grace period."
+        },
+        {
+          "key": "C",
+          "text_en": "It is frozen and receives no support at all."
+        },
+        {
+          "key": "D",
+          "text_en": "It is only available to enterprise customers."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « Active: The model is fully supported and recommended for use. »",
       "distractors_fr": {
         "B": "Un modele actif ne fait pas echouer les requetes ; c'est le modele retire.",
@@ -144,12 +214,26 @@
       "concept": "Notification de retrait par email et documentation",
       "question_en": "How are customers informed about an upcoming model retirement?",
       "options": [
-        { "key": "A", "text_en": "Only through a banner inside the model's responses." },
-        { "key": "B", "text_en": "By email and in the documentation." },
-        { "key": "C", "text_en": "They must poll the status API to find out." },
-        { "key": "D", "text_en": "There is no notice; models vanish without warning." }
+        {
+          "key": "A",
+          "text_en": "Only through a banner inside the model's responses."
+        },
+        {
+          "key": "B",
+          "text_en": "By email and in the documentation."
+        },
+        {
+          "key": "C",
+          "text_en": "They must poll the status API to find out."
+        },
+        {
+          "key": "D",
+          "text_en": "There is no notice; models vanish without warning."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc : « Impacted customers will always be notified by email and in the documentation. » Un preavis (au moins 60 jours pour les modeles publics) est donne.",
       "distractors_fr": {
         "A": "La notification passe par email et la documentation, pas par une banniere dans les reponses.",
@@ -168,14 +252,38 @@
       "difficulty": "difficile",
       "concept": "Migrer et tester avant la date de retrait",
       "question_en": "A model you use is deprecated with a retirement date. What is the recommended course?",
+      "question_fr": "Un modèle que vous utilisez est déprécié, avec une date de retrait annoncée. Quelle est la conduite recommandée ?",
       "options": [
-        { "key": "A", "text_en": "Wait until the retirement date, then switch instantly." },
-        { "key": "B", "text_en": "Keep using it; deprecated models never actually stop." },
-        { "key": "C", "text_en": "Migrate to a replacement and test before that date." },
-        { "key": "D", "text_en": "Downgrade to an older legacy model for stability." }
+        {
+          "key": "A",
+          "text_en": "Wait until the retirement date, then switch instantly.",
+          "text_fr": "Attendre la date de retrait, puis basculer instantanément."
+        },
+        {
+          "key": "B",
+          "text_en": "Keep using it; deprecated models never actually stop.",
+          "text_fr": "Continuer à l'utiliser : les modèles dépréciés ne s'arrêtent jamais vraiment."
+        },
+        {
+          "key": "C",
+          "text_en": "Migrate to a replacement and test before that date.",
+          "text_fr": "Migrer vers un modèle de remplacement et tester avant cette date."
+        },
+        {
+          "key": "D",
+          "text_en": "Downgrade to an older legacy model for stability.",
+          "text_fr": "Revenir à un modèle plus ancien pour plus de stabilité."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « migrate all usage to a suitable replacement before the retirement date » et « consider thorough testing of your applications with the new models well before the retirement date. »",
+      "citations_fr": [
+        "migrez tous vos usages vers un remplacement adapté avant la date de retrait",
+        "envisagez de tester soigneusement vos applications avec les nouveaux modèles bien avant la date de retrait."
+      ],
+      "principe_fr": "Une date de retrait est une échéance dure : passé ce jour, les appels échouent. La bonne pratique est donc de traiter la dépréciation comme le début d'une fenêtre de migration, pas comme un simple avertissement : on change de modèle tôt, on valide les sorties et les prompts sur le remplaçant, et on garde une marge avant l'échéance pour corriger les écarts de comportement.",
       "distractors_fr": {
         "A": "Attendre la date de retrait pour basculer risque une interruption ; il faut migrer et tester avant.",
         "B": "Faux : passe la date de retrait, les requetes echouent.",
@@ -193,14 +301,37 @@
       "difficulty": "moyen",
       "concept": "Auditer l'usage des modeles deprecies via l'export Console",
       "question_en": "How can you find where your app still calls deprecated models?",
+      "question_fr": "Comment identifier les endroits où votre application appelle encore des modèles dépréciés ?",
       "options": [
-        { "key": "A", "text_en": "Deprecated calls throw an exception you can log." },
-        { "key": "B", "text_en": "The model returns its own deprecation status field." },
-        { "key": "C", "text_en": "Anthropic emails a per-request usage breakdown daily." },
-        { "key": "D", "text_en": "Export the Usage CSV in Console, split by model." }
+        {
+          "key": "A",
+          "text_en": "Deprecated calls throw an exception you can log.",
+          "text_fr": "Les appels aux modèles dépréciés lèvent une exception que l'on peut journaliser."
+        },
+        {
+          "key": "B",
+          "text_en": "The model returns its own deprecation status field.",
+          "text_fr": "Le modèle renvoie lui-même un champ indiquant son statut de dépréciation."
+        },
+        {
+          "key": "C",
+          "text_en": "Anthropic emails a per-request usage breakdown daily.",
+          "text_fr": "Anthropic envoie chaque jour par e-mail un détail d'usage requête par requête."
+        },
+        {
+          "key": "D",
+          "text_en": "Export the Usage CSV in Console, split by model.",
+          "text_fr": "Exporter le CSV d'usage depuis la Console et le ventiler par modèle."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc : « Go to the Usage page in Claude Console. Click Export. Review the downloaded CSV to see usage broken down by API key and model. »",
+      "citations_fr": [
+        "Ouvrez la page Usage dans la Claude Console. Cliquez sur Export. Examinez le CSV téléchargé pour voir l'usage ventilé par clé API et par modèle."
+      ],
+      "principe_fr": "L'audit d'usage se fait côté plateforme, pas côté réponse d'API : la Console agrège la consommation par clé API et par modèle, ce qui permet de localiser les intégrations restées sur un ancien modèle. Une réponse d'API ne vous signale pas spontanément qu'un modèle est déprécié ; l'inventaire est une démarche proactive.",
       "distractors_fr": {
         "A": "Les modeles deprecies fonctionnent encore : ils ne levent pas d'exception a logger.",
         "B": "La reponse du modele ne porte pas un champ de statut de depreciation ; on audite via l'export.",
@@ -218,14 +349,36 @@
       "difficulty": "difficile",
       "concept": "Raison de la depreciation : capacite pour les nouveaux modeles",
       "question_en": "Why does Anthropic deprecate and retire older models?",
+      "question_fr": "Pourquoi Anthropic déprécie et retire-t-il les modèles plus anciens ?",
       "options": [
-        { "key": "A", "text_en": "To ensure capacity for new model releases." },
-        { "key": "B", "text_en": "Because older models cost users nothing to run." },
-        { "key": "C", "text_en": "To force every customer onto the Enterprise plan." },
-        { "key": "D", "text_en": "Because retired models are more accurate than active ones." }
+        {
+          "key": "A",
+          "text_en": "To ensure capacity for new model releases.",
+          "text_fr": "Pour garantir la capacité nécessaire aux nouvelles sorties de modèles."
+        },
+        {
+          "key": "B",
+          "text_en": "Because older models cost users nothing to run.",
+          "text_fr": "Parce que les anciens modèles ne coûtent rien à faire tourner."
+        },
+        {
+          "key": "C",
+          "text_en": "To force every customer onto the Enterprise plan.",
+          "text_fr": "Pour forcer tous les clients à passer au plan Enterprise."
+        },
+        {
+          "key": "D",
+          "text_en": "Because retired models are more accurate than active ones.",
+          "text_fr": "Parce que les modèles retirés sont plus précis que les modèles actifs."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « Anthropic currently deprecates and retires models to ensure capacity for new model releases. »",
+      "citations_fr": [
+        "Anthropic déprécie et retire actuellement des modèles afin de garantir la capacité nécessaire aux nouvelles sorties de modèles."
+      ],
       "distractors_fr": {
         "B": "Le cout pour l'utilisateur n'est pas la raison invoquee ; c'est la capacite pour les nouveaux modeles.",
         "C": "La depreciation ne vise pas a forcer un changement de plan.",
@@ -243,14 +396,39 @@
       "difficulty": "moyen",
       "concept": "Caracteristiques d'un modele deprecie",
       "question_en": "Select the TWO statements that are true of a deprecated model.",
+      "question_fr": "Sélectionnez les DEUX affirmations vraies à propos d'un modèle déprécié.",
       "options": [
-        { "key": "A", "text_en": "It is likely less reliable than an active model." },
-        { "key": "B", "text_en": "It has already stopped serving all requests." },
-        { "key": "C", "text_en": "Anthropic assigns it a retirement date." },
-        { "key": "D", "text_en": "It is automatically upgraded to the active model." }
+        {
+          "key": "A",
+          "text_en": "It is likely less reliable than an active model.",
+          "text_fr": "Il est probablement moins fiable qu'un modèle actif."
+        },
+        {
+          "key": "B",
+          "text_en": "It has already stopped serving all requests.",
+          "text_fr": "Il a déjà cessé de servir toute requête."
+        },
+        {
+          "key": "C",
+          "text_en": "Anthropic assigns it a retirement date.",
+          "text_fr": "Anthropic lui attribue une date de retrait."
+        },
+        {
+          "key": "D",
+          "text_en": "It is automatically upgraded to the active model.",
+          "text_fr": "Il est automatiquement mis à niveau vers le modèle actif."
+        }
       ],
-      "correct": ["A", "C"],
+      "correct": [
+        "A",
+        "C"
+      ],
       "explanation_fr": "La doc : « Deprecated models are likely to be less reliable than active models » et « Anthropic provides a recommended replacement and assigns a retirement date. »",
+      "citations_fr": [
+        "Les modèles dépréciés sont probablement moins fiables que les modèles actifs",
+        "Anthropic fournit un remplacement recommandé et attribue une date de retrait."
+      ],
+      "principe_fr": "Il faut distinguer deux états successifs : déprécié signifie encore disponible mais sans garantie de fiabilité, avec un remplaçant recommandé et une date de retrait ; retiré signifie que les appels échouent. Aucune bascule automatique n'a lieu vers le modèle actif : la migration reste à la charge de l'intégrateur.",
       "distractors_fr": {
         "B": "Un modele deprecie fonctionne toujours ; c'est le modele retire qui cesse de repondre.",
         "D": "Aucune mise a niveau automatique : la migration vers un modele actif est a la charge du client."
@@ -267,14 +445,39 @@
       "difficulty": "difficile",
       "concept": "Compatibilite ascendante au sein d'une version d'API",
       "question_en": "Within a single Messages API version, select the TWO changes Anthropic may make.",
+      "question_fr": "Au sein d'une même version de l'API Messages, sélectionnez les DEUX changements qu'Anthropic peut effectuer.",
       "options": [
-        { "key": "A", "text_en": "Remove existing output parameters." },
-        { "key": "B", "text_en": "Add new optional input parameters." },
-        { "key": "C", "text_en": "Change the meaning of an existing input parameter entirely." },
-        { "key": "D", "text_en": "Add new variants to enum-like output values." }
+        {
+          "key": "A",
+          "text_en": "Remove existing output parameters.",
+          "text_fr": "Supprimer des paramètres de sortie existants."
+        },
+        {
+          "key": "B",
+          "text_en": "Add new optional input parameters.",
+          "text_fr": "Ajouter de nouveaux paramètres d'entrée optionnels."
+        },
+        {
+          "key": "C",
+          "text_en": "Change the meaning of an existing input parameter entirely.",
+          "text_fr": "Modifier entièrement la signification d'un paramètre d'entrée existant."
+        },
+        {
+          "key": "D",
+          "text_en": "Add new variants to enum-like output values.",
+          "text_fr": "Ajouter de nouvelles variantes aux valeurs de sortie de type énumération."
+        }
       ],
-      "correct": ["B", "D"],
+      "correct": [
+        "B",
+        "D"
+      ],
       "explanation_fr": "La doc versioning : Anthropic preserve les parametres d'entree/sortie existants mais peut « Add additional optional inputs » et « Add new variants to enum-like output values. » D'ou l'interet de coder de facon tolerante aux nouvelles valeurs.",
+      "citations_fr": [
+        "Ajouter des entrées optionnelles supplémentaires",
+        "Ajouter de nouvelles variantes aux valeurs de sortie de type énumération."
+      ],
+      "principe_fr": "La compatibilité ascendante au sein d'une version garantit que ce qui existe ne disparaît pas et ne change pas de sens : seules des additions sont permises. Conséquence pratique pour votre code : ne traitez jamais une liste de valeurs énumérées comme fermée et ne faites pas échouer le programme sur une valeur inconnue ; prévoyez un cas par défaut tolérant.",
       "distractors_fr": {
         "A": "Au contraire, la doc garantit la preservation des parametres de sortie existants au sein d'une version.",
         "C": "Le sens des parametres d'entree existants est preserve ; il n'est pas modifie sans nouvelle version."

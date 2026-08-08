@@ -19,12 +19,26 @@
       "concept": "Definir les criteres de succes avant de concevoir les evaluations",
       "question_en": "When should you define your success criteria while building an LLM-based application?",
       "options": [
-        { "key": "A", "text_en": "Up front, before you design any evaluations." },
-        { "key": "B", "text_en": "After deploying to production and collecting user complaints." },
-        { "key": "C", "text_en": "Only once evaluations start returning failing scores." },
-        { "key": "D", "text_en": "After the prompt is finalized, as a documentation step." }
+        {
+          "key": "A",
+          "text_en": "Up front, before you design any evaluations."
+        },
+        {
+          "key": "B",
+          "text_en": "After deploying to production and collecting user complaints."
+        },
+        {
+          "key": "C",
+          "text_en": "Only once evaluations start returning failing scores."
+        },
+        {
+          "key": "D",
+          "text_en": "After the prompt is finalized, as a documentation step."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « Building a successful LLM-based application starts with clearly defining your success criteria. » On fixe donc les criteres tout au debut, avant de concevoir les tests.",
       "distractors_fr": {
         "B": "Attendre les plaintes en production inverse la demarche : les criteres guident le developpement, pas l'inverse.",
@@ -44,12 +58,27 @@
       "concept": "Attributs d'un bon critere de succes : mesurable et atteignable",
       "question_en": "Select the TWO attributes that, per the guide, characterize a good success criterion.",
       "options": [
-        { "key": "A", "text_en": "Aspirational — set beyond current model limits." },
-        { "key": "B", "text_en": "Measurable — tied to metrics or defined scales." },
-        { "key": "C", "text_en": "Achievable — grounded in benchmarks and research." },
-        { "key": "D", "text_en": "Ambiguous — broad enough to fit almost any output at all." }
+        {
+          "key": "A",
+          "text_en": "Aspirational — set beyond current model limits."
+        },
+        {
+          "key": "B",
+          "text_en": "Measurable — tied to metrics or defined scales."
+        },
+        {
+          "key": "C",
+          "text_en": "Achievable — grounded in benchmarks and research."
+        },
+        {
+          "key": "D",
+          "text_en": "Ambiguous — broad enough to fit almost any output at all."
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "La doc definit de bons criteres comme « Specific, Measurable, Achievable, Relevant ». Parmi les propositions, seuls « Measurable » et « Achievable » figurent dans cette liste.",
       "distractors_fr": {
         "A": "Un bon critere doit rester atteignable ; viser au-dela des limites du modele contredit l'attribut « Achievable ».",
@@ -68,12 +97,26 @@
       "concept": "Critere specifique plutot que vague",
       "question_en": "Which statement is a 'Specific' success criterion rather than a vague one?",
       "options": [
-        { "key": "A", "text_en": "The model should give good performance on the task." },
-        { "key": "B", "text_en": "The model should classify sentiment accurately." },
-        { "key": "C", "text_en": "The model should behave well across all inputs." },
-        { "key": "D", "text_en": "The model should generally satisfy our users." }
+        {
+          "key": "A",
+          "text_en": "The model should give good performance on the task."
+        },
+        {
+          "key": "B",
+          "text_en": "The model should classify sentiment accurately."
+        },
+        {
+          "key": "C",
+          "text_en": "The model should behave well across all inputs."
+        },
+        {
+          "key": "D",
+          "text_en": "The model should generally satisfy our users."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc oppose « good performance » (vague) a « accurate sentiment classification » (specifique). Nommer la tache visee rend le critere specifique.",
       "distractors_fr": {
         "A": "« Good performance » est justement l'exemple de formulation vague donne par la doc.",
@@ -93,12 +136,26 @@
       "concept": "Rendre mesurable un objectif flou comme la surete",
       "question_en": "Your goal 'safe outputs' is hard to quantify. What does the 'Measurable' principle recommend?",
       "options": [
-        { "key": "A", "text_en": "Abandon it — safety is impossible to quantify reliably." },
-        { "key": "B", "text_en": "Rely on a reviewer's gut feeling, case by case." },
-        { "key": "C", "text_en": "Set a metric, e.g. under 0.1% of outputs flagged toxic." },
-        { "key": "D", "text_en": "Leave it qualitative and reassess sometime after launch." }
+        {
+          "key": "A",
+          "text_en": "Abandon it — safety is impossible to quantify reliably."
+        },
+        {
+          "key": "B",
+          "text_en": "Rely on a reviewer's gut feeling, case by case."
+        },
+        {
+          "key": "C",
+          "text_en": "Set a metric, e.g. under 0.1% of outputs flagged toxic."
+        },
+        {
+          "key": "D",
+          "text_en": "Leave it qualitative and reassess sometime after launch."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc transforme le critere flou « Safe outputs » en cible chiffree : « Less than 0.1% of outputs [...] flagged for toxicity out of 10,000 trials. » Meme un sujet difficile se ramene a une metrique.",
       "distractors_fr": {
         "A": "La doc montre au contraire qu'un objectif de surete peut etre chiffre ; l'abandonner est inutile.",
@@ -118,12 +175,26 @@
       "concept": "Fixer une cible atteignable a partir de benchmarks",
       "question_en": "How should you set the target value of a success criterion so it stays 'Achievable'?",
       "options": [
-        { "key": "A", "text_en": "Base it on benchmarks, prior experiments, or research." },
-        { "key": "B", "text_en": "Pick the highest number that would impress stakeholders." },
-        { "key": "C", "text_en": "Match whatever the current frontier model can theoretically do." },
-        { "key": "D", "text_en": "Choose a round figure and adjust it after launch." }
+        {
+          "key": "A",
+          "text_en": "Base it on benchmarks, prior experiments, or research."
+        },
+        {
+          "key": "B",
+          "text_en": "Pick the highest number that would impress stakeholders."
+        },
+        {
+          "key": "C",
+          "text_en": "Match whatever the current frontier model can theoretically do."
+        },
+        {
+          "key": "D",
+          "text_en": "Choose a round figure and adjust it after launch."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « Base your success criteria on industry benchmarks, prior experiments, [...] or expert knowledge. » Des cibles ancrees dans ces references restent atteignables.",
       "distractors_fr": {
         "B": "Un chiffre choisi pour impressionner n'a aucun ancrage empirique et risque d'etre irrealiste.",
@@ -143,12 +214,26 @@
       "concept": "Pertinence d'un critere selon la finalite de l'application",
       "question_en": "Why is citation accuracy a critical criterion for a medical-summary app but minor for a casual chatbot?",
       "options": [
-        { "key": "A", "text_en": "Because medical apps process more tokens per request." },
-        { "key": "B", "text_en": "Because chatbots cannot be evaluated for accuracy at all." },
-        { "key": "C", "text_en": "Because citations are only measurable in clinical text." },
-        { "key": "D", "text_en": "Because criteria must fit the app's purpose and users." }
+        {
+          "key": "A",
+          "text_en": "Because medical apps process more tokens per request."
+        },
+        {
+          "key": "B",
+          "text_en": "Because chatbots cannot be evaluated for accuracy at all."
+        },
+        {
+          "key": "C",
+          "text_en": "Because citations are only measurable in clinical text."
+        },
+        {
+          "key": "D",
+          "text_en": "Because criteria must fit the app's purpose and users."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc (attribut « Relevant ») : « citation accuracy might be critical for medical applications but less so for casual chatbots. » La pertinence d'un critere depend de la finalite et des besoins des utilisateurs.",
       "distractors_fr": {
         "A": "Le volume de tokens n'a rien a voir avec l'importance d'un critere pour l'usage vise.",
@@ -168,12 +253,27 @@
       "concept": "Diagnostiquer les attributs manquants d'un critere faible",
       "question_en": "The criterion 'the model should classify sentiments well' is weak. Select the TWO attributes it clearly fails.",
       "options": [
-        { "key": "A", "text_en": "It is not specific — \"well\" defines no concrete target." },
-        { "key": "B", "text_en": "It is not measurable — no metric or threshold is given." },
-        { "key": "C", "text_en": "It is not achievable — no model could ever reach it." },
-        { "key": "D", "text_en": "It is not relevant — sentiment is unrelated to any use case." }
+        {
+          "key": "A",
+          "text_en": "It is not specific — \"well\" defines no concrete target."
+        },
+        {
+          "key": "B",
+          "text_en": "It is not measurable — no metric or threshold is given."
+        },
+        {
+          "key": "C",
+          "text_en": "It is not achievable — no model could ever reach it."
+        },
+        {
+          "key": "D",
+          "text_en": "It is not relevant — sentiment is unrelated to any use case."
+        }
       ],
-      "correct": ["A", "B"],
+      "correct": [
+        "A",
+        "B"
+      ],
       "explanation_fr": "Le mot « well » ne fixe aucun objectif concret (echec de « Specific ») et n'attache aucune metrique (echec de « Measurable »), les deux faiblesses que la doc corrige avec un score F1 chiffre.",
       "distractors_fr": {
         "C": "Rien n'indique que la tache soit hors de portee ; l'atteignabilite n'est pas le probleme ici.",
@@ -192,12 +292,27 @@
       "concept": "Criteres de succes courants : fidelite a la tache et latence",
       "question_en": "Select the TWO items the guide lists among common success criteria for LLM applications.",
       "options": [
-        { "key": "A", "text_en": "Task fidelity — how well the task is performed." },
-        { "key": "B", "text_en": "Parameter count — how many weights the model has." },
-        { "key": "C", "text_en": "Training-set size — how much data the model saw." },
-        { "key": "D", "text_en": "Latency — how fast the model responds." }
+        {
+          "key": "A",
+          "text_en": "Task fidelity — how well the task is performed."
+        },
+        {
+          "key": "B",
+          "text_en": "Parameter count — how many weights the model has."
+        },
+        {
+          "key": "C",
+          "text_en": "Training-set size — how much data the model saw."
+        },
+        {
+          "key": "D",
+          "text_en": "Latency — how fast the model responds."
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "La liste des criteres courants de la doc inclut « Task fidelity [...] Latency [...] Price ». « Task fidelity » et « Latency » en font partie ; le nombre de parametres et la taille du corpus n'y figurent pas.",
       "distractors_fr": {
         "B": "Le nombre de parametres est une propriete interne du modele, pas un critere de succes applicatif liste.",
@@ -216,12 +331,26 @@
       "concept": "Critere de coherence : entrees similaires, reponses similaires",
       "question_en": "What does the 'consistency' success criterion measure?",
       "options": [
-        { "key": "A", "text_en": "Whether outputs never change between model versions." },
-        { "key": "B", "text_en": "Whether similar inputs produce similar responses." },
-        { "key": "C", "text_en": "Whether the model always returns the longest answer." },
-        { "key": "D", "text_en": "Whether responses match a fixed template every time." }
+        {
+          "key": "A",
+          "text_en": "Whether outputs never change between model versions."
+        },
+        {
+          "key": "B",
+          "text_en": "Whether similar inputs produce similar responses."
+        },
+        {
+          "key": "C",
+          "text_en": "Whether the model always returns the longest answer."
+        },
+        {
+          "key": "D",
+          "text_en": "Whether responses match a fixed template every time."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc definit la consistance comme « how similar the model's responses are for similar types of input ». C'est la stabilite des reponses pour des entrees comparables.",
       "distractors_fr": {
         "A": "La consistance porte sur des entrees similaires, pas sur l'invariance entre versions du modele.",
@@ -241,12 +370,26 @@
       "concept": "Evaluation multidimensionnelle sur plusieurs criteres",
       "question_en": "According to the guide, how many success criteria do most use cases need to be evaluated against?",
       "options": [
-        { "key": "A", "text_en": "Exactly one — pick the single most important metric." },
-        { "key": "B", "text_en": "Two at most, to keep evaluation simple." },
-        { "key": "C", "text_en": "Several — evaluation is usually multidimensional." },
-        { "key": "D", "text_en": "None — a single overall quality score is enough." }
+        {
+          "key": "A",
+          "text_en": "Exactly one — pick the single most important metric."
+        },
+        {
+          "key": "B",
+          "text_en": "Two at most, to keep evaluation simple."
+        },
+        {
+          "key": "C",
+          "text_en": "Several — evaluation is usually multidimensional."
+        },
+        {
+          "key": "D",
+          "text_en": "None — a single overall quality score is enough."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « Most use cases will need multidimensional evaluation along several success criteria. » On evalue donc selon plusieurs axes, pas un seul.",
       "distractors_fr": {
         "A": "Se limiter a une metrique unique ignore l'evaluation multidimensionnelle recommandee.",
@@ -266,12 +409,26 @@
       "concept": "Un critere n'est pas toujours resolu par le prompt engineering",
       "question_en": "You must cut your app's latency and cost. Is prompt engineering necessarily the right lever?",
       "options": [
-        { "key": "A", "text_en": "Yes — prompt engineering is the only way to change latency." },
-        { "key": "B", "text_en": "Yes — a longer prompt always reduces latency and cost." },
-        { "key": "C", "text_en": "No — latency and cost are fixed and cannot be improved." },
-        { "key": "D", "text_en": "Not necessarily — a different model often helps more." }
+        {
+          "key": "A",
+          "text_en": "Yes — prompt engineering is the only way to change latency."
+        },
+        {
+          "key": "B",
+          "text_en": "Yes — a longer prompt always reduces latency and cost."
+        },
+        {
+          "key": "C",
+          "text_en": "No — latency and cost are fixed and cannot be improved."
+        },
+        {
+          "key": "D",
+          "text_en": "Not necessarily — a different model often helps more."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc : « Not every success criteria or failing eval is best solved by prompt engineering. For example, you can sometimes improve latency and cost more easily by selecting a different model. »",
       "distractors_fr": {
         "A": "La latence peut aussi se traiter en changeant de modele ; le prompt n'est pas le seul levier.",
@@ -291,12 +448,26 @@
       "concept": "Critere de fidelite a la tache incluant les cas limites",
       "question_en": "What does 'task fidelity' assess as a success criterion?",
       "options": [
-        { "key": "A", "text_en": "How quickly the model returns each response." },
-        { "key": "B", "text_en": "How closely the output matches a house style guide." },
-        { "key": "C", "text_en": "How little personal data the model reveals." },
-        { "key": "D", "text_en": "How well the task is done, including edge cases." }
+        {
+          "key": "A",
+          "text_en": "How quickly the model returns each response."
+        },
+        {
+          "key": "B",
+          "text_en": "How closely the output matches a house style guide."
+        },
+        {
+          "key": "C",
+          "text_en": "How little personal data the model reveals."
+        },
+        {
+          "key": "D",
+          "text_en": "How well the task is done, including edge cases."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc decrit « Task fidelity » comme « how well the model needs to perform on the task [...] including handling edge cases ». Il s'agit de la qualite d'execution de la tache, cas limites compris.",
       "distractors_fr": {
         "A": "La vitesse de reponse releve de la latence, pas de la fidelite a la tache.",
@@ -315,14 +486,38 @@
       "difficulty": "moyen",
       "concept": "Latence et prix comme contraintes operationnelles",
       "question_en": "How do success criteria like latency and price differ from a criterion like task fidelity?",
+      "question_fr": "En quoi des critères de succès comme la latence et le prix diffèrent-ils d'un critère comme la fidélité à la tâche ?",
       "options": [
-        { "key": "A", "text_en": "They are purely cosmetic and rarely worth measuring." },
-        { "key": "B", "text_en": "They are operational limits — the app's speed and cost." },
-        { "key": "C", "text_en": "They are only relevant for open-source models." },
-        { "key": "D", "text_en": "They are guarantees the model provider contractually meets." }
+        {
+          "key": "A",
+          "text_en": "They are purely cosmetic and rarely worth measuring.",
+          "text_fr": "Ils sont purement cosmétiques et rarement dignes d'être mesurés."
+        },
+        {
+          "key": "B",
+          "text_en": "They are operational limits — the app's speed and cost.",
+          "text_fr": "Ce sont des limites opérationnelles : la vitesse et le coût de l'application."
+        },
+        {
+          "key": "C",
+          "text_en": "They are only relevant for open-source models.",
+          "text_fr": "Ils ne concernent que les modèles open source."
+        },
+        {
+          "key": "D",
+          "text_en": "They are guarantees the model provider contractually meets.",
+          "text_fr": "Ce sont des garanties que le fournisseur du modèle respecte contractuellement."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc range « Latency » (acceptable response time) et « Price » (cost per interaction, budget) parmi les criteres courants : ce sont des contraintes operationnelles de vitesse et de cout, distinctes de la qualite de la tache.",
+      "citations_fr": [
+        "Latence",
+        "Prix"
+      ],
+      "principe_fr": "Les critères de succès se répartissent en deux familles : la qualité de la sortie (fidélité, cohérence, respect du format) et les contraintes d'exploitation (latence, coût par interaction). Les secondes ne mesurent pas si la réponse est bonne, mais si elle est livrable dans les budgets de temps et d'argent du produit. Il faut définir les deux familles séparément, car améliorer la qualité dégrade souvent la latence et le coût.",
       "distractors_fr": {
         "A": "Latence et prix sont des contraintes operationnelles reelles, pas des details cosmetiques.",
         "C": "Ces criteres s'appliquent a toute application, quel que soit le type de modele.",
@@ -340,14 +535,38 @@
       "difficulty": "moyen",
       "concept": "Critere de preservation de la vie privee",
       "question_en": "What does the 'privacy preservation' success criterion cover?",
+      "question_fr": "Que couvre le critère de succès « privacy preservation » ?",
       "options": [
-        { "key": "A", "text_en": "How fast the model masks its own reasoning steps." },
-        { "key": "B", "text_en": "How many tokens the model keeps in its context window." },
-        { "key": "C", "text_en": "How it handles personal or sensitive information." },
-        { "key": "D", "text_en": "How securely the API key is stored on the server." }
+        {
+          "key": "A",
+          "text_en": "How fast the model masks its own reasoning steps.",
+          "text_fr": "La rapidité avec laquelle le modèle masque ses propres étapes de raisonnement."
+        },
+        {
+          "key": "B",
+          "text_en": "How many tokens the model keeps in its context window.",
+          "text_fr": "Le nombre de tokens que le modèle conserve dans sa fenêtre de contexte."
+        },
+        {
+          "key": "C",
+          "text_en": "How it handles personal or sensitive information.",
+          "text_fr": "La façon dont il traite les informations personnelles ou sensibles."
+        },
+        {
+          "key": "D",
+          "text_en": "How securely the API key is stored on the server.",
+          "text_fr": "La sécurité du stockage de la clé API sur le serveur."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc definit « Privacy preservation » comme « how well the model handles [...] personal or sensitive information ». Le critere porte sur le traitement des donnees personnelles.",
+      "citations_fr": [
+        "Préservation de la vie privée",
+        "la qualité avec laquelle le modèle traite [...] les informations personnelles ou sensibles"
+      ],
+      "principe_fr": "Un critère de succès porte sur le comportement observable du modèle, pas sur l'infrastructure qui l'entoure. La préservation de la vie privée s'évalue donc sur ce que le modèle produit face à des données personnelles, alors que le chiffrement des clés ou le stockage relèvent de la sécurité applicative. Distinguer ces deux plans évite d'écrire des évaluations qui ne testent pas le modèle.",
       "distractors_fr": {
         "A": "Masquer le raisonnement n'est pas l'objet de ce critere ; il vise les donnees sensibles.",
         "B": "La taille du contexte releve de l'utilisation du contexte, pas de la vie privee.",

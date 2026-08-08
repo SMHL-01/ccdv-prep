@@ -21,12 +21,26 @@
       "concept": "Interet du prompt caching pour un prefixe repete",
       "question_en": "A team resends the same long system prompt on every API call. How does prompt caching reduce their cost?",
       "options": [
-        { "key": "A", "text_en": "It reads the repeated prefix from cache at a fraction of input price" },
-        { "key": "B", "text_en": "It compresses each output response so that fewer tokens are billed overall" },
-        { "key": "C", "text_en": "It automatically routes every request to a cheaper Claude model" },
-        { "key": "D", "text_en": "It strips the system prompt from all requests after the first one" }
+        {
+          "key": "A",
+          "text_en": "It reads the repeated prefix from cache at a fraction of input price"
+        },
+        {
+          "key": "B",
+          "text_en": "It compresses each output response so that fewer tokens are billed overall"
+        },
+        {
+          "key": "C",
+          "text_en": "It automatically routes every request to a cheaper Claude model"
+        },
+        {
+          "key": "D",
+          "text_en": "It strips the system prompt from all requests after the first one"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le prompt caching reutilise les portions deja traitees du prompt : « Instead of reprocessing the same large system prompt, document, or conversation history on every request, the API reads from cache at a fraction of the standard input price ». Le prefixe repete est donc lu depuis le cache a prix reduit, sans recompression de la sortie ni changement de modele.",
       "distractors_fr": {
         "B": "Le caching agit sur les tokens d'entree repetes, pas sur la compression des reponses en sortie.",
@@ -46,12 +60,26 @@
       "concept": "Deux facons d'activer le prompt caching",
       "question_en": "What are the two ways to enable prompt caching described in the documentation?",
       "options": [
-        { "key": "A", "text_en": "Manual token counting and asynchronous batch submission of prompts" },
-        { "key": "B", "text_en": "Regional endpoints paired with a one-hour data residency window" },
-        { "key": "C", "text_en": "Automatic caching and explicit cache breakpoints on blocks" },
-        { "key": "D", "text_en": "Output streaming and a dedicated cache-only pricing tier" }
+        {
+          "key": "A",
+          "text_en": "Manual token counting and asynchronous batch submission of prompts"
+        },
+        {
+          "key": "B",
+          "text_en": "Regional endpoints paired with a one-hour data residency window"
+        },
+        {
+          "key": "C",
+          "text_en": "Automatic caching and explicit cache breakpoints on blocks"
+        },
+        {
+          "key": "D",
+          "text_en": "Output streaming and a dedicated cache-only pricing tier"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc decrit exactement deux methodes : « Automatic caching: Add a single cache_control field at the top level of your request » et « Explicit cache breakpoints: Place cache_control directly on individual content blocks ». Le comptage de tokens, les batches ou le streaming ne sont pas des moyens d'activer le cache.",
       "distractors_fr": {
         "A": "Le comptage de tokens et les batches sont d'autres fonctionnalites, sans lien avec l'activation du cache.",
@@ -71,12 +99,26 @@
       "concept": "Taux de facturation de l'API Batches vs prix standard",
       "question_en": "The Message Batches API charges all usage at what share of standard API prices?",
       "options": [
-        { "key": "A", "text_en": "25% of standard prices" },
-        { "key": "B", "text_en": "50% of standard prices" },
-        { "key": "C", "text_en": "75% of standard prices" },
-        { "key": "D", "text_en": "90% of standard prices" }
+        {
+          "key": "A",
+          "text_en": "25% of standard prices"
+        },
+        {
+          "key": "B",
+          "text_en": "50% of standard prices"
+        },
+        {
+          "key": "C",
+          "text_en": "75% of standard prices"
+        },
+        {
+          "key": "D",
+          "text_en": "90% of standard prices"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc de tarification des batches est explicite : « All usage is charged at 50% of the standard API prices ». La remise est donc de 50 % (moitie prix), pas 25, 75 ni 90 %.",
       "distractors_fr": {
         "A": "25 % surestime la remise : le batch coute la moitie, pas le quart, du prix standard.",
@@ -96,12 +138,26 @@
       "concept": "Charge de travail adaptee a l'API Batches",
       "question_en": "Which workload is the best fit for the Message Batches API?",
       "options": [
-        { "key": "A", "text_en": "A live customer chatbot that must reply within one second" },
-        { "key": "B", "text_en": "A single urgent request blocking a production deployment" },
-        { "key": "C", "text_en": "An interactive coding session that requires immediate results" },
-        { "key": "D", "text_en": "A large-scale evaluation over thousands of test cases offline" }
+        {
+          "key": "A",
+          "text_en": "A live customer chatbot that must reply within one second"
+        },
+        {
+          "key": "B",
+          "text_en": "A single urgent request blocking a production deployment"
+        },
+        {
+          "key": "C",
+          "text_en": "An interactive coding session that requires immediate results"
+        },
+        {
+          "key": "D",
+          "text_en": "A large-scale evaluation over thousands of test cases offline"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "Le batch vise les traitements ou « Immediate responses are not required », et la doc cite explicitement « Large-scale evaluations: Process thousands of test cases efficiently ». Les usages temps reel (chatbot, requete urgente, session interactive) ne conviennent pas au traitement asynchrone.",
       "distractors_fr": {
         "A": "Un chatbot temps reel exige une reponse immediate, l'inverse du traitement asynchrone du batch.",
@@ -121,12 +177,26 @@
       "concept": "Operation de cache la moins chere",
       "question_en": "Among prompt-caching operations, which is billed at the lowest multiplier of the base input price?",
       "options": [
-        { "key": "A", "text_en": "A cache read that hits previously stored content" },
-        { "key": "B", "text_en": "A one-hour cache write that stores the prefix block" },
-        { "key": "C", "text_en": "A five-minute cache write that stores the prefix" },
-        { "key": "D", "text_en": "A standard uncached input token being processed now" }
+        {
+          "key": "A",
+          "text_en": "A cache read that hits previously stored content"
+        },
+        {
+          "key": "B",
+          "text_en": "A one-hour cache write that stores the prefix block"
+        },
+        {
+          "key": "C",
+          "text_en": "A five-minute cache write that stores the prefix"
+        },
+        {
+          "key": "D",
+          "text_en": "A standard uncached input token being processed now"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le tableau des multiplicateurs place la lecture de cache au plus bas : « Cache read (hit) : 0.1x base input price ». C'est moins que l'ecriture 5 minutes (1,25x), l'ecriture 1 heure (2x) et le token d'entree standard (1x).",
       "distractors_fr": {
         "B": "L'ecriture 1 heure coute 2x le prix d'entree, la plus chere des operations de cache.",
@@ -146,12 +216,27 @@
       "concept": "Conditions de rentabilite du cache 5 minutes",
       "question_en": "Select TWO statements that are true about when the 5-minute prompt cache becomes cost-effective.",
       "options": [
-        { "key": "A", "text_en": "A 5-minute cache write costs 1.25x base input price" },
-        { "key": "B", "text_en": "The 5-minute cache pays off after a single read" },
-        { "key": "C", "text_en": "A cache hit costs the same as a fresh uncached token" },
-        { "key": "D", "text_en": "A cache read is billed at double the base input price" }
+        {
+          "key": "A",
+          "text_en": "A 5-minute cache write costs 1.25x base input price"
+        },
+        {
+          "key": "B",
+          "text_en": "The 5-minute cache pays off after a single read"
+        },
+        {
+          "key": "C",
+          "text_en": "A cache hit costs the same as a fresh uncached token"
+        },
+        {
+          "key": "D",
+          "text_en": "A cache read is billed at double the base input price"
+        }
       ],
-      "correct": ["A", "B"],
+      "correct": [
+        "A",
+        "B"
+      ],
       "explanation_fr": "La doc precise « A cache hit costs 10% of the standard input price, which means caching pays off after just one cache read for the 5-minute duration (1.25x write) ». L'ecriture 5 minutes coute donc 1,25x et une seule lecture suffit a rentabiliser, tandis qu'une lecture ne coute que 0,1x (pas le plein tarif ni le double).",
       "distractors_fr": {
         "C": "Une lecture de cache coute 0,1x le prix d'entree, pas le meme prix qu'un token non mis en cache.",
@@ -169,14 +254,37 @@
       "difficulty": "moyen",
       "concept": "Comportement du cache automatique en conversation multi-tour",
       "question_en": "How does automatic caching behave as a multi-turn conversation grows?",
+      "question_fr": "Comment se comporte le cache automatique lorsqu'une conversation multi-tour s'allonge ?",
       "options": [
-        { "key": "A", "text_en": "It freezes the cache breakpoint at the very first user message sent" },
-        { "key": "B", "text_en": "It moves the cache breakpoint forward to the last block" },
-        { "key": "C", "text_en": "It disables caching once the conversation exceeds two turns" },
-        { "key": "D", "text_en": "It requires a new cache_control field on every single turn" }
+        {
+          "key": "A",
+          "text_en": "It freezes the cache breakpoint at the very first user message sent",
+          "text_fr": "Il fige le point de rupture du cache sur le tout premier message utilisateur envoyé"
+        },
+        {
+          "key": "B",
+          "text_en": "It moves the cache breakpoint forward to the last block",
+          "text_fr": "Il déplace le point de rupture du cache vers le dernier bloc"
+        },
+        {
+          "key": "C",
+          "text_en": "It disables caching once the conversation exceeds two turns",
+          "text_fr": "Il désactive le cache dès que la conversation dépasse deux tours"
+        },
+        {
+          "key": "D",
+          "text_en": "It requires a new cache_control field on every single turn",
+          "text_fr": "Il exige un nouveau champ cache_control à chaque tour"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le cache automatique suit la conversation : « The system automatically applies the cache breakpoint to the last cacheable block and moves it forward as conversations grow ». Il n'est ni fige au premier message, ni desactive apres deux tours, ni redeclare a chaque tour.",
+      "citations_fr": [
+        "Le système applique automatiquement le point de rupture du cache au dernier bloc pouvant être mis en cache et le déplace vers l'avant à mesure que les conversations s'allongent"
+      ],
+      "principe_fr": "Le cache de prompt est efficace parce qu'il couvre le plus long préfixe stable possible. Un mécanisme automatique doit donc suivre la croissance de la conversation : il replace le point de rupture au dernier bloc cachable à chaque échange, ce qui maximise la partie réutilisée sans intervention du développeur. Retenez cette logique de préfixe : tout ce qui est stable en tête de requête est réutilisable, tout ce qui change invalide ce qui suit.",
       "distractors_fr": {
         "A": "Le point de rupture avance avec la conversation, il n'est pas fige sur le premier message.",
         "C": "Rien n'indique une desactivation apres deux tours ; le cache automatique suit la croissance.",
@@ -194,14 +302,37 @@
       "difficulty": "facile",
       "concept": "Raison d'appeler le comptage de tokens avant l'envoi",
       "question_en": "Why would a developer call the token counting endpoint before sending a message?",
+      "question_fr": "Pourquoi un développeur appellerait-il l'endpoint de comptage de tokens avant d'envoyer un message ?",
       "options": [
-        { "key": "A", "text_en": "To permanently store the prompt text on Anthropic servers first" },
-        { "key": "B", "text_en": "To guarantee the model never adds any system tokens at all" },
-        { "key": "C", "text_en": "To proactively manage rate limits and estimate cost" },
-        { "key": "D", "text_en": "To convert the prompt into a cheaper output-only format" }
+        {
+          "key": "A",
+          "text_en": "To permanently store the prompt text on Anthropic servers first",
+          "text_fr": "Pour stocker d'abord le texte du prompt de façon permanente sur les serveurs d'Anthropic"
+        },
+        {
+          "key": "B",
+          "text_en": "To guarantee the model never adds any system tokens at all",
+          "text_fr": "Pour garantir que le modèle n'ajoute jamais aucun token système"
+        },
+        {
+          "key": "C",
+          "text_en": "To proactively manage rate limits and estimate cost",
+          "text_fr": "Pour gérer les limites de débit de façon proactive et estimer le coût"
+        },
+        {
+          "key": "D",
+          "text_en": "To convert the prompt into a cheaper output-only format",
+          "text_fr": "Pour convertir le prompt dans un format moins coûteux, réservé à la sortie"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "Le comptage de tokens sert a anticiper : « Proactively manage rate limits and costs ». Il ne stocke pas le prompt, ne supprime pas les tokens ajoutes par le systeme et ne convertit pas le prompt en un format de sortie.",
+      "citations_fr": [
+        "Gérer de façon proactive les limites de débit et les coûts"
+      ],
+      "principe_fr": "Le comptage de tokens est un outil de planification, pas de transformation : il ne modifie ni ne stocke le prompt. Son intérêt est de connaître la taille d'une requête avant de la payer et avant de heurter une limite de débit, ce qui permet d'adapter le contenu ou le rythme d'envoi en amont.",
       "distractors_fr": {
         "A": "Le comptage n'entraine aucun stockage permanent du prompt.",
         "B": "Le systeme peut ajouter des tokens d'optimisation ; le comptage ne l'empeche pas (mais ils ne sont pas factures).",
@@ -219,14 +350,37 @@
       "difficulty": "moyen",
       "concept": "Le comptage de tokens renvoie une estimation",
       "question_en": "What does the documentation say about the number returned by the token counting endpoint?",
+      "question_fr": "Que dit la documentation sur le nombre renvoyé par l'endpoint de comptage de tokens ?",
       "options": [
-        { "key": "A", "text_en": "It is the exact billed token count with no possible variation" },
-        { "key": "B", "text_en": "It always excludes the system prompt and tool defs" },
-        { "key": "C", "text_en": "It is only available for retired legacy tokenizers" },
-        { "key": "D", "text_en": "It is an estimate that may differ slightly from usage" }
+        {
+          "key": "A",
+          "text_en": "It is the exact billed token count with no possible variation",
+          "text_fr": "C'est le nombre exact de tokens facturés, sans variation possible"
+        },
+        {
+          "key": "B",
+          "text_en": "It always excludes the system prompt and tool defs",
+          "text_fr": "Il exclut toujours le prompt système et les définitions d'outils"
+        },
+        {
+          "key": "C",
+          "text_en": "It is only available for retired legacy tokenizers",
+          "text_fr": "Il n'est disponible que pour les anciens tokenizers retirés"
+        },
+        {
+          "key": "D",
+          "text_en": "It is an estimate that may differ slightly from usage",
+          "text_fr": "C'est une estimation qui peut différer légèrement de l'usage réel"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc avertit : « The token count is an estimate. In some cases, the actual number of input tokens used when creating a message might differ by a small amount. » Ce n'est donc pas un chiffre exact, il inclut le prompt systeme et les outils, et il est disponible sur tous les modeles actifs.",
+      "citations_fr": [
+        "Le nombre de tokens est une estimation. Dans certains cas, le nombre réel de tokens d'entrée utilisés lors de la création d'un message peut différer légèrement."
+      ],
+      "principe_fr": "Traitez tout compte préalable comme un ordre de grandeur, pas comme une valeur contractuelle. Les mesures faites avant l'appel réel ignorent des ajustements internes ; il faut donc prévoir une marge dans les seuils et budgets plutôt que de raisonner à l'unité près.",
       "distractors_fr": {
         "A": "Le nombre est une estimation, pas le compte facture exact ; il peut varier legerement.",
         "B": "L'endpoint accepte au contraire le prompt systeme et les definitions d'outils dans le calcul.",
@@ -244,14 +398,37 @@
       "difficulty": "moyen",
       "concept": "Facturation exclut les tokens ajoutes par le systeme",
       "question_en": "Token counts may include tokens Anthropic adds for system optimizations. How are these billed?",
+      "question_fr": "Le comptage de tokens peut inclure des tokens ajoutés par Anthropic pour des optimisations système. Comment sont-ils facturés ?",
       "options": [
-        { "key": "A", "text_en": "You are not billed for system-added tokens, only content" },
-        { "key": "B", "text_en": "You are billed double for system-added optimization tokens" },
-        { "key": "C", "text_en": "You are billed for them only when prompt caching is on" },
-        { "key": "D", "text_en": "You are billed for them at the one-hour write multiplier" }
+        {
+          "key": "A",
+          "text_en": "You are not billed for system-added tokens, only content",
+          "text_fr": "Ces tokens ajoutés par le système ne sont pas facturés, seul votre contenu l'est"
+        },
+        {
+          "key": "B",
+          "text_en": "You are billed double for system-added optimization tokens",
+          "text_fr": "Ces tokens d'optimisation sont facturés au double"
+        },
+        {
+          "key": "C",
+          "text_en": "You are billed for them only when prompt caching is on",
+          "text_fr": "Ils ne sont facturés que si le cache de prompt est activé"
+        },
+        {
+          "key": "D",
+          "text_en": "You are billed for them at the one-hour write multiplier",
+          "text_fr": "Ils sont facturés au multiplicateur d'écriture de cache d'une heure"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc est claire : « You are not billed for system-added tokens. Billing reflects only your content. » Ces tokens d'optimisation peuvent apparaitre dans le comptage mais ne sont jamais factures, ni au double, ni selon le cache.",
+      "citations_fr": [
+        "Vous n'êtes pas facturé pour les tokens ajoutés par le système. La facturation ne reflète que votre contenu."
+      ],
+      "principe_fr": "Distinguez ce qui est compté de ce qui est facturé : un total affiché peut englober de la mécanique interne, alors que la facture ne porte que sur le contenu que vous fournissez. Cette dissociation explique les petits écarts entre estimation et usage sans qu'il y ait de surcoût caché.",
       "distractors_fr": {
         "B": "Aucun surcout : ces tokens ne sont pas factures du tout.",
         "C": "L'exemption ne depend pas du prompt caching ; elle est generale.",
@@ -269,14 +446,42 @@
       "difficulty": "difficile",
       "concept": "Parametres non supportes dans une requete Batch",
       "question_en": "Select TWO Messages API parameters that are NOT supported inside a batch request.",
+      "question_fr": "Sélectionnez DEUX paramètres de l'API Messages qui ne sont PAS supportés dans une requête batch.",
       "options": [
-        { "key": "A", "text_en": "A system prompt describing the assistant's role" },
-        { "key": "B", "text_en": "stream set to true for token-by-token output" },
-        { "key": "C", "text_en": "max_tokens set to 0 for cache pre-warming" },
-        { "key": "D", "text_en": "A multi-turn conversation across several turns" }
+        {
+          "key": "A",
+          "text_en": "A system prompt describing the assistant's role",
+          "text_fr": "Un prompt système décrivant le rôle de l'assistant"
+        },
+        {
+          "key": "B",
+          "text_en": "stream set to true for token-by-token output",
+          "text_fr": "stream réglé à true pour une sortie token par token"
+        },
+        {
+          "key": "C",
+          "text_en": "max_tokens set to 0 for cache pre-warming",
+          "text_fr": "max_tokens réglé à 0 pour préchauffer le cache"
+        },
+        {
+          "key": "D",
+          "text_en": "A multi-turn conversation across several turns",
+          "text_fr": "Une conversation multi-tour répartie sur plusieurs tours"
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "La table des parametres refuses liste « stream: true » (« Batch results come back as a single file, not a stream ») et « max_tokens: 0 ». En revanche, la doc precise que « System messages » et « Multi-turn conversations » peuvent bien etre inclus dans un batch.",
+      "citations_fr": [
+        "stream: true",
+        "Les résultats de batch reviennent sous forme d'un fichier unique, pas d'un flux",
+        "max_tokens: 0",
+        "Messages système",
+        "Conversations multi-tour"
+      ],
+      "principe_fr": "Les restrictions du mode batch découlent de sa nature : traitement différé, résultats agrégés dans un fichier. Tout ce qui suppose une interaction en temps réel ou un effet de bord immédiat est donc exclu, alors que tout ce qui relève du simple contenu de la requête reste autorisé. Demandez-vous si le paramètre exige une réponse synchrone.",
       "distractors_fr": {
         "A": "Les messages systeme figurent parmi ce qui peut etre batche.",
         "D": "Les conversations multi-tour sont explicitement supportees dans un batch."
@@ -293,14 +498,37 @@
       "difficulty": "moyen",
       "concept": "Recuperation asynchrone des resultats d'un batch",
       "question_en": "After you submit a Message Batch, how do you obtain the results?",
+      "question_fr": "Après avoir soumis un Message Batch, comment récupérez-vous les résultats ?",
       "options": [
-        { "key": "A", "text_en": "You receive every result immediately in the first HTTP response body" },
-        { "key": "B", "text_en": "You poll for status and retrieve results when it ends" },
-        { "key": "C", "text_en": "You open a streaming socket pushing each result live" },
-        { "key": "D", "text_en": "You wait for an email attachment with the result file" }
+        {
+          "key": "A",
+          "text_en": "You receive every result immediately in the first HTTP response body",
+          "text_fr": "Vous recevez tous les résultats immédiatement dans le corps de la première réponse HTTP"
+        },
+        {
+          "key": "B",
+          "text_en": "You poll for status and retrieve results when it ends",
+          "text_fr": "Vous interrogez périodiquement le statut et récupérez les résultats à la fin"
+        },
+        {
+          "key": "C",
+          "text_en": "You open a streaming socket pushing each result live",
+          "text_fr": "Vous ouvrez une socket de streaming qui pousse chaque résultat en direct"
+        },
+        {
+          "key": "D",
+          "text_en": "You wait for an email attachment with the result file",
+          "text_fr": "Vous attendez un e-mail avec le fichier de résultats en pièce jointe"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le batch est asynchrone : « You can poll for the status of the batch and retrieve results when processing has ended for all requests. » Il n'y a ni reponse immediate, ni streaming, ni envoi par email.",
+      "citations_fr": [
+        "Vous pouvez interroger le statut du batch et récupérer les résultats lorsque le traitement est terminé pour toutes les requêtes."
+      ],
+      "principe_fr": "Une API asynchrone rend d'abord un identifiant de tâche, pas un résultat. Le schéma habituel est donc : soumettre, interroger le statut (polling), puis télécharger la sortie une fois le traitement achevé. Concevez votre code autour de cette boucle plutôt qu'en attendant une réponse bloquante.",
       "distractors_fr": {
         "A": "Le traitement etant asynchrone, aucun resultat n'est renvoye immediatement dans la reponse initiale.",
         "C": "Le streaming (stream: true) n'est justement pas supporte dans un batch.",
@@ -319,12 +547,26 @@
       "concept": "Choisir le cache 1 heure pour les batches partageant du contexte",
       "question_en": "The docs recommend which cache duration when batching requests that share context?",
       "options": [
-        { "key": "A", "text_en": "The one-hour cache duration, for better hit rates" },
-        { "key": "B", "text_en": "The five-minute cache, because batches finish fast" },
-        { "key": "C", "text_en": "No cache at all, since batches cannot cache prompts" },
-        { "key": "D", "text_en": "A thirty-second cache tuned to synchronous latency" }
+        {
+          "key": "A",
+          "text_en": "The one-hour cache duration, for better hit rates"
+        },
+        {
+          "key": "B",
+          "text_en": "The five-minute cache, because batches finish fast"
+        },
+        {
+          "key": "C",
+          "text_en": "No cache at all, since batches cannot cache prompts"
+        },
+        {
+          "key": "D",
+          "text_en": "A thirty-second cache tuned to synchronous latency"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "L'astuce de la doc : « Because batches can take longer than 5 minutes to process, consider using the 1-hour cache duration with prompt caching for better cache hit rates when processing batches with shared context. » Le cache 5 minutes risque d'expirer avant la fin, et le caching reste possible dans un batch.",
       "distractors_fr": {
         "B": "Un batch peut depasser 5 minutes, donc le cache 5 minutes risque d'expirer avant reutilisation.",
@@ -344,12 +586,26 @@
       "concept": "Modeles supportant l'API Batches",
       "question_en": "Which Claude models support the Message Batches API?",
       "options": [
-        { "key": "A", "text_en": "Only the Opus-tier models may use the Batches API" },
-        { "key": "B", "text_en": "Only retired models can be used with batches now" },
-        { "key": "C", "text_en": "Only models using the newer tokenizer support it" },
-        { "key": "D", "text_en": "All active models support the Message Batches API" }
+        {
+          "key": "A",
+          "text_en": "Only the Opus-tier models may use the Batches API"
+        },
+        {
+          "key": "B",
+          "text_en": "Only retired models can be used with batches now"
+        },
+        {
+          "key": "C",
+          "text_en": "Only models using the newer tokenizer support it"
+        },
+        {
+          "key": "D",
+          "text_en": "All active models support the Message Batches API"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc indique sous « Supported models » : « All active models support the Message Batches API. » Ce n'est donc pas limite aux Opus, aux modeles retires, ni au nouveau tokenizer.",
       "distractors_fr": {
         "A": "Le support ne se limite pas aux modeles Opus : tous les modeles actifs sont couverts.",
@@ -369,12 +625,26 @@
       "concept": "Cumul du multiplicateur de cache avec la remise Batch",
       "question_en": "A team caches a prefix AND submits the request through the Batch API. How do the discounts interact?",
       "options": [
-        { "key": "A", "text_en": "The cache multiplier stacks with the 50% Batch discount" },
-        { "key": "B", "text_en": "The two discounts cancel each other out, leaving standard rates" },
-        { "key": "C", "text_en": "Only the larger of the two discounts is ever applied" },
-        { "key": "D", "text_en": "Caching is silently disabled whenever batching is used" }
+        {
+          "key": "A",
+          "text_en": "The cache multiplier stacks with the 50% Batch discount"
+        },
+        {
+          "key": "B",
+          "text_en": "The two discounts cancel each other out, leaving standard rates"
+        },
+        {
+          "key": "C",
+          "text_en": "Only the larger of the two discounts is ever applied"
+        },
+        {
+          "key": "D",
+          "text_en": "Caching is silently disabled whenever batching is used"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc precise que les multiplicateurs de cache se combinent : « These multipliers stack with other pricing modifiers, including the Batch API discount and data residency. » Les remises ne s'annulent pas, ne s'excluent pas et le cache reste actif.",
       "distractors_fr": {
         "B": "Les remises se cumulent, elles ne s'annulent pas pour revenir au prix standard.",
@@ -394,12 +664,27 @@
       "concept": "Structure de tarification input, output et cache",
       "question_en": "Select TWO statements that match the model pricing structure described in the docs.",
       "options": [
-        { "key": "A", "text_en": "Output tokens are always priced cheaper than input tokens here" },
-        { "key": "B", "text_en": "Retired models are billed at exactly zero cost per token" },
-        { "key": "C", "text_en": "A cache hit is billed below the base input price" },
-        { "key": "D", "text_en": "Output tokens cost several times more than base input" }
+        {
+          "key": "A",
+          "text_en": "Output tokens are always priced cheaper than input tokens here"
+        },
+        {
+          "key": "B",
+          "text_en": "Retired models are billed at exactly zero cost per token"
+        },
+        {
+          "key": "C",
+          "text_en": "A cache hit is billed below the base input price"
+        },
+        {
+          "key": "D",
+          "text_en": "Output tokens cost several times more than base input"
+        }
       ],
-      "correct": ["C", "D"],
+      "correct": [
+        "C",
+        "D"
+      ],
       "explanation_fr": "Dans le tableau de tarification, la sortie coute plusieurs fois l'entree (par ex. Opus 5 : 5 $/MTok en entree contre 25 $/MTok en sortie) et la lecture de cache (0,1x) est bien inferieure au prix d'entree. La sortie n'est jamais moins chere que l'entree, et les modeles retires conservent un prix non nul.",
       "distractors_fr": {
         "A": "Le tableau montre l'inverse : la sortie est toujours plus chere que l'entree.",
@@ -418,12 +703,26 @@
       "concept": "Compter les tokens pour decider du routage de modele",
       "question_en": "Besides cost, what decision does token counting help a developer make before sending a request?",
       "options": [
-        { "key": "A", "text_en": "Which output format the model must return every time" },
-        { "key": "B", "text_en": "Smart model routing decisions from the input size" },
-        { "key": "C", "text_en": "Whether to permanently delete the user's stored data" },
-        { "key": "D", "text_en": "The exact wall-clock latency of the upcoming response" }
+        {
+          "key": "A",
+          "text_en": "Which output format the model must return every time"
+        },
+        {
+          "key": "B",
+          "text_en": "Smart model routing decisions from the input size"
+        },
+        {
+          "key": "C",
+          "text_en": "Whether to permanently delete the user's stored data"
+        },
+        {
+          "key": "D",
+          "text_en": "The exact wall-clock latency of the upcoming response"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc liste parmi les usages du comptage : « Make smart model routing decisions ». Connaitre la taille d'entree aide a choisir le modele. Le comptage ne fixe pas le format de sortie, ne supprime pas de donnees et ne mesure pas la latence.",
       "distractors_fr": {
         "A": "Le comptage mesure les tokens d'entree ; il ne determine pas le format de sortie.",
@@ -443,12 +742,26 @@
       "concept": "Moment de facturation ecriture vs lecture de cache",
       "question_en": "When are cache write tokens versus cache read tokens charged?",
       "options": [
-        { "key": "A", "text_en": "Both are charged together only on the first API request" },
-        { "key": "B", "text_en": "Write on retrieval, read when content is first stored" },
-        { "key": "C", "text_en": "Write when first stored, read when later retrieved" },
-        { "key": "D", "text_en": "Neither is charged until the cache entry expires" }
+        {
+          "key": "A",
+          "text_en": "Both are charged together only on the first API request"
+        },
+        {
+          "key": "B",
+          "text_en": "Write on retrieval, read when content is first stored"
+        },
+        {
+          "key": "C",
+          "text_en": "Write when first stored, read when later retrieved"
+        },
+        {
+          "key": "D",
+          "text_en": "Neither is charged until the cache entry expires"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc distingue les deux moments : « Cache write tokens are charged when content is first stored. Cache read tokens are charged when a subsequent request retrieves the cached content. » Ce ne sont ni le meme moment, ni l'ordre inverse, ni au moment de l'expiration.",
       "distractors_fr": {
         "A": "L'ecriture et la lecture sont facturees a des moments distincts, pas ensemble sur la premiere requete.",
@@ -467,14 +780,37 @@
       "difficulty": "difficile",
       "concept": "Surcout des endpoints regionaux face au global",
       "question_en": "How does choosing a regional endpoint affect pricing compared to the default global endpoint?",
+      "question_fr": "Comment le choix d'un endpoint régional affecte-t-il la tarification par rapport à l'endpoint global par défaut ?",
       "options": [
-        { "key": "A", "text_en": "It removes data residency and lowers the token price" },
-        { "key": "B", "text_en": "It makes cache reads entirely free for that workload" },
-        { "key": "C", "text_en": "It has no effect on price, only on the response latency" },
-        { "key": "D", "text_en": "It adds a premium over the global endpoint price" }
+        {
+          "key": "A",
+          "text_en": "It removes data residency and lowers the token price",
+          "text_fr": "Il supprime la résidence des données et abaisse le prix du token"
+        },
+        {
+          "key": "B",
+          "text_en": "It makes cache reads entirely free for that workload",
+          "text_fr": "Il rend les lectures de cache entièrement gratuites pour cette charge de travail"
+        },
+        {
+          "key": "C",
+          "text_en": "It has no effect on price, only on the response latency",
+          "text_fr": "Il n'a aucun effet sur le prix, seulement sur la latence de réponse"
+        },
+        {
+          "key": "D",
+          "text_en": "It adds a premium over the global endpoint price",
+          "text_fr": "Il ajoute un surcoût par rapport au prix de l'endpoint global"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc indique : « Regional and multi-region endpoints include a 10% premium over global endpoints. » Choisir un endpoint regional augmente donc le prix ; il ne le baisse pas, ne rend pas les lectures gratuites et n'est pas neutre.",
+      "citations_fr": [
+        "Les endpoints régionaux et multirégionaux incluent un surcoût de 10 % par rapport aux endpoints globaux."
+      ],
+      "principe_fr": "Le choix du périmètre géographique d'exécution est un compromis, pas une optimisation gratuite : les garanties de localisation des données et la proximité réseau se paient par une majoration du tarif unitaire. Règle générale : plus une contrainte de déploiement est spécifique par rapport au réglage par défaut le plus large, plus elle a un coût. Ne supposez jamais qu'une option d'infrastructure est neutre en prix.",
       "distractors_fr": {
         "A": "Un endpoint regional garantit au contraire un routage geographique et coute plus cher, pas moins.",
         "B": "Aucune gratuite des lectures de cache n'est liee au choix d'endpoint.",
@@ -492,14 +828,39 @@
       "difficulty": "moyen",
       "concept": "Deux usages du comptage de tokens",
       "question_en": "Select TWO tasks that token counting is designed to help with.",
+      "question_fr": "Sélectionnez DEUX tâches que le comptage de tokens est conçu pour faciliter.",
       "options": [
-        { "key": "A", "text_en": "Optimizing a prompt to fit a target length" },
-        { "key": "B", "text_en": "Guaranteeing the output is always factually correct" },
-        { "key": "C", "text_en": "Encrypting the prompt before it leaves the machine" },
-        { "key": "D", "text_en": "Proactively managing rate limits and cost" }
+        {
+          "key": "A",
+          "text_en": "Optimizing a prompt to fit a target length",
+          "text_fr": "Optimiser un prompt pour qu'il tienne dans une longueur cible"
+        },
+        {
+          "key": "B",
+          "text_en": "Guaranteeing the output is always factually correct",
+          "text_fr": "Garantir que la sortie est toujours factuellement correcte"
+        },
+        {
+          "key": "C",
+          "text_en": "Encrypting the prompt before it leaves the machine",
+          "text_fr": "Chiffrer le prompt avant qu'il ne quitte la machine"
+        },
+        {
+          "key": "D",
+          "text_en": "Proactively managing rate limits and cost",
+          "text_fr": "Gérer de façon proactive les limites de débit et le coût"
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "La doc liste comme usages : « Proactively manage rate limits and costs » et « Optimize prompts to a specific length ». Le comptage ne garantit pas l'exactitude factuelle de la sortie et ne chiffre pas le prompt.",
+      "citations_fr": [
+        "Gérer de façon proactive les limites de débit et les coûts",
+        "Optimiser les prompts pour une longueur donnée"
+      ],
+      "principe_fr": "Le comptage de tokens est un outil de mesure quantitative : il renseigne sur la taille et donc sur le coût et la consommation de quota, avant l'envoi de la requête. Il ne touche ni à la qualité sémantique de la réponse ni à la sécurité du transport. Quand une fonctionnalité mesure, attendez-vous à des usages de planification budgétaire et de dimensionnement, pas à des garanties sur le contenu.",
       "distractors_fr": {
         "B": "Le comptage mesure des tokens ; il ne garantit pas l'exactitude du contenu genere.",
         "C": "Le comptage n'a aucune fonction de chiffrement du prompt."

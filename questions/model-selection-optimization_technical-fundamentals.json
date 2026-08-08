@@ -1,609 +1,1169 @@
 {
- "subdomain": "Technical Fundamentals",
- "domain": "Model Selection and Optimization",
- "weight": 6.1,
- "target_questions": 24,
- "sources_read": [
-  "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency",
-  "https://platform.claude.com/docs/en/api/service-tiers",
-  "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
-  "https://platform.claude.com/docs/en/api/rate-limits"
- ],
- "questions": [
-  {
-   "id": "TCF-001",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Definition de la latence : delai entre l envoi du prompt et la sortie",
-   "question_en": "In the context of LLMs, what does 'latency' refer to?",
-   "options": [
-    { "key": "A", "text_en": "The time between submitting a prompt and receiving the output." },
-    { "key": "B", "text_en": "The number of tokens the model can hold in its context window." },
-    { "key": "C", "text_en": "The share of requests that return a server-overloaded error." },
-    { "key": "D", "text_en": "The monetary cost charged per million tokens generated." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc définit la latence comme « the time it takes for the model to process a prompt and generate an output » — le délai entre l'envoi du prompt et la réception de la réponse.",
-   "distractors_fr": {
-    "B": "La capacité de mémoire de travail est la fenêtre de contexte, pas la latence.",
-    "C": "La part de requêtes en surcharge est un indicateur de disponibilité, pas la latence.",
-    "D": "Le coût par million de tokens relève de la tarification, pas de la latence."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-002",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "moyen",
-   "concept": "TTFT : temps jusqu au premier token de la reponse",
-   "question_en": "What does Time to First Token (TTFT) measure?",
-   "options": [
-    { "key": "A", "text_en": "The total time to generate the entire response end to end." },
-    { "key": "B", "text_en": "The time until the first token appears after sending the prompt." },
-    { "key": "C", "text_en": "The average number of tokens the model produces per second." },
-    { "key": "D", "text_en": "The delay added by retry logic in the SDK client layer." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc décrit le TTFT : « the time it takes for the model to generate the first token of the response, from when the prompt was sent. » C'est un indicateur de réactivité, surtout en streaming.",
-   "distractors_fr": {
-    "A": "Le temps total de génération est la latence de bout en bout, pas le TTFT.",
-    "C": "Le débit en tokens par seconde est une autre mesure ; le TTFT vise le premier token.",
-    "D": "Le TTFT est une propriété de génération du modèle, pas du délai de réessai côté client."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-003",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "multi",
-   "nature": "factual_semantic",
-   "difficulty": "difficile",
-   "concept": "Termes de mesure de la latence : latence de base et TTFT",
-   "question_en": "Select the TWO statements that correctly describe latency measurement terms.",
-   "options": [
-    { "key": "A", "text_en": "Baseline latency reflects the model's overall processing speed." },
-    { "key": "B", "text_en": "TTFT is especially relevant when you stream the response." },
-    { "key": "C", "text_en": "TTFT and baseline latency are two names for one metric." },
-    { "key": "D", "text_en": "Baseline latency only matters for asynchronous batch jobs." }
-   ],
-   "correct": ["A", "B"],
-   "explanation_fr": "La doc présente la latence de base comme « the time taken by the model to process the prompt and generate the response ... a general idea of the model's speed », et le TTFT comme « particularly relevant when you're using streaming. » Donc A et B.",
-   "distractors_fr": {
-    "C": "Ce sont deux mesures distinctes : la latence de base porte sur l'ensemble, le TTFT sur le premier token.",
-    "D": "La latence de base concerne les requêtes synchrones ; elle n'est pas propre au batch."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-004",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "facile",
-   "concept": "Choisir un modele plus rapide comme premier levier de latence",
-   "question_en": "A chatbot needs faster responses. What is the most direct lever the latency guide names first?",
-   "options": [
-    { "key": "A", "text_en": "Raise the temperature so the model commits to tokens sooner." },
-    { "key": "B", "text_en": "Add more few-shot examples to speed up the decoding step." },
-    { "key": "C", "text_en": "Choose a faster model, such as Claude Haiku 4.5." },
-    { "key": "D", "text_en": "Disable streaming to remove per-token overhead." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La première stratégie listée est « Choose the right model » : « One of the most direct ways to reduce latency is to select the appropriate model », Haiku 4.5 étant cité pour les applications sensibles à la vitesse.",
-   "distractors_fr": {
-    "A": "La température règle l'aléa de sortie, pas la vitesse ; ce n'est pas le levier de latence recommandé.",
-    "B": "Ajouter des exemples alourdit le prompt et tend à augmenter la latence, pas à la réduire.",
-    "D": "Le streaming améliore la réactivité perçue ; le désactiver ne réduit pas la latence."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-005",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Ordre recommande : regler la latence apres avoir un bon prompt",
-   "question_en": "When should you apply latency-reduction tactics, per the guidance?",
-   "options": [
-    { "key": "A", "text_en": "Before writing the prompt, to constrain the design early." },
-    { "key": "B", "text_en": "Never; latency cannot be influenced by how you prompt." },
-    { "key": "C", "text_en": "Only once the app is in production and users complain." },
-    { "key": "D", "text_en": "After first engineering a prompt that works well unconstrained." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La note est explicite : « It's always better to first engineer a prompt that works well ... and then try latency reduction strategies afterward », sous peine de ne jamais découvrir la performance de pointe.",
-   "distractors_fr": {
-    "A": "Optimiser la latence trop tôt peut masquer ce que donne la meilleure performance ; la doc déconseille cet ordre.",
-    "B": "Le prompt influence bien la latence (longueur, clarté) : la longueur des tokens joue directement.",
-    "C": "Attendre les plaintes en production n'est pas la démarche recommandée ; on règle après avoir un bon prompt."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-006",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Reduire la latence en reduisant les tokens d entree et de sortie",
-   "question_en": "You want to cut latency by reducing token load. Select the TWO effective moves.",
-   "options": [
-    { "key": "A", "text_en": "Increase max_tokens so the model never stops early." },
-    { "key": "B", "text_en": "Add redundant context to save on inference steps." },
-    { "key": "C", "text_en": "Trim the input prompt down to the essential tokens." },
-    { "key": "D", "text_en": "Ask Claude to be concise so the output is shorter." }
-   ],
-   "correct": ["C", "D"],
-   "explanation_fr": "La doc conseille de « Minimize the number of tokens in both your input prompt and the expected output » : élaguer l'entrée (C) et demander des réponses concises (D). Moins de tokens à traiter et à générer, plus vite arrive la réponse.",
-   "distractors_fr": {
-    "A": "Augmenter `max_tokens` autorise des sorties plus longues, donc potentiellement plus lentes.",
-    "B": "Ajouter du contexte redondant gonfle l'entrée et augmente la latence."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-007",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Le streaming ameliore la reactivite percue, pas la latence totale",
-   "question_en": "How does streaming help latency for an interactive UI?",
-   "options": [
-    { "key": "A", "text_en": "It shows output as it streams, feeling more responsive." },
-    { "key": "B", "text_en": "It lowers total generation time by dropping slow tokens." },
-    { "key": "C", "text_en": "It removes TTFT entirely, so the first token is instant." },
-    { "key": "D", "text_en": "It batches requests server-side to cut infrastructure cost." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc précise que le streaming « can significantly improve the perceived responsiveness ... as users can see the model's output in real time. » Il agit sur la réactivité perçue, pas sur le temps total de génération.",
-   "distractors_fr": {
-    "B": "Le streaming ne raccourcit pas la génération ; il affiche seulement les tokens au fur et à mesure.",
-    "C": "Le streaming rend le TTFT visible et utile, mais ne le supprime pas.",
-    "D": "Le streaming ne regroupe pas les requêtes : c'est un mode de restitution incrémentale."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-008",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "max_tokens, levier brutal qui peut couper la reponse en plein mot",
-   "question_en": "The latency guide calls max_tokens a blunt way to cap output. Why 'blunt'?",
-   "options": [
-    { "key": "A", "text_en": "It silently retries until the output fits, adding delay." },
-    { "key": "B", "text_en": "It can cut the response off mid-sentence or mid-word." },
-    { "key": "C", "text_en": "It raises temperature, making the output less predictable." },
-    { "key": "D", "text_en": "It applies only to streaming responses, never to batches." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc prévient : « When the response reaches `max_tokens` tokens, the response will be cut off, perhaps mid-sentence or mid-word » — d'où le qualificatif de technique « blunt », souvent réservée aux réponses courtes.",
-   "distractors_fr": {
-    "A": "`max_tokens` ne déclenche pas de réessai : il coupe simplement la sortie au plafond.",
-    "C": "`max_tokens` ne touche pas à la température ni à l'aléa de la sortie.",
-    "D": "`max_tokens` s'applique à toute génération, pas seulement au streaming."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-009",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Preferer une limite en phrases ou paragraphes a un nombre de mots",
-   "question_en": "To bound output length reliably, what does the guide favour over word counts?",
-   "options": [
-    { "key": "A", "text_en": "Asking for an exact character count in the prompt." },
-    { "key": "B", "text_en": "Setting temperature to zero to shorten the output." },
-    { "key": "C", "text_en": "Asking for a sentence or paragraph limit instead." },
-    { "key": "D", "text_en": "Requesting a precise token count for the response." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "Parce que les LLM comptent en tokens et non en mots, la doc note qu'« asking for an exact word count ... is not as effective a strategy as asking for paragraph or sentence count limits. »",
-   "distractors_fr": {
-    "A": "Un nombre de caractères se heurte au même écart mots/tokens qu'un nombre de mots.",
-    "B": "La température règle l'aléa, pas la longueur ; ce n'est pas le levier proposé.",
-    "D": "Demander un nombre de tokens précis n'est pas la consigne recommandée, peu naturelle pour le modèle."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  },
-  {
-   "id": "TCF-010",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Les trois paliers de service : Standard, Priority et Batch",
-   "question_en": "Which three service tiers does the API offer?",
-   "options": [
-    { "key": "A", "text_en": "Free, Pro, and Enterprise." },
-    { "key": "B", "text_en": "Bronze, Silver, and Gold." },
-    { "key": "C", "text_en": "Start, Build, and Scale." },
-    { "key": "D", "text_en": "Standard, Priority, and Batch." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc énonce : « Anthropic offers three service tiers: Priority Tier, Standard, Batch. »",
-   "distractors_fr": {
-    "A": "Free/Pro/Enterprise ne sont pas les paliers de service de l'API.",
-    "B": "Bronze/Silver/Gold est inventé ; ce ne sont pas les paliers documentés.",
-    "C": "Start/Build/Scale sont des paliers d'usage (rate limits), pas les paliers de service."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-011",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Palier Standard : par defaut, disponibilite au mieux-effort",
-   "question_en": "What is the Standard service tier?",
-   "options": [
-    { "key": "A", "text_en": "The default tier, served with best-effort availability." },
-    { "key": "B", "text_en": "A guaranteed-capacity tier sold by monthly commitment." },
-    { "key": "C", "text_en": "An asynchronous tier for jobs that can wait hours." },
-    { "key": "D", "text_en": "A discounted tier billed at half the standard price." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc dit : « The standard tier is the default service tier for all API requests. The API prioritizes these requests ... with best-effort availability. »",
-   "distractors_fr": {
-    "B": "La capacité garantie par engagement décrit le palier Priority, pas Standard.",
-    "C": "Le traitement asynchrone qui peut attendre décrit le palier Batch.",
-    "D": "La remise de 50 % est propre au traitement par lots (Batch), pas au palier Standard."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-012",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Le palier Priority reduit les erreurs de surcharge en pic",
-   "question_en": "Under load, what does Priority Tier chiefly help with?",
-   "options": [
-    { "key": "A", "text_en": "It doubles the model's tokens-per-second throughput." },
-    { "key": "B", "text_en": "It removes all rate limits for the organization." },
-    { "key": "C", "text_en": "It cuts token prices during peak-demand periods." },
-    { "key": "D", "text_en": "It minimizes server-overloaded errors at peak times." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc indique que Priority Tier « helps minimize 'server overloaded' errors, even during peak times », en priorisant ces requêtes sur toutes les autres.",
-   "distractors_fr": {
-    "A": "Priority priorise la prise en charge ; il ne double pas le débit par token du modèle.",
-    "B": "Priority ne supprime pas les rate limits : une requête qui les dépasserait est refusée.",
-    "C": "Priority ne réduit pas les prix ; la remise de coût est le fait du palier Batch."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-013",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Valeurs du parametre service_tier : auto et standard_only",
-   "question_en": "Which values does the service_tier request parameter accept?",
-   "options": [
-    { "key": "A", "text_en": "'priority_only' or 'batch', with no default value." },
-    { "key": "B", "text_en": "'auto' (default) or 'standard_only'." },
-    { "key": "C", "text_en": "'fast' or 'slow', chosen per request." },
-    { "key": "D", "text_en": "'us' or 'global', matching the region." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "La doc liste deux valeurs : « `auto` (default) » et « `standard_only` ». `auto` utilise la capacité Priority si disponible, sinon retombe sur la capacité standard.",
-   "distractors_fr": {
-    "A": "`priority_only`/`batch` ne sont pas les valeurs de `service_tier`.",
-    "C": "`fast`/`slow` n'existent pas pour `service_tier` ; Fast mode est un réglage distinct.",
-    "D": "`us`/`global` relèvent de la résidence des données (`inference_geo`), pas de `service_tier`."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-014",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Comportement de service_tier auto : Priority si dispo, sinon repli",
-   "question_en": "With service_tier set to 'auto', how is a request handled?",
-   "options": [
-    { "key": "A", "text_en": "It always uses Priority Tier, erroring if none is left." },
-    { "key": "B", "text_en": "It always uses standard tier, ignoring Priority capacity." },
-    { "key": "C", "text_en": "It uses Priority capacity if available, else falls back." },
-    { "key": "D", "text_en": "It splits the request across both tiers to balance load." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc décrit `auto` : « Uses the Priority Tier capacity if available, falling back to your other capacity if not. »",
-   "distractors_fr": {
-    "A": "`auto` ne force pas Priority : il retombe sur la capacité standard si Priority manque, sans erreur.",
-    "B": "`auto` utilise bien la capacité Priority disponible ; il ne l'ignore pas.",
-    "D": "Une requête est servie par un palier, pas répartie simultanément sur deux."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-015",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Une requete Priority puise dans la capacite Priority et les rate limits",
-   "question_en": "A request is assigned Priority Tier. Select the TWO accurate statements.",
-   "options": [
-    { "key": "A", "text_en": "It draws from both Priority capacity and your rate limits." },
-    { "key": "B", "text_en": "If serving it would exceed the rate limits, it is declined." },
-    { "key": "C", "text_en": "It bypasses the organization's configured rate limits entirely." },
-    { "key": "D", "text_en": "It is always billed at half of the standard token price." }
-   ],
-   "correct": ["A", "B"],
-   "explanation_fr": "La note le dit : « Requests assigned Priority Tier pull from both the Priority Tier capacity and the regular rate limits. If servicing the request would exceed the rate limits, the request is declined. » Donc A et B.",
-   "distractors_fr": {
-    "C": "Priority ne contourne pas les rate limits : une requête qui les dépasserait est refusée.",
-    "D": "La remise de 50 % est propre au Batch, pas au palier Priority."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-016",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Savoir quel palier a servi une requete via l usage de la reponse",
-   "question_en": "After a request, how can you tell which service tier actually served it?",
-   "options": [
-    { "key": "A", "text_en": "Read the service tier reported in the response usage object." },
-    { "key": "B", "text_en": "It is never exposed; you must infer it from the latency." },
-    { "key": "C", "text_en": "Check the stop_reason field, which encodes the tier." },
-    { "key": "D", "text_en": "Only support can tell you, via the request-id you send." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc précise : « The response `usage` object also includes the service tier assigned to the request ... This allows you to determine which service tier was assigned. »",
-   "distractors_fr": {
-    "B": "Le palier est bien exposé, dans l'objet `usage` ; nul besoin de le déduire de la latence.",
-    "C": "`stop_reason` décrit la fin de génération, pas le palier de service.",
-    "D": "Le `request-id` sert au support pour tracer une requête, pas à lire le palier servi."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-017",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Le palier Batch pour des charges asynchrones qui peuvent attendre",
-   "question_en": "For which workload is the Batch tier the best fit?",
-   "options": [
-    { "key": "A", "text_en": "A live chat needing sub-second first-token latency." },
-    { "key": "B", "text_en": "A trading loop that must react within milliseconds." },
-    { "key": "C", "text_en": "A synchronous call blocking a user's page load." },
-    { "key": "D", "text_en": "An async job that can wait and tolerates delay." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc positionne le Batch pour « asynchronous workflows that can wait or benefit from being outside your normal capacity. »",
-   "distractors_fr": {
-    "A": "Un chat en direct exige une réponse immédiate ; le Batch est asynchrone.",
-    "B": "Une boucle temps réel ne tolère pas l'attente d'un traitement par lots.",
-    "C": "Un appel synchrone bloquant attend une réponse immédiate, contraire au Batch."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-018",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_magnitude",
-   "difficulty": "moyen",
-   "concept": "Fenetre d expiration d un batch : 24 heures",
-   "question_en": "Within what window are batch results available before a batch expires?",
-   "options": [
-    { "key": "A", "text_en": "1 minute." },
-    { "key": "B", "text_en": "5 hours." },
-    { "key": "C", "text_en": "7 days." },
-    { "key": "D", "text_en": "24 hours." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc indique : « You can access batch results when all messages have completed or after 24 hours, whichever comes first. Batches expire if processing does not complete within 24 hours. » (la plupart aboutissent en moins d'une heure).",
-   "distractors_fr": {
-    "A": "Une minute est bien en deçà : la fenêtre d'expiration est de 24 heures.",
-    "B": "Cinq heures ne correspond à aucun seuil documenté ; l'expiration est à 24 heures.",
-    "C": "Sept jours est trop long : un batch expire au bout de 24 heures."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
-  },
-  {
-   "id": "TCF-019",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Traitement d un batch : requetes independantes et types melanges",
-   "question_en": "Select the TWO accurate statements about how a batch is processed.",
-   "options": [
-    { "key": "A", "text_en": "Every request in the batch must use the same model." },
-    { "key": "B", "text_en": "Requests are processed strictly in submission order." },
-    { "key": "C", "text_en": "Each request in the batch is processed independently." },
-    { "key": "D", "text_en": "You can mix different request types in one batch." }
-   ],
-   "correct": ["C", "D"],
-   "explanation_fr": "La doc dit : « each request handled independently » et « Because each request in the batch is processed independently, you can mix different types of requests within a single batch. » Donc C et D.",
-   "distractors_fr": {
-    "A": "Les requêtes d'un même lot peuvent viser des modèles et des types différents.",
-    "B": "Chaque requête est traitée indépendamment, pas dans un ordre strict de soumission."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
-  },
-  {
-   "id": "TCF-020",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "moyen",
-   "concept": "Batch inadapte a l interactif car asynchrone, sans reponse immediate",
-   "question_en": "Why is the Batch tier unsuitable for an interactive assistant?",
-   "options": [
-    { "key": "A", "text_en": "It caps output at a few tokens per request." },
-    { "key": "B", "text_en": "It is asynchronous, so responses are not immediate." },
-    { "key": "C", "text_en": "It rejects any request that defines tools." },
-    { "key": "D", "text_en": "It disables streaming and prompt caching entirely." }
-   ],
-   "correct": ["B"],
-   "explanation_fr": "Le Batch traite les requêtes « asynchronously ... Instead of processing requests one at a time with immediate responses. » Sans réponse immédiate, il ne convient pas à un usage interactif.",
-   "distractors_fr": {
-    "A": "Le Batch ne plafonne pas la sortie à quelques tokens ; il porte les paramètres Messages habituels.",
-    "C": "Le Batch n'interdit pas les outils : chaque requête garde les paramètres standard.",
-    "D": "Le prompt caching reste utilisable avec le Batch ; c'est l'asynchronie qui l'écarte de l'interactif."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
-  },
-  {
-   "id": "TCF-021",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "multi",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "La concurrence augmente le debit mais reste bornee par les rate limits",
-   "question_en": "You raise client concurrency to increase throughput. Select the TWO accurate statements.",
-   "options": [
-    { "key": "A", "text_en": "Concurrency has no ceiling; add workers without limit." },
-    { "key": "B", "text_en": "Throughput is still bounded by your RPM and token limits." },
-    { "key": "C", "text_en": "Beyond your rate limits, extra concurrency yields 429s." },
-    { "key": "D", "text_en": "Concurrency only helps batch jobs, never live requests." }
-   ],
-   "correct": ["B", "C"],
-   "explanation_fr": "Les limites de débit (RPM/ITPM/OTPM) bornent le débit atteignable : au-delà, la doc indique qu'on reçoit un 429 « describing which rate limit was exceeded ». La concurrence aide jusqu'à ce plafond, pas au-delà.",
-   "distractors_fr": {
-    "A": "La concurrence est bornée par les rate limits ; ajouter des workers sans fin déclenche des 429.",
-    "D": "La concurrence sert aussi les requêtes synchrones, pas seulement le batch."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
-  },
-  {
-   "id": "TCF-022",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Fast mode regle la latence synchrone, sans effet sur un batch",
-   "question_en": "Does Fast mode reduce latency for a batch job?",
-   "options": [
-    { "key": "A", "text_en": "No; Fast mode tunes synchronous latency, not batch work." },
-    { "key": "B", "text_en": "Yes; it halves the batch's 24-hour processing window." },
-    { "key": "C", "text_en": "Yes; it is the only way to submit a batch at all." },
-    { "key": "D", "text_en": "No; Fast mode applies exclusively to batch processing." }
-   ],
-   "correct": ["A"],
-   "explanation_fr": "La doc du Batch note pour `speed` (Fast mode) : « Fast mode tunes synchronous latency, which doesn't apply to asynchronous batch processing. »",
-   "distractors_fr": {
-    "B": "Fast mode ne s'applique pas au batch ; il ne raccourcit pas sa fenêtre de traitement.",
-    "C": "Un batch se soumet via la Batches API, sans Fast mode.",
-    "D": "C'est l'inverse : Fast mode vise le synchrone, pas le batch asynchrone."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
-  },
-  {
-   "id": "TCF-023",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "judgment",
-   "difficulty": "difficile",
-   "concept": "Affectation au palier Priority selon la capacite Priority en tokens/minute",
-   "question_en": "Your 'auto' requests keep landing on standard tier. What does the doc say governs Priority assignment?",
-   "options": [
-    { "key": "A", "text_en": "A random share of all traffic is sampled into Priority Tier." },
-    { "key": "B", "text_en": "Priority is granted only to the first request each minute." },
-    { "key": "C", "text_en": "Enough Priority capacity in input/output tokens per minute." },
-    { "key": "D", "text_en": "The service_tier header must be set to 'priority_only'." }
-   ],
-   "correct": ["C"],
-   "explanation_fr": "La doc conditionne l'affectation à Priority à « sufficient Priority Tier capacity input tokens per minute » et « output tokens per minute » ; sinon la requête passe en standard.",
-   "distractors_fr": {
-    "A": "L'affectation n'est pas un échantillonnage aléatoire : elle dépend de la capacité Priority disponible.",
-    "B": "Rien n'indique une règle « première requête de la minute » ; c'est la capacité en tokens/minute qui décide.",
-    "D": "`priority_only` n'est pas une valeur valide de `service_tier` (auto ou standard_only)."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
-  },
-  {
-   "id": "TCF-024",
-   "domain": "Model Selection and Optimization",
-   "subdomain": "Technical Fundamentals",
-   "weight": 6.1,
-   "type": "single",
-   "nature": "factual_semantic",
-   "difficulty": "facile",
-   "concept": "Facteurs de latence : taille du modele, complexite du prompt, infrastructure",
-   "question_en": "Which factors does the guide list as influencing latency?",
-   "options": [
-    { "key": "A", "text_en": "Only the account's billing tier and its region." },
-    { "key": "B", "text_en": "Only the number of tools defined in the request." },
-    { "key": "C", "text_en": "Solely the SDK language and its retry settings." },
-    { "key": "D", "text_en": "Model size, prompt complexity, and infrastructure." }
-   ],
-   "correct": ["D"],
-   "explanation_fr": "La doc cite « the size of the model, the complexity of the prompt, and the underlying infrastructure » parmi les facteurs qui influencent la latence.",
-   "distractors_fr": {
-    "A": "Le palier de facturation n'est pas le facteur de latence cité ; taille du modèle et prompt le sont.",
-    "B": "Le nombre d'outils n'est pas isolé comme facteur ; la complexité globale du prompt compte.",
-    "C": "La latence tient au modèle et à l'infrastructure, pas au langage du SDK."
-   },
-   "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
-  }
- ]
+  "subdomain": "Technical Fundamentals",
+  "domain": "Model Selection and Optimization",
+  "weight": 6.1,
+  "target_questions": 24,
+  "sources_read": [
+    "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency",
+    "https://platform.claude.com/docs/en/api/service-tiers",
+    "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
+    "https://platform.claude.com/docs/en/api/rate-limits"
+  ],
+  "questions": [
+    {
+      "id": "TCF-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Definition de la latence : delai entre l envoi du prompt et la sortie",
+      "question_en": "In the context of LLMs, what does 'latency' refer to?",
+      "question_fr": "Dans le contexte des LLM, à quoi renvoie la « latence » ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The time between submitting a prompt and receiving the output.",
+          "text_fr": "Le délai entre l'envoi d'un prompt et la réception de la sortie."
+        },
+        {
+          "key": "B",
+          "text_en": "The number of tokens the model can hold in its context window.",
+          "text_fr": "Le nombre de tokens que le modèle peut conserver dans sa fenêtre de contexte."
+        },
+        {
+          "key": "C",
+          "text_en": "The share of requests that return a server-overloaded error.",
+          "text_fr": "La part des requêtes qui renvoient une erreur de surcharge serveur."
+        },
+        {
+          "key": "D",
+          "text_en": "The monetary cost charged per million tokens generated.",
+          "text_fr": "Le coût facturé par million de tokens générés."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc définit la latence comme « the time it takes for the model to process a prompt and generate an output » — le délai entre l'envoi du prompt et la réception de la réponse.",
+      "citations_fr": [
+        "le temps que met le modèle à traiter un prompt et à générer une sortie"
+      ],
+      "principe_fr": "La latence est une mesure temporelle de bout en bout : du départ de la requête à l'arrivée de la sortie. Ne la confondez pas avec les métriques de capacité (taille de fenêtre de contexte), de fiabilité (taux d'erreurs) ou de coût. Distinguer ces quatre familles d'indicateurs aide à choisir le bon levier d'optimisation.",
+      "distractors_fr": {
+        "B": "La capacité de mémoire de travail est la fenêtre de contexte, pas la latence.",
+        "C": "La part de requêtes en surcharge est un indicateur de disponibilité, pas la latence.",
+        "D": "Le coût par million de tokens relève de la tarification, pas de la latence."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "concept": "TTFT : temps jusqu au premier token de la reponse",
+      "question_en": "What does Time to First Token (TTFT) measure?",
+      "question_fr": "Que mesure le Time to First Token (TTFT) ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The total time to generate the entire response end to end.",
+          "text_fr": "Le temps total de génération de la réponse complète, de bout en bout."
+        },
+        {
+          "key": "B",
+          "text_en": "The time until the first token appears after sending the prompt.",
+          "text_fr": "Le temps écoulé jusqu'à l'apparition du premier token après l'envoi du prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "The average number of tokens the model produces per second.",
+          "text_fr": "Le nombre moyen de tokens produits par seconde par le modèle."
+        },
+        {
+          "key": "D",
+          "text_en": "The delay added by retry logic in the SDK client layer.",
+          "text_fr": "Le délai ajouté par la logique de réessai dans la couche client du SDK."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc décrit le TTFT : « the time it takes for the model to generate the first token of the response, from when the prompt was sent. » C'est un indicateur de réactivité, surtout en streaming.",
+      "citations_fr": [
+        "le temps que met le modèle à générer le premier token de la réponse, à compter de l'envoi du prompt."
+      ],
+      "principe_fr": "Deux horloges distinctes coexistent : le temps jusqu'au premier token et le temps jusqu'à la réponse complète. En streaming, c'est le premier qui gouverne la réactivité perçue, car l'utilisateur voit le texte apparaître progressivement. Optimiser l'un n'améliore pas forcément l'autre.",
+      "distractors_fr": {
+        "A": "Le temps total de génération est la latence de bout en bout, pas le TTFT.",
+        "C": "Le débit en tokens par seconde est une autre mesure ; le TTFT vise le premier token.",
+        "D": "Le TTFT est une propriété de génération du modèle, pas du délai de réessai côté client."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "concept": "Termes de mesure de la latence : latence de base et TTFT",
+      "question_en": "Select the TWO statements that correctly describe latency measurement terms.",
+      "question_fr": "Sélectionnez les DEUX affirmations qui décrivent correctement les termes de mesure de la latence.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Baseline latency reflects the model's overall processing speed.",
+          "text_fr": "La latence de base reflète la vitesse de traitement globale du modèle."
+        },
+        {
+          "key": "B",
+          "text_en": "TTFT is especially relevant when you stream the response.",
+          "text_fr": "Le TTFT est particulièrement pertinent lorsque vous streamez la réponse."
+        },
+        {
+          "key": "C",
+          "text_en": "TTFT and baseline latency are two names for one metric.",
+          "text_fr": "TTFT et latence de base sont deux noms pour une seule métrique."
+        },
+        {
+          "key": "D",
+          "text_en": "Baseline latency only matters for asynchronous batch jobs.",
+          "text_fr": "La latence de base ne compte que pour les traitements par lots asynchrones."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "La doc présente la latence de base comme « the time taken by the model to process the prompt and generate the response ... a general idea of the model's speed », et le TTFT comme « particularly relevant when you're using streaming. » Donc A et B.",
+      "citations_fr": [
+        "le temps que met le modèle à traiter le prompt et à générer la réponse ... une idée générale de la vitesse du modèle",
+        "particulièrement pertinent lorsque vous utilisez le streaming."
+      ],
+      "principe_fr": "Choisissez la métrique en fonction de l'expérience que vous cherchez à améliorer : latence de base pour un débit ou un traitement complet, TTFT pour la sensation d'immédiateté en streaming. Ce sont des mesures complémentaires, pas des synonymes.",
+      "distractors_fr": {
+        "C": "Ce sont deux mesures distinctes : la latence de base porte sur l'ensemble, le TTFT sur le premier token.",
+        "D": "La latence de base concerne les requêtes synchrones ; elle n'est pas propre au batch."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "concept": "Choisir un modele plus rapide comme premier levier de latence",
+      "question_en": "A chatbot needs faster responses. What is the most direct lever the latency guide names first?",
+      "question_fr": "Un chatbot doit répondre plus vite. Quel est le levier le plus direct que le guide sur la latence cite en premier ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Raise the temperature so the model commits to tokens sooner.",
+          "text_fr": "Augmenter la temperature pour que le modèle se décide plus vite sur les tokens."
+        },
+        {
+          "key": "B",
+          "text_en": "Add more few-shot examples to speed up the decoding step.",
+          "text_fr": "Ajouter davantage d'exemples few-shot pour accélérer l'étape de décodage."
+        },
+        {
+          "key": "C",
+          "text_en": "Choose a faster model, such as Claude Haiku 4.5.",
+          "text_fr": "Choisir un modèle plus rapide, par exemple Claude Haiku 4.5."
+        },
+        {
+          "key": "D",
+          "text_en": "Disable streaming to remove per-token overhead.",
+          "text_fr": "Désactiver le streaming pour supprimer le surcoût par token."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La première stratégie listée est « Choose the right model » : « One of the most direct ways to reduce latency is to select the appropriate model », Haiku 4.5 étant cité pour les applications sensibles à la vitesse.",
+      "citations_fr": [
+        "Choisir le bon modèle",
+        "L'un des moyens les plus directs de réduire la latence est de sélectionner le modèle approprié"
+      ],
+      "principe_fr": "Le choix du modèle est le levier de latence le plus structurant : il agit avant toute optimisation de prompt. Raisonnez en arbitrage capacité contre vitesse, et réservez les modèles les plus rapides aux tâches où la réactivité primes sur la profondeur de raisonnement. Les paramètres d'échantillonnage comme temperature n'ont pas d'effet sur la vitesse.",
+      "distractors_fr": {
+        "A": "La température règle l'aléa de sortie, pas la vitesse ; ce n'est pas le levier de latence recommandé.",
+        "B": "Ajouter des exemples alourdit le prompt et tend à augmenter la latence, pas à la réduire.",
+        "D": "Le streaming améliore la réactivité perçue ; le désactiver ne réduit pas la latence."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Ordre recommande : regler la latence apres avoir un bon prompt",
+      "question_en": "When should you apply latency-reduction tactics, per the guidance?",
+      "question_fr": "Selon les recommandations, quand faut-il appliquer les tactiques de réduction de latence ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Before writing the prompt, to constrain the design early.",
+          "text_fr": "Avant d'écrire le prompt, pour contraindre la conception dès le départ."
+        },
+        {
+          "key": "B",
+          "text_en": "Never; latency cannot be influenced by how you prompt.",
+          "text_fr": "Jamais ; la latence ne dépend pas de la façon de rédiger le prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "Only once the app is in production and users complain.",
+          "text_fr": "Seulement quand l'application est en production et que les utilisateurs se plaignent."
+        },
+        {
+          "key": "D",
+          "text_en": "After first engineering a prompt that works well unconstrained.",
+          "text_fr": "Après avoir d'abord conçu un prompt qui fonctionne bien, sans contrainte."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La note est explicite : « It's always better to first engineer a prompt that works well ... and then try latency reduction strategies afterward », sous peine de ne jamais découvrir la performance de pointe.",
+      "citations_fr": [
+        "Il est toujours préférable de concevoir d'abord un prompt qui fonctionne bien ... puis d'appliquer ensuite les stratégies de réduction de latence"
+      ],
+      "principe_fr": "Établissez d'abord un plafond de qualité sans contrainte, puis dégradez volontairement pour gagner en vitesse. En optimisant trop tôt, vous ne connaissez jamais la performance maximale atteignable et vous ne pouvez pas mesurer ce que coûte chaque compromis.",
+      "distractors_fr": {
+        "A": "Optimiser la latence trop tôt peut masquer ce que donne la meilleure performance ; la doc déconseille cet ordre.",
+        "B": "Le prompt influence bien la latence (longueur, clarté) : la longueur des tokens joue directement.",
+        "C": "Attendre les plaintes en production n'est pas la démarche recommandée ; on règle après avoir un bon prompt."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Reduire la latence en reduisant les tokens d entree et de sortie",
+      "question_en": "You want to cut latency by reducing token load. Select the TWO effective moves.",
+      "question_fr": "Vous voulez réduire la latence en diminuant la charge en tokens. Sélectionnez les DEUX actions efficaces.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Increase max_tokens so the model never stops early.",
+          "text_fr": "Augmenter max_tokens pour que le modèle ne s'arrête jamais trop tôt."
+        },
+        {
+          "key": "B",
+          "text_en": "Add redundant context to save on inference steps.",
+          "text_fr": "Ajouter du contexte redondant pour économiser des étapes d'inférence."
+        },
+        {
+          "key": "C",
+          "text_en": "Trim the input prompt down to the essential tokens.",
+          "text_fr": "Élaguer le prompt d'entrée pour n'en garder que les tokens essentiels."
+        },
+        {
+          "key": "D",
+          "text_en": "Ask Claude to be concise so the output is shorter.",
+          "text_fr": "Demander à Claude d'être concis afin que la sortie soit plus courte."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "La doc conseille de « Minimize the number of tokens in both your input prompt and the expected output » : élaguer l'entrée (C) et demander des réponses concises (D). Moins de tokens à traiter et à générer, plus vite arrive la réponse.",
+      "citations_fr": [
+        "Minimisez le nombre de tokens à la fois dans votre prompt d'entrée et dans la sortie attendue"
+      ],
+      "principe_fr": "La latence croît avec le volume de tokens traités en entrée et générés en sortie. Agissez donc sur les deux côtés : réduire le contexte inutile et contraindre la longueur de la réponse. Ajouter du texte ou relever les plafonds de génération ne fait qu'allonger le temps de réponse.",
+      "distractors_fr": {
+        "A": "Augmenter `max_tokens` autorise des sorties plus longues, donc potentiellement plus lentes.",
+        "B": "Ajouter du contexte redondant gonfle l'entrée et augmente la latence."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le streaming ameliore la reactivite percue, pas la latence totale",
+      "question_en": "How does streaming help latency for an interactive UI?",
+      "question_fr": "En quoi le streaming aide-t-il la latence dans une interface interactive ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It shows output as it streams, feeling more responsive.",
+          "text_fr": "Il affiche la sortie au fil du flux, ce qui donne une impression de plus grande réactivité."
+        },
+        {
+          "key": "B",
+          "text_en": "It lowers total generation time by dropping slow tokens.",
+          "text_fr": "Il réduit le temps total de génération en abandonnant les tokens lents."
+        },
+        {
+          "key": "C",
+          "text_en": "It removes TTFT entirely, so the first token is instant.",
+          "text_fr": "Il supprime entièrement le TTFT, donc le premier token est instantané."
+        },
+        {
+          "key": "D",
+          "text_en": "It batches requests server-side to cut infrastructure cost.",
+          "text_fr": "Il regroupe les requêtes côté serveur pour réduire le coût d'infrastructure."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc précise que le streaming « can significantly improve the perceived responsiveness ... as users can see the model's output in real time. » Il agit sur la réactivité perçue, pas sur le temps total de génération.",
+      "citations_fr": [
+        "peut améliorer significativement la réactivité perçue ... car les utilisateurs voient la sortie du modèle en temps réel."
+      ],
+      "principe_fr": "Il faut distinguer la latence réelle de la latence perçue. Le streaming ne change ni le temps total de génération ni le temps jusqu'au premier token : il rend seulement la progression visible, ce qui suffit à améliorer l'expérience en interface interactive. Pour agir sur la latence réelle, il faut jouer sur le modèle, la taille du prompt ou le nombre de tokens produits.",
+      "distractors_fr": {
+        "B": "Le streaming ne raccourcit pas la génération ; il affiche seulement les tokens au fur et à mesure.",
+        "C": "Le streaming rend le TTFT visible et utile, mais ne le supprime pas.",
+        "D": "Le streaming ne regroupe pas les requêtes : c'est un mode de restitution incrémentale."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "max_tokens, levier brutal qui peut couper la reponse en plein mot",
+      "question_en": "The latency guide calls max_tokens a blunt way to cap output. Why 'blunt'?",
+      "question_fr": "Le guide sur la latence qualifie max_tokens de moyen brutal de limiter la sortie. Pourquoi « brutal » ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It silently retries until the output fits, adding delay.",
+          "text_fr": "Il relance silencieusement la requête jusqu'à ce que la sortie tienne, ce qui ajoute du délai."
+        },
+        {
+          "key": "B",
+          "text_en": "It can cut the response off mid-sentence or mid-word.",
+          "text_fr": "Il peut couper la réponse en plein milieu d'une phrase ou d'un mot."
+        },
+        {
+          "key": "C",
+          "text_en": "It raises temperature, making the output less predictable.",
+          "text_fr": "Il augmente la temperature, ce qui rend la sortie moins prévisible."
+        },
+        {
+          "key": "D",
+          "text_en": "It applies only to streaming responses, never to batches.",
+          "text_fr": "Il ne s'applique qu'aux réponses en streaming, jamais aux traitements par lots."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc prévient : « When the response reaches `max_tokens` tokens, the response will be cut off, perhaps mid-sentence or mid-word » — d'où le qualificatif de technique « blunt », souvent réservée aux réponses courtes.",
+      "citations_fr": [
+        "Lorsque la réponse atteint `max_tokens` tokens, elle est coupée, éventuellement en plein milieu d'une phrase ou d'un mot",
+        "brutal"
+      ],
+      "principe_fr": "Il y a deux façons de contrôler la longueur d'une réponse : une contrainte dure côté API et une consigne dans le prompt. max_tokens est une troncature mécanique, sans aucune notion de fin de phrase : elle protège le budget mais peut détruire le contenu. Les consignes de format dans le prompt guident le modèle pour qu'il conclue de lui-même ; max_tokens sert alors de garde-fou et non d'outil de mise en forme.",
+      "distractors_fr": {
+        "A": "`max_tokens` ne déclenche pas de réessai : il coupe simplement la sortie au plafond.",
+        "C": "`max_tokens` ne touche pas à la température ni à l'aléa de la sortie.",
+        "D": "`max_tokens` s'applique à toute génération, pas seulement au streaming."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Preferer une limite en phrases ou paragraphes a un nombre de mots",
+      "question_en": "To bound output length reliably, what does the guide favour over word counts?",
+      "question_fr": "Pour borner la longueur de sortie de façon fiable, que privilégie le guide plutôt qu'un nombre de mots ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Asking for an exact character count in the prompt.",
+          "text_fr": "Demander un nombre exact de caractères dans le prompt."
+        },
+        {
+          "key": "B",
+          "text_en": "Setting temperature to zero to shorten the output.",
+          "text_fr": "Mettre la temperature à zéro pour raccourcir la sortie."
+        },
+        {
+          "key": "C",
+          "text_en": "Asking for a sentence or paragraph limit instead.",
+          "text_fr": "Demander plutôt une limite en phrases ou en paragraphes."
+        },
+        {
+          "key": "D",
+          "text_en": "Requesting a precise token count for the response.",
+          "text_fr": "Demander un nombre précis de tokens pour la réponse."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Parce que les LLM comptent en tokens et non en mots, la doc note qu'« asking for an exact word count ... is not as effective a strategy as asking for paragraph or sentence count limits. »",
+      "citations_fr": [
+        "demander un nombre de mots exact ... est une stratégie moins efficace que de demander une limite en paragraphes ou en phrases."
+      ],
+      "principe_fr": "Le modèle raisonne en tokens, pas en mots ni en caractères : toute consigne de comptage exact porte sur une unité qu'il ne perçoit pas directement et sera donc approximative. Les consignes portant sur des unités structurelles qu'il produit réellement — phrases, paragraphes, éléments de liste — sont bien mieux respectées. Règle générale : formulez les contraintes de longueur dans l'unité que le modèle manipule.",
+      "distractors_fr": {
+        "A": "Un nombre de caractères se heurte au même écart mots/tokens qu'un nombre de mots.",
+        "B": "La température règle l'aléa, pas la longueur ; ce n'est pas le levier proposé.",
+        "D": "Demander un nombre de tokens précis n'est pas la consigne recommandée, peu naturelle pour le modèle."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    },
+    {
+      "id": "TCF-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Les trois paliers de service : Standard, Priority et Batch",
+      "question_en": "Which three service tiers does the API offer?",
+      "question_fr": "Quels sont les trois paliers de service proposés par l'API ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Free, Pro, and Enterprise.",
+          "text_fr": "Free, Pro et Enterprise."
+        },
+        {
+          "key": "B",
+          "text_en": "Bronze, Silver, and Gold.",
+          "text_fr": "Bronze, Silver et Gold."
+        },
+        {
+          "key": "C",
+          "text_en": "Start, Build, and Scale.",
+          "text_fr": "Start, Build et Scale."
+        },
+        {
+          "key": "D",
+          "text_en": "Standard, Priority, and Batch.",
+          "text_fr": "Standard, Priority et Batch."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc énonce : « Anthropic offers three service tiers: Priority Tier, Standard, Batch. »",
+      "citations_fr": [
+        "Anthropic propose trois paliers de service : Priority Tier, Standard, Batch."
+      ],
+      "distractors_fr": {
+        "A": "Free/Pro/Enterprise ne sont pas les paliers de service de l'API.",
+        "B": "Bronze/Silver/Gold est inventé ; ce ne sont pas les paliers documentés.",
+        "C": "Start/Build/Scale sont des paliers d'usage (rate limits), pas les paliers de service."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Palier Standard : par defaut, disponibilite au mieux-effort",
+      "question_en": "What is the Standard service tier?",
+      "question_fr": "Qu'est-ce que le palier de service Standard ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The default tier, served with best-effort availability.",
+          "text_fr": "Le palier par défaut, servi avec une disponibilité au mieux-effort."
+        },
+        {
+          "key": "B",
+          "text_en": "A guaranteed-capacity tier sold by monthly commitment.",
+          "text_fr": "Un palier à capacité garantie, vendu par engagement mensuel."
+        },
+        {
+          "key": "C",
+          "text_en": "An asynchronous tier for jobs that can wait hours.",
+          "text_fr": "Un palier asynchrone pour les traitements qui peuvent attendre des heures."
+        },
+        {
+          "key": "D",
+          "text_en": "A discounted tier billed at half the standard price.",
+          "text_fr": "Un palier remisé, facturé à la moitié du prix standard."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc dit : « The standard tier is the default service tier for all API requests. The API prioritizes these requests ... with best-effort availability. »",
+      "citations_fr": [
+        "Le palier standard est le palier de service par défaut pour toutes les requêtes API. L'API priorise ces requêtes ... avec une disponibilité au mieux-effort."
+      ],
+      "principe_fr": "Les paliers de service s'ordonnent selon un compromis entre garantie de disponibilité, délai accepté et prix. Standard est le point neutre par défaut : pas d'engagement, pas de garantie. Priority achète de la capacité prioritaire en cas de pic, Batch échange la latence contre un tarif réduit.",
+      "distractors_fr": {
+        "B": "La capacité garantie par engagement décrit le palier Priority, pas Standard.",
+        "C": "Le traitement asynchrone qui peut attendre décrit le palier Batch.",
+        "D": "La remise de 50 % est propre au traitement par lots (Batch), pas au palier Standard."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le palier Priority reduit les erreurs de surcharge en pic",
+      "question_en": "Under load, what does Priority Tier chiefly help with?",
+      "question_fr": "En cas de charge, à quoi sert principalement le Priority Tier ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It doubles the model's tokens-per-second throughput.",
+          "text_fr": "Il double le débit du modèle en tokens par seconde."
+        },
+        {
+          "key": "B",
+          "text_en": "It removes all rate limits for the organization.",
+          "text_fr": "Il supprime toutes les limites de débit de l'organisation."
+        },
+        {
+          "key": "C",
+          "text_en": "It cuts token prices during peak-demand periods.",
+          "text_fr": "Il réduit le prix des tokens pendant les périodes de forte demande."
+        },
+        {
+          "key": "D",
+          "text_en": "It minimizes server-overloaded errors at peak times.",
+          "text_fr": "Il minimise les erreurs de surcharge serveur aux heures de pointe."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc indique que Priority Tier « helps minimize 'server overloaded' errors, even during peak times », en priorisant ces requêtes sur toutes les autres.",
+      "citations_fr": [
+        "aide à minimiser les erreurs « server overloaded », même en période de pointe"
+      ],
+      "principe_fr": "Il faut distinguer trois grandeurs souvent confondues : la vitesse de génération, la limite de débit imposée à votre organisation et la disponibilité de la capacité serveur. Priority Tier agit uniquement sur la troisième, en plaçant vos requêtes devant les autres lorsque la capacité est contrainte. Il ne rend pas le modèle plus rapide et ne lève pas vos limites de débit.",
+      "distractors_fr": {
+        "A": "Priority priorise la prise en charge ; il ne double pas le débit par token du modèle.",
+        "B": "Priority ne supprime pas les rate limits : une requête qui les dépasserait est refusée.",
+        "C": "Priority ne réduit pas les prix ; la remise de coût est le fait du palier Batch."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Valeurs du parametre service_tier : auto et standard_only",
+      "question_en": "Which values does the service_tier request parameter accept?",
+      "question_fr": "Quelles valeurs le paramètre de requête service_tier accepte-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "'priority_only' or 'batch', with no default value.",
+          "text_fr": "'priority_only' ou 'batch', sans valeur par défaut."
+        },
+        {
+          "key": "B",
+          "text_en": "'auto' (default) or 'standard_only'.",
+          "text_fr": "'auto' (valeur par défaut) ou 'standard_only'."
+        },
+        {
+          "key": "C",
+          "text_en": "'fast' or 'slow', chosen per request.",
+          "text_fr": "'fast' ou 'slow', au choix pour chaque requête."
+        },
+        {
+          "key": "D",
+          "text_en": "'us' or 'global', matching the region.",
+          "text_fr": "'us' ou 'global', selon la région."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc liste deux valeurs : « `auto` (default) » et « `standard_only` ». `auto` utilise la capacité Priority si disponible, sinon retombe sur la capacité standard.",
+      "citations_fr": [
+        "`auto` (valeur par défaut)",
+        "`standard_only`"
+      ],
+      "distractors_fr": {
+        "A": "`priority_only`/`batch` ne sont pas les valeurs de `service_tier`.",
+        "C": "`fast`/`slow` n'existent pas pour `service_tier` ; Fast mode est un réglage distinct.",
+        "D": "`us`/`global` relèvent de la résidence des données (`inference_geo`), pas de `service_tier`."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-014",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Comportement de service_tier auto : Priority si dispo, sinon repli",
+      "question_en": "With service_tier set to 'auto', how is a request handled?",
+      "question_fr": "Avec service_tier réglé sur 'auto', comment une requête est-elle traitée ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It always uses Priority Tier, erroring if none is left.",
+          "text_fr": "Elle utilise toujours le Priority Tier et échoue s'il n'en reste plus."
+        },
+        {
+          "key": "B",
+          "text_en": "It always uses standard tier, ignoring Priority capacity.",
+          "text_fr": "Elle utilise toujours le palier standard et ignore la capacité Priority."
+        },
+        {
+          "key": "C",
+          "text_en": "It uses Priority capacity if available, else falls back.",
+          "text_fr": "Elle utilise la capacité Priority si elle est disponible, sinon elle se replie."
+        },
+        {
+          "key": "D",
+          "text_en": "It splits the request across both tiers to balance load.",
+          "text_fr": "Elle répartit la requête sur les deux paliers pour équilibrer la charge."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc décrit `auto` : « Uses the Priority Tier capacity if available, falling back to your other capacity if not. »",
+      "citations_fr": [
+        "Utilise la capacité du Priority Tier si elle est disponible, en se repliant sur votre autre capacité sinon."
+      ],
+      "principe_fr": "Les paliers de service forment une hiérarchie de capacité, et une valeur « auto » signifie presque toujours : essayer la capacité privilégiée d'abord, puis se replier silencieusement plutôt qu'échouer. Retenez que le repli est la règle par défaut ; ce sont les modes explicites (comme standard_only) qui contraignent le routage. Un mode qui échouerait faute de capacité devrait être demandé explicitement.",
+      "distractors_fr": {
+        "A": "`auto` ne force pas Priority : il retombe sur la capacité standard si Priority manque, sans erreur.",
+        "B": "`auto` utilise bien la capacité Priority disponible ; il ne l'ignore pas.",
+        "D": "Une requête est servie par un palier, pas répartie simultanément sur deux."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-015",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Une requete Priority puise dans la capacite Priority et les rate limits",
+      "question_en": "A request is assigned Priority Tier. Select the TWO accurate statements.",
+      "question_fr": "Une requête est affectée au Priority Tier. Sélectionnez les DEUX affirmations exactes.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It draws from both Priority capacity and your rate limits.",
+          "text_fr": "Elle puise à la fois dans la capacité Priority et dans vos limites de débit."
+        },
+        {
+          "key": "B",
+          "text_en": "If serving it would exceed the rate limits, it is declined.",
+          "text_fr": "Si la servir dépassait les limites de débit, elle est refusée."
+        },
+        {
+          "key": "C",
+          "text_en": "It bypasses the organization's configured rate limits entirely.",
+          "text_fr": "Elle contourne entièrement les limites de débit configurées de l'organisation."
+        },
+        {
+          "key": "D",
+          "text_en": "It is always billed at half of the standard token price.",
+          "text_fr": "Elle est toujours facturée à la moitié du prix standard par jeton."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "explanation_fr": "La note le dit : « Requests assigned Priority Tier pull from both the Priority Tier capacity and the regular rate limits. If servicing the request would exceed the rate limits, the request is declined. » Donc A et B.",
+      "citations_fr": [
+        "Les requêtes affectées au Priority Tier puisent à la fois dans la capacité du Priority Tier et dans les limites de débit habituelles. Si servir la requête dépassait les limites de débit, la requête est refusée."
+      ],
+      "principe_fr": "Acheter de la capacité prioritaire n'annule pas les limites de débit : ce sont deux contraintes indépendantes qui s'appliquent en même temps. Une requête doit passer les deux filtres, donc la limite la plus restrictive détermine le résultat. Ne supposez jamais qu'un palier payant exempte des quotas de l'organisation.",
+      "distractors_fr": {
+        "C": "Priority ne contourne pas les rate limits : une requête qui les dépasserait est refusée.",
+        "D": "La remise de 50 % est propre au Batch, pas au palier Priority."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-016",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Savoir quel palier a servi une requete via l usage de la reponse",
+      "question_en": "After a request, how can you tell which service tier actually served it?",
+      "question_fr": "Après une requête, comment savoir quel palier de service l'a réellement servie ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Read the service tier reported in the response usage object.",
+          "text_fr": "Lire le palier de service indiqué dans l'objet usage de la réponse."
+        },
+        {
+          "key": "B",
+          "text_en": "It is never exposed; you must infer it from the latency.",
+          "text_fr": "Ce n'est jamais exposé ; il faut le déduire de la latence."
+        },
+        {
+          "key": "C",
+          "text_en": "Check the stop_reason field, which encodes the tier.",
+          "text_fr": "Consulter le champ stop_reason, qui encode le palier."
+        },
+        {
+          "key": "D",
+          "text_en": "Only support can tell you, via the request-id you send.",
+          "text_fr": "Seul le support peut vous le dire, via le request-id que vous fournissez."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc précise : « The response `usage` object also includes the service tier assigned to the request ... This allows you to determine which service tier was assigned. »",
+      "citations_fr": [
+        "L'objet `usage` de la réponse inclut également le palier de service affecté à la requête ... Cela vous permet de déterminer quel palier de service a été affecté."
+      ],
+      "principe_fr": "Les métadonnées de facturation et de traitement d'une réponse se trouvent dans l'objet usage, pas dans les champs de contrôle de flux comme stop_reason. Règle générale : usage renseigne sur le coût et l'acheminement, stop_reason sur la raison d'arrêt de la génération. Vérifier le comportement réel côté serveur passe par la lecture de ces champs, pas par des mesures indirectes.",
+      "distractors_fr": {
+        "B": "Le palier est bien exposé, dans l'objet `usage` ; nul besoin de le déduire de la latence.",
+        "C": "`stop_reason` décrit la fin de génération, pas le palier de service.",
+        "D": "Le `request-id` sert au support pour tracer une requête, pas à lire le palier servi."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-017",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Le palier Batch pour des charges asynchrones qui peuvent attendre",
+      "question_en": "For which workload is the Batch tier the best fit?",
+      "question_fr": "Pour quelle charge de travail le palier Batch convient-il le mieux ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A live chat needing sub-second first-token latency.",
+          "text_fr": "Un chat en direct exigeant un premier jeton en moins d'une seconde."
+        },
+        {
+          "key": "B",
+          "text_en": "A trading loop that must react within milliseconds.",
+          "text_fr": "Une boucle de trading qui doit réagir en quelques millisecondes."
+        },
+        {
+          "key": "C",
+          "text_en": "A synchronous call blocking a user's page load.",
+          "text_fr": "Un appel synchrone qui bloque le chargement de la page d'un utilisateur."
+        },
+        {
+          "key": "D",
+          "text_en": "An async job that can wait and tolerates delay.",
+          "text_fr": "Une tâche asynchrone qui peut attendre et tolère du délai."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc positionne le Batch pour « asynchronous workflows that can wait or benefit from being outside your normal capacity. »",
+      "citations_fr": [
+        "des flux de travail asynchrones qui peuvent attendre ou qui gagnent à être traités en dehors de votre capacité habituelle."
+      ],
+      "principe_fr": "Le choix du palier découle de la sensibilité à la latence, pas du volume. Tout ce qui bloque un utilisateur en attente exige un traitement synchrone ; tout ce qui peut être consommé plus tard doit passer en batch, moins coûteux et hors de votre capacité normale. Posez-vous la question : quelqu'un attend-il devant l'écran ?",
+      "distractors_fr": {
+        "A": "Un chat en direct exige une réponse immédiate ; le Batch est asynchrone.",
+        "B": "Une boucle temps réel ne tolère pas l'attente d'un traitement par lots.",
+        "C": "Un appel synchrone bloquant attend une réponse immédiate, contraire au Batch."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-018",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "concept": "Fenetre d expiration d un batch : 24 heures",
+      "question_en": "Within what window are batch results available before a batch expires?",
+      "question_fr": "Dans quel délai les résultats d'un batch sont-ils disponibles avant son expiration ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "1 minute.",
+          "text_fr": "1 minute."
+        },
+        {
+          "key": "B",
+          "text_en": "5 hours.",
+          "text_fr": "5 heures."
+        },
+        {
+          "key": "C",
+          "text_en": "7 days.",
+          "text_fr": "7 jours."
+        },
+        {
+          "key": "D",
+          "text_en": "24 hours.",
+          "text_fr": "24 heures."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc indique : « You can access batch results when all messages have completed or after 24 hours, whichever comes first. Batches expire if processing does not complete within 24 hours. » (la plupart aboutissent en moins d'une heure).",
+      "citations_fr": [
+        "Vous pouvez accéder aux résultats du batch lorsque tous les messages sont terminés ou après 24 heures, selon ce qui survient en premier. Les batchs expirent si le traitement ne s'achève pas dans les 24 heures."
+      ],
+      "distractors_fr": {
+        "A": "Une minute est bien en deçà : la fenêtre d'expiration est de 24 heures.",
+        "B": "Cinq heures ne correspond à aucun seuil documenté ; l'expiration est à 24 heures.",
+        "C": "Sept jours est trop long : un batch expire au bout de 24 heures."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "TCF-019",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Traitement d un batch : requetes independantes et types melanges",
+      "question_en": "Select the TWO accurate statements about how a batch is processed.",
+      "question_fr": "Choisissez les DEUX affirmations exactes sur la manière dont un batch est traité.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Every request in the batch must use the same model.",
+          "text_fr": "Toutes les requêtes du batch doivent utiliser le même modèle."
+        },
+        {
+          "key": "B",
+          "text_en": "Requests are processed strictly in submission order.",
+          "text_fr": "Les requêtes sont traitées strictement dans l'ordre de soumission."
+        },
+        {
+          "key": "C",
+          "text_en": "Each request in the batch is processed independently.",
+          "text_fr": "Chaque requête du batch est traitée indépendamment."
+        },
+        {
+          "key": "D",
+          "text_en": "You can mix different request types in one batch.",
+          "text_fr": "Vous pouvez mélanger différents types de requêtes dans un même batch."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "La doc dit : « each request handled independently » et « Because each request in the batch is processed independently, you can mix different types of requests within a single batch. » Donc C et D.",
+      "citations_fr": [
+        "chaque requête est traitée indépendamment",
+        "Parce que chaque requête du batch est traitée indépendamment, vous pouvez mélanger différents types de requêtes au sein d'un même batch."
+      ],
+      "principe_fr": "L'indépendance de traitement est la propriété structurante d'un batch : aucune requête ne dépend du résultat d'une autre, donc ni l'ordre ni l'homogénéité des paramètres (modèle, outils, format) ne sont contraints. Corollaire pratique : tout ce qui exige un enchaînement séquentiel doit être orchestré côté client, en plusieurs batchs successifs.",
+      "distractors_fr": {
+        "A": "Les requêtes d'un même lot peuvent viser des modèles et des types différents.",
+        "B": "Chaque requête est traitée indépendamment, pas dans un ordre strict de soumission."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "TCF-020",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "concept": "Batch inadapte a l interactif car asynchrone, sans reponse immediate",
+      "question_en": "Why is the Batch tier unsuitable for an interactive assistant?",
+      "question_fr": "Pourquoi le palier Batch ne convient-il pas à un assistant interactif ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It caps output at a few tokens per request.",
+          "text_fr": "Il plafonne la sortie à quelques tokens par requête."
+        },
+        {
+          "key": "B",
+          "text_en": "It is asynchronous, so responses are not immediate.",
+          "text_fr": "Il est asynchrone : les réponses ne sont pas immédiates."
+        },
+        {
+          "key": "C",
+          "text_en": "It rejects any request that defines tools.",
+          "text_fr": "Il rejette toute requête qui définit des outils."
+        },
+        {
+          "key": "D",
+          "text_en": "It disables streaming and prompt caching entirely.",
+          "text_fr": "Il désactive complètement le streaming et le prompt caching."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le Batch traite les requêtes « asynchronously ... Instead of processing requests one at a time with immediate responses. » Sans réponse immédiate, il ne convient pas à un usage interactif.",
+      "citations_fr": [
+        "de façon asynchrone ... Au lieu de traiter les requêtes une à une avec des réponses immédiates."
+      ],
+      "principe_fr": "Le choix d'un palier de service découle de la contrainte de latence de l'usage, pas des fonctionnalités disponibles. Batch échange le temps de réponse contre du coût et du débit : il convient aux traitements différés (évaluations, enrichissement de corpus), jamais à une boucle où un humain attend. Réciproquement, les paliers synchrones et Priority servent à borner la latence perçue.",
+      "distractors_fr": {
+        "A": "Le Batch ne plafonne pas la sortie à quelques tokens ; il porte les paramètres Messages habituels.",
+        "C": "Le Batch n'interdit pas les outils : chaque requête garde les paramètres standard.",
+        "D": "Le prompt caching reste utilisable avec le Batch ; c'est l'asynchronie qui l'écarte de l'interactif."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "TCF-021",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "La concurrence augmente le debit mais reste bornee par les rate limits",
+      "question_en": "You raise client concurrency to increase throughput. Select the TWO accurate statements.",
+      "question_fr": "Vous augmentez la concurrence côté client pour accroître le débit. Choisissez les DEUX affirmations exactes.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Concurrency has no ceiling; add workers without limit.",
+          "text_fr": "La concurrence n'a pas de plafond : ajoutez des workers sans limite."
+        },
+        {
+          "key": "B",
+          "text_en": "Throughput is still bounded by your RPM and token limits.",
+          "text_fr": "Le débit reste borné par vos limites de RPM et de tokens."
+        },
+        {
+          "key": "C",
+          "text_en": "Beyond your rate limits, extra concurrency yields 429s.",
+          "text_fr": "Au-delà de vos limites de débit, la concurrence supplémentaire produit des 429."
+        },
+        {
+          "key": "D",
+          "text_en": "Concurrency only helps batch jobs, never live requests.",
+          "text_fr": "La concurrence n'aide que les traitements batch, jamais les requêtes en direct."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "Les limites de débit (RPM/ITPM/OTPM) bornent le débit atteignable : au-delà, la doc indique qu'on reçoit un 429 « describing which rate limit was exceeded ». La concurrence aide jusqu'à ce plafond, pas au-delà.",
+      "citations_fr": [
+        "indiquant quelle limite de débit a été dépassée"
+      ],
+      "principe_fr": "La concurrence n'augmente le débit que jusqu'au plafond imposé par les limites de débit du compte (RPM, ITPM, OTPM) ; au-delà, elle ne fait que convertir des requêtes utiles en erreurs 429 et en réessais. Le bon réflexe est donc de dimensionner le parallélisme sur la limite mesurée, avec repli exponentiel et lecture des en-têtes de quota, plutôt que d'empiler des workers.",
+      "distractors_fr": {
+        "A": "La concurrence est bornée par les rate limits ; ajouter des workers sans fin déclenche des 429.",
+        "D": "La concurrence sert aussi les requêtes synchrones, pas seulement le batch."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+    },
+    {
+      "id": "TCF-022",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Fast mode regle la latence synchrone, sans effet sur un batch",
+      "question_en": "Does Fast mode reduce latency for a batch job?",
+      "question_fr": "Le mode Fast réduit-il la latence d'un traitement batch ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "No; Fast mode tunes synchronous latency, not batch work.",
+          "text_fr": "Non ; le mode Fast règle la latence synchrone, pas le travail en batch."
+        },
+        {
+          "key": "B",
+          "text_en": "Yes; it halves the batch's 24-hour processing window.",
+          "text_fr": "Oui ; il divise par deux la fenêtre de traitement de 24 heures du batch."
+        },
+        {
+          "key": "C",
+          "text_en": "Yes; it is the only way to submit a batch at all.",
+          "text_fr": "Oui ; c'est le seul moyen de soumettre un batch."
+        },
+        {
+          "key": "D",
+          "text_en": "No; Fast mode applies exclusively to batch processing.",
+          "text_fr": "Non ; le mode Fast s'applique exclusivement au traitement batch."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc du Batch note pour `speed` (Fast mode) : « Fast mode tunes synchronous latency, which doesn't apply to asynchronous batch processing. »",
+      "citations_fr": [
+        "Le mode Fast règle la latence synchrone, ce qui ne s'applique pas au traitement batch asynchrone."
+      ],
+      "principe_fr": "Les leviers de latence ne se cumulent pas avec les modes asynchrones : un paramètre conçu pour raccourcir le temps de réponse d'un appel bloquant n'a aucun sens quand la réponse est récupérée plus tard. Avant d'ajouter une option de performance, demandez-vous quelle grandeur elle optimise réellement et si cette grandeur existe dans votre mode d'exécution.",
+      "distractors_fr": {
+        "B": "Fast mode ne s'applique pas au batch ; il ne raccourcit pas sa fenêtre de traitement.",
+        "C": "Un batch se soumet via la Batches API, sans Fast mode.",
+        "D": "C'est l'inverse : Fast mode vise le synchrone, pas le batch asynchrone."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "TCF-023",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "concept": "Affectation au palier Priority selon la capacite Priority en tokens/minute",
+      "question_en": "Your 'auto' requests keep landing on standard tier. What does the doc say governs Priority assignment?",
+      "question_fr": "Vos requêtes en 'auto' finissent systématiquement sur le palier standard. Selon la documentation, qu'est-ce qui détermine l'affectation à Priority ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A random share of all traffic is sampled into Priority Tier.",
+          "text_fr": "Une part aléatoire de tout le trafic est échantillonnée vers Priority Tier."
+        },
+        {
+          "key": "B",
+          "text_en": "Priority is granted only to the first request each minute.",
+          "text_fr": "Priority n'est accordé qu'à la première requête de chaque minute."
+        },
+        {
+          "key": "C",
+          "text_en": "Enough Priority capacity in input/output tokens per minute.",
+          "text_fr": "Une capacité Priority suffisante en tokens d'entrée/sortie par minute."
+        },
+        {
+          "key": "D",
+          "text_en": "The service_tier header must be set to 'priority_only'.",
+          "text_fr": "L'en-tête service_tier doit valoir 'priority_only'."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc conditionne l'affectation à Priority à « sufficient Priority Tier capacity input tokens per minute » et « output tokens per minute » ; sinon la requête passe en standard.",
+      "citations_fr": [
+        "une capacité Priority Tier suffisante en tokens d'entrée par minute",
+        "tokens de sortie par minute"
+      ],
+      "principe_fr": "Avec service_tier en 'auto', Priority est une allocation de capacité, pas une garantie : la requête n'y est servie que s'il reste de la capacité réservée en tokens par minute, sinon elle retombe silencieusement sur le palier standard. Le débit non déterministe qui en résulte doit donc être traité comme une variation de latence normale, et non comme une erreur de configuration.",
+      "distractors_fr": {
+        "A": "L'affectation n'est pas un échantillonnage aléatoire : elle dépend de la capacité Priority disponible.",
+        "B": "Rien n'indique une règle « première requête de la minute » ; c'est la capacité en tokens/minute qui décide.",
+        "D": "`priority_only` n'est pas une valeur valide de `service_tier` (auto ou standard_only)."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/api/service-tiers"
+    },
+    {
+      "id": "TCF-024",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "concept": "Facteurs de latence : taille du modele, complexite du prompt, infrastructure",
+      "question_en": "Which factors does the guide list as influencing latency?",
+      "question_fr": "Quels facteurs le guide cite-t-il comme influençant la latence ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only the account's billing tier and its region.",
+          "text_fr": "Uniquement le palier de facturation du compte et sa région."
+        },
+        {
+          "key": "B",
+          "text_en": "Only the number of tools defined in the request.",
+          "text_fr": "Uniquement le nombre d'outils définis dans la requête."
+        },
+        {
+          "key": "C",
+          "text_en": "Solely the SDK language and its retry settings.",
+          "text_fr": "Uniquement le langage du SDK et ses réglages de réessai."
+        },
+        {
+          "key": "D",
+          "text_en": "Model size, prompt complexity, and infrastructure.",
+          "text_fr": "La taille du modèle, la complexité du prompt et l'infrastructure."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc cite « the size of the model, the complexity of the prompt, and the underlying infrastructure » parmi les facteurs qui influencent la latence.",
+      "citations_fr": [
+        "la taille du modèle, la complexité du prompt et l'infrastructure sous-jacente"
+      ],
+      "principe_fr": "La latence se décompose en facteurs que vous contrôlez (choix du modèle, longueur et complexité du prompt, nombre de tokens générés) et en facteurs que vous ne contrôlez pas (infrastructure, charge). L'optimisation utile porte donc sur les premiers : modèle plus léger quand la tâche le permet, prompt plus court, sortie bornée.",
+      "distractors_fr": {
+        "A": "Le palier de facturation n'est pas le facteur de latence cité ; taille du modèle et prompt le sont.",
+        "B": "Le nombre d'outils n'est pas isolé comme facteur ; la complexité globale du prompt compte.",
+        "C": "La latence tient au modèle et à l'infrastructure, pas au langage du SDK."
+      },
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    }
+  ]
 }

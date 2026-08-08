@@ -19,14 +19,38 @@
       "difficulty": "facile",
       "concept": "Distinguer l injection directe de l injection indirecte par le modele de menace",
       "question_en": "An assistant summarizes inbound emails for a trusted employee, and one email body carries hidden instructions. Which threat model is this?",
+      "question_fr": "Un assistant résume les courriels entrants d'un employé de confiance, et le corps d'un courriel contient des instructions dissimulées. De quel modèle de menace s'agit-il ?",
       "options": [
-        { "key": "A", "text_en": "Direct injection, since the instructions reach Claude from a user turn." },
-        { "key": "B", "text_en": "Indirect injection: the user is trusted, the third-party content is not." },
-        { "key": "C", "text_en": "Neither, because a jailbreak requires the operator to be the attacker." },
-        { "key": "D", "text_en": "Direct injection, as any text Claude reads counts as adversarial input." }
+        {
+          "key": "A",
+          "text_en": "Direct injection, since the instructions reach Claude from a user turn.",
+          "text_fr": "Injection directe, puisque les instructions parviennent à Claude via un tour utilisateur."
+        },
+        {
+          "key": "B",
+          "text_en": "Indirect injection: the user is trusted, the third-party content is not.",
+          "text_fr": "Injection indirecte : l'utilisateur est de confiance, le contenu tiers ne l'est pas."
+        },
+        {
+          "key": "C",
+          "text_en": "Neither, because a jailbreak requires the operator to be the attacker.",
+          "text_fr": "Aucun des deux, car un jailbreak suppose que l'opérateur soit l'attaquant."
+        },
+        {
+          "key": "D",
+          "text_en": "Direct injection, as any text Claude reads counts as adversarial input.",
+          "text_fr": "Injection directe, car tout texte lu par Claude constitue une entrée adverse."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La page sépare deux modèles de menace : « Jailbreaks and direct prompt injection, where the *user* of your application is the adversary » et « Indirect prompt injection, where the user is trusted but Claude processes *third-party content* (web pages, emails, documents, tool results) that contains adversarial instructions. » Un courriel entrant relève du second.",
+      "citations_fr": [
+        "Jailbreaks et injection directe de prompt, où l'*utilisateur* de votre application est l'adversaire",
+        "Injection indirecte de prompt, où l'utilisateur est de confiance mais Claude traite du *contenu tiers* (pages web, courriels, documents, résultats d'outils) qui contient des instructions adverses."
+      ],
+      "principe_fr": "Le modèle de menace se détermine par l'origine du texte hostile, pas par son contenu. Si l'adversaire est celui qui parle à l'application, l'injection est directe ; si l'utilisateur est légitime mais que le texte hostile arrive par un canal tiers que Claude lit (page web, courriel, document, résultat d'outil), l'injection est indirecte. Cette distinction commande les défenses : contrôler l'utilisateur d'un côté, isoler et traiter le contenu externe avec méfiance de l'autre.",
       "distractors_fr": {
         "A": "L'employé n'a rien rédigé d'hostile : l'attaque est portée par le contenu tiers que Claude lit pour lui, pas par le tour de l'utilisateur.",
         "C": "L'injection indirecte est bien l'un des deux modèles traités par la page ; il n'est pas nécessaire que l'utilisateur soit l'adversaire.",
@@ -44,14 +68,37 @@
       "difficulty": "moyen",
       "concept": "Ou placer un contenu tiers pour que Claude le traite avec mefiance",
       "question_en": "A team pastes fetched web pages into the system prompt so Claude always has them. What does the documentation prescribe instead?",
+      "question_fr": "Une équipe colle des pages web récupérées dans le system prompt pour que Claude les ait toujours sous les yeux. Que prescrit la documentation à la place ?",
       "options": [
-        { "key": "A", "text_en": "Keep them in the system prompt, but wrap each page in XML tags." },
-        { "key": "B", "text_en": "Move them into a plain user text block, closer to the question asked." },
-        { "key": "C", "text_en": "Deliver them in tool_result blocks, which Claude treats with skepticism." },
-        { "key": "D", "text_en": "Summarize each page first, so only your own wording reaches the model." }
+        {
+          "key": "A",
+          "text_en": "Keep them in the system prompt, but wrap each page in XML tags.",
+          "text_fr": "Les garder dans le system prompt, mais encadrer chaque page de balises XML."
+        },
+        {
+          "key": "B",
+          "text_en": "Move them into a plain user text block, closer to the question asked.",
+          "text_fr": "Les déplacer dans un bloc user text ordinaire, plus près de la question posée."
+        },
+        {
+          "key": "C",
+          "text_en": "Deliver them in tool_result blocks, which Claude treats with skepticism.",
+          "text_fr": "Les fournir dans des blocs tool_result, que Claude traite avec méfiance."
+        },
+        {
+          "key": "D",
+          "text_en": "Summarize each page first, so only your own wording reaches the model.",
+          "text_fr": "Résumer chaque page d'abord, pour que seule votre formulation atteigne le modèle."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La règle est explicite : « Put untrusted content only in tool results. Deliver third-party content to Claude inside `tool_result` blocks, never in `system` prompts or plain user `text` blocks. Claude is trained to treat instructions that appear inside tool results with appropriate skepticism. »",
+      "citations_fr": [
+        "Ne placez du contenu non fiable que dans les résultats d'outils. Transmettez le contenu tiers à Claude à l'intérieur de blocs `tool_result`, jamais dans les prompts `system` ni dans de simples blocs `text` utilisateur. Claude est entraîné à traiter les instructions qui apparaissent dans des résultats d'outils avec une méfiance appropriée."
+      ],
+      "principe_fr": "L'emplacement d'un contenu dans la requête fixe le niveau de confiance que le modèle lui accorde. Le system prompt et les tours utilisateur sont des canaux d'autorité : ce qui y figure est pris pour consigne. Les blocs tool_result sont le canal de données non fiables, et c'est pour cela que tout contenu externe doit y être acheminé, quel qu'en soit l'usage.",
       "distractors_fr": {
         "A": "Le balisage ne change pas le statut du canal : la doc exclut nommément le prompt système pour du contenu tiers.",
         "B": "Le bloc `text` d'un tour utilisateur est l'autre canal explicitement écarté ; Claude y accorde la confiance due à l'utilisateur.",
@@ -69,14 +116,37 @@
       "difficulty": "difficile",
       "concept": "Ses propres consignes n ont pas leur place dans un bloc de resultat d outil",
       "question_en": "A developer appends \"now answer only in French\" to each tool_result, and Claude keeps ignoring it. What explains this?",
+      "question_fr": "Un développeur ajoute « réponds désormais uniquement en français » à chaque tool_result, et Claude continue de l'ignorer. Qu'est-ce qui l'explique ?",
       "options": [
-        { "key": "A", "text_en": "Tool results are untrusted data, so your own directives may be ignored." },
-        { "key": "B", "text_en": "Tool results accept one instruction each, and the first one wins out." },
-        { "key": "C", "text_en": "Language directives are only honoured when set in the system prompt." },
-        { "key": "D", "text_en": "The block was malformed, since tool_result takes no free-form text." }
+        {
+          "key": "A",
+          "text_en": "Tool results are untrusted data, so your own directives may be ignored.",
+          "text_fr": "Les résultats d'outils sont des données non fiables : vos propres directives peuvent être ignorées."
+        },
+        {
+          "key": "B",
+          "text_en": "Tool results accept one instruction each, and the first one wins out.",
+          "text_fr": "Un résultat d'outil n'accepte qu'une instruction, et la première l'emporte."
+        },
+        {
+          "key": "C",
+          "text_en": "Language directives are only honoured when set in the system prompt.",
+          "text_fr": "Les directives de langue ne sont honorées que dans le system prompt."
+        },
+        {
+          "key": "D",
+          "text_en": "The block was malformed, since tool_result takes no free-form text.",
+          "text_fr": "Le bloc était mal formé, car tool_result n'accepte pas de texte libre."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Conséquence directe de la règle précédente, et souvent contre-intuitive : « Don't put your own instructions in tool results. Because Claude treats tool-result content as untrusted data, instructions you place there may be ignored or flagged as a potential injection. Send your instructions in a `user` turn that follows the `tool_result` block. »",
+      "citations_fr": [
+        "Ne placez pas vos propres instructions dans les résultats d'outils. Comme Claude traite le contenu des résultats d'outils comme des données non fiables, les instructions que vous y placez peuvent être ignorées ou signalées comme une tentative d'injection. Envoyez vos instructions dans un tour `user` qui suit le bloc `tool_result`."
+      ],
+      "principe_fr": "La méfiance appliquée à un canal ne fait pas d'exception pour vous : le modèle ne peut pas distinguer vos consignes de celles d'un attaquant dans le même bloc. La conséquence pratique est symétrique de la règle de placement : contenu externe dans tool_result, consignes propres dans un tour utilisateur qui suit le résultat.",
       "distractors_fr": {
         "B": "Il n'existe aucune limite d'une instruction par résultat : c'est le statut du canal, non leur nombre, qui les fait écarter.",
         "C": "Les consignes passent très bien dans un tour `user` suivant le résultat d'outil, et sur les modèles compatibles dans un message système en cours de conversation.",
@@ -94,14 +164,38 @@
       "difficulty": "moyen",
       "concept": "Le blindage anti-fuite de prompt se paie en performance et vient en dernier",
       "question_en": "A team plans an elaborate leak-proofing layer on a prompt that works well today. What does the documentation advise first?",
+      "question_fr": "Une équipe prévoit une couche élaborée d'anti-fuite sur un prompt qui fonctionne bien aujourd'hui. Que conseille d'abord la documentation ?",
       "options": [
-        { "key": "A", "text_en": "Ship the layer: leak-proofing carries no cost to task performance." },
-        { "key": "B", "text_en": "Prefill the assistant turn, which fully blocks leaks on every model." },
-        { "key": "C", "text_en": "Move the whole prompt to the user turn, where leaks cannot happen." },
-        { "key": "D", "text_en": "Try monitoring first: output screening and post-processing catch leaks." }
+        {
+          "key": "A",
+          "text_en": "Ship the layer: leak-proofing carries no cost to task performance.",
+          "text_fr": "Déployer la couche : l'anti-fuite n'a aucun coût sur la performance de la tâche."
+        },
+        {
+          "key": "B",
+          "text_en": "Prefill the assistant turn, which fully blocks leaks on every model.",
+          "text_fr": "Préfixer le tour assistant, ce qui bloque totalement les fuites sur tout modèle."
+        },
+        {
+          "key": "C",
+          "text_en": "Move the whole prompt to the user turn, where leaks cannot happen.",
+          "text_fr": "Déplacer tout le prompt dans le tour utilisateur, où les fuites sont impossibles."
+        },
+        {
+          "key": "D",
+          "text_en": "Try monitoring first: output screening and post-processing catch leaks.",
+          "text_fr": "Commencer par la surveillance : filtrage des sorties et post-traitement détectent les fuites."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La page ouvre sur cette mise en garde : « Consider using leak-resistant prompt engineering strategies only when absolutely necessary. Attempts to leak-proof your prompt can add complexity that may degrade performance in other parts of the task », et recommande : « Try monitoring techniques first, like output screening and post-processing, to try to catch instances of prompt leak. »",
+      "citations_fr": [
+        "N'envisagez des stratégies de prompt engineering résistantes aux fuites que lorsque c'est absolument nécessaire. Les tentatives de rendre un prompt inviolable peuvent ajouter une complexité susceptible de dégrader la performance sur d'autres parties de la tâche",
+        "Essayez d'abord des techniques de surveillance, comme le filtrage des sorties et le post-traitement, pour tenter de détecter les cas de fuite de prompt."
+      ],
+      "principe_fr": "Toute défense ajoutée dans le prompt consomme de l'attention et de la complexité au détriment de la tâche elle-même. La règle générale est de préférer les contrôles externes (surveillance, filtrage en sortie, post-traitement) aux contorsions internes du prompt, et de ne durcir le prompt que si le risque est réel et démontré.",
       "distractors_fr": {
         "A": "C'est exactement ce que la doc conteste : la complexité ajoutée peut dégrader les résultats ailleurs dans la tâche.",
         "B": "Le préremplissage est l'une des pistes citées, mais il ne bloque rien totalement, et il n'est pas pris en charge sur Claude 4.6 et au-delà.",
@@ -119,14 +213,39 @@
       "difficulty": "moyen",
       "concept": "Ecran de classification leger applique en entree comme en sortie d outil",
       "question_en": "A team adds a lightweight screening layer around an agent. Select the TWO practices the documentation describes.",
+      "question_fr": "Une équipe ajoute une couche de filtrage légère autour d'un agent. Sélectionnez les DEUX pratiques décrites par la documentation.",
       "options": [
-        { "key": "A", "text_en": "Pre-screen user input with a small model such as Claude Haiku 4.5." },
-        { "key": "B", "text_en": "Screen only user input, since tool output comes from systems you own." },
-        { "key": "C", "text_en": "Screen raw tool output before returning it in a tool_result block." },
-        { "key": "D", "text_en": "Let the screen answer in free text, which is richer than a fixed schema." }
+        {
+          "key": "A",
+          "text_en": "Pre-screen user input with a small model such as Claude Haiku 4.5.",
+          "text_fr": "Pré-filtrer l'entrée utilisateur avec un petit modèle comme Claude Haiku 4.5."
+        },
+        {
+          "key": "B",
+          "text_en": "Screen only user input, since tool output comes from systems you own.",
+          "text_fr": "Ne filtrer que l'entrée utilisateur, la sortie d'outil venant de systèmes que vous maîtrisez."
+        },
+        {
+          "key": "C",
+          "text_en": "Screen raw tool output before returning it in a tool_result block.",
+          "text_fr": "Filtrer la sortie brute d'un outil avant de la renvoyer dans un bloc tool_result."
+        },
+        {
+          "key": "D",
+          "text_en": "Let the screen answer in free text, which is richer than a fixed schema.",
+          "text_fr": "Laisser le filtre répondre en texte libre, plus riche qu'un schéma fixe."
+        }
       ],
-      "correct": ["A", "C"],
+      "correct": [
+        "A",
+        "C"
+      ],
       "explanation_fr": "Le même motif est recommandé des deux côtés : « Use a lightweight model like Claude Haiku 4.5 to pre-screen user input before it reaches your main conversation », puis « Run each tool, pass its raw output to a small classifier call with Claude Haiku 4.5, and only return the content as a `tool_result` block if the screen reports no injection attempt. » Les deux emploient des sorties structurées pour rendre le verdict exploitable.",
+      "citations_fr": [
+        "Utilisez un modèle léger comme Claude Haiku 4.5 pour pré-filtrer l'entrée utilisateur avant qu'elle n'atteigne votre conversation principale",
+        "Exécutez chaque outil, passez sa sortie brute à un petit appel de classification avec Claude Haiku 4.5, et ne renvoyez le contenu dans un bloc `tool_result` que si le filtre ne signale aucune tentative d'injection."
+      ],
+      "principe_fr": "Le filtrage par petit modèle est un motif symétrique : il s'applique à toute frontière par laquelle du texte non maîtrisé entre dans la conversation, en amont côté utilisateur comme en aval côté sortie d'outil. Deux exigences le rendent exploitable : un modèle peu coûteux, pour que le surcoût reste acceptable, et une sortie structurée, pour que le verdict soit décidable par code plutôt qu'interprété.",
       "distractors_fr": {
         "B": "L'injection indirecte arrive précisément par les résultats d'outils : pages web, courriels, OCR. Les filtrer est l'objet d'une section entière.",
         "D": "L'inverse de la consigne : « Use structured outputs so the classifier's verdict is a parseable value your application can branch on. »"
@@ -143,14 +262,37 @@
       "difficulty": "moyen",
       "concept": "Champs disponibles sur un refus de classifieur en flux",
       "question_en": "On a streaming refusal, what can an application safely assume about the stop_details object it receives?",
+      "question_fr": "Lors d'un refus en flux, que peut supposer sans risque une application au sujet de l'objet stop_details qu'elle reçoit ?",
       "options": [
-        { "key": "A", "text_en": "It is absent unless the refusal maps to a named policy category." },
-        { "key": "B", "text_en": "Its category is always filled, so branching on that string is safe." },
-        { "key": "C", "text_en": "It arrives on message_stop, after the final usage totals are known." },
-        { "key": "D", "text_en": "It is always present, but category and explanation may both be null." }
+        {
+          "key": "A",
+          "text_en": "It is absent unless the refusal maps to a named policy category.",
+          "text_fr": "Il est absent, sauf si le refus correspond à une catégorie de politique nommée."
+        },
+        {
+          "key": "B",
+          "text_en": "Its category is always filled, so branching on that string is safe.",
+          "text_fr": "Son champ category est toujours rempli : brancher sur cette chaîne est sûr."
+        },
+        {
+          "key": "C",
+          "text_en": "It arrives on message_stop, after the final usage totals are known.",
+          "text_fr": "Il arrive sur message_stop, une fois les totaux d'usage finaux connus."
+        },
+        {
+          "key": "D",
+          "text_en": "It is always present, but category and explanation may both be null.",
+          "text_fr": "Il est toujours présent, mais category et explanation peuvent tous deux valoir null."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La note est explicite : « On a refusal the `stop_details` object is always present, but its `category` and `explanation` fields can be `null`, for example when the refusal maps to no named category. Branch on `stop_reason` or `stop_details.type` rather than assuming `category` and `explanation` are populated. » Dans le flux, `stop_details` arrive sur l'événement `message_delta`, aux côtés de `stop_reason`.",
+      "citations_fr": [
+        "Lors d'un refus, l'objet `stop_details` est toujours présent, mais ses champs `category` et `explanation` peuvent valoir `null`, par exemple lorsque le refus ne correspond à aucune catégorie nommée. Branchez sur `stop_reason` ou `stop_details.type` plutôt que de supposer que `category` et `explanation` sont renseignés."
+      ],
+      "principe_fr": "Distinguez la présence d'un objet de la présence de ses champs : un objet garanti peut contenir des champs facultatifs valant null. La logique de branchement doit reposer sur les champs contractuellement renseignés (ici stop_reason ou le type), les champs descriptifs servant uniquement au journal ou à l'affichage.",
       "distractors_fr": {
         "A": "L'objet est toujours présent sur un refus ; ce sont ses champs internes qui peuvent être nuls.",
         "B": "C'est le piège que la note désigne : brancher sur `category` casse dès qu'un refus ne correspond à aucune catégorie nommée.",
@@ -168,14 +310,37 @@
       "difficulty": "difficile",
       "concept": "Poursuivre une conversation apres un refus sans reinitialiser le contexte",
       "question_en": "After a stop_reason of refusal, an app appends an apology and keeps the history intact. Every later turn is refused too. Why?",
+      "question_fr": "Après un stop_reason valant refusal, une application ajoute une excuse et conserve l'historique intact. Tous les tours suivants sont refusés eux aussi. Pourquoi ?",
       "options": [
-        { "key": "A", "text_en": "The account is rate limited for an hour once a refusal is triggered." },
-        { "key": "B", "text_en": "The context must be reset, or the refusals simply keep on coming." },
-        { "key": "C", "text_en": "The API key is flagged and has to be rotated before requests resume." },
-        { "key": "D", "text_en": "Streaming is disabled after a refusal until the session is recreated." }
+        {
+          "key": "A",
+          "text_en": "The account is rate limited for an hour once a refusal is triggered.",
+          "text_fr": "Le compte est soumis à une limite de débit pendant une heure dès qu'un refus est déclenché."
+        },
+        {
+          "key": "B",
+          "text_en": "The context must be reset, or the refusals simply keep on coming.",
+          "text_fr": "Le contexte doit être réinitialisé, sinon les refus continuent tout simplement."
+        },
+        {
+          "key": "C",
+          "text_en": "The API key is flagged and has to be rotated before requests resume.",
+          "text_fr": "La clé API est signalée et doit être renouvelée avant que les requêtes reprennent."
+        },
+        {
+          "key": "D",
+          "text_en": "Streaming is disabled after a refusal until the session is recreated.",
+          "text_fr": "Le streaming est désactivé après un refus jusqu'à ce que la session soit recréée."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "« When you receive `stop_reason`: `refusal`, you must reset the conversation context before continuing. You can remove or rephrase the turn that triggered the refusal, or clear the conversation history entirely. Attempting to continue without resetting will result in continued refusals. » Une autre voie existe : rejouer la requête refusée sur un autre modèle Claude, par bascule côté serveur ou middleware du SDK.",
+      "citations_fr": [
+        "Lorsque vous recevez `stop_reason` : `refusal`, vous devez réinitialiser le contexte de la conversation avant de continuer. Vous pouvez supprimer ou reformuler le tour qui a déclenché le refus, ou effacer entièrement l'historique de la conversation. Tenter de continuer sans réinitialiser entraînera de nouveaux refus."
+      ],
+      "principe_fr": "Un refus n'est pas un incident de compte ni une sanction technique : c'est un état de la conversation. Comme le modèle reçoit à chaque tour l'historique complet, le contenu qui a déclenché le refus reste présent et continue de le déclencher. La règle générale : quand un signal d'arrêt découle du contenu du contexte, la correction passe par une modification de ce contexte — retirer ou reformuler le tour fautif — et non par une nouvelle tentative à l'identique.",
       "distractors_fr": {
         "A": "Un refus n'entraîne aucune limitation de débit : c'est le contexte conservé qui reproduit le refus à chaque tour.",
         "C": "Aucun marquage de clé n'intervient ; le refus porte sur le contenu de la conversation, pas sur l'identité de l'appelant.",
@@ -193,14 +358,39 @@
       "difficulty": "moyen",
       "concept": "Facturation et metriques d usage d une requete refusee",
       "question_en": "A finance team asks what a refused request costs on the Claude API. Select the TWO accurate statements.",
+      "question_fr": "Une équipe financière demande ce que coûte une requête refusée sur l'API Claude. Sélectionnez les DEUX affirmations exactes.",
       "options": [
-        { "key": "A", "text_en": "Every refused request is free, whatever the model had already emitted." },
-        { "key": "B", "text_en": "A refusal arriving before any output is generated is not billed to you." },
-        { "key": "C", "text_en": "Usage metrics still come back in the response, even when it is refused." },
-        { "key": "D", "text_en": "Refused requests are billed at double rate to discourage repeat tries." }
+        {
+          "key": "A",
+          "text_en": "Every refused request is free, whatever the model had already emitted.",
+          "text_fr": "Toute requête refusée est gratuite, quoi que le modèle ait déjà émis."
+        },
+        {
+          "key": "B",
+          "text_en": "A refusal arriving before any output is generated is not billed to you.",
+          "text_fr": "Un refus qui survient avant la génération de toute sortie ne vous est pas facturé."
+        },
+        {
+          "key": "C",
+          "text_en": "Usage metrics still come back in the response, even when it is refused.",
+          "text_fr": "Les métriques d'usage sont tout de même renvoyées dans la réponse, même en cas de refus."
+        },
+        {
+          "key": "D",
+          "text_en": "Refused requests are billed at double rate to discourage repeat tries.",
+          "text_fr": "Les requêtes refusées sont facturées au double pour dissuader les tentatives répétées."
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "La note sur la facturation dit les deux : « Usage metrics are still provided in the response, even when the response is refused », puis « When a refusal arrives before Claude generates any output, you are not billed for the request on the Claude API, and the usage counts in that response are informational only. When Claude generates output before the refusal, you are billed for that request. »",
+      "citations_fr": [
+        "Les métriques d'usage sont tout de même fournies dans la réponse, même lorsque celle-ci est refusée",
+        "Lorsqu'un refus survient avant que Claude n'ait généré la moindre sortie, la requête ne vous est pas facturée sur l'API Claude, et les compteurs d'usage de cette réponse sont purement informatifs. Lorsque Claude génère une sortie avant le refus, cette requête vous est facturée."
+      ],
+      "principe_fr": "La facturation suit le travail réellement effectué par le modèle, pas le verdict final de la requête. D'où la distinction : un refus antérieur à toute génération ne coûte rien, un refus survenu après un début de sortie est facturé. Et il faut dissocier deux choses souvent confondues : la présence de métriques d'usage dans la réponse n'implique pas qu'elles soient facturables — elles peuvent n'être qu'informatives.",
       "distractors_fr": {
         "A": "La gratuité est conditionnelle : dès que Claude a produit de la sortie avant le refus, la requête est facturée.",
         "D": "Aucune surfacturation n'existe ; la doc ne prévoit qu'une facturation normale ou une absence de facturation."
@@ -217,14 +407,34 @@
       "difficulty": "facile",
       "concept": "Les trois formes que prend un refus et le format de reponse associe",
       "question_en": "The API handles refusals in three ways. Which pairing of refusal type and response format is correct?",
+      "question_fr": "L'API traite les refus de trois manières. Quel appariement entre type de refus et format de réponse est correct ?",
       "options": [
-        { "key": "A", "text_en": "Input validation failures surface as 400 error codes from the API." },
-        { "key": "B", "text_en": "Model-generated refusals arrive as a stop_reason of refusal as well." },
-        { "key": "C", "text_en": "Streaming classifier refusals surface as a 403 status on the request." },
-        { "key": "D", "text_en": "Copyright validation failures arrive as ordinary assistant text output." }
+        {
+          "key": "A",
+          "text_en": "Input validation failures surface as 400 error codes from the API.",
+          "text_fr": "Les échecs de validation d'entrée se manifestent par des codes d'erreur 400 renvoyés par l'API."
+        },
+        {
+          "key": "B",
+          "text_en": "Model-generated refusals arrive as a stop_reason of refusal as well.",
+          "text_fr": "Les refus produits par le modèle arrivent également sous la forme d'un stop_reason valant refusal."
+        },
+        {
+          "key": "C",
+          "text_en": "Streaming classifier refusals surface as a 403 status on the request.",
+          "text_fr": "Les refus de classifieur en streaming se manifestent par un statut 403 sur la requête."
+        },
+        {
+          "key": "D",
+          "text_en": "Copyright validation failures arrive as ordinary assistant text output.",
+          "text_fr": "Les échecs de validation de copyright arrivent sous forme de texte assistant ordinaire."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le tableau des types de refus donne trois lignes : les refus de classifieur en flux répondent par `stop_reason: refusal`, la validation d'entrée et de copyright par des codes d'erreur 400, et les refus produits par le modèle lui-même par une réponse texte ordinaire.",
+      "principe_fr": "Le format d'une réponse de refus indique à quel niveau de la pile le refus s'est produit. Un refus détecté avant l'inférence, par validation d'entrée ou de copyright, remonte comme une erreur HTTP 400 ; un refus décidé pendant la génération par un classifieur remonte comme un stop_reason ; un refus formulé par le modèle lui-même n'est que du texte assistant normal. Savoir situer l'origine détermine le code de gestion d'erreur approprié.",
       "distractors_fr": {
         "B": "Les refus produits par le modèle passent par une réponse texte standard ; `stop_reason: refusal` signale l'intervention d'un classifieur en flux.",
         "C": "Aucun 403 n'est en jeu : le refus de classifieur se lit sur `stop_reason`, dans une réponse par ailleurs normale.",

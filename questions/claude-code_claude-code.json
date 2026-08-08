@@ -18,14 +18,37 @@
       "difficulty": "facile",
       "concept": "Drapeau -p pour le mode non interactif (headless)",
       "question_en": "Which flag runs Claude Code in non-interactive (headless) mode?",
+      "question_fr": "Quel drapeau lance Claude Code en mode non interactif (headless) ?",
       "options": [
-        { "key": "A", "text_en": "-p (or --print)." },
-        { "key": "B", "text_en": "-i (or --interactive)." },
-        { "key": "C", "text_en": "-q (or --quiet)." },
-        { "key": "D", "text_en": "-h (or --headless)." }
+        {
+          "key": "A",
+          "text_en": "-p (or --print).",
+          "text_fr": "-p (ou --print)."
+        },
+        {
+          "key": "B",
+          "text_en": "-i (or --interactive).",
+          "text_fr": "-i (ou --interactive)."
+        },
+        {
+          "key": "C",
+          "text_en": "-q (or --quiet).",
+          "text_fr": "-q (ou --quiet)."
+        },
+        {
+          "key": "D",
+          "text_en": "-h (or --headless).",
+          "text_fr": "-h (ou --headless)."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « To run Claude Code in non-interactive mode, pass -p with your prompt » ; « Add the -p (or --print) flag to any claude command to run it non-interactively. »",
+      "citations_fr": [
+        "Pour exécuter Claude Code en mode non interactif, passez -p avec votre prompt",
+        "Ajoutez le drapeau -p (ou --print) à n'importe quelle commande claude pour l'exécuter de façon non interactive."
+      ],
       "distractors_fr": {
         "B": "-i n'existe pas comme drapeau headless ; le mode interactif est le mode par defaut, sans drapeau.",
         "C": "-q ne declenche pas le mode non interactif ; c'est -p / --print qui le fait.",
@@ -43,14 +66,37 @@
       "difficulty": "moyen",
       "concept": "Le mode --bare ignore la decouverte automatique de configuration",
       "question_en": "What does adding --bare to claude -p do?",
+      "question_fr": "Que fait l'ajout de --bare à claude -p ?",
       "options": [
-        { "key": "A", "text_en": "Streams tokens as they are generated in real time." },
-        { "key": "B", "text_en": "Forces the model to return only a one-line answer." },
-        { "key": "C", "text_en": "Skips auto-discovery of hooks, plugins, and MCP." },
-        { "key": "D", "text_en": "Runs the command with elevated filesystem permissions." }
+        {
+          "key": "A",
+          "text_en": "Streams tokens as they are generated in real time.",
+          "text_fr": "Diffuse les tokens en temps réel, à mesure qu'ils sont générés."
+        },
+        {
+          "key": "B",
+          "text_en": "Forces the model to return only a one-line answer.",
+          "text_fr": "Force le modèle à ne renvoyer qu'une réponse d'une seule ligne."
+        },
+        {
+          "key": "C",
+          "text_en": "Skips auto-discovery of hooks, plugins, and MCP.",
+          "text_fr": "Ignore la découverte automatique des hooks, des plugins et de MCP."
+        },
+        {
+          "key": "D",
+          "text_en": "Runs the command with elevated filesystem permissions.",
+          "text_fr": "Exécute la commande avec des permissions élevées sur le système de fichiers."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « Add --bare to reduce startup time by skipping auto-discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md. » C'est utile en CI pour un resultat reproductible.",
+      "citations_fr": [
+        "Ajoutez --bare pour réduire le temps de démarrage en ignorant la découverte automatique des hooks, skills, plugins, serveurs MCP, de la mémoire automatique et de CLAUDE.md."
+      ],
+      "principe_fr": "En automatisation, la reproductibilité passe par la réduction des entrées implicites. Tout ce que Claude Code découvre automatiquement dans l'environnement (hooks, plugins, MCP, mémoire, CLAUDE.md) fait varier le comportement d'une machine à l'autre. Un mode qui neutralise cette découverte rend le résultat déterministe et accélère le démarrage, au prix de la perte des extensions locales.",
       "distractors_fr": {
         "A": "Le streaming s'active avec --output-format stream-json, pas avec --bare.",
         "B": "--bare ne contraint pas la longueur de la reponse ; il saute le chargement de configuration.",
@@ -68,14 +114,37 @@
       "difficulty": "moyen",
       "concept": "Formats de sortie de --output-format : text, json, stream-json",
       "question_en": "Which values does --output-format accept in non-interactive mode?",
+      "question_fr": "Quelles valeurs --output-format accepte-t-il en mode non interactif ?",
       "options": [
-        { "key": "A", "text_en": "text, json, or stream-json." },
-        { "key": "B", "text_en": "csv, yaml, or toml." },
-        { "key": "C", "text_en": "html, markdown, or pdf export." },
-        { "key": "D", "text_en": "plain, rich, or binary." }
+        {
+          "key": "A",
+          "text_en": "text, json, or stream-json.",
+          "text_fr": "text, json ou stream-json."
+        },
+        {
+          "key": "B",
+          "text_en": "csv, yaml, or toml.",
+          "text_fr": "csv, yaml ou toml."
+        },
+        {
+          "key": "C",
+          "text_en": "html, markdown, or pdf export.",
+          "text_fr": "Export html, markdown ou pdf."
+        },
+        {
+          "key": "D",
+          "text_en": "plain, rich, or binary.",
+          "text_fr": "plain, rich ou binary."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « text (default): plain text output; json: structured JSON [...]; stream-json: newline-delimited JSON for real-time streaming. »",
+      "citations_fr": [
+        "text (par défaut) : sortie en texte brut ; json : JSON structuré [...] ; stream-json : JSON délimité par des retours à la ligne pour la diffusion en temps réel."
+      ],
+      "principe_fr": "Les formats de sortie se distinguent selon deux axes : structuré ou non, et complet ou incrémental. text sert à la lecture humaine, json au parsing en fin de course, stream-json à la consommation ligne par ligne pendant l'exécution. Choisissez selon que votre script attend le résultat final ou réagit au fil de l'eau.",
       "distractors_fr": {
         "B": "csv, yaml et toml ne sont pas des formats de sortie de --output-format.",
         "C": "Aucun export html/markdown/pdf n'est propose par --output-format.",
@@ -93,14 +162,37 @@
       "difficulty": "moyen",
       "concept": "Code de sortie 0 en cas de succes du mode non interactif",
       "question_en": "How can a script tell whether a claude -p run succeeded?",
+      "question_fr": "Comment un script peut-il savoir si une exécution claude -p a réussi ?",
       "options": [
-        { "key": "A", "text_en": "By parsing the word \"success\" in the output text." },
-        { "key": "B", "text_en": "By its exit code: 0 on success, non-zero on failure." },
-        { "key": "C", "text_en": "By counting the number of tokens returned." },
-        { "key": "D", "text_en": "By reading a status file written to the temp directory." }
+        {
+          "key": "A",
+          "text_en": "By parsing the word \"success\" in the output text.",
+          "text_fr": "En cherchant le mot « success » dans le texte de sortie."
+        },
+        {
+          "key": "B",
+          "text_en": "By its exit code: 0 on success, non-zero on failure.",
+          "text_fr": "Par son code de sortie : 0 en cas de succès, non nul en cas d'échec."
+        },
+        {
+          "key": "C",
+          "text_en": "By counting the number of tokens returned.",
+          "text_fr": "En comptant le nombre de tokens renvoyés."
+        },
+        {
+          "key": "D",
+          "text_en": "By reading a status file written to the temp directory.",
+          "text_fr": "En lisant un fichier d'état écrit dans le répertoire temporaire."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc : « Claude Code exits with code 0 on success and a non-zero code when the run fails, so your scripts can branch on the exit status. »",
+      "citations_fr": [
+        "Claude Code se termine avec le code 0 en cas de succès et un code non nul lorsque l'exécution échoue, de sorte que vos scripts peuvent brancher sur l'état de sortie."
+      ],
+      "principe_fr": "Un outil en ligne de commande signale son résultat par son code de sortie, jamais par le contenu de sa sortie textuelle. Fondez toujours la logique conditionnelle d'un script sur ce code, car le texte du modèle est variable et non fiable comme signal de contrôle.",
       "distractors_fr": {
         "A": "Chercher un mot dans le texte est fragile ; le code de sortie est le signal fiable.",
         "C": "Le nombre de tokens ne dit rien du succes ou de l'echec du run.",
@@ -118,14 +210,37 @@
       "difficulty": "facile",
       "concept": "Le mode non interactif lit l'entree standard (stdin)",
       "question_en": "Because non-interactive mode reads stdin, what can you do?",
+      "question_fr": "Puisque le mode non interactif lit l'entrée standard (stdin), que pouvez-vous faire ?",
       "options": [
-        { "key": "A", "text_en": "Skip authentication entirely for local runs." },
-        { "key": "B", "text_en": "Run the session without any prompt at all." },
-        { "key": "C", "text_en": "Edit files outside the working directory freely." },
-        { "key": "D", "text_en": "Pipe data in and redirect the response out." }
+        {
+          "key": "A",
+          "text_en": "Skip authentication entirely for local runs.",
+          "text_fr": "Vous passer complètement d'authentification pour les exécutions locales."
+        },
+        {
+          "key": "B",
+          "text_en": "Run the session without any prompt at all.",
+          "text_fr": "Lancer la session sans aucun prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "Edit files outside the working directory freely.",
+          "text_fr": "Modifier librement des fichiers hors du répertoire de travail."
+        },
+        {
+          "key": "D",
+          "text_en": "Pipe data in and redirect the response out.",
+          "text_fr": "Envoyer des données en entrée par un tube et rediriger la réponse en sortie."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc : « Non-interactive mode reads stdin, so you can pipe data in and redirect the response out like any other command-line tool. »",
+      "citations_fr": [
+        "Le mode non interactif lit stdin, vous pouvez donc envoyer des données par un tube et rediriger la réponse comme avec n'importe quel autre outil en ligne de commande."
+      ],
+      "principe_fr": "Le mode non interactif fait de Claude Code un maillon de chaîne Unix ordinaire : entrée standard, sortie standard, code de sortie. Cette conformité aux conventions permet de le composer avec grep, jq, tee ou tout autre outil, sans API dédiée.",
       "distractors_fr": {
         "A": "Lire stdin ne dispense pas d'authentification.",
         "B": "Le mode non interactif attend justement un prompt (en argument ou via stdin).",
@@ -143,14 +258,37 @@
       "difficulty": "difficile",
       "concept": "Sortie structuree via --json-schema dans le champ structured_output",
       "question_en": "With --output-format json and --json-schema, where does the schema-conforming output appear?",
+      "question_fr": "Avec --output-format json et --json-schema, où apparaît la sortie conforme au schéma ?",
       "options": [
-        { "key": "A", "text_en": "In the result field as plain text." },
-        { "key": "B", "text_en": "In a separate file named schema.json." },
-        { "key": "C", "text_en": "In the structured_output field." },
-        { "key": "D", "text_en": "In the session_id field." }
+        {
+          "key": "A",
+          "text_en": "In the result field as plain text.",
+          "text_fr": "Dans le champ result, en texte brut."
+        },
+        {
+          "key": "B",
+          "text_en": "In a separate file named schema.json.",
+          "text_fr": "Dans un fichier distinct nommé schema.json."
+        },
+        {
+          "key": "C",
+          "text_en": "In the structured_output field.",
+          "text_fr": "Dans le champ structured_output."
+        },
+        {
+          "key": "D",
+          "text_en": "In the session_id field.",
+          "text_fr": "Dans le champ session_id."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « The response includes metadata about the request (session ID, usage, etc.) with the structured output in the structured_output field. »",
+      "citations_fr": [
+        "La réponse inclut des métadonnées sur la requête (ID de session, usage, etc.), la sortie structurée se trouvant dans le champ structured_output."
+      ],
+      "principe_fr": "Une réponse JSON sépare l'enveloppe de métadonnées (session, consommation, statut) de la charge utile demandée. Lorsqu'un schéma est imposé, le contenu validé est isolé dans son propre champ afin que les consommateurs puissent le lire sans démêler le texte libre des informations de contrôle.",
       "distractors_fr": {
         "A": "Le champ result contient le texte libre ; la sortie conforme au schema va dans structured_output.",
         "B": "Aucun fichier schema.json n'est ecrit ; la sortie est dans la reponse JSON.",
@@ -169,12 +307,26 @@
       "concept": "Suivi du cout par appel via total_cost_usd en sortie JSON",
       "question_en": "How can a scripted caller track spend per claude -p invocation?",
       "options": [
-        { "key": "A", "text_en": "Read total_cost_usd from the JSON output payload." },
-        { "key": "B", "text_en": "Multiply the token count by a fixed public rate." },
-        { "key": "C", "text_en": "Query the usage dashboard after every single call." },
-        { "key": "D", "text_en": "There is no way to get per-call cost from the CLI." }
+        {
+          "key": "A",
+          "text_en": "Read total_cost_usd from the JSON output payload."
+        },
+        {
+          "key": "B",
+          "text_en": "Multiply the token count by a fixed public rate."
+        },
+        {
+          "key": "C",
+          "text_en": "Query the usage dashboard after every single call."
+        },
+        {
+          "key": "D",
+          "text_en": "There is no way to get per-call cost from the CLI."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc : « With --output-format json, the response payload includes total_cost_usd and a per-model cost breakdown, so scripted callers can track spend per invocation without consulting the usage dashboard. »",
       "distractors_fr": {
         "B": "Un taux fixe estime approximativement ; le cout reel exact est fourni dans total_cost_usd.",
@@ -194,12 +346,27 @@
       "concept": "Caracteristiques du mode --bare : identifiants et drapeaux explicites",
       "question_en": "Select the TWO true statements about running claude with --bare (bare mode).",
       "options": [
-        { "key": "A", "text_en": "It uses only credentials you pass, like ANTHROPIC_API_KEY." },
-        { "key": "B", "text_en": "It automatically loads the project's .mcp.json servers for you." },
-        { "key": "C", "text_en": "Only the flags you pass explicitly take effect." },
-        { "key": "D", "text_en": "It launches the interactive terminal UI." }
+        {
+          "key": "A",
+          "text_en": "It uses only credentials you pass, like ANTHROPIC_API_KEY."
+        },
+        {
+          "key": "B",
+          "text_en": "It automatically loads the project's .mcp.json servers for you."
+        },
+        {
+          "key": "C",
+          "text_en": "Only the flags you pass explicitly take effect."
+        },
+        {
+          "key": "D",
+          "text_en": "It launches the interactive terminal UI."
+        }
       ],
-      "correct": ["A", "C"],
+      "correct": [
+        "A",
+        "C"
+      ],
       "explanation_fr": "La doc : « Bare mode skips OAuth and the system keychain, so Claude Code only sees credentials you pass explicitly [...] set ANTHROPIC_API_KEY » et « Only flags you pass explicitly take effect. »",
       "distractors_fr": {
         "B": "Le mode --bare ne lit jamais le .mcp.json du projet ; il faut passer --mcp-config explicitement.",
@@ -218,12 +385,26 @@
       "concept": "Authentification de l'extension VS Code sans cle API",
       "question_en": "What does the Claude Code VS Code extension require to sign in?",
       "options": [
-        { "key": "A", "text_en": "An API key pasted into the extension settings." },
-        { "key": "B", "text_en": "A paid Claude subscription or a Console account." },
-        { "key": "C", "text_en": "A GitHub account linked to your organization." },
-        { "key": "D", "text_en": "A separate license purchased from the marketplace." }
+        {
+          "key": "A",
+          "text_en": "An API key pasted into the extension settings."
+        },
+        {
+          "key": "B",
+          "text_en": "A paid Claude subscription or a Console account."
+        },
+        {
+          "key": "C",
+          "text_en": "A GitHub account linked to your organization."
+        },
+        {
+          "key": "D",
+          "text_en": "A separate license purchased from the marketplace."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc : « any paid Claude subscription (Pro, Max, Team, or Enterprise) or a Claude Console account works, and no API key is required. »",
       "distractors_fr": {
         "A": "Justement, aucune cle API n'est requise ; on se connecte avec son compte.",
@@ -243,12 +424,26 @@
       "concept": "CLI autonome requis pour le terminal integre de VS Code",
       "question_en": "You want to run `claude` in VS Code's integrated terminal. What do you need?",
       "options": [
-        { "key": "A", "text_en": "Nothing; the extension's bundled CLI works there." },
-        { "key": "B", "text_en": "A special terminal profile shipped with the extension pack." },
-        { "key": "C", "text_en": "To enable a hidden setting in the extension." },
-        { "key": "D", "text_en": "The standalone CLI install, separate from the panel." }
+        {
+          "key": "A",
+          "text_en": "Nothing; the extension's bundled CLI works there."
+        },
+        {
+          "key": "B",
+          "text_en": "A special terminal profile shipped with the extension pack."
+        },
+        {
+          "key": "C",
+          "text_en": "To enable a hidden setting in the extension."
+        },
+        {
+          "key": "D",
+          "text_en": "The standalone CLI install, separate from the panel."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc : « The extension bundles its own copy of the CLI for the chat panel. To run claude in VS Code's integrated terminal, you also need the standalone CLI install. »",
       "distractors_fr": {
         "A": "Le CLI embarque sert au panneau de chat, pas au terminal integre.",
@@ -268,12 +463,27 @@
       "concept": "Ouvrir Claude Code dans VS Code",
       "question_en": "Select the TWO ways to open Claude Code inside VS Code.",
       "options": [
-        { "key": "A", "text_en": "By running the `git blame` command in the gutter." },
-        { "key": "B", "text_en": "By clicking the Spark icon in the Activity Bar." },
-        { "key": "C", "text_en": "By opening the integrated debug console." },
-        { "key": "D", "text_en": "Through the Command Palette (Cmd/Ctrl+Shift+P)." }
+        {
+          "key": "A",
+          "text_en": "By running the `git blame` command in the gutter."
+        },
+        {
+          "key": "B",
+          "text_en": "By clicking the Spark icon in the Activity Bar."
+        },
+        {
+          "key": "C",
+          "text_en": "By opening the integrated debug console."
+        },
+        {
+          "key": "D",
+          "text_en": "Through the Command Palette (Cmd/Ctrl+Shift+P)."
+        }
       ],
-      "correct": ["B", "D"],
+      "correct": [
+        "B",
+        "D"
+      ],
       "explanation_fr": "La doc liste, parmi les moyens d'ouvrir Claude Code : « Activity Bar: click the Spark icon » et « Command Palette: Cmd+Shift+P (Mac) or Ctrl+Shift+P [...] type \"Claude Code\". »",
       "distractors_fr": {
         "A": "git blame dans la marge n'ouvre pas Claude Code ; c'est une fonction Git de l'editeur.",
@@ -292,12 +502,26 @@
       "concept": "Edition du diff propose dans VS Code",
       "question_en": "In VS Code, you edit Claude's proposed diff before accepting it. What happens?",
       "options": [
-        { "key": "A", "text_en": "The edit is discarded and Claude's original is applied." },
-        { "key": "B", "text_en": "Claude re-runs the whole task from scratch." },
-        { "key": "C", "text_en": "Claude is told you modified its proposed content." },
-        { "key": "D", "text_en": "The file is locked until Claude approves your edit." }
+        {
+          "key": "A",
+          "text_en": "The edit is discarded and Claude's original is applied."
+        },
+        {
+          "key": "B",
+          "text_en": "Claude re-runs the whole task from scratch."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude is told you modified its proposed content."
+        },
+        {
+          "key": "D",
+          "text_en": "The file is locked until Claude approves your edit."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc : « If you edit the proposed content directly in the diff view before accepting, Claude is told that you modified it so it does not assume the file matches its original proposal. »",
       "distractors_fr": {
         "A": "Votre edition n'est pas jetee : elle est conservee et Claude en est informe.",

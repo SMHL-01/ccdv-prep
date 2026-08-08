@@ -17,14 +17,37 @@
       "difficulty": "facile",
       "concept": "Principe d'automatisation de la notation des evals",
       "question_en": "One eval design principle is to automate when possible. Which grading approach does it favor?",
+      "question_fr": "Un principe de conception des evals consiste à automatiser quand c'est possible. Quelle approche de notation ce principe privilégie-t-il ?",
       "options": [
-        { "key": "A", "text_en": "Multiple-choice, string match, code-graded, or LLM-graded" },
-        { "key": "B", "text_en": "Manual human hand-grading of every single response" },
-        { "key": "C", "text_en": "Reading each output aloud to a panel of experts" },
-        { "key": "D", "text_en": "Skipping grading and shipping once it looks fine" }
+        {
+          "key": "A",
+          "text_en": "Multiple-choice, string match, code-graded, or LLM-graded",
+          "text_fr": "Choix multiple, correspondance de chaîne, notation par code ou par LLM"
+        },
+        {
+          "key": "B",
+          "text_en": "Manual human hand-grading of every single response",
+          "text_fr": "Notation manuelle par un humain de chaque réponse, une par une"
+        },
+        {
+          "key": "C",
+          "text_en": "Reading each output aloud to a panel of experts",
+          "text_fr": "Lecture à voix haute de chaque sortie devant un panel d'experts"
+        },
+        {
+          "key": "D",
+          "text_en": "Skipping grading and shipping once it looks fine",
+          "text_fr": "Se passer de notation et livrer dès que le résultat paraît correct"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le principe est : « Automate when possible: Structure questions to allow for automated grading (for example, multiple-choice, string match, code-graded, LLM-graded). » La notation manuelle systematique, la lecture a un panel ou l'absence de notation vont a l'encontre de ce principe.",
+      "citations_fr": [
+        "Automatisez quand c'est possible : structurez les questions pour permettre une notation automatisée (par exemple, choix multiple, correspondance de chaîne, notation par code, notation par LLM)."
+      ],
+      "principe_fr": "Une eval n'a de valeur que si elle peut être relancée à chaque modification du prompt ou du modèle. Toute notation qui exige un humain dans la boucle devient un goulot d'étranglement et finit par ne plus être exécutée. On conçoit donc les questions à l'envers, en partant de la contrainte de notation automatique : format contraint, réponse vérifiable par code ou par un modèle juge.",
       "distractors_fr": {
         "B": "La notation manuelle de chaque reponse est exactement ce que l'automatisation vise a eviter.",
         "C": "Lire les sorties a un panel n'est pas une methode automatisable.",
@@ -42,14 +65,37 @@
       "difficulty": "facile",
       "concept": "Privilegier le volume sur la qualite des evals",
       "question_en": "The docs advise prioritizing volume over quality in evals. What does that mean concretely?",
+      "question_fr": "La documentation conseille de privilégier le volume sur la qualité dans les evals. Qu'est-ce que cela signifie concrètement ?",
       "options": [
-        { "key": "A", "text_en": "Fewer questions graded carefully by expert humans" },
-        { "key": "B", "text_en": "More questions with slightly lower-signal auto grading" },
-        { "key": "C", "text_en": "One perfect question repeated across every run" },
-        { "key": "D", "text_en": "Only questions that the model already answers right" }
+        {
+          "key": "A",
+          "text_en": "Fewer questions graded carefully by expert humans",
+          "text_fr": "Moins de questions, notées soigneusement par des experts humains"
+        },
+        {
+          "key": "B",
+          "text_en": "More questions with slightly lower-signal auto grading",
+          "text_fr": "Plus de questions, avec une notation automatique de signal légèrement moindre"
+        },
+        {
+          "key": "C",
+          "text_en": "One perfect question repeated across every run",
+          "text_fr": "Une seule question parfaite, répétée à chaque exécution"
+        },
+        {
+          "key": "D",
+          "text_en": "Only questions that the model already answers right",
+          "text_fr": "Uniquement des questions auxquelles le modèle répond déjà correctement"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le principe dit : « More questions with slightly lower signal automated grading is better than fewer questions with high-quality human hand-graded evals. » On prefere donc le volume auto-note, pas un petit jeu note a la main.",
+      "citations_fr": [
+        "Un plus grand nombre de questions avec une notation automatisée de signal légèrement moindre vaut mieux qu'un plus petit nombre de questions avec des evals notées à la main par des humains de grande qualité."
+      ],
+      "principe_fr": "Le bruit de notation d'une question individuelle se moyenne sur un grand échantillon, alors qu'un échantillon trop petit reste dominé par la variance d'échantillonnage, quelle que soit la finesse de la notation. Augmenter le nombre de cas améliore donc davantage la fiabilité du signal global que raffiner la notation de quelques cas. Ce compromis penche vers le volume dès que la notation automatique est possible.",
       "distractors_fr": {
         "A": "Peu de questions notees a la main est justement l'option jugee moins bonne.",
         "C": "Repeter une seule question ne cree pas le volume et la diversite recherches.",
@@ -67,14 +113,37 @@
       "difficulty": "facile",
       "concept": "Ce que mesure une evaluation exact match",
       "question_en": "What does an exact match evaluation measure?",
+      "question_fr": "Que mesure une évaluation par exact match ?",
       "options": [
-        { "key": "A", "text_en": "How semantically similar two summaries are overall" },
-        { "key": "B", "text_en": "A 1-to-5 subjective rating produced by a judge LLM" },
-        { "key": "C", "text_en": "Whether output equals a preset answer after normalizing" },
-        { "key": "D", "text_en": "The longest common subsequence between two texts" }
+        {
+          "key": "A",
+          "text_en": "How semantically similar two summaries are overall",
+          "text_fr": "À quel point deux résumés sont sémantiquement proches dans l'ensemble"
+        },
+        {
+          "key": "B",
+          "text_en": "A 1-to-5 subjective rating produced by a judge LLM",
+          "text_fr": "Une note subjective de 1 à 5 produite par un LLM juge"
+        },
+        {
+          "key": "C",
+          "text_en": "Whether output equals a preset answer after normalizing",
+          "text_fr": "Si la sortie est égale à une réponse prédéfinie après normalisation"
+        },
+        {
+          "key": "D",
+          "text_en": "The longest common subsequence between two texts",
+          "text_fr": "La plus longue sous-séquence commune entre deux textes"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc definit : « Exact match evals measure whether the model's output matches a predefined correct answer, typically after normalizing whitespace and case. » C'est une comparaison stricte, pas une similarite semantique, un score Likert ou une sous-sequence commune.",
+      "citations_fr": [
+        "Les evals de type exact match mesurent si la sortie du modèle correspond à une réponse correcte prédéfinie, généralement après normalisation des espaces et de la casse."
+      ],
+      "principe_fr": "Les méthodes de notation se classent selon ce qu'elles tolèrent comme écart à la référence. L'exact match n'en tolère qu'un écart de forme (espaces, casse) et convient aux tâches à réponse unique et canonique. Dès que plusieurs formulations sont également valides, il faut monter d'un cran vers une notation sémantique ou par LLM.",
       "distractors_fr": {
         "A": "La similarite semantique correspond a la similarite cosinus, pas a l'exact match.",
         "B": "Un score subjectif de 1 a 5 releve d'une echelle Likert notee par un LLM.",
@@ -92,14 +161,37 @@
       "difficulty": "moyen",
       "concept": "Utiliser un modele different pour noter les sorties",
       "question_en": "The eval examples note a best practice for LLM-based grading. What is it?",
+      "question_fr": "Les exemples d'evals mentionnent une bonne pratique pour la notation par LLM. Laquelle ?",
       "options": [
-        { "key": "A", "text_en": "Grade with the exact same model that produced output" },
-        { "key": "B", "text_en": "Always grade with the cheapest available Haiku model" },
-        { "key": "C", "text_en": "Let the model grade its own answers for consistency" },
-        { "key": "D", "text_en": "Use a different model to grade than the one generating" }
+        {
+          "key": "A",
+          "text_en": "Grade with the exact same model that produced output",
+          "text_fr": "Noter avec exactement le même modèle que celui qui a produit la sortie"
+        },
+        {
+          "key": "B",
+          "text_en": "Always grade with the cheapest available Haiku model",
+          "text_fr": "Toujours noter avec le modèle Haiku le moins cher disponible"
+        },
+        {
+          "key": "C",
+          "text_en": "Let the model grade its own answers for consistency",
+          "text_fr": "Laisser le modèle noter ses propres réponses, par souci de cohérence"
+        },
+        {
+          "key": "D",
+          "text_en": "Use a different model to grade than the one generating",
+          "text_fr": "Utiliser pour la notation un modèle différent de celui qui génère"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "Les exemples rappellent : « Generally best practice to use a different model to evaluate than the model used to generate the evaluated output. » Faire noter un modele par lui-meme introduit un biais, et le critere n'est pas le prix du modele.",
+      "citations_fr": [
+        "Il est généralement recommandé d'utiliser pour l'évaluation un modèle différent de celui utilisé pour générer la sortie évaluée."
+      ],
+      "principe_fr": "Un modèle qui juge sa propre production réutilise les mêmes biais et les mêmes angles morts que ceux qui ont produit l'erreur : il ne peut donc pas la détecter de façon fiable. Séparer le générateur du juge crée l'indépendance nécessaire pour que la note apporte de l'information. Le critère de choix du juge est cette indépendance, pas le coût.",
       "distractors_fr": {
         "A": "Noter avec le meme modele que celui qui genere est precisement deconseille.",
         "B": "Le choix ne porte pas sur le cout du juge mais sur le fait qu'il soit different.",
@@ -117,14 +209,37 @@
       "difficulty": "moyen",
       "concept": "Usage d'une echelle de Likert notee par LLM",
       "question_en": "What is an LLM-based Likert scale used for in evaluation?",
+      "question_fr": "À quoi sert une échelle de Likert notée par LLM en évaluation ?",
       "options": [
-        { "key": "A", "text_en": "An LLM judging subjective tone on a 1-to-5 scale" },
-        { "key": "B", "text_en": "An exact string comparison of two categorical labels" },
-        { "key": "C", "text_en": "A rule-based regex scan for forbidden PHI strings" },
-        { "key": "D", "text_en": "A cosine similarity score between two embeddings" }
+        {
+          "key": "A",
+          "text_en": "An LLM judging subjective tone on a 1-to-5 scale",
+          "text_fr": "À faire juger par un LLM un ton subjectif sur une échelle de 1 à 5"
+        },
+        {
+          "key": "B",
+          "text_en": "An exact string comparison of two categorical labels",
+          "text_fr": "À comparer exactement deux étiquettes catégorielles"
+        },
+        {
+          "key": "C",
+          "text_en": "A rule-based regex scan for forbidden PHI strings",
+          "text_fr": "À un balayage par regex, fondé sur des règles, des chaînes PHI interdites"
+        },
+        {
+          "key": "D",
+          "text_en": "A cosine similarity score between two embeddings",
+          "text_fr": "À calculer un score de similarité cosinus entre deux embeddings"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc decrit : « The LLM-based Likert scale is a psychometric scale that uses an LLM to judge subjective attitudes or perceptions [...] to rate the tone of responses on a scale from 1 to 5. » Ce n'est ni une comparaison exacte, ni un scan regex, ni une similarite cosinus.",
+      "citations_fr": [
+        "L'échelle de Likert notée par LLM est une échelle psychométrique qui utilise un LLM pour juger des attitudes ou des perceptions subjectives [...] pour noter le ton des réponses sur une échelle de 1 à 5."
+      ],
+      "principe_fr": "Le choix de la méthode de notation découle de la nature du critère mesuré. Un critère gradué et subjectif (ton, clarté, utilité) appelle une échelle ordinale jugée par un modèle ; un critère binaire appelle une classification ; un critère canonique appelle une correspondance exacte. Confondre ces familles produit des scores soit ininterprétables, soit inutilement grossiers.",
       "distractors_fr": {
         "B": "La comparaison exacte de labels est l'exact match, pas une echelle de Likert.",
         "C": "Un scan regex est une methode par regles, l'oppose d'une notation par LLM.",
@@ -142,14 +257,37 @@
       "difficulty": "moyen",
       "concept": "Avantage de la classification binaire LLM sur les regles",
       "question_en": "Why use LLM-based binary classification instead of a rule-based system, for example to detect PHI?",
+      "question_fr": "Pourquoi utiliser une classification binaire par LLM plutôt qu'un système fondé sur des règles, par exemple pour détecter des PHI ?",
       "options": [
-        { "key": "A", "text_en": "It is always faster and cheaper than any regex" },
-        { "key": "B", "text_en": "It can catch subtle or implicit cases rules miss" },
-        { "key": "C", "text_en": "It never requires any labeled test cases at all" },
-        { "key": "D", "text_en": "It returns a 1-to-5 score rather than two classes" }
+        {
+          "key": "A",
+          "text_en": "It is always faster and cheaper than any regex",
+          "text_fr": "Elle est toujours plus rapide et moins chère que n'importe quelle regex"
+        },
+        {
+          "key": "B",
+          "text_en": "It can catch subtle or implicit cases rules miss",
+          "text_fr": "Elle peut détecter les cas subtils ou implicites que les règles laissent passer"
+        },
+        {
+          "key": "C",
+          "text_en": "It never requires any labeled test cases at all",
+          "text_fr": "Elle ne nécessite absolument aucun cas de test étiqueté"
+        },
+        {
+          "key": "D",
+          "text_en": "It returns a 1-to-5 score rather than two classes",
+          "text_fr": "Elle renvoie une note de 1 à 5 plutôt que deux classes"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc note : « This method can account for context and identify subtle or implicit forms of PHI that rule-based systems might miss. » L'avantage est la finesse contextuelle, pas la vitesse, ni l'absence de cas de test, et une classification binaire produit bien deux classes.",
+      "citations_fr": [
+        "Cette méthode peut tenir compte du contexte et identifier des formes subtiles ou implicites de PHI que des systèmes fondés sur des règles pourraient laisser passer."
+      ],
+      "principe_fr": "Les règles déterministes ne reconnaissent que ce qui a été énuméré à l'avance : elles sont rapides et reproductibles, mais aveugles au contexte et aux formulations imprévues. Un LLM juge apporte cette sensibilité au contexte, au prix d'un coût, d'une latence et d'une variabilité supérieurs. On choisit donc les règles pour les motifs bien spécifiés et le LLM dès que la définition du critère dépend du sens.",
       "distractors_fr": {
         "A": "La doc met en avant la finesse contextuelle, pas une garantie de rapidite ou de cout.",
         "C": "Une eval de classification binaire s'appuie justement sur des cas de test etiquetes.",
@@ -167,14 +305,37 @@
       "difficulty": "moyen",
       "concept": "Principe be task-specific pour concevoir les evals",
       "question_en": "The first eval design principle is to be task-specific. What does it require?",
+      "question_fr": "Le premier principe de conception des evals est d'être spécifique à la tâche. Qu'exige-t-il ?",
       "options": [
-        { "key": "A", "text_en": "Reusing one generic benchmark across every application here" },
-        { "key": "B", "text_en": "Testing only the easy happy path to keep evals simpler" },
-        { "key": "C", "text_en": "Evals mirroring your real task distribution, with edge cases" },
-        { "key": "D", "text_en": "Grading absolutely everything by hand for top accuracy" }
+        {
+          "key": "A",
+          "text_en": "Reusing one generic benchmark across every application here",
+          "text_fr": "Réutiliser un seul benchmark générique pour toutes les applications"
+        },
+        {
+          "key": "B",
+          "text_en": "Testing only the easy happy path to keep evals simpler",
+          "text_fr": "Ne tester que le chemin nominal facile, pour simplifier les evals"
+        },
+        {
+          "key": "C",
+          "text_en": "Evals mirroring your real task distribution, with edge cases",
+          "text_fr": "Des evals qui reflètent la distribution réelle de vos tâches, cas limites inclus"
+        },
+        {
+          "key": "D",
+          "text_en": "Grading absolutely everything by hand for top accuracy",
+          "text_fr": "Noter absolument tout à la main, pour une précision maximale"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "Le premier principe est : « Be task-specific: Design evals that mirror your real-world task distribution. Don't forget to factor in edge cases! » Un benchmark generique, le seul happy path ou la notation manuelle ne repondent pas a cette exigence.",
+      "citations_fr": [
+        "Soyez spécifique à la tâche : concevez des evals qui reflètent la distribution réelle de vos tâches. N'oubliez pas d'intégrer les cas limites !"
+      ],
+      "principe_fr": "Une eval n'a de valeur prédictive que si son échantillon ressemble au trafic de production, cas limites compris. Un benchmark générique mesure une aptitude moyenne, pas votre tâche ; ne tester que le chemin nominal produit un score flatteur qui ne détecte aucune régression réelle. La règle générale : construisez le jeu de test à partir de la distribution observée, puis enrichissez-le volontairement des cas rares où le système risque de céder.",
       "distractors_fr": {
         "A": "Un benchmark generique partage ne reflete pas la distribution reelle de votre tache.",
         "B": "Ne tester que le happy path ignore les cas limites explicitement demandes.",
@@ -192,14 +353,39 @@
       "difficulty": "moyen",
       "concept": "Types de cas limites a integrer aux evals",
       "question_en": "Select TWO kinds of edge cases the guide says to factor into evals.",
+      "question_fr": "Choisissez DEUX types de cas limites que le guide recommande d'intégrer aux evals.",
       "options": [
-        { "key": "A", "text_en": "Irrelevant or nonexistent input data" },
-        { "key": "B", "text_en": "Only inputs the model already handles well" },
-        { "key": "C", "text_en": "Perfectly clean, average-length questions" },
-        { "key": "D", "text_en": "Ambiguous cases where even humans disagree" }
+        {
+          "key": "A",
+          "text_en": "Irrelevant or nonexistent input data",
+          "text_fr": "Des données d'entrée hors sujet ou inexistantes"
+        },
+        {
+          "key": "B",
+          "text_en": "Only inputs the model already handles well",
+          "text_fr": "Uniquement des entrées que le modèle traite déjà bien"
+        },
+        {
+          "key": "C",
+          "text_en": "Perfectly clean, average-length questions",
+          "text_fr": "Des questions parfaitement propres et de longueur moyenne"
+        },
+        {
+          "key": "D",
+          "text_en": "Ambiguous cases where even humans disagree",
+          "text_fr": "Des cas ambigus sur lesquels même des humains ne s'accordent pas"
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "La liste des cas limites cite « Irrelevant or nonexistent input data » et « Ambiguous test cases where even humans would find it hard to reach an assessment consensus ». Les entrees deja bien gerees ou parfaitement propres ne sont pas des cas limites.",
+      "citations_fr": [
+        "Données d'entrée hors sujet ou inexistantes",
+        "Cas de test ambigus pour lesquels même des humains auraient du mal à parvenir à un consensus d'évaluation"
+      ],
+      "principe_fr": "Un cas limite se définit par le stress qu'il impose au système, pas par sa rareté statistique. Les deux familles utiles sont les entrées dégénérées (vides, hors sujet, absentes) et les entrées intrinsèquement ambiguës, où le désaccord humain révèle les limites de votre barème. Tout ce que le modèle traite déjà bien n'apporte aucune information de diagnostic.",
       "distractors_fr": {
         "B": "Les entrees deja bien traitees ne testent aucune limite du modele.",
         "C": "Des questions propres et de longueur moyenne sont le cas nominal, pas un cas limite."
@@ -216,14 +402,37 @@
       "difficulty": "difficile",
       "concept": "Difference entre echelle ordinale et classification binaire",
       "question_en": "How does an LLM-based ordinal scale differ from binary classification?",
+      "question_fr": "En quoi une échelle ordinale évaluée par un LLM diffère-t-elle d'une classification binaire ?",
       "options": [
-        { "key": "A", "text_en": "It requires no LLM and runs on pure string matching" },
-        { "key": "B", "text_en": "It only ever outputs a binary pass or fail result" },
-        { "key": "C", "text_en": "It measures word overlap like a ROUGE-L F1 score" },
-        { "key": "D", "text_en": "It rates on a fixed ordered 1-to-5 scale, not two classes" }
+        {
+          "key": "A",
+          "text_en": "It requires no LLM and runs on pure string matching",
+          "text_fr": "Elle ne nécessite aucun LLM et repose sur de la simple comparaison de chaînes"
+        },
+        {
+          "key": "B",
+          "text_en": "It only ever outputs a binary pass or fail result",
+          "text_fr": "Elle ne produit jamais qu'un résultat binaire : réussite ou échec"
+        },
+        {
+          "key": "C",
+          "text_en": "It measures word overlap like a ROUGE-L F1 score",
+          "text_fr": "Elle mesure le recouvrement lexical, comme un score ROUGE-L F1"
+        },
+        {
+          "key": "D",
+          "text_en": "It rates on a fixed ordered 1-to-5 scale, not two classes",
+          "text_fr": "Elle note sur une échelle ordonnée fixe de 1 à 5, au lieu de deux classes"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc precise : « the ordinal scale measures on a fixed, ordered scale (1-5) », captant un degre plutot que deux classes. Elle utilise bien un LLM, ne se reduit pas a un pass/fail et ne mesure pas le recouvrement de mots comme ROUGE-L.",
+      "citations_fr": [
+        "l'échelle ordinale mesure sur une échelle fixe et ordonnée (1-5)"
+      ],
+      "principe_fr": "Le choix de la granularité de notation découle de ce que vous voulez observer. Le binaire répond à « conforme ou non » et donne un signal net mais grossier ; l'échelle ordinale capte un degré de qualité et permet de suivre des progrès partiels, au prix d'une cohérence de notation plus difficile à tenir. Les métriques de recouvrement lexical, elles, mesurent la forme du texte et non le jugement.",
       "distractors_fr": {
         "A": "L'echelle ordinale utilise un LLM juge ; ce n'est pas du simple string matching.",
         "B": "Un resultat pass/fail a deux issues correspond a la classification binaire, pas a l'ordinale.",
@@ -241,14 +450,38 @@
       "difficulty": "difficile",
       "concept": "Formats de notation adaptes a l'automatisation",
       "question_en": "Select TWO grading formats the guide lists as suitable for automated grading.",
+      "question_fr": "Choisissez DEUX formats de notation que le guide présente comme adaptés à la notation automatisée.",
       "options": [
-        { "key": "A", "text_en": "Free-form essays scored by a human panel" },
-        { "key": "B", "text_en": "String match against a normalized answer" },
-        { "key": "C", "text_en": "Code-graded checks run programmatically" },
-        { "key": "D", "text_en": "Verbal interviews with each test author" }
+        {
+          "key": "A",
+          "text_en": "Free-form essays scored by a human panel",
+          "text_fr": "Des textes libres notés par un panel humain"
+        },
+        {
+          "key": "B",
+          "text_en": "String match against a normalized answer",
+          "text_fr": "Une comparaison de chaînes avec une réponse normalisée"
+        },
+        {
+          "key": "C",
+          "text_en": "Code-graded checks run programmatically",
+          "text_fr": "Des vérifications notées par du code, exécutées programmatiquement"
+        },
+        {
+          "key": "D",
+          "text_en": "Verbal interviews with each test author",
+          "text_fr": "Des entretiens oraux avec chaque auteur de test"
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "Le principe d'automatisation cite « multiple-choice, string match, code-graded, LLM-graded » comme formats notables automatiquement. Les essais notes par un panel humain et les entretiens oraux ne sont pas automatisables.",
+      "citations_fr": [
+        "choix multiple, comparaison de chaînes, notation par code, notation par LLM"
+      ],
+      "principe_fr": "Privilégiez les formats de notation qui s'exécutent sans intervention humaine, car une eval n'est utile que si elle peut tourner à chaque changement. Choix multiple, comparaison de chaînes, notation par code et notation par LLM sont automatisables ; dès qu'un humain doit lire chaque sortie, la boucle de retour devient trop lente pour piloger l'itération.",
       "distractors_fr": {
         "A": "Un essai note par un panel humain est l'exemple meme de notation non automatisable.",
         "D": "Des entretiens oraux avec les auteurs ne peuvent pas etre notes par un programme."

@@ -18,14 +18,38 @@
       "difficulty": "facile",
       "concept": "Le principe etre clair et direct : demander explicitement le comportement voulu",
       "question_en": "A prompt vaguely asks Claude to \"write a good summary\" and the team is unhappy that outputs rarely go above and beyond. Per the best-practices guide, what is the most reliable fix?",
+      "question_fr": "Un prompt demande vaguement à Claude d'« écrire un bon résumé » et l'équipe déplore que les sorties dépassent rarement les attentes. Selon le guide des bonnes pratiques, quelle est la correction la plus fiable ?",
       "options": [
-        { "key": "A", "text_en": "Raise the temperature so the model explores more ambitious phrasings on its own." },
-        { "key": "B", "text_en": "Retry the same prompt several times and keep whichever output reads as the strongest." },
-        { "key": "C", "text_en": "State the desired format and the above-and-beyond behavior explicitly in the prompt." },
-        { "key": "D", "text_en": "Move to a larger model, since vague prompts mostly reflect limited model capability." }
+        {
+          "key": "A",
+          "text_en": "Raise the temperature so the model explores more ambitious phrasings on its own.",
+          "text_fr": "Augmenter la température pour que le modèle explore de lui-même des formulations plus ambitieuses."
+        },
+        {
+          "key": "B",
+          "text_en": "Retry the same prompt several times and keep whichever output reads as the strongest.",
+          "text_fr": "Relancer plusieurs fois le même prompt et garder la sortie qui paraît la meilleure."
+        },
+        {
+          "key": "C",
+          "text_en": "State the desired format and the above-and-beyond behavior explicitly in the prompt.",
+          "text_fr": "Énoncer explicitement dans le prompt le format attendu et le comportement « au-delà des attentes »."
+        },
+        {
+          "key": "D",
+          "text_en": "Move to a larger model, since vague prompts mostly reflect limited model capability.",
+          "text_fr": "Passer à un modèle plus grand, puisque les prompts vagues traduisent surtout une capacité limitée du modèle."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La règle « Be clear and direct » est explicite : « If you want 'above and beyond' behavior, explicitly request it rather than relying on the model to infer this from vague prompts. » La doc compare Claude à un employé brillant mais nouveau, sans contexte sur vos normes — plus la consigne est précise, meilleur est le résultat. La correction porte donc sur le prompt, pas sur les paramètres d'échantillonnage ni sur le modèle.",
+      "citations_fr": [
+        "Soyez clair et direct",
+        "Si vous voulez un comportement qui dépasse les attentes, demandez-le explicitement plutôt que de compter sur le modèle pour le déduire de prompts vagues."
+      ],
+      "principe_fr": "Un défaut de sortie provient bien plus souvent d'une consigne implicite que d'une limite du modèle. Avant de toucher aux paramètres d'échantillonnage ou de changer de modèle, vérifiez que le prompt énonce noir sur blanc le format, le niveau d'exigence et le comportement attendus. Traitez le modèle comme un collaborateur compétent mais totalement dépourvu de contexte sur vos normes internes.",
       "distractors_fr": {
         "A": "La température joue sur la variété du phrasé, pas sur la compréhension de l'objectif. Un prompt vague reste vague à n'importe quelle température.",
         "B": "Rejouer le même prompt masque le problème sans le régler : la doc demande de rendre l'attente explicite, pas de trier au hasard des sorties toutes issues d'une consigne floue.",
@@ -43,14 +67,38 @@
       "difficulty": "facile",
       "concept": "Ajouter le pourquoi d une consigne pour ameliorer la performance",
       "question_en": "You need Claude to always reply in formal British English. Beyond stating the rule, which addition does the guide say tends to improve adherence?",
+      "question_fr": "Vous voulez que Claude réponde toujours en anglais britannique formel. Au-delà de l'énoncé de la règle, quel ajout améliore le respect de la consigne selon le guide ?",
       "options": [
-        { "key": "A", "text_en": "Explain why the rule matters, for example that the audience is UK enterprise clients." },
-        { "key": "B", "text_en": "Repeat the same rule three separate times so the instruction cannot be missed." },
-        { "key": "C", "text_en": "Put the rule in all capital letters to signal that it is a hard requirement." },
-        { "key": "D", "text_en": "Add the rule only to the final user turn so it stays freshest in the context." }
+        {
+          "key": "A",
+          "text_en": "Explain why the rule matters, for example that the audience is UK enterprise clients.",
+          "text_fr": "Expliquer pourquoi la règle importe, par exemple que le public est constitué de clients grands comptes britanniques."
+        },
+        {
+          "key": "B",
+          "text_en": "Repeat the same rule three separate times so the instruction cannot be missed.",
+          "text_fr": "Répéter trois fois la même règle pour que la consigne ne puisse pas passer inaperçue."
+        },
+        {
+          "key": "C",
+          "text_en": "Put the rule in all capital letters to signal that it is a hard requirement.",
+          "text_fr": "Écrire la règle tout en majuscules pour signaler qu'il s'agit d'une exigence stricte."
+        },
+        {
+          "key": "D",
+          "text_en": "Add the rule only to the final user turn so it stays freshest in the context.",
+          "text_fr": "Placer la règle uniquement dans le dernier tour utilisateur pour qu'elle reste la plus fraîche dans le contexte."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La section « Add context to improve performance » dit que donner le contexte ou la motivation derrière une consigne — expliquer pourquoi ce comportement compte — aide Claude à mieux cerner l'objectif et à répondre de façon plus ciblée. La doc conclut : « Claude is smart enough to generalize from the explanation. » C'est le pourquoi qui porte, pas la répétition ni la mise en forme.",
+      "citations_fr": [
+        "Ajoutez du contexte pour améliorer la performance",
+        "Claude est assez intelligent pour généraliser à partir de l'explication."
+      ],
+      "principe_fr": "Une consigne accompagnée de sa motivation est mieux suivie qu'une consigne isolée, car le modèle peut généraliser aux cas que vous n'avez pas énumérés. Le « pourquoi » sert de règle de décision pour les situations limites. La répétition ou l'emphase typographique n'apportent pas cette capacité de généralisation.",
       "distractors_fr": {
         "B": "Répéter la consigne n'est pas la technique décrite ; la doc mise sur l'explication de la motivation, pas sur la redondance.",
         "C": "Les majuscules ne figurent pas parmi les leviers recommandés. La doc conseille plutôt de dire quoi faire et d'expliquer pourquoi.",
@@ -68,14 +116,37 @@
       "difficulty": "moyen",
       "concept": "Nombre et qualites recommandes des exemples few-shot",
       "question_en": "Your teammate adds one example to a classification prompt and asks how many the best-practices guide suggests for reliable few-shot steering, and what they should look like.",
+      "question_fr": "Un collègue ajoute un seul exemple à un prompt de classification et demande combien le guide des bonnes pratiques en recommande pour un pilotage few-shot fiable, et à quoi ils doivent ressembler.",
       "options": [
-        { "key": "A", "text_en": "One carefully chosen example, kept minimal so the model is not overly constrained." },
-        { "key": "B", "text_en": "3 to 5 examples that are relevant, diverse, and wrapped in example tags." },
-        { "key": "C", "text_en": "At least 10 near-identical examples, so the target pattern is unmistakable." },
-        { "key": "D", "text_en": "As many examples as the context window allows, ordered from short to long." }
+        {
+          "key": "A",
+          "text_en": "One carefully chosen example, kept minimal so the model is not overly constrained.",
+          "text_fr": "Un seul exemple soigneusement choisi, réduit au minimum pour ne pas trop contraindre le modèle."
+        },
+        {
+          "key": "B",
+          "text_en": "3 to 5 examples that are relevant, diverse, and wrapped in example tags.",
+          "text_fr": "3 à 5 exemples pertinents, variés, et encadrés par des balises d'exemple."
+        },
+        {
+          "key": "C",
+          "text_en": "At least 10 near-identical examples, so the target pattern is unmistakable.",
+          "text_fr": "Au moins 10 exemples quasi identiques, afin que le motif visé soit incontestable."
+        },
+        {
+          "key": "D",
+          "text_en": "As many examples as the context window allows, ordered from short to long.",
+          "text_fr": "Autant d'exemples que la fenêtre de contexte le permet, du plus court au plus long."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc recommande d'« Include 3–5 examples for best results » et précise les qualités attendues : relevant (proches du cas réel), diverse (couvrant des cas limites pour éviter que Claude n'apprenne un motif involontaire), et structured (enveloppés dans des balises `<example>`, plusieurs dans `<examples>`). C'est le triptyque pertinence / diversité / structure, sur 3 à 5 exemples.",
+      "citations_fr": [
+        "Incluez 3 à 5 exemples pour de meilleurs résultats"
+      ],
+      "principe_fr": "L'efficacité du few-shot dépend moins du nombre d'exemples que de leur pertinence et de leur diversité. Des exemples trop semblables entre eux font apprendre au modèle un motif involontaire, alors que des exemples couvrant les cas limites délimitent correctement la tâche. La structuration par balises complète le dispositif en distinguant les exemples des consignes.",
       "distractors_fr": {
         "A": "Un seul exemple minimal contredit la fourchette de 3 à 5 et la qualité de diversité, qui suppose plusieurs exemples couvrant des cas variés.",
         "C": "Dix exemples quasi identiques violent la consigne de diversité : la doc avertit qu'un manque de variété fait apprendre à Claude des motifs involontaires.",
@@ -93,14 +164,36 @@
       "difficulty": "facile",
       "concept": "Balises pour separer les exemples des consignes dans un prompt",
       "question_en": "The guide says few-shot examples should be wrapped so Claude can tell them apart from instructions. Which tag convention does it name?",
+      "question_fr": "Le guide indique que les exemples few-shot doivent être encadrés pour que Claude les distingue des consignes. Quelle convention de balisage nomme-t-il ?",
       "options": [
-        { "key": "A", "text_en": "A fenced code block per example, so formatting is preserved verbatim by the model." },
-        { "key": "B", "text_en": "A numbered markdown list, one list item holding each individual example." },
-        { "key": "C", "text_en": "A JSON array of strings passed as a separate examples field on the request body." },
-        { "key": "D", "text_en": "Example tags per example, with multiple examples grouped inside examples tags." }
+        {
+          "key": "A",
+          "text_en": "A fenced code block per example, so formatting is preserved verbatim by the model.",
+          "text_fr": "Un bloc de code délimité par exemple, afin que le modèle préserve le formatage à l'identique."
+        },
+        {
+          "key": "B",
+          "text_en": "A numbered markdown list, one list item holding each individual example.",
+          "text_fr": "Une liste markdown numérotée, un élément de liste par exemple."
+        },
+        {
+          "key": "C",
+          "text_en": "A JSON array of strings passed as a separate examples field on the request body.",
+          "text_fr": "Un tableau JSON de chaînes transmis dans un champ examples distinct du corps de requête."
+        },
+        {
+          "key": "D",
+          "text_en": "Example tags per example, with multiple examples grouped inside examples tags.",
+          "text_fr": "Des balises example autour de chaque exemple, regroupées dans des balises examples quand il y en a plusieurs."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc est littérale : « Wrap examples in `<example>` tags (multiple examples in `<examples>` tags) so Claude can distinguish them from instructions. » C'est la même logique que le balisage XML général : chaque type de contenu dans sa propre balise pour lever l'ambiguïté. Il n'existe pas de champ `examples` séparé dans le corps de requête.",
+      "citations_fr": [
+        "Encadrez les exemples avec des balises `<example>` (plusieurs exemples dans des balises `<examples>`) pour que Claude puisse les distinguer des consignes."
+      ],
       "distractors_fr": {
         "A": "Les blocs de code servent à préserver du code, pas à séparer exemples et consignes ; la doc nomme explicitement les balises `<example>`.",
         "B": "Une liste markdown numérotée n'est pas la convention citée ; la doc s'appuie sur des balises XML dédiées.",
@@ -118,14 +211,38 @@
       "difficulty": "facile",
       "concept": "Role des balises XML pour desambiguiser un prompt qui melange plusieurs types de contenu",
       "question_en": "A prompt mixes instructions, background context, examples, and the variable user input all as plain prose, and Claude sometimes confuses one for another. What does the guide advise?",
+      "question_fr": "Un prompt mêle consignes, contexte de fond, exemples et entrée utilisateur variable sous forme de prose brute, et Claude confond parfois l'un avec l'autre. Que conseille le guide ?",
       "options": [
-        { "key": "A", "text_en": "Split the prompt across several requests, one content type sent per API call." },
-        { "key": "B", "text_en": "Wrap each type of content in its own descriptive XML tag within the one prompt." },
-        { "key": "C", "text_en": "Move every instruction into the system prompt and leave only input in the user turn." },
-        { "key": "D", "text_en": "Delete the background context, since mixing it in is what causes the confusion." }
+        {
+          "key": "A",
+          "text_en": "Split the prompt across several requests, one content type sent per API call.",
+          "text_fr": "Découper le prompt en plusieurs requêtes, un type de contenu par appel d'API."
+        },
+        {
+          "key": "B",
+          "text_en": "Wrap each type of content in its own descriptive XML tag within the one prompt.",
+          "text_fr": "Encadrer chaque type de contenu dans sa propre balise XML descriptive, au sein du même prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "Move every instruction into the system prompt and leave only input in the user turn.",
+          "text_fr": "Déplacer toutes les consignes dans le prompt système et ne laisser que l'entrée dans le tour utilisateur."
+        },
+        {
+          "key": "D",
+          "text_en": "Delete the background context, since mixing it in is what causes the confusion.",
+          "text_fr": "Supprimer le contexte de fond, puisque c'est son mélange avec le reste qui provoque la confusion."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La section « Structure prompts with XML tags » vise exactement ce cas : « Wrapping each type of content in its own tag (for example, `<instructions>`, `<context>`, `<input>`) reduces misinterpretation. » Elle conseille des noms de balises cohérents et descriptifs, et l'imbrication quand le contenu a une hiérarchie naturelle. On sépare par balisage, sans découper la requête ni supprimer le contexte utile.",
+      "citations_fr": [
+        "Structurez les prompts avec des balises XML",
+        "Encadrer chaque type de contenu dans sa propre balise (par exemple `<instructions>`, `<context>`, `<input>`) réduit les erreurs d'interprétation."
+      ],
+      "principe_fr": "Quand un prompt agrège des contenus de natures différentes, l'ambiguïté vient de l'absence de frontières explicites, pas du volume. Le balisage XML avec des noms descriptifs et cohérents crée ces frontières, et l'imbrication reflète les hiérarchies naturelles du contenu. La bonne réaction est donc de structurer, non de fragmenter la requête ni de retirer du contexte utile.",
       "distractors_fr": {
         "A": "Découper en plusieurs requêtes casse le contexte partagé et n'est pas la réponse : la doc résout l'ambiguïté par le balisage à l'intérieur d'un même prompt.",
         "C": "Déplacer les consignes vers le système peut aider au ton, mais ne règle pas le mélange context/exemples/input ; la doc prescrit le balisage XML par type de contenu.",
@@ -143,14 +260,38 @@
       "difficulty": "moyen",
       "concept": "Definir un role dans le prompt systeme pour orienter ton et comportement",
       "question_en": "A legal-review assistant answers correctly but in a tone too casual for the audience. Per the guide, what is the lightest-touch lever to focus its behavior and tone?",
+      "question_fr": "Un assistant de revue juridique répond correctement mais sur un ton trop familier pour son public. Selon le guide, quel est le levier le plus léger pour recentrer son comportement et son ton ?",
       "options": [
-        { "key": "A", "text_en": "Give Claude a role in the system prompt; even one sentence shifts tone and focus." },
-        { "key": "B", "text_en": "Prefill the assistant turn with a formal opening line for the model to continue." },
-        { "key": "C", "text_en": "Lower the temperature to zero so the wording becomes maximally formal." },
-        { "key": "D", "text_en": "Append a long style guide of dos and don'ts to every single user message." }
+        {
+          "key": "A",
+          "text_en": "Give Claude a role in the system prompt; even one sentence shifts tone and focus.",
+          "text_fr": "Attribuer un rôle à Claude dans le prompt système ; une seule phrase suffit à modifier le ton et le focus."
+        },
+        {
+          "key": "B",
+          "text_en": "Prefill the assistant turn with a formal opening line for the model to continue.",
+          "text_fr": "Préremplir le tour assistant avec une phrase d'ouverture formelle que le modèle prolongera."
+        },
+        {
+          "key": "C",
+          "text_en": "Lower the temperature to zero so the wording becomes maximally formal.",
+          "text_fr": "Abaisser la température à zéro pour que la formulation devienne maximalement formelle."
+        },
+        {
+          "key": "D",
+          "text_en": "Append a long style guide of dos and don'ts to every single user message.",
+          "text_fr": "Ajouter un long guide de style, avec ses interdits, à chaque message utilisateur."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La section « Give Claude a role » dit qu'un rôle posé dans le prompt système oriente le comportement et le ton, et que « Even a single sentence makes a difference. » C'est le levier le plus léger : une phrase de rôle. Le prefill sur le dernier tour assistant n'est plus accepté sur les modèles récents, et la température n'agit pas sur la formalité du ton.",
+      "citations_fr": [
+        "Attribuez un rôle à Claude",
+        "Même une seule phrase fait la différence."
+      ],
+      "principe_fr": "Le prompt système est l'endroit prévu pour cadrer l'identité, le ton et le périmètre d'un assistant, et son effet est disproportionné par rapport à sa longueur. La température gouverne la variabilité du choix des tokens, pas le registre de langue : ne l'utilisez pas pour régler un problème de style. Cherchez toujours le levier le plus léger qui agit à la bonne couche.",
       "distractors_fr": {
         "B": "Le prefill du dernier tour assistant renvoie une erreur 400 sur les modèles récents ; ce n'est plus une option, et ce n'était pas le levier le plus léger.",
         "C": "La température à zéro rend la sortie déterministe, pas formelle : elle ne fixe pas le registre de langue.",
@@ -168,14 +309,38 @@
       "difficulty": "moyen",
       "concept": "Placer les donnees longues en haut du prompt pour le long contexte",
       "question_en": "For a task over several 20k-token documents, where does the guide say the long input should sit relative to the query and instructions?",
+      "question_fr": "Pour une tâche portant sur plusieurs documents de 20k tokens, où le guide recommande-t-il de placer l'entrée longue par rapport à la requête et aux instructions ?",
       "options": [
-        { "key": "A", "text_en": "Interleaved, with each instruction placed right beside the document it refers to." },
-        { "key": "B", "text_en": "After the query, so Claude reads what you want before it reads the documents." },
-        { "key": "C", "text_en": "At the top of the prompt, above the query, instructions, and any examples." },
-        { "key": "D", "text_en": "In the system prompt, kept apart from the user turn that holds the query." }
+        {
+          "key": "A",
+          "text_en": "Interleaved, with each instruction placed right beside the document it refers to.",
+          "text_fr": "En alternance, chaque instruction placée juste à côté du document auquel elle se rapporte."
+        },
+        {
+          "key": "B",
+          "text_en": "After the query, so Claude reads what you want before it reads the documents.",
+          "text_fr": "Après la requête, pour que Claude lise ce que vous voulez avant de lire les documents."
+        },
+        {
+          "key": "C",
+          "text_en": "At the top of the prompt, above the query, instructions, and any examples.",
+          "text_fr": "En haut du prompt, au-dessus de la requête, des instructions et des éventuels exemples."
+        },
+        {
+          "key": "D",
+          "text_en": "In the system prompt, kept apart from the user turn that holds the query.",
+          "text_fr": "Dans le system prompt, séparé du tour utilisateur qui contient la requête."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La section « Long context prompting » est nette : « Place your long documents and inputs near the top of your prompt, above your query, instructions, and examples. This improves performance across all models. » La doc ajoute que mettre les requêtes à la fin peut améliorer la qualité jusqu'à 30 % sur des entrées complexes multi-documents. Les données longues vont donc en haut, la requête en bas.",
+      "citations_fr": [
+        "Prompting en contexte long",
+        "Placez vos documents et entrées longs près du haut de votre prompt, au-dessus de votre requête, de vos instructions et de vos exemples. Cela améliore les performances sur tous les modèles."
+      ],
+      "principe_fr": "Dans un prompt long, la position de l'information compte : les blocs volumineux et statiques se placent en tête, la consigne et la question en fin de prompt. Le modèle traite mieux une instruction énoncée juste avant sa génération, tandis que le matériau de référence sert de contexte en amont. Cette structure améliore aussi la mise en cache, puisque le préfixe stable reste inchangé d'une requête à l'autre.",
       "distractors_fr": {
         "A": "L'entrelacement n'est pas recommandé ; la doc veut le bloc de données en haut et la requête à la fin, pas des consignes dispersées au fil des documents.",
         "B": "C'est l'inverse : les documents en haut, la requête après. Placer la requête à la fin améliore justement la qualité.",
@@ -193,14 +358,39 @@
       "difficulty": "moyen",
       "concept": "Deux pratiques recommandees pour les taches sur documents longs",
       "question_en": "A team builds Q&A over large multi-document inputs and wants the two long-context practices the guide recommends. Select the TWO that the guide names.",
+      "question_fr": "Une équipe construit un système de questions-réponses sur de grandes entrées multi-documents et veut appliquer les deux pratiques de contexte long recommandées par le guide. Choisissez les DEUX que le guide nomme.",
       "options": [
-        { "key": "A", "text_en": "Place the longform documents near the top, above the query and the instructions." },
-        { "key": "B", "text_en": "Summarize each document down to a paragraph before putting any of it in the prompt." },
-        { "key": "C", "text_en": "Ask Claude to first quote the relevant parts, then carry out the task from them." },
-        { "key": "D", "text_en": "Randomly shuffle the document order per request so no position is ever favored." }
+        {
+          "key": "A",
+          "text_en": "Place the longform documents near the top, above the query and the instructions.",
+          "text_fr": "Placer les documents longs près du haut, au-dessus de la requête et des instructions."
+        },
+        {
+          "key": "B",
+          "text_en": "Summarize each document down to a paragraph before putting any of it in the prompt.",
+          "text_fr": "Résumer chaque document en un paragraphe avant d'en insérer quoi que ce soit dans le prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "Ask Claude to first quote the relevant parts, then carry out the task from them.",
+          "text_fr": "Demander à Claude de citer d'abord les passages pertinents, puis d'exécuter la tâche à partir d'eux."
+        },
+        {
+          "key": "D",
+          "text_en": "Randomly shuffle the document order per request so no position is ever favored.",
+          "text_fr": "Mélanger aléatoirement l'ordre des documents à chaque requête pour ne favoriser aucune position."
+        }
       ],
-      "correct": ["A", "C"],
+      "correct": [
+        "A",
+        "C"
+      ],
       "explanation_fr": "La doc long-context nomme deux leviers repris ici. D'abord la position : « Place your long documents and inputs near the top of your prompt. » Ensuite l'ancrage : « ask Claude to quote relevant parts of the documents first before carrying out its task », ce qui l'aide à se concentrer sur le pertinent et à ignorer le reste. Les deux bonnes réponses sont donc A et C.",
+      "citations_fr": [
+        "Placez vos documents et entrées longs près du haut de votre prompt.",
+        "demandez à Claude de citer d'abord les passages pertinents des documents avant d'exécuter sa tâche"
+      ],
+      "principe_fr": "Deux leviers indépendants agissent sur le contexte long : la position du matériau et l'ancrage explicite. Faire citer les extraits pertinents avant de raisonner force le modèle à localiser l'information avant de l'utiliser, ce qui réduit les confusions et les inventions. Ces techniques exploitent le contexte fourni plutôt que de le réduire par un prétraitement destructeur comme un résumé préalable.",
       "distractors_fr": {
         "B": "Résumer chaque document en amont détruit l'information que la tâche doit exploiter ; la doc conserve les documents entiers, bien placés et structurés en balises.",
         "D": "Mélanger l'ordre au hasard n'est pas recommandé et contredit la règle de placer les données longues en haut, dans une structure stable."
@@ -217,14 +407,39 @@
       "difficulty": "facile",
       "concept": "Dire a Claude quoi faire plutot que ce qu il ne faut pas faire",
       "question_en": "Outputs keep containing markdown even though the prompt says \"Do not use markdown.\" Which rewrite does the guide recommend?",
+      "question_fr": "Les sorties continuent de contenir du markdown alors que le prompt dit « Do not use markdown. » Quelle réécriture le guide recommande-t-il ?",
       "options": [
-        { "key": "A", "text_en": "\"Your response should be composed of smoothly flowing prose paragraphs.\"" },
-        { "key": "B", "text_en": "\"Do not use markdown, and do not use bullet points or headings either.\"" },
-        { "key": "C", "text_en": "\"NEVER USE MARKDOWN,\" placed in capitals at the very end of the prompt." },
-        { "key": "D", "text_en": "\"Avoid markdown unless you happen to think it improves the answer here.\"" }
+        {
+          "key": "A",
+          "text_en": "\"Your response should be composed of smoothly flowing prose paragraphs.\"",
+          "text_fr": "« Your response should be composed of smoothly flowing prose paragraphs. »"
+        },
+        {
+          "key": "B",
+          "text_en": "\"Do not use markdown, and do not use bullet points or headings either.\"",
+          "text_fr": "« Do not use markdown, and do not use bullet points or headings either. »"
+        },
+        {
+          "key": "C",
+          "text_en": "\"NEVER USE MARKDOWN,\" placed in capitals at the very end of the prompt.",
+          "text_fr": "« NEVER USE MARKDOWN », en capitales, tout à la fin du prompt."
+        },
+        {
+          "key": "D",
+          "text_en": "\"Avoid markdown unless you happen to think it improves the answer here.\"",
+          "text_fr": "« Avoid markdown unless you happen to think it improves the answer here. »"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc « Control the format of responses » donne exactement cet exemple : au lieu de « Do not use markdown in your response », préférer « Your response should be composed of smoothly flowing prose paragraphs. » Le principe est de dire à Claude quoi faire plutôt que ce qu'il ne faut pas faire ; une consigne positive décrivant la sortie voulue steer mieux le format.",
+      "citations_fr": [
+        "Contrôler le format des réponses",
+        "N'utilisez pas de markdown dans votre réponse",
+        "Votre réponse doit être composée de paragraphes de prose fluide."
+      ],
+      "principe_fr": "Une interdiction oblige le modèle à représenter ce qu'il doit éviter, sans lui indiquer la cible. Une consigne positive qui décrit la sortie souhaitée est plus fiable, car elle fournit directement le format à produire. Règle générale : dites ce qu'il faut faire plutôt que ce qu'il ne faut pas faire, et décrivez le résultat attendu en termes concrets.",
       "distractors_fr": {
         "B": "Empiler des interdictions reste une formulation négative, exactement ce que la doc conseille de remplacer par une consigne positive.",
         "C": "Les majuscules ne sont pas le levier ; le principe est de reformuler positivement, pas de crier l'interdiction.",
@@ -242,14 +457,38 @@
       "difficulty": "moyen",
       "concept": "Indicateur de format XML pour steer le formatage de la sortie",
       "question_en": "Besides telling Claude what to do, the guide lists an XML technique to steer output formatting. Which option states it correctly?",
+      "question_fr": "Outre le fait de dire à Claude quoi faire, le guide cite une technique XML pour orienter le formatage de la sortie. Quelle option l'énonce correctement ?",
       "options": [
-        { "key": "A", "text_en": "Set a response_format parameter to xml so the API enforces the tag layout." },
-        { "key": "B", "text_en": "Ask Claude to write the prose inside a smoothly_flowing_prose_paragraphs tag." },
-        { "key": "C", "text_en": "Send a stop_sequence of a closing tag so generation halts at the format boundary." },
-        { "key": "D", "text_en": "Prefill the assistant turn with an opening tag to lock the output structure in." }
+        {
+          "key": "A",
+          "text_en": "Set a response_format parameter to xml so the API enforces the tag layout.",
+          "text_fr": "Définir un paramètre response_format à xml pour que l'API impose la structure de balises."
+        },
+        {
+          "key": "B",
+          "text_en": "Ask Claude to write the prose inside a smoothly_flowing_prose_paragraphs tag.",
+          "text_fr": "Demander à Claude d'écrire la prose dans une balise smoothly_flowing_prose_paragraphs."
+        },
+        {
+          "key": "C",
+          "text_en": "Send a stop_sequence of a closing tag so generation halts at the format boundary.",
+          "text_fr": "Envoyer une stop_sequence contenant une balise fermante pour arrêter la génération à la limite du format."
+        },
+        {
+          "key": "D",
+          "text_en": "Prefill the assistant turn with an opening tag to lock the output structure in.",
+          "text_fr": "Préfixer le tour assistant avec une balise ouvrante pour verrouiller la structure de sortie."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La doc liste « Use XML format indicators » avec l'exemple : « Write the prose sections of your response in `<smoothly_flowing_prose_paragraphs>` tags. » L'indicateur de format est une balise demandée dans le prompt, pas un paramètre d'API. Il n'existe pas de `response_format: xml`, et le prefill du dernier tour assistant n'est plus accepté sur les modèles récents.",
+      "citations_fr": [
+        "Utiliser des indicateurs de format XML",
+        "Écrivez les sections de prose de votre réponse dans des balises `<smoothly_flowing_prose_paragraphs>`."
+      ],
+      "principe_fr": "Le formatage se pilote par le contenu du prompt, pas par un paramètre d'API : les balises XML sont une convention textuelle que le modèle imite, et leur nom peut lui-même porter l'instruction de style. Méfiez-vous des options qui inventent un paramètre de requête pour un problème qui relève du prompt.",
       "distractors_fr": {
         "A": "Aucun paramètre `response_format: xml` n'existe pour ce cas ; la doc obtient le format par une balise demandée dans le prompt.",
         "C": "Une `stop_sequence` arrête la génération, elle ne façonne pas le format en balises ; ce n'est pas l'indicateur de format décrit.",
@@ -267,14 +506,38 @@
       "difficulty": "moyen",
       "concept": "Faire correspondre le style du prompt au style de sortie voulu",
       "question_en": "You want plain-text output but keep getting heavy markdown, and explicit instructions only half-help. What extra lever does the guide mention?",
+      "question_fr": "Vous voulez une sortie en texte brut mais obtenez beaucoup de markdown, et les instructions explicites n'aident qu'à moitié. Quel levier supplémentaire le guide mentionne-t-il ?",
       "options": [
-        { "key": "A", "text_en": "Turn on a plain-text mode flag on the request that strips markdown after generation." },
-        { "key": "B", "text_en": "Lower max_tokens sharply so there is no room left for markdown scaffolding." },
-        { "key": "C", "text_en": "Match your prompt style to the output; remove markdown from the prompt itself." },
-        { "key": "D", "text_en": "Add a second model pass whose only job is to delete markdown from the first output." }
+        {
+          "key": "A",
+          "text_en": "Turn on a plain-text mode flag on the request that strips markdown after generation.",
+          "text_fr": "Activer un indicateur de mode texte brut sur la requête, qui retire le markdown après génération."
+        },
+        {
+          "key": "B",
+          "text_en": "Lower max_tokens sharply so there is no room left for markdown scaffolding.",
+          "text_fr": "Réduire fortement max_tokens pour qu'il ne reste plus de place pour la structure markdown."
+        },
+        {
+          "key": "C",
+          "text_en": "Match your prompt style to the output; remove markdown from the prompt itself.",
+          "text_fr": "Aligner le style de votre prompt sur celui de la sortie ; retirer le markdown du prompt lui-même."
+        },
+        {
+          "key": "D",
+          "text_en": "Add a second model pass whose only job is to delete markdown from the first output.",
+          "text_fr": "Ajouter une seconde passe du modèle dont le seul rôle est de supprimer le markdown de la première sortie."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc « Match your prompt style to the desired output » est explicite : « The formatting style used in your prompt may influence Claude's response style... try matching your prompt style to your desired output style as closely as possible. For example, removing markdown from your prompt can reduce the volume of markdown in the output. » Le levier est donc de retirer le markdown du prompt lui-même.",
+      "citations_fr": [
+        "Alignez le style de votre prompt sur la sortie souhaitée",
+        "Le style de formatage utilisé dans votre prompt peut influencer le style de réponse de Claude... essayez d'aligner le style de votre prompt sur le style de sortie souhaité aussi précisément que possible. Par exemple, retirer le markdown de votre prompt peut réduire le volume de markdown en sortie."
+      ],
+      "principe_fr": "Le modèle imite la forme de ce qu'il lit, pas seulement les consignes qu'il reçoit. Le prompt agit donc à deux niveaux : ce qu'il dit et la façon dont il est écrit. Quand une instruction explicite ne suffit pas, corrigez la démonstration implicite en alignant la forme du prompt sur la sortie voulue.",
       "distractors_fr": {
         "A": "Aucun flag de mode texte brut n'est décrit ; la doc agit en amont, sur le style du prompt.",
         "B": "Réduire `max_tokens` tronque la réponse sans supprimer le markdown ; ce n'est pas le levier cité.",
@@ -292,14 +555,37 @@
       "difficulty": "difficile",
       "concept": "La regle d or : faire relire le prompt par un collegue sans contexte",
       "question_en": "The guide states a \"golden rule\" for judging whether a prompt is clear enough. Which option restates it faithfully?",
+      "question_fr": "Le guide énonce une « règle d'or » pour juger si un prompt est assez clair. Quelle option la reformule fidèlement ?",
       "options": [
-        { "key": "A", "text_en": "Show it to a colleague with minimal context; if they'd be confused, Claude will be too." },
-        { "key": "B", "text_en": "Run it at three temperatures; if answers diverge, the prompt is not yet clear enough." },
-        { "key": "C", "text_en": "Count its tokens; if it exceeds the model's ideal budget, it is too long to be clear." },
-        { "key": "D", "text_en": "Ask Claude to grade its own prompt from one to ten and revise anything under eight." }
+        {
+          "key": "A",
+          "text_en": "Show it to a colleague with minimal context; if they'd be confused, Claude will be too.",
+          "text_fr": "Montrez-le à un collègue disposant d'un minimum de contexte ; s'il est perdu, Claude le sera aussi."
+        },
+        {
+          "key": "B",
+          "text_en": "Run it at three temperatures; if answers diverge, the prompt is not yet clear enough.",
+          "text_fr": "Exécutez-le à trois températures ; si les réponses divergent, le prompt n'est pas encore assez clair."
+        },
+        {
+          "key": "C",
+          "text_en": "Count its tokens; if it exceeds the model's ideal budget, it is too long to be clear.",
+          "text_fr": "Comptez ses tokens ; s'il dépasse le budget idéal du modèle, il est trop long pour être clair."
+        },
+        {
+          "key": "D",
+          "text_en": "Ask Claude to grade its own prompt from one to ten and revise anything under eight.",
+          "text_fr": "Demandez à Claude de noter son propre prompt de un à dix et corrigez tout score inférieur à huit."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La règle d'or est citée telle quelle : « Show your prompt to a colleague with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too. » Le test de clarté est humain et s'applique au prompt lui-même, pas une mesure de tokens, de température, ni une auto-notation par le modèle.",
+      "citations_fr": [
+        "Montrez votre prompt à un collègue disposant d'un minimum de contexte sur la tâche et demandez-lui de le suivre. S'il est perdu, Claude le sera aussi."
+      ],
+      "principe_fr": "La clarté d'un prompt s'évalue en supposant zéro contexte implicite chez le lecteur : tout ce que vous savez de la tâche et qui n'est pas écrit est absent pour le modèle. Le test humain révèle les hypothèses tacites, les référents ambigus et les étapes manquantes, ce qu'aucune mesure quantitative ne détecte.",
       "distractors_fr": {
         "B": "La divergence entre températures n'est pas la règle d'or ; celle-ci est un test de compréhension par un collègue peu informé.",
         "C": "Le comptage de tokens concerne le coût et la fenêtre, pas le critère de clarté énoncé par la règle d'or.",
@@ -317,14 +603,37 @@
       "difficulty": "moyen",
       "concept": "Quand le prompt engineering n est pas le bon levier : latence et cout",
       "question_en": "A failing eval is really about response latency and cost, not answer quality. What does the prompt-engineering overview say about using prompting to fix it?",
+      "question_fr": "Un eval en échec porte en réalité sur la latence et le coût de la réponse, pas sur la qualité de la réponse. Que dit la vue d'ensemble du prompt engineering sur le fait d'utiliser le prompting pour corriger cela ?",
       "options": [
-        { "key": "A", "text_en": "Prompt engineering is the first lever to try for essentially any failing eval." },
-        { "key": "B", "text_en": "Not every failing eval is best fixed by prompting; latency may favor a model change." },
-        { "key": "C", "text_en": "Latency and cost are always prompt problems, since shorter prompts run faster and cheaper." },
-        { "key": "D", "text_en": "Prompting cannot influence quality either, so evals should be scored by humans only." }
+        {
+          "key": "A",
+          "text_en": "Prompt engineering is the first lever to try for essentially any failing eval.",
+          "text_fr": "Le prompt engineering est le premier levier à essayer pour pratiquement tout eval en échec."
+        },
+        {
+          "key": "B",
+          "text_en": "Not every failing eval is best fixed by prompting; latency may favor a model change.",
+          "text_fr": "Tous les evals en échec ne se corrigent pas au mieux par le prompting ; la latence peut plutôt justifier un changement de modèle."
+        },
+        {
+          "key": "C",
+          "text_en": "Latency and cost are always prompt problems, since shorter prompts run faster and cheaper.",
+          "text_fr": "La latence et le coût sont toujours des problèmes de prompt, puisque des prompts plus courts sont plus rapides et moins chers."
+        },
+        {
+          "key": "D",
+          "text_en": "Prompting cannot influence quality either, so evals should be scored by humans only.",
+          "text_fr": "Le prompting ne peut pas non plus influencer la qualité, donc les evals doivent être notés uniquement par des humains."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "L'overview cadre le périmètre : « Not every success criteria or failing eval is best solved by prompt engineering. For example, you can sometimes improve latency and cost more easily by selecting a different model. » Le prompt engineering vise les critères pilotables par le prompt ; latence et coût relèvent souvent d'un autre levier, comme le choix de modèle.",
+      "citations_fr": [
+        "Tous les critères de succès ou evals en échec ne se résolvent pas au mieux par le prompt engineering. Par exemple, vous pouvez parfois améliorer la latence et le coût plus facilement en choisissant un modèle différent."
+      ],
+      "principe_fr": "Avant d'optimiser un prompt, identifiez la dimension réellement en cause. Le prompt agit sur ce que le modèle produit : format, exactitude, ton, respect des consignes. La latence, le coût et le débit dépendent surtout de choix d'architecture — modèle retenu, taille des sorties, mise en cache, parallélisation. Choisir le levier qui correspond à la dimension mesurée évite des itérations coûteuses et sans effet.",
       "distractors_fr": {
         "A": "L'overview dit précisément l'inverse : toutes les évaluations ratées ne se règlent pas au prompt.",
         "C": "Latence et coût ne sont pas systématiquement des problèmes de prompt ; la doc oriente vers le choix de modèle pour ces critères.",
@@ -342,14 +651,40 @@
       "difficulty": "difficile",
       "concept": "Prerequis a etablir avant de se lancer dans le prompt engineering",
       "question_en": "A team wants to iterate on prompts but has no way to tell whether a change helped. What does the overview say they should establish first?",
+      "question_fr": "Une équipe veut itérer sur ses prompts mais n'a aucun moyen de savoir si une modification a aidé. Que dit la vue d'ensemble sur ce qu'elle doit établir en premier ?",
       "options": [
-        { "key": "A", "text_en": "A fine-tuned model, so the base behavior is fixed before prompts are tuned on top." },
-        { "key": "B", "text_en": "A production traffic rollout, so real user feedback drives every prompt revision." },
-        { "key": "C", "text_en": "A larger context window, so full documents fit before prompt tuning begins." },
-        { "key": "D", "text_en": "Clear success criteria plus a way to test against them, and a first-draft prompt." }
+        {
+          "key": "A",
+          "text_en": "A fine-tuned model, so the base behavior is fixed before prompts are tuned on top.",
+          "text_fr": "Un modèle fine-tuné, pour figer le comportement de base avant d'ajuster les prompts par-dessus."
+        },
+        {
+          "key": "B",
+          "text_en": "A production traffic rollout, so real user feedback drives every prompt revision.",
+          "text_fr": "Un déploiement sur le trafic de production, pour que le retour des vrais utilisateurs guide chaque révision de prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "A larger context window, so full documents fit before prompt tuning begins.",
+          "text_fr": "Une fenêtre de contexte plus grande, pour que les documents complets tiennent avant de commencer l'ajustement des prompts."
+        },
+        {
+          "key": "D",
+          "text_en": "Clear success criteria plus a way to test against them, and a first-draft prompt.",
+          "text_fr": "Des critères de succès clairs, un moyen de tester par rapport à ces critères, et un premier brouillon de prompt."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "L'overview pose trois prérequis avant de faire du prompt engineering : « A clear definition of the success criteria for your use case », « Some ways to empirically test against those criteria », et « A first draft prompt you want to improve ». Sans critères mesurables et sans moyen de tester, on itère à l'aveugle ; la doc renvoie d'ailleurs à « Define success criteria and build evaluations ».",
+      "citations_fr": [
+        "Une définition claire des critères de succès pour votre cas d'usage",
+        "Des moyens de tester empiriquement par rapport à ces critères",
+        "Un premier brouillon de prompt que vous voulez améliorer",
+        "Définir les critères de succès et construire des évaluations"
+      ],
+      "principe_fr": "L'itération sur les prompts n'a de valeur que si l'on peut mesurer l'effet de chaque changement. La séquence est donc toujours la même : définir ce que « réussi » veut dire de façon mesurable, se doter d'un moyen de tester automatiquement, puis seulement modifier le prompt. Sans cette boucle de mesure, on substitue une impression subjective à une amélioration réelle, et les régressions passent inaperçues.",
       "distractors_fr": {
         "A": "Le fine-tuning n'est pas un prérequis au prompt engineering ; la doc demande des critères de succès et des tests, pas un modèle spécialisé.",
         "B": "Déployer en production avant d'avoir des critères et des tests, c'est justement itérer sans boussole ; l'ordre prescrit est l'inverse.",
@@ -367,14 +702,37 @@
       "difficulty": "difficile",
       "concept": "Prefill du dernier tour assistant refuse par les modeles recents et son remplacement",
       "question_en": "A pipeline prefills the final assistant turn with an opening brace to force JSON, and after upgrading to a 4.6-generation model every such request now returns HTTP 400. What is the documented fix?",
+      "question_fr": "Un pipeline préremplit le dernier tour assistant avec une accolade ouvrante pour forcer du JSON ; après passage à un modèle de génération 4.6, chaque requête de ce type renvoie un HTTP 400. Quelle est la correction documentée ?",
       "options": [
-        { "key": "A", "text_en": "Move the opening brace into the system prompt so it is no longer an assistant turn." },
-        { "key": "B", "text_en": "Add anthropic-beta: prefill so the older prefill behavior is re-enabled for the call." },
-        { "key": "C", "text_en": "Drop the prefill and use Structured Outputs to constrain the response to the schema." },
-        { "key": "D", "text_en": "Retry with exponential backoff, since a 400 here is a transient capacity signal." }
+        {
+          "key": "A",
+          "text_en": "Move the opening brace into the system prompt so it is no longer an assistant turn.",
+          "text_fr": "Déplacer l'accolade ouvrante dans le system prompt pour qu'elle ne soit plus un tour assistant."
+        },
+        {
+          "key": "B",
+          "text_en": "Add anthropic-beta: prefill so the older prefill behavior is re-enabled for the call.",
+          "text_fr": "Ajouter anthropic-beta: prefill pour réactiver l'ancien comportement de prefill sur l'appel."
+        },
+        {
+          "key": "C",
+          "text_en": "Drop the prefill and use Structured Outputs to constrain the response to the schema.",
+          "text_fr": "Supprimer le prefixe de réponse et utiliser Structured Outputs pour contraindre la réponse au schéma."
+        },
+        {
+          "key": "D",
+          "text_en": "Retry with exponential backoff, since a 400 here is a transient capacity signal.",
+          "text_fr": "Réessayer avec un backoff exponentiel, car un 400 ici signale une saturation temporaire."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc « Migrating away from prefilled responses » explique qu'à partir des modèles 4.6, un prefill sur le dernier tour assistant n'est plus supporté et renvoie une erreur 400. Pour le cas du forçage de format, elle oriente vers la fonctionnalité Structured Outputs, conçue pour contraindre la réponse à un schéma donné. Ajouter des messages assistant ailleurs que sur le dernier tour reste possible, mais ce n'est pas ce que fait ce pipeline.",
+      "citations_fr": [
+        "Migrating away from prefilled responses"
+      ],
+      "principe_fr": "Quand une technique est retirée d'une génération de modèles, la bonne réaction est de chercher la fonctionnalité qui reprend son intention, pas de forcer le retour de l'ancien comportement. Ici l'intention est de contraindre le format de sortie, et Structured Outputs est le mécanisme prévu pour cela. Par ailleurs, un code 400 dénote une requête invalide : le réessayer à l'identique ne peut pas réussir, contrairement aux erreurs 429 ou 5xx.",
       "distractors_fr": {
         "A": "Une accolade dans le système ne contraint pas la sortie et n'est pas la migration décrite ; la doc renvoie aux Structured Outputs.",
         "B": "Aucun en-tête beta ne réactive le prefill du dernier tour ; le comportement est retiré sur ces modèles, pas caché derrière un flag.",
@@ -392,14 +750,40 @@
       "difficulty": "moyen",
       "concept": "Deux techniques recommandees pour steer le formatage de la sortie",
       "question_en": "You want tighter control over Claude's output format. Select the TWO techniques the best-practices guide recommends for steering formatting.",
+      "question_fr": "Vous voulez mieux contrôler le format de sortie de Claude. Sélectionnez les DEUX techniques que le guide des bonnes pratiques recommande pour orienter le formatage.",
       "options": [
-        { "key": "A", "text_en": "Increase the model's temperature so it explores more formatting styles per request." },
-        { "key": "B", "text_en": "Lower max_tokens until the response is too short to contain unwanted formatting." },
-        { "key": "C", "text_en": "Tell Claude what to do instead of what not to do, describing the format you want." },
-        { "key": "D", "text_en": "Match the prompt style to the output; remove markdown from the prompt to reduce it." }
+        {
+          "key": "A",
+          "text_en": "Increase the model's temperature so it explores more formatting styles per request.",
+          "text_fr": "Augmenter la temperature du modèle pour qu'il explore davantage de styles de formatage par requête."
+        },
+        {
+          "key": "B",
+          "text_en": "Lower max_tokens until the response is too short to contain unwanted formatting.",
+          "text_fr": "Réduire max_tokens jusqu'à ce que la réponse soit trop courte pour contenir du formatage indésirable."
+        },
+        {
+          "key": "C",
+          "text_en": "Tell Claude what to do instead of what not to do, describing the format you want.",
+          "text_fr": "Dire à Claude quoi faire plutôt que quoi ne pas faire, en décrivant le format souhaité."
+        },
+        {
+          "key": "D",
+          "text_en": "Match the prompt style to the output; remove markdown from the prompt to reduce it.",
+          "text_fr": "Aligner le style du prompt sur la sortie voulue ; retirer le markdown du prompt pour en réduire la présence."
+        }
       ],
-      "correct": ["C", "D"],
+      "correct": [
+        "C",
+        "D"
+      ],
       "explanation_fr": "La doc « Control the format of responses » liste plusieurs leviers, dont deux repris ici : « Tell Claude what to do instead of what not to do » (consigne positive décrivant la sortie voulue) et « Match your prompt style to the desired output » (retirer le markdown du prompt réduit le markdown en sortie). Ce sont C et D. Les indicateurs de format XML en font aussi partie, mais ne sont pas listés ici.",
+      "citations_fr": [
+        "Contrôler le format des réponses",
+        "Dites à Claude quoi faire plutôt que quoi ne pas faire",
+        "Alignez le style de votre prompt sur la sortie souhaitée"
+      ],
+      "principe_fr": "Le format de sortie s'obtient par démonstration et par consigne positive, pas par contrainte mécanique. Décrire précisément la forme attendue est plus efficace qu'énumérer des interdictions, car le modèle produit ce qu'on lui décrit. De plus, le modèle imite le style du prompt : la forme de vos instructions et de vos exemples est en soi un signal de formatage. Les paramètres d'échantillonnage comme temperature ou max_tokens ne servent pas à cela.",
       "distractors_fr": {
         "A": "La température joue sur la variété, pas sur le contrôle du format ; l'augmenter irait à rebours d'un formatage régulier.",
         "B": "Réduire `max_tokens` tronque la réponse au lieu de façonner son format ; ce n'est pas une technique de formatage citée."
@@ -416,14 +800,38 @@
       "difficulty": "difficile",
       "concept": "Deux qualites que doivent avoir les exemples few-shot",
       "question_en": "A prompt includes several near-identical examples and outputs pick up an unintended pattern. Per the guide's example criteria, select the TWO qualities the examples are missing.",
+      "question_fr": "Un prompt contient plusieurs exemples quasi identiques et les sorties reprennent un motif non voulu. D'après les critères d'exemples du guide, sélectionnez les DEUX qualités qui manquent à ces exemples.",
       "options": [
-        { "key": "A", "text_en": "Brevity, so that each example stays as short as the model can possibly tolerate." },
-        { "key": "B", "text_en": "Diversity, varying enough that Claude does not latch onto an unintended pattern." },
-        { "key": "C", "text_en": "Alphabetical ordering, so the set is arranged predictably from first to last." },
-        { "key": "D", "text_en": "Relevance, mirroring the actual use case the prompt will be run against closely." }
+        {
+          "key": "A",
+          "text_en": "Brevity, so that each example stays as short as the model can possibly tolerate.",
+          "text_fr": "La brièveté, pour que chaque exemple reste aussi court que le modèle peut le tolérer."
+        },
+        {
+          "key": "B",
+          "text_en": "Diversity, varying enough that Claude does not latch onto an unintended pattern.",
+          "text_fr": "La diversité, avec assez de variation pour que Claude ne s'accroche pas à un motif non voulu."
+        },
+        {
+          "key": "C",
+          "text_en": "Alphabetical ordering, so the set is arranged predictably from first to last.",
+          "text_fr": "L'ordre alphabétique, pour que l'ensemble soit rangé de façon prévisible du premier au dernier."
+        },
+        {
+          "key": "D",
+          "text_en": "Relevance, mirroring the actual use case the prompt will be run against closely.",
+          "text_fr": "La pertinence, en reflétant au plus près le cas d'usage réel sur lequel le prompt sera exécuté."
+        }
       ],
-      "correct": ["B", "D"],
+      "correct": [
+        "B",
+        "D"
+      ],
       "explanation_fr": "La doc « Use examples effectively » demande trois qualités : relevant (proche du cas réel), diverse (assez variés pour que Claude n'apprenne pas de motif involontaire) et structured (balisés). Des exemples quasi identiques échouent sur la diversité, et s'ils ne reflètent pas le cas d'usage, sur la pertinence : ce sont B et D. La brièveté et l'ordre alphabétique ne figurent pas parmi les critères.",
+      "citations_fr": [
+        "Utiliser efficacement les exemples"
+      ],
+      "principe_fr": "Des exemples few-shot enseignent implicitement tout ce qu'ils ont en commun, y compris les régularités accidentelles. Ils doivent donc être proches du cas réel (pertinence), suffisamment variés pour qu'aucun motif parasite ne se dégage (diversité), et clairement délimités pour être distingués des instructions (structure). Quand une sortie reproduit une bizarrerie constante, cherchez d'abord ce que vos exemples partagent par accident.",
       "distractors_fr": {
         "A": "La brièveté n'est pas un critère : la doc parle de pertinence, de diversité et de structure, pas de minimiser la longueur.",
         "C": "L'ordre alphabétique n'est pas mentionné ; il ne fait pas partie des qualités attendues des exemples."
@@ -440,14 +848,40 @@
       "difficulty": "moyen",
       "concept": "Deux affirmations exactes sur le balisage XML dans les prompts",
       "question_en": "Which TWO statements about XML tags in prompts match the best-practices guide?",
+      "question_fr": "Quelles DEUX affirmations sur les balises XML dans les prompts correspondent au guide des bonnes pratiques ?",
       "options": [
-        { "key": "A", "text_en": "Use consistent, descriptive tag names across your prompts for the same content types." },
-        { "key": "B", "text_en": "Tag names must come from a fixed reserved list the API validates on every request." },
-        { "key": "C", "text_en": "A closing tag doubles as a stop_sequence, so generation ends when the tag appears." },
-        { "key": "D", "text_en": "Nest tags when content has a hierarchy, like each document inside a documents tag." }
+        {
+          "key": "A",
+          "text_en": "Use consistent, descriptive tag names across your prompts for the same content types.",
+          "text_fr": "Utilisez des noms de balises cohérents et descriptifs, identiques d'un prompt à l'autre pour un même type de contenu."
+        },
+        {
+          "key": "B",
+          "text_en": "Tag names must come from a fixed reserved list the API validates on every request.",
+          "text_fr": "Les noms de balises doivent provenir d'une liste réservée fixe que l'API valide à chaque requête."
+        },
+        {
+          "key": "C",
+          "text_en": "A closing tag doubles as a stop_sequence, so generation ends when the tag appears.",
+          "text_fr": "Une balise fermante fait office de stop_sequence : la génération s'arrête dès qu'elle apparaît."
+        },
+        {
+          "key": "D",
+          "text_en": "Nest tags when content has a hierarchy, like each document inside a documents tag.",
+          "text_fr": "Imbriquez les balises quand le contenu a une hiérarchie, par exemple chaque document dans une balise documents."
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "La doc « Structure prompts with XML tags » donne deux bonnes pratiques reprises ici : « Use consistent, descriptive tag names across your prompts » et « Nest tags when content has a natural hierarchy (documents inside `<documents>`, each inside `<document index=\"n\">`) ». Ce sont A et D. Les balises XML sont libres — pas de liste réservée validée par l'API — et une balise n'est pas une `stop_sequence`.",
+      "citations_fr": [
+        "Structurer les prompts avec des balises XML",
+        "Utilisez des noms de balises cohérents et descriptifs dans vos prompts",
+        "Imbriquez les balises quand le contenu a une hiérarchie naturelle (des documents dans `<documents>`, chacun dans `<document index=\"n\">`)"
+      ],
+      "principe_fr": "Les balises XML dans un prompt sont une convention de lisibilité, pas une syntaxe validée par l'API : vous choisissez librement les noms, et leur utilité vient de leur cohérence et de leur caractère descriptif. Elles servent à séparer instructions, données et exemples, et à refléter la hiérarchie du contenu par imbrication. Ne leur prêtez pas d'effet sur le décodage : arrêter la génération relève de stop_sequences, un paramètre distinct de l'API.",
       "distractors_fr": {
         "B": "Il n'existe pas de liste réservée de noms de balises validée par l'API : la doc encourage des noms descriptifs choisis par vous.",
         "C": "Une balise de fermeture n'agit pas comme `stop_sequence` : le balisage sert à structurer, pas à arrêter la génération."

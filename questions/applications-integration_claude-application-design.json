@@ -25,28 +25,34 @@
       "difficulty": "moyen",
       "concept": "Choix entre Messages API et Managed Agents selon la duree et l infrastructure",
       "question_en": "A platform team wants a nightly job in which Claude refactors a large repository: roughly forty minutes of work, hundreds of tool calls, and a filesystem that must persist across the run. They have no sandbox infrastructure and no appetite to build one. Their current plan is a custom loop on the Messages API. What is the better architecture?",
+      "question_fr": "Une équipe plateforme veut une tâche nocturne où Claude refactorise un grand dépôt : environ quarante minutes de travail, des centaines d'appels d'outils, et un système de fichiers qui doit persister pendant toute l'exécution. Elle ne dispose d'aucune infrastructure de bac à sable et n'a aucune envie d'en construire une. Son plan actuel est une boucle maison sur la Messages API. Quelle est la meilleure architecture ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Move to Claude Managed Agents, which supplies the harness, the sandbox and the tool execution layer for long-running asynchronous work."
+          "text_en": "Move to Claude Managed Agents, which supplies the harness, the sandbox and the tool execution layer for long-running asynchronous work.",
+          "text_fr": "Passer à Claude Managed Agents, qui fournit le harnais, le bac à sable et la couche d'exécution des outils pour du travail asynchrone de longue durée."
         },
         {
           "key": "B",
-          "text_en": "Stay on the Messages API and raise `max_tokens` to its ceiling so the model can complete the whole refactor inside one long response."
+          "text_en": "Stay on the Messages API and raise `max_tokens` to its ceiling so the model can complete the whole refactor inside one long response.",
+          "text_fr": "Rester sur la Messages API et pousser `max_tokens` à son maximum pour que le modèle termine tout le refactoring dans une seule longue réponse."
         },
         {
           "key": "C",
-          "text_en": "Stay on the Messages API but submit the job through the Message Batches API, which is built for long multi-step tool sessions."
+          "text_en": "Stay on the Messages API but submit the job through the Message Batches API, which is built for long multi-step tool sessions.",
+          "text_fr": "Rester sur la Messages API mais soumettre la tâche via la Message Batches API, conçue pour les longues sessions d'outils multi-étapes."
         },
         {
           "key": "D",
-          "text_en": "Stay on the Messages API and stream the response, since streaming is what lifts the duration ceiling on long-running generations."
+          "text_en": "Stay on the Messages API and stream the response, since streaming is what lifts the duration ceiling on long-running generations.",
+          "text_fr": "Rester sur la Messages API et streamer la réponse, puisque le streaming est ce qui lève la limite de durée sur les générations longues."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc oppose les deux façons de construire : la Messages API donne un accès direct au modèle, idéale quand on veut sa propre boucle et un contrôle fin ; Managed Agents est un harnais préconstruit qui tourne sur une infrastructure gérée, fait pour les tâches longues et le travail asynchrone. Ici l'équipe veut précisément ce qu'elle n'a pas envie de construire : boucle d'agent, sandbox, exécution d'outils, état persistant. C'est le cas d'usage nommé de Managed Agents.",
+      "principe_fr": "Le choix entre appel direct au modèle et harnais géré se décide sur ce que vous êtes prêt à opérer vous-même. La Messages API vous laisse écrire la boucle d'agent et donne un contrôle fin, mais vous devez fournir le bac à sable, l'exécution des outils et la persistance de l'état. Dès que la tâche est longue, asynchrone et exige un environnement d'exécution durable, une solution gérée évite de réimplémenter cette infrastructure. Augmenter `max_tokens` ou streamer ne change rien à ces besoins d'infrastructure.",
       "distractors_fr": {
         "B": "`max_tokens` borne la longueur d'UNE réponse, pas la durée d'une session. Un refactoring de quarante minutes suppose des centaines d'allers-retours d'outils, ce qu'aucune valeur de `max_tokens` ne produit.",
         "C": "La Batch API traite de gros volumes de requêtes indépendantes en asynchrone. Elle ne gère ni boucle d'agent, ni sandbox, ni état persistant entre les appels.",
@@ -64,28 +70,37 @@
       "difficulty": "facile",
       "concept": "La Messages API est sans etat : l historique complet est renvoye a chaque tour",
       "question_en": "A developer ports a chatbot from another provider's SDK, where the server retained conversation state. Their new code sends only the latest user message on each request. Users report that Claude has no memory of anything said earlier in the session, even seconds before. What is the fix?",
+      "question_fr": "Un développeur porte un chatbot depuis le SDK d'un autre fournisseur, où le serveur conservait l'état de la conversation. Son nouveau code n'envoie que le dernier message utilisateur à chaque requête. Les utilisateurs signalent que Claude n'a aucun souvenir de ce qui a été dit plus tôt dans la session, même quelques secondes avant. Quel est le correctif ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Set a `store` flag on the request so the API retains the conversation server-side and links the following calls to it."
+          "text_en": "Set a `store` flag on the request so the API retains the conversation server-side and links the following calls to it.",
+          "text_fr": "Mettre un indicateur `store` dans la requête pour que l'API conserve la conversation côté serveur et y rattache les appels suivants."
         },
         {
           "key": "B",
-          "text_en": "Pass the identifier of the previous response so the API can look that exchange up and continue it."
+          "text_en": "Pass the identifier of the previous response so the API can look that exchange up and continue it.",
+          "text_fr": "Passer l'identifiant de la réponse précédente pour que l'API retrouve cet échange et le poursuive."
         },
         {
           "key": "C",
-          "text_en": "Send the full message history on every request: the Messages API is stateless and keeps nothing between calls."
+          "text_en": "Send the full message history on every request: the Messages API is stateless and keeps nothing between calls.",
+          "text_fr": "Envoyer l'historique complet des messages à chaque requête : la Messages API est sans état et ne conserve rien entre les appels."
         },
         {
           "key": "D",
-          "text_en": "Put a conversation identifier in the request's metadata field so successive turns are grouped into one session."
+          "text_en": "Put a conversation identifier in the request's metadata field so successive turns are grouped into one session.",
+          "text_fr": "Placer un identifiant de conversation dans le champ metadata de la requête pour que les tours successifs soient regroupés en une session."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc est explicite : « The Messages API is stateless, which means that you always send the full conversational history to the API. » L'historique est reconstruit côté client à chaque appel. C'est aussi ce qui rend le prompt caching intéressant, puisque ce préfixe renvoyé en boucle peut être lu depuis le cache.",
+      "citations_fr": [
+        "La Messages API est sans état, ce qui signifie que vous envoyez toujours l'historique conversationnel complet à l'API."
+      ],
+      "principe_fr": "L'absence d'état est une propriété structurante de la Messages API : le serveur ne mémorise aucun tour, c'est au client de reconstruire l'historique à chaque appel. Aucun identifiant de session, aucun champ metadata ne restaure cette mémoire côté serveur. Conséquence utile : comme le même préfixe est renvoyé encore et encore, il devient un excellent candidat au prompt caching.",
       "distractors_fr": {
         "A": "Convention d'un autre écosystème. La Messages API n'a pas de paramètre de persistance côté serveur ; c'est justement le sens de « stateless ».",
         "B": "Chaîner les tours par l'identifiant de la réponse précédente est le modèle de l'API Responses d'OpenAI, pas celui de la Messages API.",
@@ -103,28 +118,37 @@
       "difficulty": "moyen",
       "concept": "Tours assistant synthetiques pour orienter le comportement sans gonfler le prompt systeme",
       "question_en": "A team wants a support assistant to adopt a specific answer shape only after the conversation reaches the troubleshooting stage. Putting the full format description in the top-level system prompt makes it apply from the greeting onward and bloats the cached prefix. What technique does the Messages API guide support here?",
+      "question_fr": "Une équipe veut qu'un assistant de support adopte une forme de réponse précise seulement lorsque la conversation atteint la phase de diagnostic. Placer la description complète du format dans le prompt système de haut niveau l'applique dès la salutation et alourdit le préfixe mis en cache. Quelle technique le guide de la Messages API propose-t-il ici ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Add the format rules to the `metadata` field of the request, which the model reads as auxiliary guidance for that turn."
+          "text_en": "Add the format rules to the `metadata` field of the request, which the model reads as auxiliary guidance for that turn.",
+          "text_fr": "Ajouter les règles de format au champ `metadata` de la requête, que le modèle lit comme une consigne auxiliaire pour ce tour."
         },
         {
           "key": "B",
-          "text_en": "Write a synthetic `assistant` turn showing the desired shape: earlier assistant turns need not have come from Claude."
+          "text_en": "Write a synthetic `assistant` turn showing the desired shape: earlier assistant turns need not have come from Claude.",
+          "text_fr": "Écrire un tour `assistant` synthétique montrant la forme voulue : les tours assistant antérieurs n'ont pas besoin de venir de Claude."
         },
         {
           "key": "C",
-          "text_en": "Send two requests per turn, the first one asking the model to restate the format rules it should apply next."
+          "text_en": "Send two requests per turn, the first one asking the model to restate the format rules it should apply next.",
+          "text_fr": "Envoyer deux requêtes par tour, la première demandant au modèle de reformuler les règles de format qu'il doit appliquer ensuite."
         },
         {
           "key": "D",
-          "text_en": "Repeat the format rules inside every user message, so the instruction always sits closest to the current question."
+          "text_en": "Repeat the format rules inside every user message, so the instruction always sits closest to the current question.",
+          "text_fr": "Répéter les règles de format dans chaque message utilisateur, pour que la consigne soit toujours au plus près de la question courante."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La doc note que « Earlier conversational turns don't necessarily need to actually originate from Claude. You can use synthetic `assistant` messages. » Écrire soi-même un tour assistant exemplaire au bon endroit de l'historique est une manière peu coûteuse de démontrer le format attendu à partir d'un point précis de la conversation, sans toucher au préfixe mis en cache.",
+      "citations_fr": [
+        "Les tours conversationnels antérieurs n'ont pas nécessairement besoin de provenir réellement de Claude. Vous pouvez utiliser des messages `assistant` synthétiques."
+      ],
+      "principe_fr": "Puisque l'historique est entièrement construit par le client, vous pouvez y insérer des tours assistant que Claude n'a jamais produits. C'est un levier de conduite du comportement positionnel : la démonstration s'applique à partir de l'endroit où vous la placez, et non depuis le début de la conversation. Cela évite d'alourdir le prompt système et préserve le préfixe mis en cache.",
       "distractors_fr": {
         "A": "`metadata` n'est pas transmis au modèle comme instruction. Il sert à étiqueter la requête côté application.",
         "C": "Doubler chaque tour double le coût et la latence pour obtenir un effet qu'un simple exemple dans l'historique produit gratuitement.",
@@ -142,28 +166,34 @@
       "difficulty": "difficile",
       "concept": "Le prefill n est plus accepte sur les modeles recents : passer aux structured outputs",
       "question_en": "An extraction service prefills the assistant turn with an opening brace so Claude always emits raw JSON. After upgrading the model, every request fails with a 400 error while the prompt itself is unchanged. The team needs guaranteed JSON output on the new model. What should they do?",
+      "question_fr": "Un service d'extraction préremplit le tour assistant avec une accolade ouvrante pour que Claude émette toujours du JSON brut. Après une montée de version du modèle, chaque requête échoue avec une erreur 400 alors que le prompt est inchangé. L'équipe a besoin d'une sortie JSON garantie sur le nouveau modèle. Que doit-elle faire ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Keep the prefill but move it into the top-level `system` field, where the restriction on assistant prefilling does not apply."
+          "text_en": "Keep the prefill but move it into the top-level `system` field, where the restriction on assistant prefilling does not apply.",
+          "text_fr": "Conserver le prefixe de réponse mais le déplacer dans le champ `system` de haut niveau, où la restriction sur le prefill assistant ne s'applique pas."
         },
         {
           "key": "B",
-          "text_en": "Keep the prefill and add a stop sequence on the closing brace so the response terminates as valid JSON."
+          "text_en": "Keep the prefill and add a stop sequence on the closing brace so the response terminates as valid JSON.",
+          "text_fr": "Conserver le prefixe de réponse et ajouter une séquence d'arrêt sur l'accolade fermante pour que la réponse termine en JSON valide."
         },
         {
           "key": "C",
-          "text_en": "Pin the service to the previous model version, since prefilling remains the only dependable way to force a JSON response."
+          "text_en": "Pin the service to the previous model version, since prefilling remains the only dependable way to force a JSON response.",
+          "text_fr": "Figer le service sur la version de modèle précédente, puisque le prefill reste le seul moyen fiable de forcer une réponse JSON."
         },
         {
           "key": "D",
-          "text_en": "Remove the prefill and use structured outputs on models that support it, or state the required format in the system prompt."
+          "text_en": "Remove the prefill and use structured outputs on models that support it, or state the required format in the system prompt.",
+          "text_fr": "Supprimer le prefixe de réponse et utiliser les structured outputs sur les modèles qui les prennent en charge, ou indiquer le format requis dans le prompt système."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La doc avertit que le prefill n'est pas pris en charge sur Claude 4.6 et les modèles ultérieurs ni sur Claude Mythos Preview : ces requêtes renvoient une 400. Le guide de migration indique la voie de remplacement, les structured outputs quand le modèle les supporte, sinon une consigne de format dans le prompt système.",
+      "principe_fr": "Quand une technique devient non prise en charge sur les modèles récents, l'API le signale par une erreur dure (400) et non par une dégradation silencieuse : la bonne réaction est de chercher le mécanisme de remplacement, pas de contourner ni de figer une ancienne version. Pour contraindre un format, la hiérarchie est : mécanisme natif garanti par l'API (structured outputs) d'abord, consigne dans le prompt ensuite.",
       "distractors_fr": {
         "A": "Le prefill n'est pas une option de configuration mais un contenu placé en dernière position de `messages`. Le déplacer dans `system` n'a pas de sens : ce serait une simple consigne textuelle, sans la contrainte du prefill.",
         "B": "La 400 est renvoyée avant toute génération. Ajouter une `stop_sequence` ne fait pas accepter une requête refusée à la validation.",
@@ -181,28 +211,34 @@
       "difficulty": "moyen",
       "concept": "temperature, top_p et top_k refuses sur les modeles recents : piloter par le prompt",
       "question_en": "A configuration file carried over from an earlier integration sets `temperature` to 0 for reproducible classification output. On Claude 4.7 and later the same call returns 400. The product owner still wants the labels to be stable across runs. What is the right response?",
+      "question_fr": "Un fichier de configuration hérité d'une intégration antérieure fixe `temperature` à 0 pour obtenir une sortie de classification reproductible. Sur Claude 4.7 et les modèles ultérieurs, le même appel renvoie 400. Le responsable produit veut toujours que les libellés restent stables d'une exécution à l'autre. Quelle est la bonne réponse ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Drop the sampling parameters from the payload and obtain the consistency you need through the prompt itself."
+          "text_en": "Drop the sampling parameters from the payload and obtain the consistency you need through the prompt itself.",
+          "text_fr": "Retirer les paramètres d'échantillonnage du payload et obtenir la cohérence voulue par le prompt lui-même."
         },
         {
           "key": "B",
-          "text_en": "Send `temperature` at 0.2 instead: mid-range values remain accepted on these models, only the extremes are rejected."
+          "text_en": "Send `temperature` at 0.2 instead: mid-range values remain accepted on these models, only the extremes are rejected.",
+          "text_fr": "Envoyer `temperature` à 0.2 à la place : les valeurs intermédiaires restent acceptées sur ces modèles, seuls les extrêmes sont rejetés."
         },
         {
           "key": "C",
-          "text_en": "Keep `temperature` at 0 and pair it with `top_p` at 1, the parameter combination the newer models still validate."
+          "text_en": "Keep `temperature` at 0 and pair it with `top_p` at 1, the parameter combination the newer models still validate.",
+          "text_fr": "Garder `temperature` à 0 et l'associer à `top_p` à 1, la combinaison de paramètres que les modèles récents valident encore."
         },
         {
           "key": "D",
-          "text_en": "Keep the parameters and route classification traffic to an older model that still accepts the sampling fields."
+          "text_en": "Keep the parameters and route classification traffic to an older model that still accepts the sampling fields.",
+          "text_fr": "Garder les paramètres et router le trafic de classification vers un modèle plus ancien qui accepte encore les champs d'échantillonnage."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc indique que `temperature`, `top_p` et `top_k` ne sont pas pris en charge sur Claude 4.7 et les modèles ultérieurs ni sur Claude Mythos Preview, et que leur donner une valeur non par défaut renvoie une 400. La consigne est de les retirer du payload et de guider le comportement par le prompt. Pour la stabilité d'une classification, cela passe par des catégories bien définies et des exemples, ce que le guide de routage de tickets détaille.",
+      "principe_fr": "Sur les modèles récents, le réglage du comportement se fait par les instructions, pas par les paramètres d'échantillonnage : ceux-ci sont refusés dès qu'ils portent une valeur non par défaut. La stabilité d'une sortie ne s'achète donc plus avec une température basse, mais avec une définition nette des catégories, un format de sortie explicite et des exemples.",
       "distractors_fr": {
         "B": "Ce n'est pas une question d'extrême : toute valeur non par défaut est refusée, 0,2 comme 0.",
         "C": "`top_p` est concerné par la même restriction. La combinaison ne restaure rien et échoue pour la même raison.",
@@ -220,28 +256,34 @@
       "difficulty": "moyen",
       "concept": "Message systeme en cours de conversation plutot que modification du champ system",
       "question_en": "A coding assistant runs sessions of forty or more cached turns. When a user switches on a stricter security policy mid-session, the application appends the new rule to the top-level `system` field. From that request onward `cache_read_input_tokens` drops to zero and latency doubles for the rest of the session. What should the application do instead?",
+      "question_fr": "Un assistant de code mène des sessions de quarante tours mis en cache ou plus. Lorsqu'un utilisateur active une politique de sécurité plus stricte en cours de session, l'application ajoute la nouvelle règle au champ `system` de haut niveau. À partir de cette requête, `cache_read_input_tokens` tombe à zéro et la latence double pour le reste de la session. Que devrait faire l'application à la place ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Restate the new rule inside every subsequent user message, keeping the instruction near the model's current focus."
+          "text_en": "Restate the new rule inside every subsequent user message, keeping the instruction near the model's current focus.",
+          "text_fr": "Reformuler la nouvelle règle dans chaque message utilisateur suivant, pour garder la consigne près du point d'attention courant du modèle."
         },
         {
           "key": "B",
-          "text_en": "Move the entire system prompt into the first user message, so later edits land after the cache breakpoint."
+          "text_en": "Move the entire system prompt into the first user message, so later edits land after the cache breakpoint.",
+          "text_fr": "Déplacer tout le prompt système dans le premier message utilisateur, pour que les modifications ultérieures tombent après le point de rupture de cache."
         },
         {
           "key": "C",
-          "text_en": "Append a `role: \"system\"` message at the end of the history, leaving the already-cached prefix byte-identical."
+          "text_en": "Append a `role: \"system\"` message at the end of the history, leaving the already-cached prefix byte-identical.",
+          "text_fr": "Ajouter un message `role: \"system\"` à la fin de l'historique, en laissant le préfixe déjà mis en cache identique octet pour octet."
         },
         {
           "key": "D",
-          "text_en": "Keep editing the `system` field but place an extra cache breakpoint after it to shield the message history."
+          "text_en": "Keep editing the `system` field but place an extra cache breakpoint after it to shield the message history.",
+          "text_fr": "Continuer à modifier le champ `system` mais placer un point de rupture de cache supplémentaire après lui pour protéger l'historique des messages."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "Le cache hache le préfixe dans l'ordre `tools`, `system`, `messages`. Le champ `system` est donc presque au début : y ajouter une phrase change le hachage et fait manquer le cache pour tout ce qui suit. Un message système en cours de conversation s'ajoute à la FIN de l'historique : le préfixe déjà mis en cache reste identique, seul le nouveau message est traité comme entrée fraîche, et l'instruction garde son autorité d'opérateur.",
+      "principe_fr": "Le cache fonctionne sur des préfixes, hachés dans l'ordre `tools`, `system`, `messages` : toute modification invalide tout ce qui suit le point modifié. La règle générale est donc d'écrire les nouveautés le plus loin possible en fin de préfixe, et de ne jamais toucher aux segments amont d'une conversation longue. Un message système inséré en fin d'historique conserve l'autorité d'une instruction d'opérateur tout en préservant l'intégralité du cache.",
       "distractors_fr": {
         "A": "Cela fonctionne mais gonfle chaque tour et donne à la règle l'autorité d'un message utilisateur, alors qu'une politique de sécurité est une consigne d'opérateur.",
         "B": "Déplacer le prompt système dans un message utilisateur lui fait perdre sa priorité sur les demandes de l'utilisateur, ce qui est exactement contre-indiqué pour une règle de sécurité.",
@@ -259,28 +301,34 @@
       "difficulty": "difficile",
       "concept": "Regles de placement d un message systeme en cours de conversation",
       "question_en": "In an agentic loop, an application tries to inject a mid-conversation system message the moment it detects a budget change. It lands between the assistant's `tool_use` block and the user message carrying the matching `tool_result`, and the API returns 400. Where may such a message legally sit?",
+      "question_fr": "Dans une boucle d'agent, une application tente d'injecter un message système en cours de conversation dès qu'elle détecte un changement de budget. Il se retrouve entre le bloc `tool_use` de l'assistant et le message utilisateur qui porte le `tool_result` correspondant, et l'API renvoie une 400. Où un tel message peut-il légalement se placer ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Anywhere inside `messages`, as long as it is not the final entry of the array and not the first one either."
+          "text_en": "Anywhere inside `messages`, as long as it is not the final entry of the array and not the first one either.",
+          "text_fr": "N'importe où dans `messages`, du moment qu'il n'est ni la dernière entrée du tableau ni la première."
         },
         {
           "key": "B",
-          "text_en": "Right after a `user` turn, tool results included, and either ending the array or preceding an `assistant` turn."
+          "text_en": "Right after a `user` turn, tool results included, and either ending the array or preceding an `assistant` turn.",
+          "text_fr": "Juste après un tour `user`, résultats d'outils inclus, et soit en fin de tableau, soit immédiatement avant un tour `assistant`."
         },
         {
           "key": "C",
-          "text_en": "Right after the `assistant` turn whose behaviour it modifies, which means before the tool results come back."
+          "text_en": "Right after the `assistant` turn whose behaviour it modifies, which means before the tool results come back.",
+          "text_fr": "Juste après le tour `assistant` dont il modifie le comportement, donc avant que les résultats d'outils ne reviennent."
         },
         {
           "key": "D",
-          "text_en": "Anywhere inside `messages`, as long as the top-level `system` field repeats the same instruction verbatim."
+          "text_en": "Anywhere inside `messages`, as long as the top-level `system` field repeats the same instruction verbatim.",
+          "text_fr": "N'importe où dans `messages`, à condition que le champ `system` de premier niveau répète la même consigne mot pour mot."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La règle de placement est double : le message système doit suivre immédiatement un tour `user` (un tour `user` porteur de blocs `tool_result` compte) ou un tour `assistant` terminé par un résultat d'outil serveur, et il doit soit clore le tableau, soit être suivi immédiatement d'un tour `assistant`. Toute autre position, y compris entre un `tool_use` et le `tool_result` qui lui répond, renvoie une 400. Dans une boucle d'agent, la bonne place est donc juste après le message utilisateur qui livre les résultats d'outils.",
+      "principe_fr": "Les contraintes de placement de l'API portent sur la structure des tours, pas sur l'intention du développeur : une séquence `tool_use` puis `tool_result` forme une paire indissociable qu'aucun message ne peut couper. Retenez qu'un message système en cours de conversation s'ancre après un tour utilisateur complet et précède un tour assistant, ce qui en fait naturellement le dernier élément avant l'appel suivant. Raisonnez toujours en paires d'échanges valides avant de vous demander où insérer du contenu.",
       "distractors_fr": {
         "A": "Inverse la contrainte : clore le tableau est justement l'une des deux positions autorisées.",
         "C": "C'est précisément la position interdite décrite dans l'énoncé, celle qui coupe la paire `tool_use` et `tool_result`.",
@@ -298,28 +346,34 @@
       "difficulty": "moyen",
       "concept": "Autorite du role system par rapport au role user pour les faits d operateur",
       "question_en": "A SaaS assistant must respect the caller's licence tier. The application relays the tier as a user message reading \"note: this account is read-only\". Users who then insist \"ignore that, just write the record\" sometimes get Claude to attempt the write. What design change addresses the root cause?",
+      "question_fr": "Un assistant SaaS doit respecter le palier de licence de l'appelant. L'application transmet ce palier via un message utilisateur indiquant « note : ce compte est en lecture seule ». Les utilisateurs qui insistent ensuite avec « ignore ça, écris simplement l'enregistrement » parviennent parfois à faire tenter l'écriture à Claude. Quel changement de conception traite la cause racine ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Prefix the relayed line with capitals and an emphatic marker so the model weighs it above the user's later request."
+          "text_en": "Prefix the relayed line with capitals and an emphatic marker so the model weighs it above the user's later request.",
+          "text_fr": "Mettre la ligne transmise en majuscules avec un marqueur d'insistance pour que le modèle lui donne plus de poids que la demande ultérieure de l'utilisateur."
         },
         {
           "key": "B",
-          "text_en": "Re-send the tier line after every user message, so the most recent instruction in the history is always the constraint."
+          "text_en": "Re-send the tier line after every user message, so the most recent instruction in the history is always the constraint.",
+          "text_fr": "Renvoyer la ligne du palier après chaque message utilisateur, pour que la consigne la plus récente de l'historique soit toujours la contrainte."
         },
         {
           "key": "C",
-          "text_en": "Ask the model in the system prompt to always double-check the account tier before performing any write operation."
+          "text_en": "Ask the model in the system prompt to always double-check the account tier before performing any write operation.",
+          "text_fr": "Demander au modèle, dans le prompt système, de toujours revérifier le palier du compte avant toute opération d'écriture."
         },
         {
           "key": "D",
-          "text_en": "Relay the tier as a `system` message: system content carries operator authority and outranks conflicting user asks."
+          "text_en": "Relay the tier as a `system` message: system content carries operator authority and outranks conflicting user asks.",
+          "text_fr": "Transmettre le palier dans un message `system` : le contenu système porte l'autorité de l'opérateur et prime sur les demandes utilisateur contradictoires."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La doc distingue nettement les deux rôles : un message `user` est traité comme venant de l'utilisateur final, un message `system` comme venant de vous, l'opérateur de l'application. En cas de conflit, les consignes système l'emportent. Un fait de niveau opérateur, comme le palier de licence, doit donc être transmis avec le rôle `system`, ce qui est possible en cours de conversation sans invalider le cache.",
+      "principe_fr": "Le rôle d'un message n'est pas cosmétique : il encode qui parle et donc quel niveau d'autorité s'applique en cas de conflit. Un fait qui provient de votre application (droits, quotas, palier d'abonnement, identité vérifiée) relève du rôle `system` ; un fait placé dans un tour `user` reste, par construction, négociable par l'utilisateur. Corrigez le canal plutôt que d'essayer de compenser par de l'emphase ou de la répétition.",
       "distractors_fr": {
         "A": "La typographie n'est pas un mécanisme de priorité. Le rôle du message est le mécanisme documenté.",
         "B": "Répéter la ligne conserve l'autorité d'un message utilisateur : deux affirmations utilisateur contradictoires restent au même niveau.",
@@ -337,28 +391,34 @@
       "difficulty": "moyen",
       "concept": "Ne jamais placer du contenu non fiable dans un message systeme",
       "question_en": "A knowledge-base assistant retrieves articles at runtime. To make Claude treat those articles as authoritative, an engineer proposes copying the retrieved text into a mid-conversation system message before each answer. What is the objection?",
+      "question_fr": "Un assistant de base de connaissances récupère des articles à l'exécution. Pour que Claude traite ces articles comme faisant autorité, un ingénieur propose de copier le texte récupéré dans un message système en cours de conversation avant chaque réponse. Quelle est l'objection ?",
       "options": [
         {
           "key": "A",
-          "text_en": "System content is followed as operator instruction, so retrieved text belongs in `tool_result` or `search_result` blocks instead."
+          "text_en": "System content is followed as operator instruction, so retrieved text belongs in `tool_result` or `search_result` blocks instead.",
+          "text_fr": "Le contenu système est suivi comme une consigne d'opérateur ; le texte récupéré appartient donc à des blocs `tool_result` ou `search_result`."
         },
         {
           "key": "B",
-          "text_en": "System messages are capped at a short length, so full knowledge-base articles would be truncated before the model sees them."
+          "text_en": "System messages are capped at a short length, so full knowledge-base articles would be truncated before the model sees them.",
+          "text_fr": "Les messages système sont limités à une longueur courte, si bien que des articles complets seraient tronqués avant d'atteindre le modèle."
         },
         {
           "key": "C",
-          "text_en": "Content placed in a system message cannot be cited, so the assistant would lose the source attribution users rely on."
+          "text_en": "Content placed in a system message cannot be cited, so the assistant would lose the source attribution users rely on.",
+          "text_fr": "Le contenu placé dans un message système ne peut pas être cité, et l'assistant perdrait l'attribution des sources dont dépendent les utilisateurs."
         },
         {
           "key": "D",
-          "text_en": "System messages are excluded from the prompt cache, so each retrieved article would be reprocessed on every later turn."
+          "text_en": "System messages are excluded from the prompt cache, so each retrieved article would be reprocessed on every later turn.",
+          "text_fr": "Les messages système sont exclus du cache de prompt, si bien que chaque article récupéré serait retraité à chaque tour suivant."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc pose la limite en toutes lettres : un message système n'est pas l'endroit pour du contenu non fiable. Claude traite le contenu système comme des consignes d'opérateur et les suit ; y coller de la sortie d'outil, des documents récupérés ou du contenu web revient à donner à ce texte une autorité d'opérateur, et ouvre la voie à l'injection de prompt. Ces données restent dans des blocs `tool_result`, et pour un cas RAG dans des blocs `search_result` qui apportent en plus la citation.",
+      "principe_fr": "Le canal détermine le niveau de confiance accordé au texte : ce qui arrive dans le rôle système est exécuté comme une instruction, ce qui arrive dans un `tool_result` est lu comme une donnée à évaluer. Toute donnée d'origine externe — sortie d'outil, document récupéré, page web, saisie utilisateur — doit donc rester dans un canal de données, sinon vous accordez à un attaquant potentiel l'autorité de l'opérateur. C'est le fondement de la défense contre l'injection de prompt.",
       "distractors_fr": {
         "B": "Aucune limite de longueur particulière n'est documentée pour les messages système ; ce n'est pas là que le bât blesse.",
         "C": "L'objection de fond est l'autorité accordée au texte, pas la citation. Cela dit, passer par `search_result` apporte effectivement la citation en prime.",
@@ -376,28 +436,34 @@
       "difficulty": "moyen",
       "concept": "Faire evoluer une consigne en ajoutant un message systeme plutot qu en modifiant celui deja envoye",
       "question_en": "Twenty turns into a cached session, a policy relayed earlier through a mid-conversation system message needs to become stricter. A developer edits that earlier message in the stored history and resends the conversation. Cache hits collapse from that point onward. What is the correct handling?",
+      "question_fr": "Après vingt tours dans une session mise en cache, une règle transmise plus tôt via un message système en cours de conversation doit devenir plus stricte. Un développeur modifie ce message antérieur dans l'historique stocké et renvoie la conversation. Les cache hits s'effondrent à partir de ce point. Quelle est la bonne façon de procéder ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Edit the earlier message but re-place the cache breakpoint just before it, so the rewritten text falls outside the cached prefix."
+          "text_en": "Edit the earlier message but re-place the cache breakpoint just before it, so the rewritten text falls outside the cached prefix.",
+          "text_fr": "Modifier le message antérieur mais replacer le point de rupture de cache juste avant lui, pour que le texte réécrit sorte du préfixe mis en cache."
         },
         {
           "key": "B",
-          "text_en": "Delete the earlier system message and re-inject the updated policy at the same index, keeping the history length stable."
+          "text_en": "Delete the earlier system message and re-inject the updated policy at the same index, keeping the history length stable.",
+          "text_fr": "Supprimer le message système antérieur et réinjecter la règle mise à jour au même index, en gardant la longueur de l'historique stable."
         },
         {
           "key": "C",
-          "text_en": "Leave the sent message untouched and append a new system message: later system messages take precedence over earlier ones."
+          "text_en": "Leave the sent message untouched and append a new system message: later system messages take precedence over earlier ones.",
+          "text_fr": "Laisser intact le message déjà envoyé et ajouter un nouveau message système : les messages système ultérieurs priment sur les précédents."
         },
         {
           "key": "D",
-          "text_en": "Move the policy up into the top-level `system` field, the only place where an instruction can be revised safely."
+          "text_en": "Move the policy up into the top-level `system` field, the only place where an instruction can be revised safely.",
+          "text_fr": "Remonter la règle dans le champ `system` de premier niveau, seul endroit où une consigne peut être révisée sans risque."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc recommande explicitement d'éviter de modifier ou de retirer un message système déjà envoyé : comme toute modification d'un message antérieur, cela invalide le cache à partir de ce point. Si la consigne doit évoluer, on ajoute un nouveau message système plutôt que de réécrire l'ancien, et la doc précise qu'en cas de conflit les messages système les plus récents l'emportent. Des messages système consécutifs sont d'ailleurs acceptés et traités comme une seule section.",
+      "principe_fr": "Le cache de prompt fonctionne sur un préfixe strictement identique : toute modification d'un élément déjà envoyé invalide tout ce qui le suit. La bonne stratégie pour faire évoluer un comportement est donc additive — on ajoute du contenu en fin d'historique au lieu de réécrire l'existant — et elle est viable parce que la consigne la plus récente l'emporte en cas de conflit. Pensez l'historique comme un journal en ajout seul.",
       "distractors_fr": {
         "A": "Reculer le point de rupture avant le message modifié réduit le préfixe caché à presque rien : on paie le plein tarif sur vingt tours pour économiser une réécriture.",
         "B": "Supprimer puis réinsérer est une modification de l'historique comme une autre : le cache est invalidé à partir de cet index, longueur stable ou non.",
@@ -415,28 +481,34 @@
       "difficulty": "facile",
       "concept": "Fonctionnalite citations plutot que consigne de citer dans le prompt",
       "question_en": "A compliance assistant asks Claude in its system prompt to quote the source passage verbatim after every claim. Reviewers find quotes that do not appear anywhere in the supplied documents, and output token spend is high. What does the documented citations feature change?",
+      "question_fr": "Un assistant de conformité demande à Claude, dans son prompt système, de citer mot pour mot le passage source après chaque affirmation. Les relecteurs trouvent des citations qui n'apparaissent nulle part dans les documents fournis, et la consommation de tokens de sortie est élevée. Qu'apporte la fonctionnalité de citations documentée ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It lets the model quote longer passages than a prompt-based approach, since quoted spans are exempt from the context window."
+          "text_en": "It lets the model quote longer passages than a prompt-based approach, since quoted spans are exempt from the context window.",
+          "text_fr": "Elle permet de citer des passages plus longs qu'une approche par prompt, puisque les extraits cités sont exemptés de la fenêtre de contexte."
         },
         {
           "key": "B",
-          "text_en": "The API extracts `cited_text` from the documents, so citations are guaranteed valid pointers and cost no output tokens."
+          "text_en": "The API extracts `cited_text` from the documents, so citations are guaranteed valid pointers and cost no output tokens.",
+          "text_fr": "L'API extrait `cited_text` des documents, si bien que les citations sont garanties comme des pointeurs valides et ne coûtent aucun token de sortie."
         },
         {
           "key": "C",
-          "text_en": "It moves quotation into a second pass over the response, where a verifier model checks each quote against the sources."
+          "text_en": "It moves quotation into a second pass over the response, where a verifier model checks each quote against the sources.",
+          "text_fr": "Elle déplace la citation dans une seconde passe sur la réponse, où un modèle vérificateur contrôle chaque citation face aux sources."
         },
         {
           "key": "D",
-          "text_en": "It replaces free-text answers with a strict JSON schema in which every claim carries its supporting quote as a field."
+          "text_en": "It replaces free-text answers with a strict JSON schema in which every claim carries its supporting quote as a field.",
+          "text_fr": "Elle remplace les réponses en texte libre par un schéma JSON strict où chaque affirmation porte sa citation d'appui dans un champ."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La doc compare directement la fonctionnalité aux approches par prompt et retient trois avantages : des économies, parce que `cited_text` ne compte pas dans les tokens de sortie ; une fiabilité garantie, parce que l'API analyse les citations et extrait `cited_text` directement des documents fournis, si bien qu'une citation pointe forcément vers un passage réel ; et une meilleure qualité, la fonctionnalité citant les passages les plus pertinents plus souvent qu'un prompt.",
+      "principe_fr": "Quand une garantie doit être structurelle (une citation qui existe réellement dans la source), une consigne de prompt ne suffit pas : le modèle peut toujours générer du texte plausible mais faux. Préférez les fonctionnalités où l'API elle-même extrait ou contraint la sortie, car elles transforment une exigence probabiliste en propriété vérifiée, avec en général un coût en tokens inférieur.",
       "distractors_fr": {
         "A": "Rien n'est exempté du contexte : les documents sources sont bien comptés en entrée. C'est en sortie que `cited_text` n'est pas facturé.",
         "C": "Il n'y a pas de seconde passe ni de modèle vérificateur. L'extraction est faite par l'API à partir des documents de la requête.",
@@ -454,22 +526,27 @@
       "difficulty": "facile",
       "concept": "Les citations sont tout ou rien sur l ensemble des documents d une requete",
       "question_en": "A document assistant sends three documents per request: a contract that must be cited, plus two internal style guides that should not clutter the answer with references. The team enables citations on the contract only. What does the documentation say about that configuration?",
+      "question_fr": "Un assistant documentaire envoie trois documents par requête : un contrat qui doit être cité, plus deux guides de style internes qui ne doivent pas encombrer la réponse de références. L'équipe active les citations sur le contrat seulement. Que dit la documentation sur cette configuration ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It works as intended: citations are configured per document, and only enabled documents produce citation blocks."
+          "text_en": "It works as intended: citations are configured per document, and only enabled documents produce citation blocks.",
+          "text_fr": "Cela fonctionne comme prévu : les citations se configurent par document, et seuls les documents activés produisent des blocs de citation."
         },
         {
           "key": "B",
-          "text_en": "It works, but the two style guides silently become citable anyway once any document in the request enables citations."
+          "text_en": "It works, but the two style guides silently become citable anyway once any document in the request enables citations.",
+          "text_fr": "Cela fonctionne, mais les deux guides de style deviennent malgré tout citables dès qu'un document de la requête active les citations."
         },
         {
           "key": "C",
-          "text_en": "It is rejected unless the style guides are supplied as `search_result` blocks, which have an independent citation setting."
+          "text_en": "It is rejected unless the style guides are supplied as `search_result` blocks, which have an independent citation setting.",
+          "text_fr": "C'est rejeté sauf si les guides de style sont fournis comme blocs `search_result`, qui ont un réglage de citation indépendant."
         },
         {
           "key": "D",
-          "text_en": "It is not supported: citations must currently be enabled on all documents in a request, or on none of them."
+          "text_en": "It is not supported: citations must currently be enabled on all documents in a request, or on none of them.",
+          "text_fr": "Ce n'est pas pris en charge : les citations doivent actuellement être activées sur tous les documents d'une requête, ou sur aucun."
         }
       ],
       "correct": [
@@ -493,28 +570,34 @@
       "difficulty": "difficile",
       "concept": "Citations et structured outputs sont incompatibles",
       "question_en": "A contract-review service returns a typed object to its front end: a list of findings, each with a risk level. The team also wants each finding grounded in the source text, so they enable citations on the document and set the output format parameter. The API returns 400. Why?",
+      "question_fr": "Un service de revue de contrats renvoie un objet typé à son front end : une liste de constats, chacun avec un niveau de risque. L'équipe veut aussi que chaque constat soit ancré dans le texte source, elle active donc les citations sur le document et définit le paramètre de format de sortie. L'API renvoie 400. Pourquoi ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Citations interleave citation blocks with text output, which cannot satisfy the strict JSON schema of structured outputs."
+          "text_en": "Citations interleave citation blocks with text output, which cannot satisfy the strict JSON schema of structured outputs.",
+          "text_fr": "Les citations entrelacent des blocs de citation avec le texte produit, ce qui ne peut pas respecter le schéma JSON strict des structured outputs."
         },
         {
           "key": "B",
-          "text_en": "Structured outputs require the document to be uploaded through the Files API, and inline document blocks are refused."
+          "text_en": "Structured outputs require the document to be uploaded through the Files API, and inline document blocks are refused.",
+          "text_fr": "Les structured outputs exigent que le document soit téléversé via la Files API ; les blocs document en ligne sont refusés."
         },
         {
           "key": "C",
-          "text_en": "Citations need a tool to be declared in the request, and structured outputs disable tool use for the whole call."
+          "text_en": "Citations need a tool to be declared in the request, and structured outputs disable tool use for the whole call.",
+          "text_fr": "Les citations nécessitent qu'un outil soit déclaré dans la requête, et les structured outputs désactivent l'usage d'outils pour tout l'appel."
         },
         {
           "key": "D",
-          "text_en": "Structured outputs are limited to a single content block, and every cited document adds one block to the response."
+          "text_en": "Structured outputs are limited to a single content block, and every cited document adds one block to the response.",
+          "text_fr": "Les structured outputs sont limités à un seul bloc de contenu, et chaque document cité ajoute un bloc à la réponse."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc pose un avertissement dédié : citations et structured outputs sont incompatibles. Activer les citations sur un document fourni, bloc `document` ou bloc `search_result`, tout en passant `output_config.format` renvoie une 400. La raison donnée est structurelle : les citations exigent d'entrelacer des blocs de citation avec le texte produit, ce qui ne peut pas respecter les contraintes strictes d'un schéma JSON. Il faut choisir : réponse citée en texte, ou objet typé sans citation.",
+      "principe_fr": "Certaines fonctionnalités sont structurellement exclusives : dès qu'une option impose sa propre forme au flux de sortie, elle entre en conflit avec toute autre option qui contraint aussi cette forme. Les citations imposent des blocs entrelacés, les structured outputs imposent un schéma JSON unique — l'incompatibilité est logique, pas arbitraire. Face à une 400 en combinant deux fonctions, demandez-vous d'abord si elles revendiquent toutes deux le contrôle du format de réponse.",
       "distractors_fr": {
         "B": "La Files API est une commodité pour les gros fichiers, pas une condition des structured outputs. Les documents en ligne restent acceptés.",
         "C": "Les citations ne dépendent d'aucun outil déclaré, et les structured outputs ne désactivent pas le tool use.",
@@ -532,28 +615,34 @@
       "difficulty": "difficile",
       "concept": "Choix du type de document selon la granularite de citation voulue pour des chunks RAG",
       "question_en": "A RAG pipeline retrieves chunks of about three paragraphs each. Product wants footnotes precise enough to highlight the exact sentence supporting a claim, not the whole chunk. The chunks are currently sent as one custom content document whose content array holds one block per chunk. What should change?",
+      "question_fr": "Un pipeline RAG récupère des chunks d'environ trois paragraphes chacun. Le produit veut des notes de bas de page assez précises pour surligner la phrase exacte qui appuie une affirmation, et non le chunk entier. Les chunks sont actuellement envoyés comme un seul document à contenu personnalisé dont le tableau content contient un bloc par chunk. Que faut-il changer ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Keep the custom content document and enable automatic chunking on it, so its blocks are split into sentences before matching."
+          "text_en": "Keep the custom content document and enable automatic chunking on it, so its blocks are split into sentences before matching.",
+          "text_fr": "Conserver le document à contenu personnalisé et activer le découpage automatique dessus, pour que ses blocs soient scindés en phrases avant l'appariement."
         },
         {
           "key": "B",
-          "text_en": "Keep the custom content document and lower the chunk size in the retriever, so each retrieved chunk is roughly one sentence."
+          "text_en": "Keep the custom content document and lower the chunk size in the retriever, so each retrieved chunk is roughly one sentence.",
+          "text_fr": "Conserver le document à contenu personnalisé et réduire la taille des chunks dans le retriever, pour que chaque chunk récupéré fasse environ une phrase."
         },
         {
           "key": "C",
-          "text_en": "Put each retrieved chunk into a plain text document, where content is automatically chunked into citable sentences."
+          "text_en": "Put each retrieved chunk into a plain text document, where content is automatically chunked into citable sentences.",
+          "text_fr": "Placer chaque chunk récupéré dans un document en texte brut, dont le contenu est automatiquement découpé en phrases citables."
         },
         {
           "key": "D",
-          "text_en": "Merge every chunk into a single plain text document, since fewer documents give the model finer citation boundaries."
+          "text_en": "Merge every chunk into a single plain text document, since fewer documents give the model finer citation boundaries.",
+          "text_fr": "Fusionner tous les chunks en un seul document en texte brut, puisque moins de documents donnent au modèle des frontières de citation plus fines."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc traite ce cas mot pour mot : si vous voulez que Claude puisse citer des phrases précises de vos chunks RAG, mettez chaque chunk dans un document en texte brut, dont le contenu est automatiquement découpé en phrases citables. Les documents à contenu personnalisé utilisent vos blocs tels quels, sans découpage supplémentaire : c'est le bon choix quand vous voulez maîtriser vous-même la granularité, par exemple pour des puces ou une transcription, pas quand vous cherchez la phrase.",
+      "principe_fr": "Le type de document choisi détermine la granularité des citations : le texte brut est découpé automatiquement en phrases, le contenu personnalisé utilise vos blocs tels quels comme unités citables. Choisissez donc le type selon l'unité de citation souhaitée : phrase précise, ou bloc que vous contrôlez vous-même. Modifier la taille des chunks en amont dégraderait la qualité de la recherche pour résoudre un problème d'affichage.",
       "distractors_fr": {
         "A": "Le propre du document à contenu personnalisé est justement qu'aucun découpage supplémentaire n'est fait. Il n'existe pas d'option pour l'y réactiver.",
         "B": "Réduire les chunks à la phrase dégrade la recherche : le retriever perd le contexte dont il a besoin pour bien classer, alors que le problème ne concerne que l'affichage de la citation.",
@@ -571,28 +660,34 @@
       "difficulty": "moyen",
       "concept": "cited_text n est facture ni en sortie ni en entree aux tours suivants",
       "question_en": "A finance assistant answers with heavy quotation from cached filings. Before rollout, an architect models the cost of long multi-turn sessions where each answer carries several citations and the whole exchange is replayed on the next turn. How is `cited_text` billed?",
+      "question_fr": "Un assistant financier répond en citant abondamment des dépôts réglementaires mis en cache. Avant le déploiement, un architecte modélise le coût de longues sessions multi-tours où chaque réponse porte plusieurs citations et où tout l'échange est rejoué au tour suivant. Comment `cited_text` est-il facturé ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is billed as output when produced, then as ordinary input on every later turn that replays the exchange."
+          "text_en": "It is billed as output when produced, then as ordinary input on every later turn that replays the exchange.",
+          "text_fr": "Il est facturé en sortie lors de sa production, puis en entrée ordinaire à chaque tour ultérieur qui rejoue l'échange."
         },
         {
           "key": "B",
-          "text_en": "It is not counted toward output tokens, and it is not counted as input when passed back on later turns either."
+          "text_en": "It is not counted toward output tokens, and it is not counted as input when passed back on later turns either.",
+          "text_fr": "Il n'est pas compté dans les tokens de sortie, et il n'est pas non plus compté en entrée lorsqu'il est renvoyé aux tours suivants."
         },
         {
           "key": "C",
-          "text_en": "It is not billed as output, but counts as ordinary input from the next turn onward, like any other assistant text."
+          "text_en": "It is not billed as output, but counts as ordinary input from the next turn onward, like any other assistant text.",
+          "text_fr": "Il n'est pas facturé en sortie, mais compte comme entrée ordinaire dès le tour suivant, comme tout autre texte de l'assistant."
         },
         {
           "key": "D",
-          "text_en": "It is billed as output at a reduced rate, and is exempt from input billing only while the document stays cached."
+          "text_en": "It is billed as output at a reduced rate, and is exempt from input billing only while the document stays cached.",
+          "text_fr": "Il est facturé en sortie à tarif réduit, et exempté de facturation en entrée seulement tant que le document reste en cache."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La section sur le coût en tokens est nette sur les deux points. En sortie, le modèle émet en interne un format standardisé qui est ensuite converti en texte cité et en indices de position ; le champ `cited_text` est fourni pour votre commodité et ne compte pas dans les tokens de sortie. Et lorsqu'il est renvoyé aux tours suivants de la conversation, `cited_text` n'est pas non plus compté en entrée. En revanche, activer les citations augmente légèrement les tokens d'entrée, à cause des ajouts au prompt système et du découpage des documents.",
+      "principe_fr": "Distinguez ce que le modèle génère réellement de ce que l'API ajoute pour votre confort. Les champs dérivés, reconstruits par l'API à partir d'une représentation interne compacte, ne sont facturés ni en sortie ni en entrée. En revanche, le surcoût réel d'une fonctionnalité se trouve souvent ailleurs : ici, dans les ajouts au prompt système et le découpage des documents.",
       "distractors_fr": {
         "A": "Décrit une facturation classique, mais c'est exactement ce que la fonctionnalité évite sur les deux versants.",
         "C": "À moitié juste : la sortie est bien exonérée, mais l'exonération vaut aussi pour l'entrée aux tours suivants.",
@@ -610,22 +705,27 @@
       "difficulty": "moyen",
       "concept": "Les deux facons de fournir des blocs search_result et le cas d usage de chacune",
       "question_en": "A support product is adding cited answers over an internal knowledge base. Some queries need a live lookup against the search index; others replay results the application already fetched and cached minutes earlier. Select the TWO statements that correctly describe how `search_result` blocks support this.",
+      "question_fr": "Un produit de support ajoute des réponses citées sur une base de connaissances interne. Certaines requêtes nécessitent une recherche en direct dans l'index ; d'autres rejouent des résultats que l'application a déjà récupérés et mis en cache quelques minutes plus tôt. Choisissez les DEUX affirmations qui décrivent correctement comment les blocs `search_result` prennent cela en charge.",
       "options": [
         {
           "key": "A",
-          "text_en": "Custom tools can return `search_result` blocks in their tool results, which covers the live-lookup path."
+          "text_en": "Custom tools can return `search_result` blocks in their tool results, which covers the live-lookup path.",
+          "text_fr": "Des outils personnalisés peuvent renvoyer des blocs `search_result` dans leurs résultats d'outil, ce qui couvre la recherche en direct."
         },
         {
           "key": "B",
-          "text_en": "Pre-fetched results must be replayed through a tool result as well, since that is the only accepted position."
+          "text_en": "Pre-fetched results must be replayed through a tool result as well, since that is the only accepted position.",
+          "text_fr": "Les résultats pré-récupérés doivent aussi être rejoués via un résultat d'outil, car c'est la seule position acceptée."
         },
         {
           "key": "C",
-          "text_en": "`search_result` blocks can be placed directly in a user message, which covers pre-fetched or cached content."
+          "text_en": "`search_result` blocks can be placed directly in a user message, which covers pre-fetched or cached content.",
+          "text_fr": "Les blocs `search_result` peuvent être placés directement dans un message utilisateur, ce qui couvre le contenu pré-récupéré ou mis en cache."
         },
         {
           "key": "D",
-          "text_en": "Mixing the two methods in one conversation is rejected, so the application must commit to a single path."
+          "text_en": "Mixing the two methods in one conversation is rejected, so the application must commit to a single path.",
+          "text_fr": "Mélanger les deux méthodes dans une même conversation est rejeté ; l'application doit donc s'en tenir à une seule voie."
         }
       ],
       "correct": [
@@ -633,6 +733,7 @@
         "C"
       ],
       "explanation_fr": "La doc décrit deux méthodes et les recommande pour des usages différents. Méthode 1, depuis un appel d'outil : vos outils personnalisés renvoient des blocs `search_result`, ce qui permet le RAG dynamique avec une recherche à l'exécution. Méthode 2, en contenu de premier niveau : vous placez les blocs `search_result` directement dans un message utilisateur, ce qui convient au contenu pré-récupéré, mis en cache, ou venant d'un service de recherche externe. Les deux méthodes peuvent coexister dans une même conversation.",
+      "principe_fr": "Une même primitive de contenu peut souvent être fournie par plusieurs chemins, chacun correspondant à un moment d'obtention de la donnée : à l'exécution via un outil, ou en amont via le message utilisateur. Ces chemins sont complémentaires et coexistent dans une conversation. Raisonnez donc par cas d'usage plutôt que de supposer une position unique imposée.",
       "distractors_fr": {
         "B": "La méthode 2 existe précisément pour cela : un bloc `search_result` est accepté directement dans un message utilisateur.",
         "D": "La doc consacre une section au mélange des deux méthodes : Claude cite depuis l'une comme depuis l'autre, et `search_result_index` numérote tous les blocs dans l'ordre de la requête, quelle que soit leur provenance."
@@ -649,28 +750,34 @@
       "difficulty": "facile",
       "concept": "Les blocs search_result ne sont acceptes que dans les messages utilisateur",
       "question_en": "To keep a conversation compact, an engineer rewrites history so that retrieved passages are folded into the preceding `assistant` turn as `search_result` blocks rather than kept in the user turn that delivered them. The request is rejected. What is the placement rule?",
+      "question_fr": "Pour garder une conversation compacte, un ingénieur réécrit l'historique afin que les passages récupérés soient repliés dans le tour `assistant` précédent sous forme de blocs `search_result`, au lieu de rester dans le tour utilisateur qui les avait fournis. La requête est rejetée. Quelle est la règle de placement ?",
       "options": [
         {
           "key": "A",
-          "text_en": "`search_result` blocks may appear in any turn, but only the first ten per conversation are indexed for citation."
+          "text_en": "`search_result` blocks may appear in any turn, but only the first ten per conversation are indexed for citation.",
+          "text_fr": "Les blocs `search_result` peuvent apparaître dans n'importe quel tour, mais seuls les dix premiers par conversation sont indexés pour la citation."
         },
         {
           "key": "B",
-          "text_en": "`search_result` blocks may appear only in the request's very first user message, before any assistant turn."
+          "text_en": "`search_result` blocks may appear only in the request's very first user message, before any assistant turn.",
+          "text_fr": "Les blocs `search_result` ne peuvent apparaître que dans le tout premier message utilisateur de la requête, avant tout tour assistant."
         },
         {
           "key": "C",
-          "text_en": "`search_result` blocks may appear in assistant turns only when citations are disabled on all of them."
+          "text_en": "`search_result` blocks may appear in assistant turns only when citations are disabled on all of them.",
+          "text_fr": "Les blocs `search_result` ne peuvent apparaître dans les tours assistant que si les citations sont désactivées sur tous ces blocs."
         },
         {
           "key": "D",
-          "text_en": "`search_result` blocks may appear only in user messages, tool results included; assistant messages are rejected."
+          "text_en": "`search_result` blocks may appear only in user messages, tool results included; assistant messages are rejected.",
+          "text_fr": "Les blocs `search_result` ne peuvent apparaître que dans des messages utilisateur, résultats d'outils inclus ; les messages assistant sont rejetés."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Parmi les limitations, la doc indique que les blocs `search_result` ne peuvent apparaître que dans des messages utilisateur, y compris à l'intérieur de blocs `tool_result`, et que les messages assistant qui en contiennent sont rejetés. C'est cohérent avec le modèle : un résultat de recherche est une donnée que vous fournissez au modèle, pas quelque chose que le modèle produit.",
+      "principe_fr": "Le rôle d'un message détermine qui est censé produire son contenu : l'utilisateur (et par extension l'application, y compris via les résultats d'outils) fournit les données, l'assistant produit les réponses. Les blocs représentant des données d'entrée sont donc restreints aux tours utilisateur. Cette logique de rôle permet de deviner beaucoup de contraintes de placement sans les mémoriser.",
       "distractors_fr": {
         "A": "Aucun plafond de dix n'est documenté, et la contrainte porte sur le rôle du message, pas sur un nombre.",
         "B": "La doc montre au contraire des résultats de recherche apportés à plusieurs endroits d'une même conversation, y compris via des résultats d'outils tardifs.",
@@ -688,28 +795,34 @@
       "difficulty": "difficile",
       "concept": "Un tool_result contenant un search_result ne peut pas melanger les types de blocs",
       "question_en": "A retrieval tool returns three `search_result` blocks plus a short text block explaining that one index was unavailable. The API rejects the tool result with a validation error. How should the tool return that explanatory note?",
+      "question_fr": "Un outil de recherche renvoie trois blocs `search_result` plus un court bloc de texte expliquant qu'un index était indisponible. L'API rejette le résultat d'outil avec une erreur de validation. Comment l'outil doit-il renvoyer cette note explicative ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Send the note in a separate user message immediately after the tool result, outside the tool result block itself."
+          "text_en": "Send the note in a separate user message immediately after the tool result, outside the tool result block itself.",
+          "text_fr": "Envoyer la note dans un message utilisateur distinct, juste après le résultat d'outil, en dehors du bloc de résultat lui-même."
         },
         {
           "key": "B",
-          "text_en": "Attach the note to the tool result's top level as a description field, which sits outside the content array."
+          "text_en": "Attach the note to the tool result's top level as a description field, which sits outside the content array.",
+          "text_fr": "Attacher la note au premier niveau du résultat d'outil dans un champ description, situé hors du tableau content."
         },
         {
           "key": "C",
-          "text_en": "Put the note as a text block inside one of the search results' own content arrays, where it also becomes citable."
+          "text_en": "Put the note as a text block inside one of the search results' own content arrays, where it also becomes citable.",
+          "text_fr": "Placer la note comme bloc de texte à l'intérieur du tableau content de l'un des résultats de recherche, où elle devient aussi citable."
         },
         {
           "key": "D",
-          "text_en": "Return the note as a fourth `search_result` whose source names the failing index and whose content holds the message."
+          "text_en": "Return the note as a fourth `search_result` whose source names the failing index and whose content holds the message.",
+          "text_fr": "Renvoyer la note comme un quatrième `search_result` dont la source nomme l'index défaillant et dont le contenu porte le message."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc énonce la contrainte : les résultats d'outils sont plus stricts que les messages utilisateur, et si un bloc d'un tableau `tool_result` est un `search_result`, tous ses blocs doivent l'être. Mélanger des types renvoie une erreur de validation. La solution donnée est exactement celle-ci : pour joindre du texte d'accompagnement à des résultats de recherche venus d'un outil, inclure ce texte comme bloc `text` à l'intérieur du tableau `content` de l'un des résultats de recherche, où il devient citable au passage.",
+      "principe_fr": "Les résultats d'outils imposent des contraintes d'homogénéité plus strictes que les messages utilisateur : si un bloc d'un tableau est d'un type spécialisé, tous doivent l'être. Quand une contrainte interdit le mélange au même niveau, la solution est généralement d'imbriquer le contenu hétérogène un niveau plus bas, là où il est autorisé. Cette imbrication apporte souvent un bénéfice secondaire, comme rendre le texte citable.",
       "distractors_fr": {
         "A": "Un tour utilisateur supplémentaire au milieu d'une boucle d'outils casse l'appariement `tool_use` / `tool_result` attendu ; la doc propose une solution qui reste dans le résultat d'outil.",
         "B": "Il n'existe pas de champ descriptif de ce genre sur un `tool_result` : le contenu passe par le tableau `content`.",
@@ -727,22 +840,27 @@
       "difficulty": "moyen",
       "concept": "Structurer le contenu des search_result pour obtenir des frontieres de citation utilisables",
       "question_en": "Users complain that every footnote in a RAG assistant expands to a full page of text. Each retrieved article is currently sent as one `search_result` whose content array holds a single large text block. Select the TWO changes that follow the documented best practices.",
+      "question_fr": "Les utilisateurs se plaignent que chaque note de bas de page d'un assistant RAG s'étend sur une page entière de texte. Chaque article récupéré est actuellement envoyé comme un seul `search_result` dont le tableau content contient un unique gros bloc texte. Choisissez les DEUX changements conformes aux bonnes pratiques documentées.",
       "options": [
         {
           "key": "A",
-          "text_en": "Split each article into several focused text blocks inside the content array, giving Claude finer citation boundaries."
+          "text_en": "Split each article into several focused text blocks inside the content array, giving Claude finer citation boundaries.",
+          "text_fr": "Découper chaque article en plusieurs blocs texte ciblés dans le tableau content, ce qui donne à Claude des frontières de citation plus fines."
         },
         {
           "key": "B",
-          "text_en": "Shorten `cited_text` on the client by truncating it to the first sentence before rendering the footnote to users."
+          "text_en": "Shorten `cited_text` on the client by truncating it to the first sentence before rendering the footnote to users.",
+          "text_fr": "Raccourcir `cited_text` côté client en le tronquant à la première phrase avant d'afficher la note aux utilisateurs."
         },
         {
           "key": "C",
-          "text_en": "Use stable, permanent source identifiers and descriptive titles, so each footnote resolves to something users can open."
+          "text_en": "Use stable, permanent source identifiers and descriptive titles, so each footnote resolves to something users can open.",
+          "text_fr": "Utiliser des identifiants de source stables et permanents ainsi que des titres descriptifs, afin que chaque note renvoie à quelque chose que l'utilisateur peut ouvrir."
         },
         {
           "key": "D",
-          "text_en": "Disable citations on the search results and ask Claude in the prompt to name the article title inline instead."
+          "text_en": "Disable citations on the search results and ask Claude in the prompt to name the article title inline instead.",
+          "text_fr": "Désactiver les citations sur les résultats de recherche et demander à Claude, dans le prompt, de nommer le titre de l'article dans le texte."
         }
       ],
       "correct": [
@@ -750,6 +868,7 @@
         "C"
       ],
       "explanation_fr": "Deux bonnes pratiques documentées répondent au symptôme. D'abord, le bloc texte est l'unité citable minimale : Claude cite des blocs entiers, jamais une sous-chaîne à l'intérieur d'un bloc. Regrouper tout un article dans un bloc unique fait donc que chaque citation renvoie le texte intégral ; découper en blocs courts et cohérents donne des frontières fines. Ensuite, la doc demande des URL de source claires et permanentes et des titres descriptifs, pour que la citation soit exploitable par l'utilisateur.",
+      "principe_fr": "L'unité citable minimale est le bloc de contenu : le modèle cite un bloc entier, jamais une portion interne. La granularité des citations est donc décidée au moment où vous construisez le contenu, pas au moment du rendu. Découper en blocs courts et cohérents, et fournir des identifiants et titres stables, rend les références à la fois précises et exploitables.",
       "distractors_fr": {
         "B": "Tronquer côté client casse la garantie de la fonctionnalité : `cited_text` correspond exactement aux blocs cités, et l'afficher amputé donne une citation qui ne correspond plus à ce que le modèle a réellement invoqué.",
         "D": "Retourner à une citation demandée par prompt, c'est renoncer aux garanties de la fonctionnalité, celles-là mêmes que la doc oppose aux approches par prompt : pointeurs valides et texte cité non facturé en sortie."
@@ -766,28 +885,37 @@
       "difficulty": "moyen",
       "concept": "Gerer une recherche vide ou en echec sans interrompre la conversation",
       "question_en": "A knowledge-base tool sometimes finds nothing, and sometimes its backing index times out. Today the tool raises, the agent loop aborts, and the user sees a generic failure page. What does the search results guide recommend for both cases?",
+      "question_fr": "Un outil de base de connaissances ne trouve parfois rien, et parfois son index sous-jacent dépasse le délai d'attente. Aujourd'hui l'outil lève une erreur, la boucle de l'agent s'interrompt et l'utilisateur voit une page d'échec générique. Que recommande le guide sur les résultats de recherche dans les deux cas ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Return an empty `search_result` with an empty content array, which the model reads as an explicit no-match signal."
+          "text_en": "Return an empty `search_result` with an empty content array, which the model reads as an explicit no-match signal.",
+          "text_fr": "Renvoyer un `search_result` vide avec un tableau content vide, que le modèle interprète comme un signal explicite d'absence de correspondance."
         },
         {
           "key": "B",
-          "text_en": "Return a plain text block describing the outcome, so Claude explains it to the user and the conversation continues."
+          "text_en": "Return a plain text block describing the outcome, so Claude explains it to the user and the conversation continues.",
+          "text_fr": "Renvoyer un simple bloc texte décrivant le résultat, afin que Claude l'explique à l'utilisateur et que la conversation continue."
         },
         {
           "key": "C",
-          "text_en": "Retry the query up to three times with backoff, and surface the failure only once every attempt has failed."
+          "text_en": "Retry the query up to three times with backoff, and surface the failure only once every attempt has failed.",
+          "text_fr": "Réessayer la requête jusqu'à trois fois avec un délai croissant, et ne remonter l'échec qu'après l'échec de toutes les tentatives."
         },
         {
           "key": "D",
-          "text_en": "Return the most recent successful results for that query from a local cache, marked with their original timestamp."
+          "text_en": "Return the most recent successful results for that query from a local cache, marked with their original timestamp.",
+          "text_fr": "Renvoyer depuis un cache local les derniers résultats obtenus avec succès pour cette requête, marqués de leur horodatage d'origine."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La doc traite la gestion d'erreur comme une bonne pratique de conception : quand une recherche échoue ou ne renvoie rien, retournez un bloc texte décrivant ce qui s'est passé, par exemple « No results found. », au lieu de lever une erreur. Claude explique alors le résultat vide à l'utilisateur et la conversation continue. C'est aussi ce que rappelle la section sur la recherche par outil : gérer les erreurs en renvoyant des messages appropriés.",
+      "citations_fr": [
+        "Aucun résultat trouvé."
+      ],
+      "principe_fr": "Dans une boucle d'agent, une exception côté outil interrompt le raisonnement, alors qu'un résultat textuel décrivant l'échec le nourrit. La règle générale : traduisez les conditions anormales en contenu que le modèle peut lire et expliquer, plutôt qu'en erreurs qui remontent à l'infrastructure. Cela vaut aussi bien pour l'absence de résultat que pour une panne du service sous-jacent.",
       "distractors_fr": {
         "A": "Le tableau `content` d'un résultat de recherche doit contenir des blocs texte non vides ; un résultat vide n'est pas la façon documentée de signaler l'absence de correspondance.",
         "C": "Réessayer peut avoir du sens sur un timeout, mais ne répond pas au cas « aucun résultat », et laisse toujours la boucle s'interrompre au bout du compte.",
@@ -805,28 +933,34 @@
       "difficulty": "difficile",
       "concept": "search_result_index numerote tous les blocs dans l ordre de la requete, sources confondues",
       "question_en": "An application renders footnotes by looking up `search_result_index` in the array its retrieval tool returned for the current turn. Footnotes are correct in simple sessions, but point at the wrong articles whenever the first user message also carried a pre-fetched result. What is the flaw?",
+      "question_fr": "Une application affiche les notes de bas de page en cherchant `search_result_index` dans le tableau renvoyé par son outil de récupération pour le tour courant. Les notes sont correctes dans les sessions simples, mais pointent vers les mauvais articles dès que le premier message utilisateur contenait aussi un résultat pré-récupéré. Où est la faille ?",
       "options": [
         {
           "key": "A",
-          "text_en": "`search_result_index` counts every `search_result` block in the request, across all messages and both supply methods."
+          "text_en": "`search_result_index` counts every `search_result` block in the request, across all messages and both supply methods.",
+          "text_fr": "`search_result_index` compte tous les blocs `search_result` de la requête, tous messages confondus et quelle que soit la méthode d'apport."
         },
         {
           "key": "B",
-          "text_en": "`search_result_index` restarts at zero on each assistant turn, so indices from earlier turns cannot be reused later."
+          "text_en": "`search_result_index` restarts at zero on each assistant turn, so indices from earlier turns cannot be reused later.",
+          "text_fr": "`search_result_index` repart de zéro à chaque tour de l'assistant, donc les indices des tours précédents ne sont pas réutilisables ensuite."
         },
         {
           "key": "C",
-          "text_en": "`search_result_index` refers to the block position inside the cited result, not to the result's rank in the request."
+          "text_en": "`search_result_index` refers to the block position inside the cited result, not to the result's rank in the request.",
+          "text_fr": "`search_result_index` désigne la position du bloc à l'intérieur du résultat cité, et non le rang du résultat dans la requête."
         },
         {
           "key": "D",
-          "text_en": "`search_result_index` is assigned by relevance rather than by position, so its order differs from the supplied order."
+          "text_en": "`search_result_index` is assigned by relevance rather than by position, so its order differs from the supplied order.",
+          "text_fr": "`search_result_index` est attribué par pertinence et non par position, son ordre diffère donc de l'ordre d'apport."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La doc définit `search_result_index` comme l'indice, à partir de zéro, du résultat cité parmi TOUS les blocs `search_result` de la requête, dans l'ordre où ils apparaissent, tous messages et tous résultats d'outils confondus. L'exemple de combinaison des deux méthodes le montre : le résultat pré-récupéré du premier message utilisateur porte l'indice 0, et celui renvoyé plus tard par l'outil porte l'indice 1. Indexer seulement le tableau renvoyé par l'outil décale donc tout dès qu'un résultat vient d'ailleurs.",
+      "principe_fr": "Les indices renvoyés par l'API se rapportent toujours à la requête telle que l'API la voit, c'est-à-dire à l'ensemble des blocs concernés dans leur ordre d'apparition, et non à une structure locale de votre code. Dès qu'un même type de contenu peut arriver par plusieurs chemins (message utilisateur, résultat d'outil), il faut reconstruire côté client la liste complète dans le même ordre pour résoudre les références.",
       "distractors_fr": {
         "B": "Aucune remise à zéro par tour : la numérotation court sur toute la requête, ce qui est précisément la cause du décalage observé.",
         "C": "C'est le rôle de `start_block_index` et `end_block_index`, qui désignent une tranche du tableau `content` du résultat cité.",
@@ -844,22 +978,27 @@
       "difficulty": "difficile",
       "concept": "Combiner citations et prompt caching sur les documents sources",
       "question_en": "A legal assistant sends the same 60-page contract on every turn of a review session, with citations enabled, and wants to stop paying full input price for it each time. Select the TWO statements that describe how caching and citations combine.",
+      "question_fr": "Un assistant juridique envoie le même contrat de 60 pages à chaque tour d'une session de relecture, citations activées, et veut cesser de payer le plein tarif d'entrée à chaque fois. Choisissez les DEUX affirmations qui décrivent la combinaison du cache et des citations.",
       "options": [
         {
           "key": "A",
-          "text_en": "Citation blocks generated in a response can themselves be cached, so repeat answers over one document get cheaper."
+          "text_en": "Citation blocks generated in a response can themselves be cached, so repeat answers over one document get cheaper.",
+          "text_fr": "Les blocs de citation générés dans une réponse peuvent eux-mêmes être mis en cache, ce qui rend moins coûteuses les réponses répétées sur un même document."
         },
         {
           "key": "B",
-          "text_en": "Apply `cache_control` to the top-level document content block, so the source is read from cache on later turns."
+          "text_en": "Apply `cache_control` to the top-level document content block, so the source is read from cache on later turns.",
+          "text_fr": "Appliquer `cache_control` au bloc de contenu document de premier niveau, afin que la source soit lue depuis le cache aux tours suivants."
         },
         {
           "key": "C",
-          "text_en": "Enabling citations disables caching for the whole request, because chunking must be recomputed on every call."
+          "text_en": "Enabling citations disables caching for the whole request, because chunking must be recomputed on every call.",
+          "text_fr": "Activer les citations désactive le cache pour toute la requête, car le découpage doit être recalculé à chaque appel."
         },
         {
           "key": "D",
-          "text_en": "Citations work together with prompt caching, token counting and batch processing, so nothing has to be given up."
+          "text_en": "Citations work together with prompt caching, token counting and batch processing, so nothing has to be given up.",
+          "text_fr": "Les citations fonctionnent de concert avec le prompt caching, le comptage de tokens et le traitement par lots : rien n'est à sacrifier."
         }
       ],
       "correct": [
@@ -867,6 +1006,7 @@
         "D"
       ],
       "explanation_fr": "La doc consacre une section à l'usage conjoint : les blocs de citation produits dans les réponses ne peuvent pas être mis en cache directement, mais les documents sources qu'ils référencent le peuvent. La recommandation est donc de poser `cache_control` sur les blocs `document` de premier niveau. Elle indique par ailleurs que les citations fonctionnent de concert avec le prompt caching, le comptage de tokens et le traitement par lots.",
+      "principe_fr": "Le cache s'applique aux entrées que vous renvoyez à l'identique, pas aux sorties générées par le modèle. Quand une fonctionnalité produit du contenu dérivé (citations, raisonnement), c'est la source stable en entrée qu'il faut marquer avec `cache_control`. Les fonctionnalités de l'API sont en général composables : vérifiez la section « utilisation conjointe » avant de supposer une exclusion.",
       "distractors_fr": {
         "A": "L'inverse exactement : les blocs de citation générés ne sont pas cacheables directement. Ce sont les documents sources que l'on met en cache.",
         "C": "Aucune incompatibilité de ce genre. La seule incompatibilité documentée des citations est avec les structured outputs."
@@ -883,28 +1023,37 @@
       "difficulty": "facile",
       "concept": "Files API plutot que base64 en ligne pour des documents reutilises",
       "question_en": "An onboarding tool sends the same 90-page policy manual, base64-encoded inline, on every request across a long review session. Payloads are enormous, uploads dominate latency, and occasional requests are rejected outright. What is the documented remedy?",
+      "question_fr": "Un outil d'intégration envoie le même manuel de politique de 90 pages, encodé en base64 en ligne, à chaque requête d'une longue session de relecture. Les charges utiles sont énormes, les téléversements dominent la latence, et certaines requêtes sont carrément rejetées. Quel est le remède documenté ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Send the manual once in the first request only, since the conversation history keeps it available on later turns."
+          "text_en": "Send the manual once in the first request only, since the conversation history keeps it available on later turns.",
+          "text_fr": "N'envoyer le manuel que dans la première requête, puisque l'historique de conversation le garde disponible aux tours suivants."
         },
         {
           "key": "B",
-          "text_en": "Compress the PDF client-side before encoding it, so the same inline pattern fits comfortably under the size limit."
+          "text_en": "Compress the PDF client-side before encoding it, so the same inline pattern fits comfortably under the size limit.",
+          "text_fr": "Compresser le PDF côté client avant de l'encoder, afin que le même schéma en ligne passe confortablement sous la limite de taille."
         },
         {
           "key": "C",
-          "text_en": "Split the manual across several requests and ask Claude to summarize each part into a compact running digest."
+          "text_en": "Split the manual across several requests and ask Claude to summarize each part into a compact running digest.",
+          "text_fr": "Répartir le manuel sur plusieurs requêtes et demander à Claude de résumer chaque partie dans un condensé compact cumulatif."
         },
         {
           "key": "D",
-          "text_en": "Upload the manual once through the Files API and reference it by `file_id` in each request, keeping payloads small."
+          "text_en": "Upload the manual once through the Files API and reference it by `file_id` in each request, keeping payloads small.",
+          "text_fr": "Téléverser le manuel une fois via la Files API et le référencer par `file_id` dans chaque requête, en gardant les charges utiles réduites."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La Files API suit une logique « téléverser une fois, réutiliser plusieurs fois » : on téléverse le fichier, on reçoit un `file_id`, et on le référence dans les requêtes Messages au lieu de renvoyer le contenu. La page sur les PDF le recommande explicitement pour les gros documents, afin de garder des charges utiles réduites sous la limite de taille de requête.",
+      "citations_fr": [
+        "téléverser une fois, réutiliser plusieurs fois"
+      ],
+      "principe_fr": "Un contenu binaire volumineux et réutilisé doit être découplé de la requête : on le téléverse une fois et on n'envoie ensuite qu'une référence. Cela réduit la taille des charges utiles, la latence de téléversement et le risque de dépasser la limite de taille de requête. Le contenu en ligne reste adapté aux fichiers ponctuels et petits.",
       "distractors_fr": {
         "B": "La compression gagne un peu de marge sans traiter la cause : le document est renvoyé intégralement à chaque tour.",
         "C": "Le découpage et le résumé perdent de l'information et changent la nature de la tâche, alors que le problème est un problème de transport.",
@@ -922,28 +1071,37 @@
       "difficulty": "moyen",
       "concept": "Disponibilite de la Files API selon la plateforme de deploiement",
       "question_en": "An architecture doc standardizes every Claude workload on the Files API, including services that are contractually required to run through Amazon Bedrock and Google Cloud. A reviewer flags the plan. What is the documented availability?",
+      "question_fr": "Un document d'architecture standardise toutes les charges Claude sur la Files API, y compris des services contractuellement tenus de passer par Amazon Bedrock et Google Cloud. Un relecteur signale le problème. Quelle est la disponibilité documentée ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The Files API is available everywhere Claude is offered, though a beta header is needed on the cloud marketplaces."
+          "text_en": "The Files API is available everywhere Claude is offered, though a beta header is needed on the cloud marketplaces.",
+          "text_fr": "La Files API est disponible partout où Claude est proposé, avec un en-tête beta requis sur les places de marché cloud."
         },
         {
           "key": "B",
-          "text_en": "The Files API is available on Amazon Bedrock and Google Cloud only, and not on the direct Claude API at all."
+          "text_en": "The Files API is available on Amazon Bedrock and Google Cloud only, and not on the direct Claude API at all.",
+          "text_fr": "La Files API est disponible uniquement sur Amazon Bedrock et Google Cloud, et pas du tout sur la Claude API directe."
         },
         {
           "key": "C",
-          "text_en": "The Files API is on the Claude API, Claude Platform on AWS and Microsoft Foundry, not on Bedrock or Google Cloud."
+          "text_en": "The Files API is on the Claude API, Claude Platform on AWS and Microsoft Foundry, not on Bedrock or Google Cloud.",
+          "text_fr": "La Files API existe sur la Claude API, Claude Platform on AWS et Microsoft Foundry, mais pas sur Bedrock ni Google Cloud."
         },
         {
           "key": "D",
-          "text_en": "The Files API is available on the direct Claude API only, with no support on any cloud provider platform."
+          "text_en": "The Files API is available on the direct Claude API only, with no support on any cloud provider platform.",
+          "text_fr": "La Files API est disponible uniquement sur la Claude API directe, sans prise en charge sur aucune plateforme de fournisseur cloud."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La page précise que la Files API est disponible sur la Claude API, sur Claude Platform on AWS et sur Microsoft Foundry — sur Foundry, uniquement avec un déploiement « Hosted on Anthropic » — et qu'elle n'est actuellement disponible ni sur Amazon Bedrock, ni sur Google Cloud. Une conception qui impose la Files API à tous les services doit donc prévoir le repli sur le contenu en ligne pour les charges liées à Bedrock ou à Google Cloud.",
+      "citations_fr": [
+        "Hosted on Anthropic"
+      ],
+      "principe_fr": "Les fonctionnalités de l'API ne sont pas uniformément disponibles sur toutes les plateformes de déploiement, et certaines n'existent que sous conditions d'hébergement. Toute architecture multi-plateforme doit donc vérifier la matrice de disponibilité fonctionnalité par fonctionnalité et prévoir un chemin de repli pour les plateformes non couvertes.",
       "distractors_fr": {
         "A": "L'en-tête beta `files-api-2025-04-14` est bien nécessaire, mais la disponibilité n'est pas universelle : c'est le point que le relecteur soulève.",
         "B": "Inverse la situation : ce sont justement ces deux plateformes qui ne l'ont pas.",
@@ -961,28 +1119,34 @@
       "difficulty": "moyen",
       "concept": "Seuls les fichiers produits par les skills ou le code execution tool sont telechargeables",
       "question_en": "A reporting feature uploads a dataset through the Files API, has Claude produce a chart with the code execution tool, then tries to download both the chart and the original dataset by `file_id`. The chart downloads; the dataset request fails. How should the team read this?",
+      "question_fr": "Une fonctionnalité de reporting téléverse un jeu de données via la Files API, fait produire un graphique à Claude avec le code execution tool, puis tente de télécharger le graphique et le jeu de données d'origine par `file_id`. Le graphique se télécharge ; la requête sur le jeu de données échoue. Comment l'équipe doit-elle interpréter cela ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Expected: uploaded files report `downloadable: false`; only files made by skills or code execution come back."
+          "text_en": "Expected: uploaded files report `downloadable: false`; only files made by skills or code execution come back.",
+          "text_fr": "Comportement attendu : les fichiers téléversés indiquent `downloadable: false` ; seuls les fichiers créés par les skills ou par le code execution sont récupérables."
         },
         {
           "key": "B",
-          "text_en": "A permissions problem: the API key used for the download lacks the file-read scope that the uploading key held."
+          "text_en": "A permissions problem: the API key used for the download lacks the file-read scope that the uploading key held.",
+          "text_fr": "Un problème de permissions : la clé API utilisée pour le téléchargement n'a pas la portée de lecture de fichiers que possédait la clé de téléversement."
         },
         {
           "key": "C",
-          "text_en": "An expiry problem: uploaded files are purged as soon as they have been referenced by a completed Messages call."
+          "text_en": "An expiry problem: uploaded files are purged as soon as they have been referenced by a completed Messages call.",
+          "text_fr": "Un problème d'expiration : les fichiers téléversés sont purgés dès qu'ils ont été référencés par un appel Messages terminé."
         },
         {
           "key": "D",
-          "text_en": "A format problem: only files whose MIME type maps to a `document` content block can be retrieved after upload."
+          "text_en": "A format problem: only files whose MIME type maps to a `document` content block can be retrieved after upload.",
+          "text_fr": "Un problème de format : seuls les fichiers dont le type MIME correspond à un bloc de contenu `document` peuvent être récupérés après téléversement."
         }
       ],
       "correct": [
         "A"
       ],
       "explanation_fr": "La réponse au téléversement contient un champ `downloadable`, qui vaut `false` pour les fichiers que vous téléversez vous-même. Seuls les fichiers créés par les skills ou par l'outil d'exécution de code peuvent être téléchargés. Le comportement observé est donc conforme : le graphique produit par le code est téléchargeable, le jeu de données d'origine ne l'est pas — l'application le possède déjà de toute façon.",
+      "principe_fr": "La Files API distingue les fichiers dont vous êtes la source et ceux que le modèle génère. Un fichier que vous avez téléversé, vous le détenez déjà : l'API n'a aucune raison de le rendre récupérable, et le champ `downloadable` le signale explicitement. Règle générale : ne concevez un flux de téléchargement que pour les artefacts produits côté serveur (skills, exécution de code).",
       "distractors_fr": {
         "B": "Rien dans la doc ne décrit de portée de lecture distincte pour les fichiers ; l'explication documentée est le champ `downloadable`.",
         "C": "Les fichiers téléversés ne sont pas purgés après référencement ; ils se gèrent par les opérations list, retrieve et delete.",
@@ -1000,28 +1164,34 @@
       "difficulty": "moyen",
       "concept": "Limites de pages PDF par requete et effet de la fenetre de contexte",
       "question_en": "A due-diligence tool must process PDFs of several hundred pages. The team sizes the ingestion stage around the documented per-request page limit and wants to know when the higher figure applies. What are the documented maximums?",
+      "question_fr": "Un outil de due diligence doit traiter des PDF de plusieurs centaines de pages. L'équipe dimensionne l'étape d'ingestion sur la limite de pages par requête documentée et veut savoir quand la valeur la plus élevée s'applique. Quels sont les maximums documentés ?",
       "options": [
         {
           "key": "A",
-          "text_en": "300 pages per request, reduced to 50 when the request's context window is under 1M tokens."
+          "text_en": "300 pages per request, reduced to 50 when the request's context window is under 1M tokens.",
+          "text_fr": "300 pages par requête, ramenées à 50 lorsque la fenêtre de contexte de la requête est inférieure à 1 M de tokens."
         },
         {
           "key": "B",
-          "text_en": "600 pages per request, with no reduction: the page limit is independent of the context window in use."
+          "text_en": "600 pages per request, with no reduction: the page limit is independent of the context window in use.",
+          "text_fr": "600 pages par requête, sans réduction : la limite de pages est indépendante de la fenêtre de contexte utilisée."
         },
         {
           "key": "C",
-          "text_en": "100 pages per request, raised to 600 only when the document is supplied through the Files API."
+          "text_en": "100 pages per request, raised to 600 only when the document is supplied through the Files API.",
+          "text_fr": "100 pages par requête, portées à 600 uniquement lorsque le document est fourni via la Files API."
         },
         {
           "key": "D",
-          "text_en": "600 pages per request, reduced to 100 when the request's context window is under 1M tokens."
+          "text_en": "600 pages per request, reduced to 100 when the request's context window is under 1M tokens.",
+          "text_fr": "600 pages par requête, ramenées à 100 lorsque la fenêtre de contexte de la requête est inférieure à 1 M de tokens."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Le tableau des prérequis PDF donne 600 pages par requête au maximum, et 100 lorsque la fenêtre de contexte de la requête est inférieure à 1 M de tokens. La taille maximale de requête est par ailleurs de 32 Mo, et les deux limites portent sur la charge utile entière, y compris tout ce qui accompagne le PDF. La doc ajoute qu'un PDF dense peut saturer la fenêtre de contexte avant même d'atteindre la limite de pages, auquel cas il faut découper le document.",
+      "principe_fr": "Les limites documentaires se lisent toujours en couple : une limite structurelle (nombre de pages, taille de la charge utile) et une limite de contexte. La contrainte effective est la plus stricte des deux, et elle porte sur la requête entière, pas seulement sur le document. Un PDF dense peut donc saturer la fenêtre de contexte bien avant la limite de pages, ce qui impose un découpage.",
       "distractors_fr": {
         "A": "Ni 300 ni 50 ne figurent dans la doc ; les chiffres réels sont 600 et 100.",
         "B": "Le plafond de 600 est bien documenté, mais il dépend de la fenêtre de contexte : sous 1 M de tokens, il tombe à 100.",
@@ -1039,22 +1209,27 @@
       "difficulty": "difficile",
       "concept": "Comprehension visuelle des PDF via l API Converse de Bedrock",
       "question_en": "A team on Amazon Bedrock's Converse API reports that Claude describes the text of their PDFs correctly but claims not to see any of the charts. Token usage is far lower than they expected for the page count. Select the TWO accurate statements about this situation.",
+      "question_fr": "Une équipe qui utilise l'API Converse d'Amazon Bedrock signale que Claude décrit correctement le texte de ses PDF mais affirme ne voir aucun graphique. La consommation de tokens est très inférieure à ce qu'ils attendaient pour ce nombre de pages. Choisissez les DEUX affirmations exactes sur cette situation.",
       "options": [
         {
           "key": "A",
-          "text_en": "Without citations enabled, the Converse API falls back to basic text extraction and cannot analyse charts or layout."
+          "text_en": "Without citations enabled, the Converse API falls back to basic text extraction and cannot analyse charts or layout.",
+          "text_fr": "Sans citations activées, l'API Converse retombe sur une simple extraction de texte et ne peut analyser ni graphiques ni mise en page."
         },
         {
           "key": "B",
-          "text_en": "Low token usage is consistent with text-extraction mode, which costs far less per page than full visual processing."
+          "text_en": "Low token usage is consistent with text-extraction mode, which costs far less per page than full visual processing.",
+          "text_fr": "Une consommation de tokens faible est cohérente avec le mode extraction de texte, bien moins coûteux par page que le traitement visuel complet."
         },
         {
           "key": "C",
-          "text_en": "Visual understanding on Converse requires the PDF to be supplied through the Files API rather than inline bytes."
+          "text_en": "Visual understanding on Converse requires the PDF to be supplied through the Files API rather than inline bytes.",
+          "text_fr": "La compréhension visuelle sur Converse exige que le PDF soit fourni via la Files API plutôt qu'en octets inline."
         },
         {
           "key": "D",
-          "text_en": "Charts are never readable from a PDF on any platform, since PDF support only ever extracts the text layer."
+          "text_en": "Charts are never readable from a PDF on any platform, since PDF support only ever extracts the text layer.",
+          "text_fr": "Les graphiques ne sont jamais lisibles depuis un PDF sur aucune plateforme, le support PDF n'extrayant que la couche texte."
         }
       ],
       "correct": [
@@ -1062,6 +1237,10 @@
         "B"
       ],
       "explanation_fr": "La doc décrit deux modes de traitement documentaire dans l'API Converse. Le mode d'origine ne fait qu'extraire le texte, ne peut analyser ni images, ni graphiques, ni mise en page, et consomme environ 1 000 tokens pour un PDF de trois pages. Le mode « Claude PDF Chat », qui traite chaque page à la fois comme texte et comme image, consomme environ 7 000 tokens pour les mêmes trois pages — et il exige que les citations soient activées. Le symptôme décrit, texte vu, graphiques invisibles, consommation faible, est exactement la signature du mode extraction.",
+      "citations_fr": [
+        "Claude PDF Chat"
+      ],
+      "principe_fr": "Le traitement d'un PDF peut passer par deux régimes très différents : extraction de la couche texte, ou rendu de chaque page en image analysée visuellement. La consommation de tokens est un indicateur fiable du régime actif, car le mode visuel coûte plusieurs fois plus par page. Quand une capacité visuelle semble absente, vérifiez d'abord la condition d'activation du mode (ici, les citations) avant de suspecter le format d'entrée.",
       "distractors_fr": {
         "C": "Le déclencheur documenté est l'activation des citations, pas le mode de transport du fichier.",
         "D": "Faux en général : la prise en charge des PDF repose sur les capacités de vision de Claude, chaque page étant traitée comme une image. La limitation décrite est propre à l'API Converse sans citations."
@@ -1078,28 +1257,34 @@
       "difficulty": "facile",
       "concept": "Un refus est une reponse HTTP 200 avec stop_reason refusal, pas une erreur",
       "question_en": "A security-research assistant occasionally produces responses its error middleware never catches: the user sees a blank answer, and the application's error rate dashboard shows nothing unusual. The responses carry `stop_reason: \"refusal\"`. What is happening at the protocol level?",
+      "question_fr": "Un assistant de recherche en sécurité produit parfois des réponses que son middleware d'erreurs n'intercepte jamais : l'utilisateur voit une réponse vide et le tableau de bord du taux d'erreurs n'indique rien d'anormal. Ces réponses portent `stop_reason: \"refusal\"`. Que se passe-t-il au niveau du protocole ?",
       "options": [
         {
           "key": "A",
-          "text_en": "A refusal is returned as HTTP 403 with an error body, which generic middleware often swallows without logging."
+          "text_en": "A refusal is returned as HTTP 403 with an error body, which generic middleware often swallows without logging.",
+          "text_fr": "Un refus est renvoyé en HTTP 403 avec un corps d'erreur, que les middlewares génériques absorbent souvent sans journaliser."
         },
         {
           "key": "B",
-          "text_en": "A refusal is returned as HTTP 200 but with a null `content` field, which the SDKs raise as a typed exception."
+          "text_en": "A refusal is returned as HTTP 200 but with a null `content` field, which the SDKs raise as a typed exception.",
+          "text_fr": "Un refus est renvoyé en HTTP 200 mais avec un champ `content` nul, que les SDK remontent comme exception typée."
         },
         {
           "key": "C",
-          "text_en": "A refusal is a successful HTTP 200 response, so error handling never fires; the signal is `stop_reason` itself."
+          "text_en": "A refusal is a successful HTTP 200 response, so error handling never fires; the signal is `stop_reason` itself.",
+          "text_fr": "Un refus est une réponse HTTP 200 réussie : la gestion d'erreurs ne se déclenche donc jamais ; le signal est `stop_reason` lui-même."
         },
         {
           "key": "D",
-          "text_en": "A refusal is returned as HTTP 400 with `invalid_request_error`, since the request violated the usage policy."
+          "text_en": "A refusal is returned as HTTP 400 with `invalid_request_error`, since the request violated the usage policy.",
+          "text_fr": "Un refus est renvoyé en HTTP 400 avec `invalid_request_error`, puisque la requête a violé la politique d'usage."
         }
       ],
       "correct": [
         "C"
       ],
       "explanation_fr": "La doc le dit d'emblée : quand un classificateur de sécurité décline une requête, vous recevez une réponse normale et non une erreur, avec `stop_reason: \"refusal\"`. C'est un HTTP 200 réussi, donc aucun gestionnaire d'erreur ne se déclenche. Le refus se lit sur `stop_reason`, et l'objet `stop_details` en donne la catégorie et une explication lisible, dont le texte n'est pas stable : il faut l'afficher, pas l'analyser.",
+      "principe_fr": "Distinguez les échecs de transport (codes HTTP d'erreur) des issues de génération, qui arrivent dans une réponse valide et se lisent sur `stop_reason`. Toute logique applicative doit donc inspecter `stop_reason` à chaque appel réussi, et pas seulement s'appuyer sur les exceptions. Corollaire : les textes explicatifs associés à ces issues sont destinés à l'affichage, jamais au parsing.",
       "distractors_fr": {
         "A": "Aucun 403 n'est renvoyé pour un refus. Le 403 `permission_error` concerne les droits de la clé d'API sur une ressource.",
         "B": "Le contenu est vide sur un refus antérieur à toute sortie, mais la réponse reste un succès : les SDK ne lèvent pas d'exception.",
@@ -1117,22 +1302,27 @@
       "difficulty": "moyen",
       "concept": "Choisir entre repli cote serveur, middleware SDK et reprise manuelle",
       "question_en": "Two services must retry refused requests on another model. Service one calls the Claude API directly with the Python SDK and wants the least code. Service two runs on Google Cloud with raw HTTP and its own retry layer. Select the TWO appropriate choices.",
+      "question_fr": "Deux services doivent réessayer les requêtes refusées sur un autre modèle. Le premier appelle la Claude API directement avec le SDK Python et veut le minimum de code. Le second tourne sur Google Cloud en HTTP brut, avec sa propre couche de reprise. Choisissez les DEUX options appropriées.",
       "options": [
         {
           "key": "A",
-          "text_en": "Service one can set `fallbacks` to `\"default\"` and let the API retry inside a single call, in beta on the Claude API."
+          "text_en": "Service one can set `fallbacks` to `\"default\"` and let the API retry inside a single call, in beta on the Claude API.",
+          "text_fr": "Le premier service peut mettre `fallbacks` à `\"default\"` et laisser l'API réessayer au sein d'un seul appel, en beta sur la Claude API."
         },
         {
           "key": "B",
-          "text_en": "Service one should drop the SDK, since the fallback middleware is only available to raw HTTP integrations."
+          "text_en": "Service one should drop the SDK, since the fallback middleware is only available to raw HTTP integrations.",
+          "text_fr": "Le premier service devrait abandonner le SDK, le middleware de repli n'étant disponible que pour les intégrations en HTTP brut."
         },
         {
           "key": "C",
-          "text_en": "Service two should send the `fallbacks` parameter too, which behaves identically on Google Cloud deployments."
+          "text_en": "Service two should send the `fallbacks` parameter too, which behaves identically on Google Cloud deployments.",
+          "text_fr": "Le second service devrait envoyer aussi le paramètre `fallbacks`, qui se comporte de façon identique sur les déploiements Google Cloud."
         },
         {
           "key": "D",
-          "text_en": "Service two should retry manually and use fallback credit, which is what keeps the cost of a second call down."
+          "text_en": "Service two should retry manually and use fallback credit, which is what keeps the cost of a second call down.",
+          "text_fr": "Le second service devrait réessayer manuellement et utiliser le fallback credit, qui est ce qui limite le coût d'un second appel."
         }
       ],
       "correct": [
@@ -1140,6 +1330,10 @@
         "D"
       ],
       "explanation_fr": "La doc donne trois approches et les associe à des situations. Sur la Claude API et pour la configuration la plus simple : le repli côté serveur, `fallbacks` à `\"default\"`, une requête et une réponse, l'API se charge de la reprise. Avec un SDK Anthropic sur n'importe quelle plateforme : le middleware du SDK. En HTTP brut ou avec sa propre logique de reprise : la reprise manuelle, où la page « Fallback credit » sert justement à ne pas payer deux fois. Le repli côté serveur et le middleware appliquent le crédit de repli pour vous.",
+      "citations_fr": [
+        "Fallback credit"
+      ],
+      "principe_fr": "Le choix d'un mécanisme de repli dépend de deux facteurs : la plateforme d'appel et le degré de contrôle que vous voulez garder. Plus le repli est intégré côté serveur, moins vous écrivez de code mais plus l'option est restreinte à la Claude API ; plus vous descendez vers la reprise manuelle, plus c'est portable mais plus vous devez gérer vous-même la facturation et la logique. Vérifiez toujours quelle couche applique le crédit de repli à votre place.",
       "distractors_fr": {
         "B": "Le middleware est justement la solution SDK ; c'est la reprise manuelle qui s'adresse au HTTP brut.",
         "C": "Le paramètre `fallbacks` n'est pas disponible sur Amazon Bedrock, Google Cloud ni Microsoft Foundry, et la Batch API renvoie l'élément en erreur s'il le contient. Sur ces plateformes, il faut le repli côté client."
@@ -1156,28 +1350,34 @@
       "difficulty": "facile",
       "concept": "Le parametre fallbacks n est pas supporte par la Batch API",
       "question_en": "A nightly pipeline submits tens of thousands of moderation prompts through the Message Batches API. To make refusals self-healing, an engineer adds the `fallbacks` parameter to each batch item. The batch completes, but a subset of items comes back unusable. What happened?",
+      "question_fr": "Un pipeline nocturne soumet des dizaines de milliers de prompts de modération via la Message Batches API. Pour rendre les refus auto-réparables, un ingénieur ajoute le paramètre `fallbacks` à chaque élément du lot. Le lot se termine, mais une partie des éléments revient inutilisable. Que s'est-il passé ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The items were retried on the fallback model but their results were returned without naming the answering model."
+          "text_en": "The items were retried on the fallback model but their results were returned without naming the answering model.",
+          "text_fr": "Les éléments ont été réessayés sur le modèle de repli, mais leurs résultats ont été renvoyés sans indiquer quel modèle avait répondu."
         },
         {
           "key": "B",
-          "text_en": "`fallbacks` is not supported by the Batches API: a batch item that includes it comes back as an errored result."
+          "text_en": "`fallbacks` is not supported by the Batches API: a batch item that includes it comes back as an errored result.",
+          "text_fr": "`fallbacks` n'est pas pris en charge par la Batches API : un élément de lot qui le contient revient en résultat erroné."
         },
         {
           "key": "C",
-          "text_en": "`fallbacks` is accepted in batches but applies only to the first item, leaving the rest of the batch unprotected."
+          "text_en": "`fallbacks` is accepted in batches but applies only to the first item, leaving the rest of the batch unprotected.",
+          "text_fr": "`fallbacks` est accepté dans les lots mais ne s'applique qu'au premier élément, laissant le reste du lot sans protection."
         },
         {
           "key": "D",
-          "text_en": "The parameter is accepted, but batch items that trigger a refusal are silently dropped from the results file."
+          "text_en": "The parameter is accepted, but batch items that trigger a refusal are silently dropped from the results file.",
+          "text_fr": "Le paramètre est accepté, mais les éléments de lot qui déclenchent un refus sont silencieusement retirés du fichier de résultats."
         }
       ],
       "correct": [
         "B"
       ],
       "explanation_fr": "La note sur le repli côté serveur est explicite : la fonctionnalité est en beta sur la Claude API, le paramètre `fallbacks` n'est pas pris en charge par la Message Batches API, et un élément de lot qui le contient revient en résultat erroné. Il n'est pas non plus disponible sur Amazon Bedrock, Google Cloud ni Microsoft Foundry. Pour un traitement par lots, il faut détecter `stop_reason: \"refusal\"` dans les résultats et resoumettre soi-même.",
+      "principe_fr": "Une fonctionnalité en beta a un périmètre de disponibilité à vérifier sur deux axes : les endpoints (Messages contre Batches) et les plateformes (Claude API contre Bedrock, Google Cloud, Foundry). Un paramètre hors périmètre n'est pas forcément ignoré silencieusement : il peut faire échouer l'élément. Sur les chemins non couverts, il faut reproduire le comportement à la main en inspectant `stop_reason` dans les résultats.",
       "distractors_fr": {
         "A": "Le repli côté serveur nomme bien le modèle qui a répondu, mais il ne s'applique pas ici puisque le paramètre est refusé en lot.",
         "C": "Aucune application partielle de ce genre : l'élément qui porte le paramètre est en erreur.",
@@ -1195,28 +1395,34 @@
       "difficulty": "difficile",
       "concept": "Traiter la sortie partielle d un refus en cours de flux comme incomplete",
       "question_en": "A streaming assistant renders tokens as they arrive. On rare requests, a paragraph appears, then the stream ends with `stop_reason: \"refusal\"`. The team plans to keep the rendered text and append a short notice below it, arguing the user has already read it. What does the documentation prescribe?",
+      "question_fr": "Un assistant en streaming affiche les tokens à mesure qu'ils arrivent. Sur de rares requêtes, un paragraphe apparaît, puis le flux se termine avec `stop_reason: \"refusal\"`. L'équipe prévoit de conserver le texte déjà affiché et d'ajouter un court avertissement en dessous, au motif que l'utilisateur l'a déjà lu. Que prescrit la documentation ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Keep the partial output but mark it provisional, since a mid-stream refusal only affects the tokens not yet produced."
+          "text_en": "Keep the partial output but mark it provisional, since a mid-stream refusal only affects the tokens not yet produced.",
+          "text_fr": "Conserver la sortie partielle mais la marquer comme provisoire, puisqu'un refus en cours de flux n'affecte que les tokens pas encore produits."
         },
         {
           "key": "B",
-          "text_en": "Keep the partial output and re-submit it as an assistant turn, so the retry continues from where the stream stopped."
+          "text_en": "Keep the partial output and re-submit it as an assistant turn, so the retry continues from where the stream stopped.",
+          "text_fr": "Conserver la sortie partielle et la resoumettre comme tour assistant, afin que la nouvelle tentative reprenne là où le flux s'est arrêté."
         },
         {
           "key": "C",
-          "text_en": "Keep the partial output only when `stop_details.category` is null, which indicates an uncategorized soft refusal."
+          "text_en": "Keep the partial output only when `stop_details.category` is null, which indicates an uncategorized soft refusal.",
+          "text_fr": "Conserver la sortie partielle uniquement quand `stop_details.category` est null, ce qui indique un refus léger non catégorisé."
         },
         {
           "key": "D",
-          "text_en": "Treat the partial output as incomplete and discard it, whether the refusal arrives before or during the response."
+          "text_en": "Treat the partial output as incomplete and discard it, whether the refusal arrives before or during the response.",
+          "text_fr": "Traiter la sortie partielle comme incomplète et la jeter, que le refus arrive avant ou pendant la réponse."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "La doc pose la règle sans nuance : un refus peut arriver avant toute sortie, ou en cours de flux après une sortie partielle ; dans les deux cas, il faut traiter la sortie partielle comme incomplète et la jeter. La facturation, elle, distingue bien les deux cas : un refus antérieur à toute sortie n'est pas facturé, tandis qu'un refus en cours de flux facture l'entrée et la sortie déjà émise au tarif normal. Mais cela ne change rien à la conduite à tenir sur le contenu.",
+      "principe_fr": "Un signal d'arrêt anormal invalide l'intégralité du contenu produit dans ce tour, pas seulement la partie manquante : le modèle n'a pas terminé son raisonnement, donc le fragment affiché n'est pas une réponse tronquée fiable. Distinguez deux plans indépendants : la conduite à tenir sur le contenu (jeter, ne pas réinjecter) et la facturation (qui peut, elle, dépendre du moment du refus). Un raisonnement correct ne déduit jamais l'un de l'autre.",
       "distractors_fr": {
         "A": "Un contenu marqué provisoire reste un contenu affiché. La doc demande de l'écarter, pas de le qualifier.",
         "B": "Renvoyer la sortie partielle comme tour assistant pour « reprendre » revient à réinjecter un contenu que le classificateur a précisément interrompu.",
@@ -1234,22 +1440,27 @@
       "difficulty": "facile",
       "concept": "Quand un LLM est preferable a une approche ML classique pour une classification",
       "question_en": "A support organisation must choose between training a classical text classifier and using Claude to route incoming tickets. They have a few dozen labelled tickets, categories that shift every quarter, and tickets in eleven languages. Select the TWO documented indicators that favour Claude here.",
+      "question_fr": "Une organisation de support doit choisir entre entraîner un classifieur de texte classique et utiliser Claude pour router les tickets entrants. Elle dispose de quelques dizaines de tickets étiquetés, de catégories qui changent chaque trimestre, et de tickets en onze langues. Choisissez les DEUX indicateurs documentés qui plaident ici pour Claude.",
       "options": [
         {
           "key": "A",
-          "text_en": "Throughput is the binding constraint, and a hosted model classifies a large backlog faster than a local classifier."
+          "text_en": "Throughput is the binding constraint, and a hosted model classifies a large backlog faster than a local classifier.",
+          "text_fr": "Le débit est la contrainte déterminante, et un modèle hébergé classe un gros arriéré plus vite qu'un classifieur local."
         },
         {
           "key": "B",
-          "text_en": "Labelled data is scarce: Claude can classify effectively from a few dozen labelled examples instead of a large dataset."
+          "text_en": "Labelled data is scarce: Claude can classify effectively from a few dozen labelled examples instead of a large dataset.",
+          "text_fr": "Les données étiquetées sont rares : Claude classe efficacement à partir de quelques dizaines d'exemples étiquetés au lieu d'un grand jeu de données."
         },
         {
           "key": "C",
-          "text_en": "Categories evolve: Claude adapts to changed or new classes without the relabelling a trained model would require."
+          "text_en": "Categories evolve: Claude adapts to changed or new classes without the relabelling a trained model would require.",
+          "text_fr": "Les catégories évoluent : Claude s'adapte à des classes modifiées ou nouvelles sans le réétiquetage qu'exigerait un modèle entraîné."
         },
         {
           "key": "D",
-          "text_en": "Cost per ticket is the binding constraint, and per-token inference is always cheaper than maintaining a trained model."
+          "text_en": "Cost per ticket is the binding constraint, and per-token inference is always cheaper than maintaining a trained model.",
+          "text_fr": "Le coût par ticket est la contrainte déterminante, et l'inférence facturée au token est toujours moins chère que la maintenance d'un modèle entraîné."
         }
       ],
       "correct": [
@@ -1257,6 +1468,7 @@
         "C"
       ],
       "explanation_fr": "Le guide de routage de tickets liste les indicateurs qui doivent faire préférer un LLM à une approche ML classique. Deux d'entre eux décrivent exactement cette organisation : peu de données étiquetées disponibles, là où le ML classique exige des jeux massifs alors que Claude classe correctement avec quelques dizaines d'exemples ; et des catégories appelées à évoluer, là où modifier une approche ML établie est laborieux et gourmand en données. Le multilingue sans modèle séparé par langue en est un troisième, non proposé ici.",
+      "principe_fr": "Le choix entre LLM et ML classique se décide sur la nature du problème, pas sur des promesses de performance générique. Un LLM est indiqué quand les données étiquetées manquent, quand le schéma de classes est instable, ou quand il faut couvrir plusieurs langues sans multiplier les modèles. À l'inverse, un volume énorme et stable avec beaucoup d'étiquettes favorise un modèle entraîné : les arguments de débit ou de coût « toujours moins cher » sont des raccourcis, pas des critères documentés.",
       "distractors_fr": {
         "A": "Le débit n'est pas un des indicateurs listés, et un classifieur local entraîné est souvent plus rapide qu'un appel réseau à un LLM.",
         "D": "Le coût unitaire n'est pas listé non plus, et l'affirmation est fausse en général : sur un très gros volume stable, un modèle entraîné peut coûter moins cher par ticket."
@@ -1273,28 +1485,37 @@
       "difficulty": "facile",
       "concept": "Definir des criteres de succes mesurables avant de construire",
       "question_en": "A team is two weeks from launching a customer support assistant. Asked how they will know it works, they answer that they will read a few transcripts after launch and iterate on the prompt from there. What does the customer support guide advise instead?",
+      "question_fr": "Une équipe est à deux semaines du lancement d'un assistant de support client. Interrogée sur la manière dont elle saura que cela fonctionne, elle répond qu'elle lira quelques transcriptions après le lancement et itérera sur le prompt à partir de là. Que recommande à la place le guide de support client ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Postpone measurement until the prompt stabilises, since criteria written against a moving prompt go stale fast."
+          "text_en": "Postpone measurement until the prompt stabilises, since criteria written against a moving prompt go stale fast.",
+          "text_fr": "Reporter la mesure jusqu'à ce que le prompt se stabilise, car des critères écrits contre un prompt mouvant se périment vite."
         },
         {
           "key": "B",
-          "text_en": "Ship to a small share of traffic and let user satisfaction ratings stand in for a formal evaluation set of cases."
+          "text_en": "Ship to a small share of traffic and let user satisfaction ratings stand in for a formal evaluation set of cases.",
+          "text_fr": "Déployer sur une petite part du trafic et laisser les notes de satisfaction utilisateur tenir lieu de jeu d'évaluation formel."
         },
         {
           "key": "C",
-          "text_en": "Have a second Claude call grade each production answer in real time, and raise an alert when its score drops."
+          "text_en": "Have a second Claude call grade each production answer in real time, and raise an alert when its score drops.",
+          "text_fr": "Faire noter chaque réponse de production en temps réel par un second appel à Claude, et lever une alerte quand le score baisse."
         },
         {
           "key": "D",
-          "text_en": "Work with the support team up front to define measurable success criteria and write evaluations against them."
+          "text_en": "Work with the support team up front to define measurable success criteria and write evaluations against them.",
+          "text_fr": "Travailler en amont avec l'équipe support pour définir des critères de succès mesurables et écrire des évaluations contre ces critères."
         }
       ],
       "correct": [
         "D"
       ],
       "explanation_fr": "Le guide consacre une étape à ce point : travailler avec l'équipe support pour définir des critères de succès et écrire des évaluations détaillées, avec des repères mesurables. Il en donne même les cibles : 95 % ou plus de compréhension correcte de la demande, 90 % de pertinence des réponses, 100 % d'exactitude sur les informations produit fournies en contexte, 95 % d'exactitude d'escalade. Sans ces repères posés avant, « itérer sur le prompt » n'a aucun signal contre lequel itérer.",
+      "citations_fr": [
+        "itérer sur le prompt"
+      ],
+      "principe_fr": "Les critères de succès se définissent avant la construction, pas après le lancement : ils sont la cible contre laquelle on itère, et sans eux l'itération n'a aucun signal. De bons critères sont chiffrés et attribués à une dimension précise (compréhension de la demande, pertinence, exactitude factuelle, décision d'escalade) plutôt qu'à une impression globale. Les retours de production complètent ce dispositif mais ne le remplacent pas.",
       "distractors_fr": {
         "B": "La satisfaction utilisateur est un indicateur d'impact utile, mais elle arrive tard, agrège tout et ne dit pas quelle tâche a échoué.",
         "C": "La notation par un LLM est justement l'une des méthodes proposées pour évaluer à grande échelle, mais elle suppose des critères définis au préalable : elle ne les remplace pas.",
@@ -1312,22 +1533,27 @@
       "difficulty": "moyen",
       "concept": "Decomposer une interaction en taches distinctes avant de prompter et d evaluer",
       "question_en": "Before writing any prompt for an insurance support assistant, an architect maps the ideal conversation and breaks it into greeting, product information, staying on topic, and quote generation. A colleague calls this premature documentation. Select the TWO documented reasons the breakdown is worth doing first.",
+      "question_fr": "Avant d'écrire le moindre prompt pour un assistant de support en assurance, un architecte cartographie la conversation idéale et la découpe en accueil, information produit, maintien du sujet et génération de devis. Un collègue qualifie cela de documentation prématurée. Choisissez les DEUX raisons documentées qui justifient de faire ce découpage d'abord.",
       "options": [
         {
           "key": "A",
-          "text_en": "It ensures every task can be prompted and evaluated on its own, not judged through the conversation as a whole."
+          "text_en": "It ensures every task can be prompted and evaluated on its own, not judged through the conversation as a whole.",
+          "text_fr": "Il garantit que chaque tâche peut être promptée et évaluée séparément, au lieu d'être jugée à travers la conversation entière."
         },
         {
           "key": "B",
-          "text_en": "It reveals the full range of interactions to cover, which is what the test cases have to be written against."
+          "text_en": "It reveals the full range of interactions to cover, which is what the test cases have to be written against.",
+          "text_fr": "Il révèle tout l'éventail des interactions à couvrir, ce qui est précisément la base d'écriture des cas de test."
         },
         {
           "key": "C",
-          "text_en": "It produces the tool schemas directly, since each identified task maps one-to-one onto a tool definition block."
+          "text_en": "It produces the tool schemas directly, since each identified task maps one-to-one onto a tool definition block.",
+          "text_fr": "Il produit directement les schémas d'outils, puisque chaque tâche identifiée correspond exactement à un bloc de définition d'outil."
         },
         {
           "key": "D",
-          "text_en": "It lets each task run on its own model tier, which is the documented way to keep a support assistant affordable."
+          "text_en": "It lets each task run on its own model tier, which is the documented way to keep a support assistant affordable.",
+          "text_fr": "Il permet de faire tourner chaque tâche sur un palier de modèle distinct, ce qui est la méthode documentée pour garder un assistant de support abordable."
         }
       ],
       "correct": [
@@ -1335,6 +1561,10 @@
         "B"
       ],
       "explanation_fr": "Le guide justifie l'étape en ces termes : un chat de support est un assemblage de tâches distinctes — répondre à des questions, retrouver de l'information, agir sur des demandes — réunies dans une seule interaction. Décomposer garantit que vous pouvez prompter et évaluer Claude pour chacune, et donne une bonne idée de l'éventail d'interactions à couvrir quand vous écrirez vos cas de test. Le guide montre d'ailleurs que la tâche « information produit » implique une intégration RAG, ce qu'on ne voit qu'en décomposant.",
+      "citations_fr": [
+        "information produit"
+      ],
+      "principe_fr": "Une interaction conversationnelle est un assemblage de tâches hétérogènes ; les traiter en bloc rend impossible tout diagnostic ciblé. Décomposer d'abord donne deux leviers : chaque tâche devient promptable et évaluable isolément, et l'inventaire des tâches définit la couverture des cas de test. Le découpage révèle aussi les dépendances techniques cachées, comme le besoin d'un RAG pour les réponses factuelles.",
       "distractors_fr": {
         "C": "La correspondance n'est pas un pour un : dans l'exemple, plusieurs tâches ne demandent aucun outil, et la génération de devis en appelle un seul.",
         "D": "Le découpage par palier de modèle n'est pas la raison avancée. Le guide justifie la décomposition par le prompting et l'évaluation."

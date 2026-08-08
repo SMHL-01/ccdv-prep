@@ -19,12 +19,26 @@
       "concept": "Trois criteres a arbitrer pour choisir un modele",
       "question_en": "According to the guide, selecting the optimal Claude model involves balancing which three considerations?",
       "options": [
-        { "key": "A", "text_en": "Capabilities, speed, and cost of the model" },
-        { "key": "B", "text_en": "Latency, token limit, and cache duration only" },
-        { "key": "C", "text_en": "Accuracy, refusal rate, and data retention" },
-        { "key": "D", "text_en": "Context window, tokenizer, and region" }
+        {
+          "key": "A",
+          "text_en": "Capabilities, speed, and cost of the model"
+        },
+        {
+          "key": "B",
+          "text_en": "Latency, token limit, and cache duration only"
+        },
+        {
+          "key": "C",
+          "text_en": "Accuracy, refusal rate, and data retention"
+        },
+        {
+          "key": "D",
+          "text_en": "Context window, tokenizer, and region"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "Le guide ouvre sur : « Selecting the optimal Claude model for your application involves balancing three key considerations: capabilities, speed, and cost. » Les autres triplets melangent des criteres secondaires qui ne sont pas le cadre de decision principal.",
       "distractors_fr": {
         "B": "La latence releve de la vitesse, mais le cadre officiel est capacites/vitesse/cout, pas la duree de cache.",
@@ -44,12 +58,26 @@
       "concept": "Ajuster l'effort plutot que changer de modele",
       "question_en": "The docs say tuning the effort parameter is often a better lever than doing what?",
       "options": [
-        { "key": "A", "text_en": "Rewriting the entire system prompt from scratch" },
-        { "key": "B", "text_en": "Switching to a different Claude model" },
-        { "key": "C", "text_en": "Disabling prompt caching for the request" },
-        { "key": "D", "text_en": "Lowering the max_tokens on each request" }
+        {
+          "key": "A",
+          "text_en": "Rewriting the entire system prompt from scratch"
+        },
+        {
+          "key": "B",
+          "text_en": "Switching to a different Claude model"
+        },
+        {
+          "key": "C",
+          "text_en": "Disabling prompt caching for the request"
+        },
+        {
+          "key": "D",
+          "text_en": "Lowering the max_tokens on each request"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le guide precise que l'effort « trades intelligence for latency and cost within a single model. Tuning effort is often a better lever than switching models. » Ajuster l'effort au sein d'un meme modele evite souvent d'en changer.",
       "distractors_fr": {
         "A": "Le levier oppose au reglage d'effort est le changement de modele, pas la reecriture du prompt.",
@@ -69,12 +97,26 @@
       "concept": "Modele de depart de l'approche efficiency-first",
       "question_en": "In the efficiency-first approach, which model does the guide suggest beginning implementation with?",
       "options": [
-        { "key": "A", "text_en": "Claude Opus 5 for maximum reasoning" },
-        { "key": "B", "text_en": "Claude Fable 5 for highest capability" },
-        { "key": "C", "text_en": "Claude Haiku 4.5 for fast, low-cost iteration" },
-        { "key": "D", "text_en": "Claude Sonnet 5 for balanced throughput" }
+        {
+          "key": "A",
+          "text_en": "Claude Opus 5 for maximum reasoning"
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Fable 5 for highest capability"
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Haiku 4.5 for fast, low-cost iteration"
+        },
+        {
+          "key": "D",
+          "text_en": "Claude Sonnet 5 for balanced throughput"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "L'approche efficiency-first commence au plus economique : « Begin implementation with Claude Haiku 4.5 [...] Upgrade only if necessary for specific capability gaps. » On ne demarre donc pas sur Opus, Fable ni Sonnet.",
       "distractors_fr": {
         "A": "Demarrer sur Opus 5 correspond a l'approche capability-first, pas efficiency-first.",
@@ -94,12 +136,26 @@
       "concept": "Situation adaptee a l'approche capability-first",
       "question_en": "The capability-first approach is described as best for which situation?",
       "options": [
-        { "key": "A", "text_en": "High-volume, straightforward, latency-bound tasks" },
-        { "key": "B", "text_en": "Simple prototypes where cost is the priority" },
-        { "key": "C", "text_en": "Applications needing the cheapest possible tokens" },
-        { "key": "D", "text_en": "Complex reasoning where accuracy outweighs cost" }
+        {
+          "key": "A",
+          "text_en": "High-volume, straightforward, latency-bound tasks"
+        },
+        {
+          "key": "B",
+          "text_en": "Simple prototypes where cost is the priority"
+        },
+        {
+          "key": "C",
+          "text_en": "Applications needing the cheapest possible tokens"
+        },
+        {
+          "key": "D",
+          "text_en": "Complex reasoning where accuracy outweighs cost"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "L'approche capability-first vise les taches complexes : la doc la recommande pour « Complex reasoning tasks » et « Applications where accuracy outweighs cost considerations ». Les cas a fort volume ou sensibles au cout relevent au contraire de l'approche efficiency-first.",
       "distractors_fr": {
         "A": "Les taches a fort volume et contraintes de latence relevent de l'efficiency-first.",
@@ -119,12 +175,26 @@
       "concept": "Etape la plus importante avant de changer de modele",
       "question_en": "When deciding whether to upgrade or change models, what does the guide call the most important step?",
       "options": [
-        { "key": "A", "text_en": "Creating benchmark tests specific to your use case" },
-        { "key": "B", "text_en": "Reading the release notes for every new model" },
-        { "key": "C", "text_en": "Switching to the newest model immediately" },
-        { "key": "D", "text_en": "Picking the model with the lowest token price" }
+        {
+          "key": "A",
+          "text_en": "Creating benchmark tests specific to your use case"
+        },
+        {
+          "key": "B",
+          "text_en": "Reading the release notes for every new model"
+        },
+        {
+          "key": "C",
+          "text_en": "Switching to the newest model immediately"
+        },
+        {
+          "key": "D",
+          "text_en": "Picking the model with the lowest token price"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc insiste : « Create benchmark tests specific to your use case - having a good evaluation set is the most important step in the process. » Ni la lecture des notes de version, ni un changement immediat, ni le seul prix ne remplacent ce jeu d'evaluation.",
       "distractors_fr": {
         "B": "Lire les notes de version aide, mais l'etape cle est de construire un jeu de benchmark.",
@@ -144,12 +214,26 @@
       "concept": "Modele conseille pour la capacite maximale dans la matrice",
       "question_en": "In the model selection matrix, which model is suggested when you need the highest available capability?",
       "options": [
-        { "key": "A", "text_en": "Claude Haiku 4.5" },
-        { "key": "B", "text_en": "Claude Fable 5" },
-        { "key": "C", "text_en": "Claude Sonnet 5" },
-        { "key": "D", "text_en": "Claude Opus 4.8" }
+        {
+          "key": "A",
+          "text_en": "Claude Haiku 4.5"
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Fable 5"
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Sonnet 5"
+        },
+        {
+          "key": "D",
+          "text_en": "Claude Opus 4.8"
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "La matrice associe « The highest available capability » a « Claude Fable 5 » (long-running agents, deep reasoning). Haiku vise l'economie, Sonnet la frontiere a l'echelle, et Opus 4.8 n'est pas la ligne de capacite maximale.",
       "distractors_fr": {
         "A": "Haiku 4.5 est positionne pour la vitesse et l'economie, pas la capacite maximale.",
@@ -169,12 +253,26 @@
       "concept": "Modele conseille pour du temps reel a fort volume economique",
       "question_en": "Which model does the matrix recommend for real-time, high-volume, cost-sensitive work that still needs strong reasoning?",
       "options": [
-        { "key": "A", "text_en": "Claude Opus 5" },
-        { "key": "B", "text_en": "Claude Fable 5" },
-        { "key": "C", "text_en": "Claude Haiku 4.5" },
-        { "key": "D", "text_en": "Claude Sonnet 5" }
+        {
+          "key": "A",
+          "text_en": "Claude Opus 5"
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Fable 5"
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Haiku 4.5"
+        },
+        {
+          "key": "D",
+          "text_en": "Claude Sonnet 5"
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La matrice place Haiku 4.5 sur « Near-frontier performance with lightning-fast speed [...] at the most economical price point », pour « Real-time applications, high-volume intelligent processing, cost-sensitive deployments needing strong reasoning ». Opus, Fable et Sonnet ciblent des besoins de capacite superieure.",
       "distractors_fr": {
         "A": "Opus 5 vise le codage agentique complexe, pas le temps reel economique a fort volume.",
@@ -194,12 +292,26 @@
       "concept": "Valeur par defaut du parametre effort sur Opus 5 et 4.8",
       "question_en": "What is the default value of the effort parameter on Claude Opus 5 and Opus 4.8?",
       "options": [
-        { "key": "A", "text_en": "max, the most intelligent setting" },
-        { "key": "B", "text_en": "low, to minimize latency and cost" },
-        { "key": "C", "text_en": "xhigh, tuned for coding by default" },
-        { "key": "D", "text_en": "high, adjusted up or down by evals" }
+        {
+          "key": "A",
+          "text_en": "max, the most intelligent setting"
+        },
+        {
+          "key": "B",
+          "text_en": "low, to minimize latency and cost"
+        },
+        {
+          "key": "C",
+          "text_en": "xhigh, tuned for coding by default"
+        },
+        {
+          "key": "D",
+          "text_en": "high, adjusted up or down by evals"
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La note precise : « The effort parameter defaults to high on Claude Opus 5 and Claude Opus 4.8 [...] start at the default and step up to xhigh for the most demanding coding and agentic work. » Le defaut est donc high, ajuste selon les evals, ni max, ni low, ni xhigh.",
       "distractors_fr": {
         "A": "max n'est pas le defaut ; on part de high et on peut monter au besoin.",
@@ -219,12 +331,27 @@
       "concept": "Situations recommandant l'approche efficiency-first",
       "question_en": "Select TWO situations where the guide recommends the efficiency-first (start-with-Haiku) approach.",
       "options": [
-        { "key": "A", "text_en": "Complex scientific and mathematical reasoning" },
-        { "key": "B", "text_en": "Applications with tight latency requirements" },
-        { "key": "C", "text_en": "High-volume, straightforward tasks" },
-        { "key": "D", "text_en": "Work where accuracy outweighs any cost" }
+        {
+          "key": "A",
+          "text_en": "Complex scientific and mathematical reasoning"
+        },
+        {
+          "key": "B",
+          "text_en": "Applications with tight latency requirements"
+        },
+        {
+          "key": "C",
+          "text_en": "High-volume, straightforward tasks"
+        },
+        {
+          "key": "D",
+          "text_en": "Work where accuracy outweighs any cost"
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "L'approche efficiency-first est recommandee pour « Applications with tight latency requirements » et « High-volume, straightforward tasks ». Le raisonnement scientifique complexe et les cas ou la precision prime sur le cout relevent au contraire du capability-first.",
       "distractors_fr": {
         "A": "Le raisonnement scientifique complexe est un cas de capability-first, pas efficiency-first.",
@@ -243,12 +370,26 @@
       "concept": "Difference de classifieurs entre Fable 5 et Mythos 5",
       "question_en": "How does Claude Fable 5 differ from Claude Mythos 5 in the model documentation?",
       "options": [
-        { "key": "A", "text_en": "Fable 5 has safety classifiers that can decline requests" },
-        { "key": "B", "text_en": "Fable 5 lacks a 1M context window and thinking" },
-        { "key": "C", "text_en": "Fable 5 is limited to Project Glasswing access" },
-        { "key": "D", "text_en": "Fable 5 costs far less per token than Mythos 5" }
+        {
+          "key": "A",
+          "text_en": "Fable 5 has safety classifiers that can decline requests"
+        },
+        {
+          "key": "B",
+          "text_en": "Fable 5 lacks a 1M context window and thinking"
+        },
+        {
+          "key": "C",
+          "text_en": "Fable 5 is limited to Project Glasswing access"
+        },
+        {
+          "key": "D",
+          "text_en": "Fable 5 costs far less per token than Mythos 5"
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La doc distingue les deux : « Claude Fable 5 includes safety classifiers that can decline requests. Claude Mythos 5 does not include these classifiers. » Les deux partagent la fenetre 1M, la meme tarification, et c'est Mythos 5 (non Fable) qui est reserve a Project Glasswing.",
       "distractors_fr": {
         "B": "Les deux modeles partagent la fenetre 1M et l'adaptive thinking toujours active.",
@@ -268,12 +409,27 @@
       "concept": "Dimensions a comparer entre modeles lors d'un benchmark",
       "question_en": "When comparing performance across models, select TWO dimensions the guide says to compare.",
       "options": [
-        { "key": "A", "text_en": "Accuracy of the responses produced" },
-        { "key": "B", "text_en": "The model's raw parameter count" },
-        { "key": "C", "text_en": "The marketing launch date of each model" },
-        { "key": "D", "text_en": "Handling of tricky edge cases" }
+        {
+          "key": "A",
+          "text_en": "Accuracy of the responses produced"
+        },
+        {
+          "key": "B",
+          "text_en": "The model's raw parameter count"
+        },
+        {
+          "key": "C",
+          "text_en": "The marketing launch date of each model"
+        },
+        {
+          "key": "D",
+          "text_en": "Handling of tricky edge cases"
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "Le guide demande de comparer « Accuracy of responses », « Response quality » et « Handling of edge cases ». Le nombre de parametres et la date de lancement ne figurent pas parmi les dimensions de comparaison recommandees.",
       "distractors_fr": {
         "B": "Le nombre brut de parametres n'est pas une dimension de comparaison citee.",

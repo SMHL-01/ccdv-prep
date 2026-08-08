@@ -8,6 +8,15 @@
 
 const CLE = 'ccdv-prep:progression:v1'
 
+/* Champs d'une reponse enregistree :
+     id, juste, date, domain, subdomain, difficulty  — depuis l'origine
+     choix, correct                                  — ajoutes ensuite
+   Les deux derniers sont FACULTATIFS : les reponses enregistrees avant leur
+   ajout n'en ont pas, et doivent rester lisibles. C'est pourquoi la version
+   du format ne bouge pas — ajouter un champ ne casse rien, l'effacer si.
+   Tout code qui les lit doit donc traiter undefined comme « non enregistre »,
+   a distinguer de [] qui veut dire « question laissee sans reponse ». */
+
 /* Repetition espacee, telle que demandee : une question ratee revient a J+2,
    puis a J+7 si elle est reussie a J+2. Un nouvel echec la ramene a J+2.
    Une question reussie du premier coup n'entre jamais dans le cycle. */
@@ -53,11 +62,18 @@ function ecrire(etat) {
   }
 }
 
+/* undefined reste undefined : JSON.stringify le supprime, et l'absence du
+   champ garde son sens de « non enregistre ». */
+function cles(v) {
+  if (v === undefined || v === null) return undefined
+  return Array.isArray(v) ? [...v] : [v]
+}
+
 /**
  * Enregistre une reponse et met a jour la fiche de repetition espacee.
  * @param {string} id identifiant de la question
  * @param {boolean} juste
- * @param {object} meta { domain, subdomain, difficulty }
+ * @param {object} meta { domain, subdomain, difficulty, choix, correct }
  */
 export function enregistrerReponse(id, juste, meta = {}) {
   const etat = lire()
@@ -68,6 +84,10 @@ export function enregistrerReponse(id, juste, meta = {}) {
     domain: meta.domain,
     subdomain: meta.subdomain,
     difficulty: meta.difficulty,
+    // « juste: false » ne dit pas CE QU'ON A REPONDU. Sans ces deux champs,
+    // un export ne permet pas d'analyser les erreurs — seulement de les compter.
+    choix: cles(meta.choix),
+    correct: cles(meta.correct),
   })
 
   const fiche = etat.fiches[id] || { palier: -1, prochaine: null, echecs: 0 }
@@ -176,6 +196,16 @@ export function serieProgression(etat = lire(), taille = 20) {
     points.push(Math.round((100 * juste) / tranche.length))
   }
   return points.slice(-taille)
+}
+
+/**
+ * Remplace integralement la progression stockee. Utilise par l'import, seul
+ * endroit ou l'on ecrit un etat qui ne vient pas d'une reponse donnee ici.
+ */
+export function remplacer(progression) {
+  const etat = { ...vide(), ...progression, version: 1 }
+  ecrire(etat)
+  return etat
 }
 
 export function reinitialiser() {

@@ -86,6 +86,8 @@ export default function Serie({ questions, mode = 'libre', titre, onQuitter }) {
         domain: q.domain,
         subdomain: q.subdomain,
         difficulty: q.difficulty,
+        choix: etat[i].choix,
+        correct: q.correct,
       })
     })
 
@@ -145,6 +147,8 @@ export default function Serie({ questions, mode = 'libre', titre, onQuitter }) {
       domain: q.domain,
       subdomain: q.subdomain,
       difficulty: q.difficulty,
+      choix: r.choix,
+      correct: q.correct,
     })
     setReponses((etat) => {
       const suivant = [...etat]

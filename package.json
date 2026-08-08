@@ -12,6 +12,8 @@
     "corpus": "node aspirer-docs.js",
     "couverture": "node verifier-couverture.js",
     "questions": "node verifier-questions.js",
+    "transfert": "node verifier-transfert.js",
+    "traduire": "node traduire-questions.js",
     "etat": "node etat.js",
     "livrer": "node generer-manifeste.js && node verifier-questions.js --index && node etat.js --ecrire"
   },

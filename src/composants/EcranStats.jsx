@@ -1,6 +1,16 @@
+import { useRef, useState } from 'react'
 import IndicateurCouverture from './IndicateurCouverture.jsx'
-import { DOMAINES } from '../banque.js'
-import { statistiques, serieProgression, examens, reinitialiser } from '../stockage.js'
+import { DOMAINES, metaParId, chargerQuestions } from '../banque.js'
+import { lire, remplacer, statistiques, serieProgression, examens, reinitialiser } from '../stockage.js'
+import {
+  construireExport,
+  fusionner,
+  idsCites,
+  lireExport,
+  lireFichier,
+  nomFichier,
+  telecharger,
+} from '../transfert.js'
 
 /* ============================================================
    STATISTIQUES — ou sont les trous.
@@ -14,6 +24,76 @@ export default function EcranStats({ couverture, onChangement }) {
   const stats = statistiques(undefined, DOMAINES)
   const progression = serieProgression()
   const historiqueExamens = examens()
+
+  // Transfert : un fichier choisi n'est jamais applique tout de suite. Il est
+  // d'abord lu, resume, et pose ici — c'est ce resume qui permet de decider
+  // entre fusionner et ecraser en connaissance de cause.
+  const [enAttente, setEnAttente] = useState(null)
+  const [occupe, setOccupe] = useState(false)
+  const [erreur, setErreur] = useState(null)
+  const [message, setMessage] = useState(null)
+  const champFichier = useRef(null)
+
+  /* L'export enrichit chaque reponse avec le concept et l'enonce de sa
+     question. Ces textes ne sont pas dans le manifeste : il faut charger les
+     fichiers des sous-domaines concernes, d'ou l'attente. */
+  async function exporter() {
+    setErreur(null)
+    setMessage(null)
+    setOccupe(true)
+    try {
+      const etat = lire()
+      const metas = idsCites(etat).map(metaParId).filter(Boolean)
+      const questions = await chargerQuestions(metas)
+      const doc = construireExport(etat, new Map(questions.map((q) => [q.id, q])))
+      telecharger(nomFichier(), JSON.stringify(doc, null, 2))
+      setMessage(`Export téléchargé : ${doc.reponses.length} réponses, ${doc.fiches.length} fiches de révision.`)
+    } catch (e) {
+      setErreur(`L’export a échoué : ${e.message}`)
+    } finally {
+      setOccupe(false)
+    }
+  }
+
+  async function choisirFichier(evenement) {
+    const fichier = evenement.target.files?.[0]
+    // Remis a zero tout de suite : sans cela, rechoisir le meme fichier apres
+    // une annulation ne declencherait aucun evenement.
+    evenement.target.value = ''
+    if (!fichier) return
+    setErreur(null)
+    setMessage(null)
+    try {
+      const lu = lireExport(await lireFichier(fichier))
+      setEnAttente({ ...lu, nom: fichier.name })
+    } catch (e) {
+      setEnAttente(null)
+      setErreur(e.message)
+    }
+  }
+
+  function appliquer(mode) {
+    const actuel = lire()
+    const rien = actuel.reponses.length === 0
+    if (
+      mode === 'remplacement' &&
+      !rien &&
+      !window.confirm(
+        `Remplacer définitivement vos ${actuel.reponses.length} réponses enregistrées par le contenu de ce fichier ?`
+      )
+    ) {
+      return
+    }
+    const resultat = mode === 'fusion' ? fusionner(actuel, enAttente.progression) : enAttente.progression
+    remplacer(resultat)
+    setEnAttente(null)
+    setMessage(
+      mode === 'fusion'
+        ? `Progression fusionnée : ${resultat.reponses.length} réponses au total.`
+        : `Progression remplacée : ${resultat.reponses.length} réponses restaurées.`
+    )
+    onChangement?.()
+  }
 
   return (
     <>
@@ -128,6 +208,85 @@ export default function EcranStats({ couverture, onChangement }) {
         </div>
       )}
 
+      <div className="carte">
+        <div className="carte-titre">
+          <h2>Sauvegarder et partager</h2>
+        </div>
+        <p className="note">
+          Votre progression ne vit que dans ce navigateur : un nettoyage de l’historique l’efface. L’export en fait un
+          fichier JSON — chaque réponse avec son concept, son énoncé, la réponse donnée et la bonne — lisible tel quel,
+          partageable pour analyse, et rechargeable ici même.
+        </p>
+
+        <div className="pile">
+          <button
+            className="bouton bouton-principal"
+            onClick={exporter}
+            disabled={occupe || stats.totalReponses === 0}
+          >
+            {occupe ? 'Préparation du fichier…' : 'Exporter mes résultats'}
+          </button>
+          <button className="bouton" onClick={() => champFichier.current?.click()} disabled={occupe}>
+            Importer
+          </button>
+        </div>
+
+        <input
+          ref={champFichier}
+          type="file"
+          accept="application/json,.json"
+          onChange={choisirFichier}
+          style={{ display: 'none' }}
+        />
+
+        {stats.totalReponses === 0 && (
+          <p className="note" style={{ marginTop: 'var(--e3)', marginBottom: 0 }}>
+            Rien à exporter pour l’instant — l’import, lui, reste disponible.
+          </p>
+        )}
+
+        {erreur && (
+          <div className="avertissement" style={{ marginTop: 'var(--e3)', marginBottom: 0 }}>
+            {erreur}
+          </div>
+        )}
+
+        {enAttente && (
+          <div className="avertissement" style={{ marginTop: 'var(--e3)', marginBottom: 0 }}>
+            <p style={{ marginTop: 0 }}>
+              <strong>{enAttente.nom}</strong>, exporté le {dateLisible(enAttente.genere)} :{' '}
+              {enAttente.resume.questionsRepondues} question
+              {enAttente.resume.questionsRepondues > 1 ? 's' : ''} répondue
+              {enAttente.resume.questionsRepondues > 1 ? 's' : ''}, {enAttente.resume.reponsesTotales} réponse
+              {enAttente.resume.reponsesTotales > 1 ? 's' : ''}, {enAttente.resume.examensPasses} examen
+              {enAttente.resume.examensPasses > 1 ? 's' : ''} blanc
+              {enAttente.resume.examensPasses > 1 ? 's' : ''}.
+            </p>
+            <p>
+              Ce navigateur en compte {stats.totalRepondu} répondue{stats.totalRepondu > 1 ? 's' : ''} pour{' '}
+              {stats.totalReponses} réponse{stats.totalReponses > 1 ? 's' : ''}. Rien n’est encore écrit.
+            </p>
+            <div className="pile">
+              <button className="bouton bouton-principal" onClick={() => appliquer('fusion')}>
+                Fusionner avec ma progression
+              </button>
+              <button className="bouton" onClick={() => appliquer('remplacement')}>
+                Remplacer ma progression
+              </button>
+              <button className="bouton" onClick={() => setEnAttente(null)}>
+                Annuler
+              </button>
+            </div>
+          </div>
+        )}
+
+        {message && (
+          <p className="note" style={{ marginTop: 'var(--e3)', marginBottom: 0 }}>
+            {message}
+          </p>
+        )}
+      </div>
+
       <IndicateurCouverture couverture={couverture} detaille />
 
       <div className="carte">
@@ -152,4 +311,11 @@ export default function EcranStats({ couverture, onChangement }) {
       </div>
     </>
   )
+}
+
+/** « 4 août 2025 » — la date de generation d'un export, telle qu'annoncee. */
+function dateLisible(iso) {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return 'date inconnue'
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 }

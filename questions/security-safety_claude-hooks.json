@@ -18,19 +18,42 @@
       "concept": "Un hook silencieux ne vaut pas approbation de l appel d outil",
       "question_en": "A PreToolUse hook inspects a Bash command, finds nothing dangerous, and exits 0 without printing anything. What happens to the tool call?",
       "options": [
-        { "key": "A", "text_en": "It is approved outright, the silent exit standing in for an allow." },
-        { "key": "B", "text_en": "It is blocked, since a hook must explicitly allow every tool call." },
-        { "key": "C", "text_en": "It continues through the normal permission flow, undecided so far." },
-        { "key": "D", "text_en": "It is retried once, then approved if the hook stays silent again." }
+        {
+          "key": "A",
+          "text_en": "It is approved outright, the silent exit standing in for an allow.",
+          "text_fr": "Il est approuvé d'emblée, la sortie silencieuse valant autorisation."
+        },
+        {
+          "key": "B",
+          "text_en": "It is blocked, since a hook must explicitly allow every tool call.",
+          "text_fr": "Il est bloqué, puisqu'un hook doit autoriser explicitement chaque appel d'outil."
+        },
+        {
+          "key": "C",
+          "text_en": "It continues through the normal permission flow, undecided so far.",
+          "text_fr": "Il poursuit le flux de permission habituel, aucune décision n'ayant été prise."
+        },
+        {
+          "key": "D",
+          "text_en": "It is retried once, then approved if the hook stays silent again.",
+          "text_fr": "Il est réessayé une fois, puis approuvé si le hook reste silencieux à nouveau."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La référence est explicite : « Exit code 0 with no output means the hook has no decision to report, so the tool call continues through the normal permission flow. The hook can deny the call, but staying silent doesn't approve it. » Un hook est donc un droit de veto, pas un droit d'approbation : se taire laisse simplement le flux de permission habituel décider.",
       "distractors_fr": {
         "A": "C'est l'erreur exacte que la doc corrige : « staying silent doesn't approve it ». Un hook muet ne délivre aucune autorisation, il s'efface.",
         "B": "L'inverse du fonctionnement réel : un hook n'a rien à autoriser pour que l'appel se poursuive, il doit au contraire agir pour le refuser.",
         "D": "Aucun mécanisme de réessai n'est attaché au silence d'un hook ; l'appel poursuit son chemin en une seule passe."
       },
-      "doc_ref": "https://code.claude.com/docs/en/hooks"
+      "doc_ref": "https://code.claude.com/docs/en/hooks",
+      "question_fr": "Un hook PreToolUse inspecte une commande Bash, n'y trouve rien de dangereux, et se termine avec le code 0 sans rien afficher. Qu'advient-il de l'appel d'outil ?",
+      "citations_fr": [
+        "Un code de sortie 0 sans aucune sortie signifie que le hook n'a pas de décision à signaler : l'appel d'outil poursuit donc le flux de permission habituel. Le hook peut refuser l'appel, mais se taire ne l'approuve pas."
+      ],
+      "principe_fr": "Un hook est un droit de veto, pas un droit d'approbation, et cette dissymétrie est le cœur du modèle. Le flux de permission garde sa propre logique de décision ; le hook s'y greffe uniquement pour interdire. Agir — sortir en code 2, ou émettre une décision JSON explicite — est donc le seul moyen d'infléchir le résultat ; ne rien faire rend simplement la main au flux normal. C'est le fonctionnement d'une chaîne de middlewares : le silence passe au maillon suivant, il ne conclut jamais."
     },
     {
       "id": "CLH-002",
@@ -43,19 +66,43 @@
       "concept": "Le code de sortie 2 ne bloque rien sur un evenement posterieur a l execution",
       "question_en": "A PostToolUse hook exits with code 2 to try to cancel a file write it judges unsafe. What does that actually achieve?",
       "options": [
-        { "key": "A", "text_en": "The write is rolled back, and Claude is told the hook rejected it." },
-        { "key": "B", "text_en": "Nothing is undone: the tool already ran, and stderr goes to Claude." },
-        { "key": "C", "text_en": "The write is blocked before it happens, as a PreToolUse hook would." },
-        { "key": "D", "text_en": "The whole session stops, which is how exit code 2 behaves anywhere." }
+        {
+          "key": "A",
+          "text_en": "The write is rolled back, and Claude is told the hook rejected it.",
+          "text_fr": "L'écriture est annulée, et Claude est informé que le hook l'a rejetée."
+        },
+        {
+          "key": "B",
+          "text_en": "Nothing is undone: the tool already ran, and stderr goes to Claude.",
+          "text_fr": "Rien n'est défait : l'outil s'est déjà exécuté, et stderr est transmis à Claude."
+        },
+        {
+          "key": "C",
+          "text_en": "The write is blocked before it happens, as a PreToolUse hook would.",
+          "text_fr": "L'écriture est bloquée avant d'avoir lieu, comme le ferait un hook PreToolUse."
+        },
+        {
+          "key": "D",
+          "text_en": "The whole session stops, which is how exit code 2 behaves anywhere.",
+          "text_fr": "Toute la session s'arrête, ce qui serait le comportement du code 2 partout."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le tableau du comportement de la sortie 2 par événement donne, pour `PostToolUse` : bloquant « No », effet « Shows stderr to Claude; the tool already ran ». L'événement se déclenche après une exécution réussie : il sert à commenter ou à corriger ensuite, jamais à empêcher. Pour interdire une écriture, c'est `PreToolUse` qu'il faut câbler.",
       "distractors_fr": {
         "A": "Aucun retour arrière n'existe : Claude Code ne défait pas l'effet d'un outil déjà exécuté sur la foi d'un code de sortie.",
         "C": "C'est justement la différence entre les deux événements : `PreToolUse` s'exécute avant l'appel et peut le bloquer, `PostToolUse` arrive trop tard.",
         "D": "La sortie 2 n'a pas un effet unique : le tableau par événement montre qu'elle bloque pour certains et se contente d'afficher stderr pour d'autres."
       },
-      "doc_ref": "https://code.claude.com/docs/en/hooks"
+      "doc_ref": "https://code.claude.com/docs/en/hooks",
+      "question_fr": "Un hook PostToolUse se termine avec le code 2 pour tenter d'annuler une écriture de fichier qu'il juge dangereuse. Qu'obtient-il réellement ?",
+      "citations_fr": [
+        "Non",
+        "Montre stderr à Claude ; l'outil s'est déjà exécuté"
+      ],
+      "principe_fr": "Le nom de l'événement dit à quel moment de la chaîne le hook s'insère, et ce moment détermine ce qu'il peut faire. Avant l'exécution (PreToolUse), il peut encore empêcher ; après (PostToolUse), il ne peut plus que constater, commenter ou corriger. Un même code de sortie n'a donc pas le même pouvoir selon l'événement : la table du comportement de la sortie 2 est indexée par événement, elle n'est pas globale. Règle générale — pour interdire un effet, câblez le hook sur l'événement qui le précède, jamais sur celui qui le suit."
     },
     {
       "id": "CLH-003",
@@ -68,12 +115,27 @@
       "concept": "Portee reelle d une decision allow renvoyee par un hook PreToolUse",
       "question_en": "A PreToolUse hook returns a permissionDecision of allow to auto-approve a tool call. Select the TWO accurate statements.",
       "options": [
-        { "key": "A", "text_en": "Deny and ask rules are still evaluated, so a deny rule still wins." },
-        { "key": "B", "text_en": "The allow decision overrides any deny rule set for that same tool." },
-        { "key": "C", "text_en": "The reason given for allow is shown to Claude, and not to the user." },
-        { "key": "D", "text_en": "updatedInput replaces the whole input, so unchanged fields go in too." }
+        {
+          "key": "A",
+          "text_en": "Deny and ask rules are still evaluated, so a deny rule still wins."
+        },
+        {
+          "key": "B",
+          "text_en": "The allow decision overrides any deny rule set for that same tool."
+        },
+        {
+          "key": "C",
+          "text_en": "The reason given for allow is shown to Claude, and not to the user."
+        },
+        {
+          "key": "D",
+          "text_en": "updatedInput replaces the whole input, so unchanged fields go in too."
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "Deux garde-fous documentés. Sur `permissionDecision` : « Deny and ask rules are still evaluated regardless of what the hook returns » — un hook ne peut donc pas servir à contourner une règle de refus, ce qui serait une élévation de privilège. Sur `updatedInput` : « Replaces the entire input object, so include unchanged fields alongside modified ones ».",
       "distractors_fr": {
         "B": "C'est précisément ce que la doc exclut : les règles `deny` et `ask` sont évaluées quoi que renvoie le hook, un `allow` ne les court-circuite pas.",
@@ -92,12 +154,26 @@
       "concept": "Emplacement de definition d un hook a partager avec toute l equipe",
       "question_en": "A team wants one hook to ship with the repository, so every contributor gets it on clone. Where should it be defined?",
       "options": [
-        { "key": "A", "text_en": "In ~/.claude/settings.json, which follows the user across projects." },
-        { "key": "B", "text_en": "In .claude/settings.local.json, which Claude Code keeps out of git." },
-        { "key": "C", "text_en": "In managed policy settings, which an administrator alone can push." },
-        { "key": "D", "text_en": "In .claude/settings.json, scoped to the project and committable." }
+        {
+          "key": "A",
+          "text_en": "In ~/.claude/settings.json, which follows the user across projects."
+        },
+        {
+          "key": "B",
+          "text_en": "In .claude/settings.local.json, which Claude Code keeps out of git."
+        },
+        {
+          "key": "C",
+          "text_en": "In managed policy settings, which an administrator alone can push."
+        },
+        {
+          "key": "D",
+          "text_en": "In .claude/settings.json, scoped to the project and committable."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "Le tableau des emplacements de hooks donne pour `.claude/settings.json` une portée « Single project » et un partage « Yes, can be committed to the repo ». C'est le seul emplacement à la fois versionnable et propre au dépôt, donc celui qui suit le clone.",
       "distractors_fr": {
         "A": "Portée « All your projects », partage « No, local to your machine » : le fichier ne quitte pas la machine et ne suivrait aucun clone.",

@@ -179,6 +179,30 @@
   margin-bottom: var(--e4);
 }
 
+/* ------------------------------------------------------------ BILINGUE */
+
+/* Anglais en reference, francais en aide. Des <span> en display:block
+   plutot que des <p> : ce bloc sert aussi dans un <button>, ou seul le
+   contenu phrase est du HTML valide. */
+.bilingue {
+  display: block;
+  /* Les identifiants de l'API sont longs (`cache_creation_input_tokens`) et
+     un mot indivisible plus large que la colonne deborderait sur telephone. */
+  overflow-wrap: break-word;
+}
+
+.bilingue-source {
+  display: block;
+}
+
+.bilingue-traduction {
+  display: block;
+  margin-top: var(--e1);
+  font-size: 0.85em;
+  line-height: 1.45;
+  color: var(--texte-doux);
+}
+
 .options {
   display: flex;
   flex-direction: column;
@@ -196,6 +220,31 @@
   background: var(--surface-haute);
   border: 1px solid var(--ligne);
   line-height: 1.5;
+}
+
+/* min-width:0 : sans cela, la largeur minimale du texte anglais empeche
+   l'element flex de retrecir et la carte deborde a 360 px. */
+.option-corps {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Jamais la couleur seule : chaque option corrigee porte aussi un mot. */
+.option-mention {
+  display: block;
+  margin-top: var(--e1);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+.mention-juste {
+  color: var(--juste);
+}
+
+.mention-fausse {
+  color: var(--faux);
 }
 
 .option-cle {
@@ -274,6 +323,40 @@
   letter-spacing: 0.05em;
   font-size: 0.7rem;
   margin: var(--e4) 0 var(--e2);
+}
+
+.correction p {
+  overflow-wrap: break-word;
+}
+
+/* Traduction d'une citation de doc, glissee juste apres elle dans la prose. */
+.citation-traduction {
+  color: var(--texte-doux);
+  font-size: 0.92em;
+}
+
+/* La regle generale derriere le cas particulier : c'est ce qu'on retient. */
+.principe {
+  margin-top: var(--e4);
+  padding: var(--e3);
+  border-left: 3px solid var(--accent);
+  background: var(--accent-voile);
+  border-radius: 0 var(--r-petit) var(--r-petit) 0;
+}
+
+.principe-titre {
+  color: var(--accent-texte);
+  margin-top: 0;
+}
+
+.principe p:last-child {
+  margin-bottom: 0;
+}
+
+.oubliee {
+  display: flex;
+  gap: var(--e2);
+  align-items: baseline;
 }
 
 .lien-doc {
@@ -450,6 +533,160 @@
   border-top: 2px solid var(--accent);
   border-radius: 2px 2px 0 0;
   min-height: 2px;
+}
+
+/* ------------------------------------------------------------ EXAMEN BLANC */
+
+/* Precedent / Suivant cote a cote : le pouce les atteint tous les deux. */
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--e2);
+  margin-top: var(--e4);
+}
+
+.note-centree {
+  text-align: center;
+  margin-top: var(--e2);
+  margin-bottom: 0;
+}
+
+/* Drapeau « a revoir », dans la barre de progression de la carte. */
+.drapeau {
+  min-height: 32px;
+  padding: 2px var(--e2);
+  border-radius: var(--r-pilule);
+  border: 1px solid var(--ligne);
+  background: var(--surface-haute);
+  color: var(--texte-doux);
+  font-size: 0.72rem;
+}
+
+.drapeau-actif {
+  background: var(--attention-voile);
+  border-color: rgba(255, 196, 107, 0.45);
+  color: var(--attention);
+  font-weight: 650;
+}
+
+/* Grille du recapitulatif : autant de colonnes que la largeur en permet,
+   jamais moins de 40 px par case pour rester touchable. */
+.grille-questions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: var(--e2);
+  margin: var(--e3) 0;
+}
+
+.case-question {
+  position: relative;
+  min-height: 44px;
+  border-radius: var(--r-petit);
+  background: var(--surface-haute);
+  border: 1px solid var(--ligne);
+  color: var(--texte-faible);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.case-repondue {
+  background: var(--accent-voile);
+  border-color: rgba(76, 196, 255, 0.4);
+  color: var(--accent-texte);
+  font-weight: 650;
+}
+
+.case-marquee {
+  border-color: var(--attention);
+}
+
+.case-drapeau {
+  position: absolute;
+  top: 1px;
+  right: 3px;
+  font-size: 0.6rem;
+  color: var(--attention);
+}
+
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e3);
+  font-size: 0.72rem;
+  color: var(--texte-doux);
+}
+
+.legende span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e1);
+}
+
+.pastille-legende {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--ligne);
+}
+
+.pastille-repondue {
+  background: var(--accent-voile);
+  border-color: rgba(76, 196, 255, 0.4);
+}
+
+.pastille-vide {
+  background: var(--surface-haute);
+}
+
+.pastille-marquee {
+  background: var(--surface-haute);
+  border-color: var(--attention);
+}
+
+.carte-confirmation {
+  border-color: rgba(255, 196, 107, 0.35);
+  background: var(--attention-voile);
+}
+
+/* ------------------------------------------------------------ A REVOIR */
+
+/* L'enonce n'est JAMAIS tronque, ni ici ni ailleurs : c'est la question
+   entiere qu'il faut relire pour comprendre ce qu'on a rate. */
+.revoir {
+  margin-top: var(--e3);
+  border: 1px solid var(--ligne);
+  border-radius: var(--r);
+  background: var(--surface-haute);
+}
+
+.revoir > summary {
+  cursor: pointer;
+  padding: var(--e3);
+  list-style-position: outside;
+  overflow-wrap: break-word;
+}
+
+.revoir-enonce {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.revoir-enonce-fr {
+  display: block;
+  margin-top: var(--e1);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--texte-doux);
+}
+
+.revoir-detail {
+  padding: 0 var(--e3) var(--e3);
+}
+
+.revoir-detail .correction {
+  background: var(--surface);
 }
 
 @media (min-width: 640px) {

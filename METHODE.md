@@ -148,3 +148,16 @@ camp au hasard : les deux jeux contiennent du bon. Fusionner en gardant le
 nombre cible, renumeroter les identifiants en continu, puis `npm run livrer` et
 `npm run questions`. C'est ce qui a ete fait pour Software Engineering
 Foundations le 2026-08-03.
+
+---
+
+## Deuxieme banque : Prep Course
+
+Meme regle, fichiers paralleles. Les questions issues du Prep Course officiel
+(source `prepcourse`, vs `doc` pour la banque ci-dessus) vivent dans
+`questions-prepcourse/` (un fichier par topic, pas par sous-domaine), avec leur
+propre `reservations-prepcourse.json` et `ETAT-prepcourse.md`. Ne jamais
+reserver un topic dans `reservations.json` ni un sous-domaine dans
+`reservations-prepcourse.json` : chaque banque a son fichier. Le contenu vient
+de `prepcourse-corpus/`, mais chaque `doc_ref` doit quand meme pointer vers une
+page reelle de `docs-corpus/` qui etaye le fait.

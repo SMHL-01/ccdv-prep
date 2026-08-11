@@ -1,0 +1,369 @@
+{
+  "topic": "m1-1.1-llm-behavior",
+  "source": "prepcourse",
+  "domain": "Model Selection and Optimization",
+  "subdomain": "LLM Fundamentals",
+  "weight": 5.2,
+  "corpus_ref": "prepcourse-corpus/m1-1.1-llm-behavior.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/about-claude/glossary",
+    "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+    "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+    "https://platform.claude.com/docs/en/about-claude/models/migration-guide",
+    "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+  ],
+  "questions": [
+    {
+      "id": "PC-LLB-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Un token est la plus petite unite de texte (mot, sous-mot, caractere, octet)",
+      "question_en": "According to Anthropic's documentation, what is a 'token' in the context of a language model like Claude?",
+      "question_fr": "D'après la documentation Anthropic, qu'est-ce qu'un « token » dans le contexte d'un modèle de langage comme Claude ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A model's smallest processing unit: a word, subword, character, or byte.",
+          "text_fr": "L'unité de traitement la plus petite d'un modèle : un mot, un sous-mot, un caractère ou un octet."
+        },
+        {
+          "key": "B",
+          "text_en": "One complete sentence sent to the model within a single API request.",
+          "text_fr": "Une phrase complète envoyée au modèle au sein d'une seule requête API."
+        },
+        {
+          "key": "C",
+          "text_en": "A block of GPU memory the model reserves for one conversation turn.",
+          "text_fr": "Un bloc de mémoire GPU que le modèle réserve pour un tour de conversation."
+        },
+        {
+          "key": "D",
+          "text_en": "A cryptographic key that authenticates a single Messages API call.",
+          "text_fr": "Une clé cryptographique qui authentifie un seul appel à l'API Messages."
+        }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le glossaire définit les tokens comme « the smallest individual units of a language model, and can correspond to words, subwords, characters, or even bytes ».",
+      "distractors_fr": {
+        "B": "Une phrase n'est pas l'unité de traitement : elle se décompose elle-même en plusieurs tokens.",
+        "C": "Un token n'est pas une unité de mémoire GPU, c'est une unité de texte.",
+        "D": "Une clé d'API authentifie une requête ; ce n'est pas ce qu'est un token."
+      },
+      "principe_fr": "Le modèle ne raisonne jamais en mots complets ni en caractères isolés : la tokenisation est le grain réel sur lequel il opère, ce qui explique pourquoi la longueur en tokens d'un texte ne correspond jamais exactement à sa longueur en mots ou en caractères.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+    },
+    {
+      "id": "PC-LLB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le prompt, l historique, les definitions d outils, les resultats d outils et la sortie comptent tous dans le budget de tokens",
+      "question_en": "A developer estimates the token cost of a request by counting only the words in the user's latest message. Why is this estimate likely to be wrong?",
+      "question_fr": "Un développeur estime le coût en tokens d'une requête en ne comptant que les mots du dernier message utilisateur. Pourquoi cette estimation est-elle probablement fausse ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Because token counts are billed at a flat rate no matter what content is actually sent.",
+          "text_fr": "Parce que le nombre de tokens est facturé à taux fixe quel que soit le contenu envoyé."
+        },
+        {
+          "key": "B",
+          "text_en": "Because the system prompt, history, tool definitions, tool results, and output all count.",
+          "text_fr": "Parce que le prompt système, l'historique, les définitions d'outils, les résultats d'outils et la sortie comptent aussi."
+        },
+        {
+          "key": "C",
+          "text_en": "Because only the words the user types in the current turn are ever tokenized at all.",
+          "text_fr": "Parce que seuls les mots tapés par l'utilisateur dans le tour actuel sont jamais tokenisés."
+        },
+        {
+          "key": "D",
+          "text_en": "Because tool results are compressed before being sent, so they consume no tokens at all.",
+          "text_fr": "Parce que les résultats d'outils sont compressés avant l'envoi et ne consomment donc aucun token."
+        }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc est explicite : « Everything in the request counts toward the context window: the system prompt, every message in messages (including tool results, images, and documents), and your tool definitions. The output Claude generates for the turn... counts too. »",
+      "distractors_fr": {
+        "A": "Le tarif dépend du nombre de tokens effectivement consommés, pas d'un forfait fixe.",
+        "C": "L'historique complet, le prompt système et les outils sont tokenisés, pas seulement le dernier message.",
+        "D": "Les résultats d'outils sont comptés comme le reste du contenu de la requête, pas compressés ni exemptés."
+      },
+      "principe_fr": "Estimer un coût ou une marge de contexte à partir du seul message visible sous-estime systématiquement l'usage réel : tout ce que le modèle lit ou écrit — y compris les pièces invisibles à l'utilisateur comme les définitions d'outils — consomme le même budget de tokens.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+    },
+    {
+      "id": "PC-LLB-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Une entree deja plus grande que la fenetre de contexte est rejetee avant generation (erreur 400)",
+      "question_en": "An application sends a request whose input alone, before any output is generated, already exceeds the model's context window. What happens?",
+      "question_fr": "Une application envoie une requête dont l'entrée seule, avant toute génération de sortie, dépasse déjà la fenêtre de contexte du modèle. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The API silently truncates the oldest messages and processes the rest.",
+          "text_fr": "L'API tronque silencieusement les messages les plus anciens et traite le reste."
+        },
+        {
+          "key": "B",
+          "text_en": "The model generates a partial response and reports a model_context_window_exceeded stop reason.",
+          "text_fr": "Le modèle génère une réponse partielle et signale un stop reason model_context_window_exceeded."
+        },
+        {
+          "key": "C",
+          "text_en": "The API rejects the request with a 400 invalid_request_error before any generation begins.",
+          "text_fr": "L'API rejette la requête avec une erreur 400 invalid_request_error avant que la génération ne commence."
+        },
+        {
+          "key": "D",
+          "text_en": "The request queues until enough context frees up, then it runs as normal.",
+          "text_fr": "La requête est mise en file d'attente jusqu'à ce que du contexte se libère, puis s'exécute normalement."
+        }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc précise : « If the input alone already exceeds the model's context window, the API returns a 400 invalid_request_error (\"prompt is too long\") on every model. »",
+      "distractors_fr": {
+        "A": "L'API ne tronque rien elle-même : c'est à l'application de trimmer ou résumer l'historique avant l'appel.",
+        "B": "Ce stop reason concerne le cas où la génération atteint la limite en cours de route, pas une entrée déjà trop grande au départ.",
+        "D": "Il n'y a pas de mise en file d'attente : la requête est rejetée immédiatement, pas différée."
+      },
+      "principe_fr": "La fenêtre de contexte a deux comportements de dépassement distincts selon le moment où la limite est atteinte : avant génération (rejet immédiat) ou pendant la génération (troncature avec stop reason). Confondre les deux fait manquer le bon code de gestion d'erreur côté application.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+    },
+    {
+      "id": "PC-LLB-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Une entree qui tient au depart peut atteindre la limite pendant la generation -> stop_reason model_context_window_exceeded, pas une erreur",
+      "question_en": "A request's input fits within the context window, but during generation the model reaches the window's ceiling before finishing its answer. On current models, how does the API report this?",
+      "question_fr": "L'entrée d'une requête tient dans la fenêtre de contexte, mais pendant la génération, le modèle atteint le plafond de la fenêtre avant de terminer sa réponse. Sur les modèles actuels, comment l'API signale-t-elle ce cas ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It raises the same 400 invalid_request_error used for an oversized input.",
+          "text_fr": "Elle lève la même erreur 400 invalid_request_error qu'une entrée trop grande."
+        },
+        {
+          "key": "B",
+          "text_en": "It returns a 500 server error immediately, with no output at all.",
+          "text_fr": "Elle renvoie une erreur serveur 500 immédiate, sans aucune sortie."
+        },
+        {
+          "key": "C",
+          "text_en": "It silently drops the response's earliest part rather than its latest.",
+          "text_fr": "Elle supprime silencieusement le début de la réponse plutôt que la fin."
+        },
+        {
+          "key": "D",
+          "text_en": "It returns the output so far, with stop_reason model_context_window_exceeded.",
+          "text_fr": "Elle renvoie la sortie déjà générée, avec un stop_reason model_context_window_exceeded."
+        }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La table des stop reasons est explicite : « model_context_window_exceeded — The response filled the model's context window. Treat the response as truncated. » C'est une réponse valide, pas une erreur.",
+      "distractors_fr": {
+        "A": "L'erreur 400 s'applique à une entrée déjà trop grande dès le départ, pas à une limite atteinte en cours de génération.",
+        "B": "Il n'y a pas d'erreur serveur : la réponse partielle est renvoyée normalement avec un stop_reason spécifique.",
+        "C": "Rien n'est tronqué au début : la réponse s'arrête là où la limite est atteinte, le contenu déjà généré est conservé."
+      },
+      "principe_fr": "Un stop_reason n'est pas toujours un signal d'échec : model_context_window_exceeded décrit une réponse tronquée mais valide, que l'application doit traiter comme telle — par exemple en résumant l'historique — plutôt que comme une erreur à retenter telle quelle.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+    },
+    {
+      "id": "PC-LLB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "La temperature controle le caractere aleatoire des predictions : plus elevee = plus varie, plus basse = plus conservateur",
+      "question_en": "What effect does raising the `temperature` parameter have on Claude's output?",
+      "question_fr": "Quel effet a une augmentation du paramètre `temperature` sur la sortie de Claude ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It increases randomness, producing more varied and creative outputs.",
+          "text_fr": "Elle augmente le caractère aléatoire, produisant des sorties plus variées et plus créatives."
+        },
+        {
+          "key": "B",
+          "text_en": "It increases the maximum number of tokens the model can output.",
+          "text_fr": "Elle augmente le nombre maximal de tokens que le modèle peut produire."
+        },
+        {
+          "key": "C",
+          "text_en": "It increases the size of the context window available to the request.",
+          "text_fr": "Elle augmente la taille de la fenêtre de contexte disponible pour la requête."
+        },
+        {
+          "key": "D",
+          "text_en": "It increases the model's factual accuracy on knowledge questions.",
+          "text_fr": "Elle augmente la précision factuelle du modèle sur les questions de connaissance."
+        }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le glossaire définit : « Temperature is a parameter that controls the randomness of a model's predictions... Higher temperatures lead to more creative and diverse outputs... Lower temperatures result in more conservative and deterministic outputs. »",
+      "distractors_fr": {
+        "B": "max_tokens est un paramètre distinct qui plafonne la longueur de sortie ; temperature ne touche pas cette limite.",
+        "C": "La taille de la fenêtre de contexte dépend du modèle, pas du paramètre temperature.",
+        "D": "La temperature agit sur l'échantillonnage du prochain token, pas sur la justesse factuelle du contenu."
+      },
+      "principe_fr": "La temperature est un curseur d'échantillonnage, pas un curseur de qualité : elle déplace le compromis entre répétabilité et diversité de formulation, sans rendre le contenu ni plus exact ni plus long.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+    },
+    {
+      "id": "PC-LLB-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Meme a temperature=0, la sortie n est pas garantie totalement deterministe d un appel a l autre",
+      "question_en": "A team sets `temperature` to `0` expecting Claude to return byte-for-byte identical output for every identical request, so they can cache and diff responses. Is this expectation correct?",
+      "question_fr": "Une équipe fixe `temperature` à `0` en s'attendant à ce que Claude renvoie une sortie identique au bit près pour chaque requête identique, afin de mettre en cache et de comparer les réponses. Cette attente est-elle correcte ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Yes, temperature 0 is documented as fully deterministic across all Claude models.",
+          "text_fr": "Oui, temperature 0 est documentée comme totalement déterministe sur tous les modèles."
+        },
+        {
+          "key": "B",
+          "text_en": "No, identical inputs may still produce different outputs even at temperature 0.",
+          "text_fr": "Non, même à temperature 0, des entrées identiques peuvent produire des sorties différentes d'un appel à l'autre."
+        },
+        {
+          "key": "C",
+          "text_en": "Yes, but only on Anthropic's first-party API, not through third-party cloud providers.",
+          "text_fr": "Oui, mais seulement sur l'API Claude de premier niveau, pas via les fournisseurs cloud tiers."
+        },
+        {
+          "key": "D",
+          "text_en": "No, because temperature 0 is rejected with an error on all current Claude models.",
+          "text_fr": "Non, car temperature 0 est rejetée avec une erreur sur tous les modèles Claude actuels."
+        }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le glossaire est explicite : « Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls. This applies both to Anthropic's first-party inference service and to inference through third-party cloud providers. »",
+      "distractors_fr": {
+        "A": "La doc dit explicitement le contraire : temperature 0 rend la sortie plus répétable, pas totalement déterministe.",
+        "C": "Le non-déterminisme à temperature 0 s'applique aussi bien au service Anthropic de premier niveau qu'aux fournisseurs cloud tiers.",
+        "D": "Seuls les modèles les plus récents refusent les valeurs non par défaut des paramètres d'échantillonnage (voir le changement documenté pour Sonnet 5) ; ce n'est pas une règle valable pour « tous les modèles actuels », et le sujet ici est le déterminisme, pas le rejet de la valeur."
+      },
+      "principe_fr": "Le non-déterminisme n'est pas un défaut de configuration qu'on peut annuler en poussant un curseur à zéro : c'est une propriété structurelle de l'échantillonnage, à traiter comme une contrainte de conception plutôt que comme un bug à corriger.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
+    },
+    {
+      "id": "PC-LLB-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Les modeles Claude les plus recents n acceptent plus les parametres d echantillonnage non par defaut (temperature, top_p, top_k) : erreur 400",
+      "question_en": "On Claude Sonnet 5, a request sets `temperature` to a non-default value. What happens?",
+      "question_fr": "Sur Claude Sonnet 5, une requête fixe `temperature` à une valeur non par défaut. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The value is accepted and applied exactly as on earlier Sonnet models.",
+          "text_fr": "La valeur est acceptée et appliquée exactement comme sur les modèles Sonnet précédents."
+        },
+        {
+          "key": "B",
+          "text_en": "The value is silently ignored and the model falls back to its default.",
+          "text_fr": "La valeur est ignorée silencieusement et le modèle revient à sa valeur par défaut."
+        },
+        {
+          "key": "C",
+          "text_en": "The API returns a 400 error; sampling is steered through prompting instead.",
+          "text_fr": "L'API renvoie une erreur 400 ; le comportement d'échantillonnage se pilote alors par le prompt."
+        },
+        {
+          "key": "D",
+          "text_en": "The request succeeds but billing switches to the long-context pricing tier.",
+          "text_fr": "La requête réussit mais la facturation bascule sur le palier de tarification longue contexte."
+        }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le guide de migration précise que pour Claude Sonnet 5 par rapport à Sonnet 4.6 : « sampling parameters (temperature, top_p, top_k) set to non-default values are no longer accepted and return a 400 error. »",
+      "distractors_fr": {
+        "A": "C'est l'inverse : ce comportement change justement par rapport aux modèles précédents, qui acceptaient ces valeurs.",
+        "B": "Il n'y a pas d'ignorance silencieuse : l'API renvoie explicitement une erreur 400, pas un repli discret.",
+        "D": "Ce changement concerne les paramètres d'échantillonnage, pas la tarification longue contexte, qui est un mécanisme distinct."
+      },
+      "principe_fr": "Le contrôle fin de l'échantillonnage n'est pas garanti stable d'une génération de modèle à l'autre : sur les modèles les plus récents, cette responsabilité se déplace du paramètre numérique vers l'instruction en langage naturel, ce qui casse silencieusement le code existant si on ne vérifie pas la compatibilité au moment du build.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/migration-guide"
+    },
+    {
+      "id": "PC-LLB-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Tester une fonctionnalite non-deterministe : exact-match pour les taches categoriques, juge LLM pour les sorties ouvertes",
+      "question_en": "A test suite for a Claude-powered feature asserts that the response text matches one exact hard-coded string. Given how sampling works, what is the most likely outcome, and what should the test do instead for open-ended output?",
+      "question_fr": "Une suite de tests pour une fonctionnalité pilotée par Claude vérifie que le texte de la réponse correspond exactement à une chaîne codée en dur. Étant donné le fonctionnement de l'échantillonnage, quel est le résultat le plus probable, et que devrait faire le test à la place pour une sortie ouverte ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The test will always pass, since Claude caches identical wording for repeated prompts.",
+          "text_fr": "Le test réussira toujours, car Claude réutilise un texte mis en cache pour les prompts répétés."
+        },
+        {
+          "key": "B",
+          "text_en": "The test will always fail, since Claude never reuses the exact same wording twice.",
+          "text_fr": "Le test échouera toujours, car Claude ne répète jamais aucune formulation d'un appel à l'autre."
+        },
+        {
+          "key": "C",
+          "text_en": "The test is reliable as written; exact-match suits every kind of Claude output.",
+          "text_fr": "Le test est fiable tel quel ; l'exact-match est la méthode recommandée pour toutes les sorties de Claude."
+        },
+        {
+          "key": "D",
+          "text_en": "The test will be flaky, since wording varies; use an LLM-based grader for open output.",
+          "text_fr": "Le test sera instable, car la formulation varie ; utiliser plutôt un correcteur à base de LLM pour une sortie ouverte."
+        }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc réserve l'exact-match aux tâches à réponses catégoriques et nettes (« clear-cut, categorical answers like sentiment analysis ») et recommande le « LLM-based grading » — « fast and flexible, scalable and suitable for complex judgement » — dès que le jugement porte sur le sens plutôt que sur une structure fixe.",
+      "distractors_fr": {
+        "A": "Il n'y a pas de mise en cache de formulation entre appels : chaque génération est un nouvel échantillonnage.",
+        "B": "Le modèle ne change pas systématiquement chaque mot ; le problème est que la formulation PEUT varier, pas qu'elle varie forcément à chaque fois.",
+        "C": "L'exact-match convient aux réponses catégoriques nettes, pas aux sorties ouvertes où plusieurs formulations sont correctes."
+      },
+      "principe_fr": "Le non-déterminisme de l'échantillonnage déplace la question de test de « le texte est-il identique ? » à « la propriété attendue est-elle respectée ? » : structure, présence d'un champ, ou jugement de sens via un évaluateur calibré plutôt qu'une chaîne figée.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    }
+  ]
+}

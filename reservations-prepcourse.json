@@ -5,7 +5,7 @@
     "marie-line": "Marie-Line (Claude Code, acces direct GitHub -> gros topics)"
   },
   "reservations": {
-    "m1-1.1-llm-behavior": { "qui": "said", "etat": "reserve", "depuis": "2026-08-11", "note": "Topic test de calibrage, valide avec Said avant tout partage du reste avec Marie-Line." },
+    "m1-1.1-llm-behavior": { "qui": "said", "etat": "reserve", "depuis": "2026-08-11", "note": "8 questions test ecrites le 2026-08-11, en attente de validation du style par Said avant tout partage du reste avec Marie-Line. Ne pas marquer 'fait' avant validation." },
     "m1-1.2-models-reasoning": { "etat": "libre" },
     "m1-1.3-prompting-modes": { "etat": "libre" },
     "m1-1.4-technical-substrate": { "etat": "libre" },

@@ -5,8 +5,10 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**0 / 27 topics ecrits** (glossaire `00-glossaire.md` exclu : reference
-transverse, pas un topic a questions).
+**1 / 27 topics en test, 0 valide** (glossaire `00-glossaire.md` exclu :
+reference transverse, pas un topic a questions). m1-1.1-llm-behavior a 8
+questions ecrites en attente de validation du style par Said avant de
+definir le partage du reste avec Marie-Line.
 
 ## Module 1 — Fondations LLM & modeles
 

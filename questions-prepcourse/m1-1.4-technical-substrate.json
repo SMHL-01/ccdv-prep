@@ -1,0 +1,269 @@
+{
+  "topic": "m1-1.4-technical-substrate",
+  "source": "prepcourse",
+  "domain": "Applications and Integration / Model Selection and Optimization",
+  "subdomain": "Claude API Mechanics / Technical Fundamentals",
+  "weight": 12.9,
+  "corpus_ref": "prepcourse-corpus/m1-1.4-technical-substrate.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/overview",
+    "https://platform.claude.com/docs/en/build-with-claude/streaming",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python",
+    "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript",
+    "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  ],
+  "questions": [
+    {
+      "id": "PC-TSB-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le SDK est une couche fine sur la meme API REST ; SDK et REST atteignent le meme modele",
+      "question_en": "According to the technical substrate overview, what is the relationship between an official Anthropic SDK and the underlying REST API?",
+      "question_fr": "D'après la présentation du socle technique, quelle est la relation entre un SDK officiel Anthropic et l'API REST sous-jacente ?",
+      "options": [
+        { "key": "A", "text_en": "The SDK is a thin convenience layer over the same REST API, reaching the same model.", "text_fr": "Le SDK est une fine couche de commodité au-dessus de la même API REST, atteignant le même modèle." },
+        { "key": "B", "text_en": "The SDK replaces the REST API with a faster binary protocol that bypasses HTTP.", "text_fr": "Le SDK remplace l'API REST par un protocole binaire plus rapide qui contourne HTTP." },
+        { "key": "C", "text_en": "The SDK connects to a separate, SDK-only model not reachable over raw REST calls.", "text_fr": "Le SDK se connecte à un modèle séparé, réservé au SDK, inaccessible en appels REST bruts." },
+        { "key": "D", "text_en": "The SDK is only a code generator; it produces REST calls you must send yourself.", "text_fr": "Le SDK n'est qu'un générateur de code ; il produit des appels REST que vous devez envoyer vous-même." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le cours l'énonce sans ambiguïté : « The SDK and raw REST reach the same API and the same model. The SDK saves you from assembling requests by hand. » Le SDK est une commodité, pas un chemin d'accès différent.",
+      "distractors_fr": {
+        "B": "Rien n'indique de protocole binaire ; le SDK reste une couche au-dessus de la même API HTTP.",
+        "C": "SDK et REST atteignent le même modèle ; il n'existe pas de modèle réservé au SDK.",
+        "D": "Le SDK fait plus que générer du code à envoyer soi-même : il gère l'authentification, la construction des requêtes, les retries et le parsing des réponses."
+      },
+      "principe_fr": "Savoir qu'un SDK est une commodité et non un chemin d'accès différent évite de sur-interpréter une différence de comportement observée entre SDK et appels REST bruts.",
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/overview"
+    },
+    {
+      "id": "PC-TSB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Synchrone convient quand personne n attend ; streaming evite l attente ecran vide quand un utilisateur regarde",
+      "question_en": "A backend job processes a report overnight with no one watching, while a chat UI shows Claude's reply as the user waits. Per the documented tradeoff between synchronous and streaming requests, which pattern fits which case?",
+      "question_fr": "Un job backend traite un rapport de nuit sans personne pour regarder, tandis qu'une interface de chat affiche la réponse de Claude pendant que l'utilisateur attend. D'après l'arbitrage documenté entre requêtes synchrones et streaming, quel motif convient à quel cas ?",
+      "options": [
+        { "key": "A", "text_en": "Streaming for both cases, since streaming is strictly faster than synchronous requests.", "text_fr": "Streaming pour les deux cas, le streaming étant strictement plus rapide qu'une requête synchrone." },
+        { "key": "B", "text_en": "Synchronous for both cases, since streaming only works for image and audio generation.", "text_fr": "Synchrone pour les deux cas, le streaming ne fonctionnant que pour la génération d'image et d'audio." },
+        { "key": "C", "text_en": "Synchronous for the backend job, streaming for the chat UI: only the chat has someone waiting.", "text_fr": "Synchrone pour le job backend, streaming pour l'interface de chat : seul le chat a quelqu'un qui attend." },
+        { "key": "D", "text_en": "Streaming for the backend job, synchronous for the chat UI, to avoid a blank-screen wait.", "text_fr": "Streaming pour le job backend, synchrone pour l'interface de chat, pour éviter une attente écran vide." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le cours pose exactement cette distinction : le synchrone « is fine for short responses and backend jobs where no one is waiting », tandis que le streaming s'impose « when a response is long or a user is watching » pour éviter l'attente écran vide.",
+      "distractors_fr": {
+        "A": "Le streaming ne réduit pas le temps total de génération, il change le moment où le contenu devient visible ; ce n'est pas « plus rapide » au sens strict.",
+        "B": "Le streaming s'applique à tout type de contenu textuel, outil ou raisonnement via SSE, pas seulement à l'image ou l'audio.",
+        "D": "C'est l'inverse exact de la correspondance documentée cas → motif."
+      },
+      "principe_fr": "Le choix entre synchrone et streaming dépend de qui attend la réponse, pas d'une supériorité générale d'un mode sur l'autre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+    },
+    {
+      "id": "PC-TSB-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le streaming passe par des server-sent events sur la meme connexion HTTP ; le code reassemble les morceaux",
+      "question_en": "Per the technical substrate overview, how does Claude deliver a streamed response to your application?",
+      "question_fr": "D'après la présentation du socle technique, comment Claude délivre-t-il une réponse en streaming à votre application ?",
+      "options": [
+        { "key": "A", "text_en": "Through a separate WebSocket connection opened just for that one streamed request.", "text_fr": "Via une connexion WebSocket séparée, ouverte spécialement pour cette requête en streaming." },
+        { "key": "B", "text_en": "By opening a new short-lived connection for every chunk, closing it after each piece.", "text_fr": "En ouvrant une nouvelle connexion de courte durée pour chaque fragment, refermée après chaque morceau." },
+        { "key": "C", "text_en": "Through a second polling endpoint your code must call repeatedly for new pieces.", "text_fr": "Via un second point de terminaison de sondage que votre code doit appeler à répétition pour obtenir de nouveaux morceaux." },
+        { "key": "D", "text_en": "Over the same HTTP connection via server-sent events; your code reassembles the pieces.", "text_fr": "Sur la même connexion HTTP via des server-sent events ; votre code réassemble les morceaux." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le cours est explicite : « Claude exposes streaming over the same HTTP connection using server-sent events... your code reassembles the pieces into the final message. »",
+      "distractors_fr": {
+        "A": "Pas de connexion WebSocket séparée documentée ; c'est la même connexion HTTP qui sert au streaming.",
+        "B": "Aucun mécanisme de reconnexion par fragment n'est documenté ; la connexion HTTP reste ouverte pour toute la durée du streaming.",
+        "C": "Le streaming pousse les morceaux via SSE sur la connexion ouverte ; il n'y a pas de second point de terminaison à sonder."
+      },
+      "principe_fr": "Le streaming reste un seul appel HTTP de longue durée, pas un canal ou un protocole à part : ce qui change, c'est le découpage de la réponse, pas le transport.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+    },
+    {
+      "id": "PC-TSB-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le SDK TypeScript n a pas de classe async separee : le client standard est deja base sur les Promise",
+      "question_en": "A Python codebase uses `AsyncAnthropic` from the `anthropic` package. A teammate porting the same call to TypeScript looks for an equivalent `AsyncAnthropic` class in the SDK. What will they find?",
+      "question_fr": "Un code Python utilise `AsyncAnthropic` du paquet `anthropic`. Un collègue qui porte le même appel en TypeScript cherche une classe `AsyncAnthropic` équivalente dans le SDK. Que va-t-il trouver ?",
+      "options": [
+        { "key": "A", "text_en": "The exact same class name `AsyncAnthropic`, imported the same way as in Python.", "text_fr": "Exactement le même nom de classe `AsyncAnthropic`, importée de la même façon qu'en Python." },
+        { "key": "B", "text_en": "No separate async client: the standard client is Promise-based, awaited directly.", "text_fr": "Aucun client async séparé : le client standard est déjà basé sur les Promise, à attendre directement avec `await`." },
+        { "key": "C", "text_en": "A class called `AnthropicAsync`, functionally identical with a different import path.", "text_fr": "Une classe nommée `AnthropicAsync`, fonctionnellement identique mais avec un chemin d'import différent." },
+        { "key": "D", "text_en": "Nothing: the TypeScript SDK provides no way to make non-blocking calls at all.", "text_fr": "Rien : le SDK TypeScript n'offre aucun moyen de faire des appels non bloquants." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le cours le précise : « In the TypeScript SDK the standard Anthropic client is Promise-based, so you await calls directly. There is no separate async client class. »",
+      "distractors_fr": {
+        "A": "Le nommage Python ne se retrouve pas côté TypeScript ; aucune classe `AsyncAnthropic` n'existe dans ce SDK.",
+        "C": "Nom inventé, absent de la documentation du SDK TypeScript.",
+        "D": "Contredit la doc : le client standard est justement déjà « awaitable », donc non bloquant par défaut."
+      },
+      "principe_fr": "Un même concept (appel non bloquant) se traduit différemment selon le langage : Python isole un client async dédié, TypeScript intègre l'attente native dans son client standard.",
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript"
+    },
+    {
+      "id": "PC-TSB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le client async libere le thread appelant pour faire autre chose, mais la reponse revient toujours en temps reel, contrairement au batch",
+      "question_en": "A developer switches their code from the synchronous client to `AsyncAnthropic`, expecting responses to now return before the model finishes generating, similar to submitting a batch job. Is that expectation accurate?",
+      "question_fr": "Un développeur remplace le client synchrone par `AsyncAnthropic`, en s'attendant à ce que les réponses reviennent désormais avant que le modèle ait fini de générer, comme pour une soumission de job en batch. Cette attente est-elle exacte ?",
+      "options": [
+        { "key": "A", "text_en": "No: the call still returns in real time; async/await only frees the calling thread meanwhile.", "text_fr": "Non : l'appel revient toujours en temps réel ; `async`/`await` libère seulement le thread appelant pendant l'attente." },
+        { "key": "B", "text_en": "Yes: `AsyncAnthropic` is simply a rebranded alias for submitting a Message Batch under the hood.", "text_fr": "Oui : `AsyncAnthropic` n'est qu'un alias renommé qui soumet en réalité un Message Batch en coulisses." },
+        { "key": "C", "text_en": "Yes: async requests always return an immediate placeholder, filled in later via a webhook.", "text_fr": "Oui : les requêtes async renvoient toujours un espace réservé immédiat, rempli plus tard via un webhook." },
+        { "key": "D", "text_en": "No: async/await actually slows down every request compared to the synchronous client.", "text_fr": "Non : `async`/`await` ralentit en réalité chaque requête par rapport au client synchrone." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le cours distingue précisément les deux patterns : « Either way the request still returns in real time, but your application can handle other work while it waits. This is the right pattern when you need concurrency without blocking. » — à l'opposé du batch, présenté comme « a separate pattern for bulk offline workloads. »",
+      "distractors_fr": {
+        "B": "Confond deux patterns distincts et documentés séparément : le client async et la Message Batches API ne sont pas la même chose.",
+        "C": "Aucun mécanisme de webhook ou d'espace réservé n'est décrit pour le client async ; la réponse revient directement à l'appel `await`.",
+        "D": "`async`/`await` ne ralentit pas l'appel lui-même ; il change seulement ce que le thread appelant peut faire pendant l'attente."
+      },
+      "principe_fr": "`async`/`await` change ce que le thread appelant peut faire pendant l'attente, pas le moment où la réponse arrive ; confondre ce levier avec le pattern batch, qui lui diffère réellement le retour, est un piège fréquent.",
+      "doc_ref": "https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python"
+    },
+    {
+      "id": "PC-TSB-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Choisir la Message Batches API quand personne n attend et que le cout par token importe plus que le delai",
+      "question_en": "A pipeline scores 50,000 support tickets overnight; no user is waiting, and minimizing per-token cost matters more than turnaround time. Per the documented guidance on high-volume patterns, which should it use?",
+      "question_fr": "Un pipeline note 50 000 tickets support pendant la nuit ; personne n'attend, et minimiser le coût par token compte plus que le délai. D'après les conseils documentés sur les motifs à fort volume, lequel utiliser ?",
+      "options": [
+        { "key": "A", "text_en": "The async client (`AsyncAnthropic`), since any high-volume job should avoid the synchronous client.", "text_fr": "Le client async (`AsyncAnthropic`), tout job à fort volume devant éviter le client synchrone." },
+        { "key": "B", "text_en": "The streaming API, since streaming is the documented pattern for processing large batches of data.", "text_fr": "L'API de streaming, le streaming étant le motif documenté pour traiter de gros lots de données." },
+        { "key": "C", "text_en": "The synchronous client called in a tight loop, since it needs no extra setup or polling.", "text_fr": "Le client synchrone appelé en boucle serrée, car il ne demande aucune configuration ni sondage supplémentaire." },
+        { "key": "D", "text_en": "The Message Batches API, which trades latency for a lower per-token cost on bulk, offline work.", "text_fr": "La Message Batches API, qui échange du délai contre un coût par token réduit sur du travail en masse, hors ligne." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le cours réserve exactement ce cas au batch : « This suits offline pipelines, evaluation runs, and bulk jobs where no user is waiting on each result and cost matters more than turnaround time. »",
+      "distractors_fr": {
+        "A": "Le client async répond à un besoin de concurrence sans blocage, pas à la réduction de coût documentée spécifiquement pour le batch.",
+        "B": "Le streaming sert l'affichage incrémental en temps réel, pas le traitement en masse optimisé en coût.",
+        "C": "Fonctionnerait mais ignore le motif à coût réduit et débit plus élevé que le cours recommande précisément pour ce cas."
+      },
+      "principe_fr": "Le motif à choisir dépend du couple attente-utilisateur / sensibilité au coût, pas du seul volume : deux patterns à fort volume (async, batch) résolvent des problèmes différents.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "PC-TSB-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La Message Batches API reduit le cout par token d environ 50% par rapport aux requetes synchrones",
+      "question_en": "Per Anthropic's documentation, roughly how much does the Message Batches API cut per-token cost compared to synchronous requests?",
+      "question_fr": "D'après la documentation d'Anthropic, de combien environ l'API Message Batches réduit-elle le coût par token par rapport aux requêtes synchrones ?",
+      "options": [
+        { "key": "A", "text_en": "About 5%, a marginal saving not worth the added complexity.", "text_fr": "Environ 5 %, une économie marginale qui ne justifie pas la complexité ajoutée." },
+        { "key": "B", "text_en": "About 50%, per the documented batch-processing figure.", "text_fr": "Environ 50 %, le chiffre documenté pour le traitement par lots." },
+        { "key": "C", "text_en": "About 90%, since batches skip model inference almost entirely.", "text_fr": "Environ 90 %, les batches contournant presque entièrement l'inférence du modèle." },
+        { "key": "D", "text_en": "No documented reduction; batching only changes response latency.", "text_fr": "Aucune réduction documentée ; le batch ne change que la latence de réponse." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc l'annonce dès l'introduction : « Process large volumes of Messages requests asynchronously with the Message Batches API, cutting costs by 50% and increasing throughput. »",
+      "distractors_fr": {
+        "A": "Sous-estime largement le chiffre documenté d'un ordre de grandeur.",
+        "C": "Surestime le chiffre documenté ; rien n'indique que l'inférence soit contournée.",
+        "D": "Contredit la doc : la réduction de coût est justement l'argument central de la Message Batches API, pas seulement un effet de latence."
+      },
+      "principe_fr": "Un chiffre documenté (ici 50 %) donne un repère concret pour arbitrer entre coût et délai, plutôt qu'une impression vague de « moins cher ».",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "PC-TSB-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "La Batch API renvoie un identifiant a soumettre puis se sonde a part ; elle ne renvoie pas les resultats dans le meme appel",
+      "question_en": "A developer calls the Message Batches API expecting the response body of that same POST request to contain the finished results, just delayed. Per the documented workflow, is that how it works?",
+      "question_fr": "Un développeur appelle l'API Message Batches en s'attendant à ce que le corps de réponse de cette même requête POST contienne directement les résultats terminés, simplement avec un délai. D'après le fonctionnement documenté, est-ce ainsi que ça se passe ?",
+      "options": [
+        { "key": "A", "text_en": "Yes: the connection stays open until processing ends, then results arrive in that response.", "text_fr": "Oui : la connexion reste ouverte jusqu'à la fin du traitement, puis les résultats arrivent dans cette même réponse." },
+        { "key": "B", "text_en": "Yes, but only for batches under 100 requests; larger batches require polling instead.", "text_fr": "Oui, mais seulement pour les batches de moins de 100 requêtes ; les plus gros exigent un sondage." },
+        { "key": "C", "text_en": "No: the call returns a batch ID; the app polls for status and fetches results separately.", "text_fr": "Non : l'appel renvoie un identifiant de batch ; l'application sonde le statut puis récupère les résultats séparément." },
+        { "key": "D", "text_en": "No: results are pushed to a webhook URL configured once at the API-key level.", "text_fr": "Non : les résultats sont poussés vers une URL de webhook configurée une fois au niveau de la clé API." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le cours décrit ce flux précis : « You submit a large set of requests in one call, receive an identifier, and poll for completion. » L'appel initial ne reste pas ouvert jusqu'au résultat.",
+      "distractors_fr": {
+        "A": "Contredit le design asynchrone et hors ligne du batch ; l'appel ne reste pas ouvert jusqu'à 24 heures.",
+        "B": "Aucun seuil de taille documenté ne fait basculer entre réponse directe et sondage ; le motif identifiant + sondage s'applique uniformément.",
+        "D": "Aucun mécanisme de webhook n'est documenté pour la Message Batches API dans ce cours."
+      },
+      "principe_fr": "Un pattern asynchrone se reconnaît à sa forme d'API : un appel court qui renvoie un identifiant, suivi d'un sondage séparé, pas un appel unique qui reste ouvert jusqu'au résultat.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "PC-TSB-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "weight": 6.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "24 heures est un plafond avant expiration, pas la duree typique d un batch ; la plupart finissent bien plus vite",
+      "question_en": "A team reads that Message Batches \"can take up to 24 hours to complete\" and designs their pipeline assuming every batch will take close to a full day. Per the documented behavior, is that assumption well calibrated?",
+      "question_fr": "Une équipe lit que les Message Batches « peuvent prendre jusqu'à 24 heures » et conçoit son pipeline en supposant que chaque batch prendra environ une journée complète. D'après le comportement documenté, cette hypothèse est-elle bien calibrée ?",
+      "options": [
+        { "key": "A", "text_en": "No: 24 hours is an upper ceiling before batches expire; most finish in under an hour.", "text_fr": "Non : 24 heures est un plafond avant expiration ; la plupart des batches se terminent en moins d'une heure." },
+        { "key": "B", "text_en": "Yes: batches are deliberately throttled to always land close to the 24-hour mark.", "text_fr": "Oui : les batches sont délibérément régulés pour toujours se rapprocher des 24 heures." },
+        { "key": "C", "text_en": "No: batches always complete within seconds; the 24-hour figure is unrelated to processing.", "text_fr": "Non : les batches se terminent toujours en quelques secondes ; le chiffre de 24 heures est sans rapport avec le traitement." },
+        { "key": "D", "text_en": "Yes: 24 hours is the guaranteed minimum processing time documented for every batch.", "text_fr": "Oui : 24 heures est le temps de traitement minimum garanti et documenté pour chaque batch." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc précise les deux bornes : « most batches finishing in less than 1 hour... Batches expire if processing does not complete within 24 hours. » Les 24 heures sont un plafond avant expiration, pas une durée typique.",
+      "distractors_fr": {
+        "B": "Aucun mécanisme de régulation visant à approcher systématiquement le plafond n'est documenté.",
+        "C": "Surcorrige dans l'autre sens : la doc parle de « moins d'une heure » pour la plupart des cas, pas de quelques secondes.",
+        "D": "C'est l'inverse d'un minimum garanti : 24 heures est un maximum avant expiration, pas un plancher."
+      },
+      "principe_fr": "« Jusqu'à X » documente un plafond de pire cas, pas une estimation typique ; concevoir un pipeline sur l'hypothèse du pire cas systématique surestime la latence réelle.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    }
+  ]
+}

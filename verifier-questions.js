@@ -3,15 +3,25 @@
 /**
  * verifier-questions.js
  *
- * Controle qualite de la banque de questions, et tenue de l index des concepts.
- * Sur 400 questions, la repetition et la derive des repartitions sont les deux
- * risques principaux : ce script les rend visibles apres chaque sous-domaine.
+ * Controle qualite des deux banques de questions (doc et prepcourse), et
+ * tenue de l index des concepts de la banque doc. Sur plusieurs centaines de
+ * questions, la repetition et la derive des repartitions sont les deux
+ * risques principaux : ce script les rend visibles apres chaque sous-domaine
+ * ou topic.
  *
- *   node verifier-questions.js                tous les fichiers de questions/
- *   node verifier-questions.js <fichier.json> un seul fichier
- *   node verifier-questions.js --index        reecrit questions/_index-concepts.json
+ *   node verifier-questions.js                tous les fichiers, les deux banques
+ *   node verifier-questions.js <fichier.json> un seul fichier (cherche dans les deux)
+ *   node verifier-questions.js --index        reecrit questions/_index-concepts.json (banque doc)
  *
- * Ce qui est verifie :
+ * Les deux banques sont verifiees avec les memes regles mais rapportees et
+ * plafonnees SEPAREMENT (jamais melangees dans un seul total) : la banque doc
+ * (questions/, un fichier par sous-domaine) et la banque prepcourse
+ * (questions-prepcourse/, un fichier par topic, champ "source": "prepcourse").
+ * Les deux partagent le meme corpus de sourcage, docs-corpus/ : un doc_ref
+ * prepcourse doit exister dans docs-corpus/ tout comme un doc_ref doc, meme
+ * si le contenu de la question vient de prepcourse-corpus/.
+ *
+ * Ce qui est verifie, par banque :
  *   - schema de chaque question et validite du JSON
  *   - repartition par nature (cible 65 / 30 / 5) et par difficulte (25 / 50 / 25)
  *   - plafond strict de 5 % de "factual_magnitude", evalue SUR LA BANQUE
@@ -21,17 +31,26 @@
  *   - part de questions a reponses multiples (cible 20 %)
  *   - longueur des options : la bonne reponse ne doit pas etre reperable
  *   - explication presente pour CHAQUE mauvaise option
- *   - doc_ref reellement present dans docs-corpus/
+ *   - doc_ref reellement present dans docs-corpus/ (corpus partage)
  *   - plafond de 8 questions sur les API beta
- *   - doublons de concept, dans le fichier et vis-a-vis des autres fichiers
+ *   - doublons d identifiant et de concept, dans le fichier et vis-a-vis des
+ *     autres fichiers DE LA MEME BANQUE -- pas de comparaison inter-banques :
+ *     les deux corpus abordent parfois les memes faits sous un angle
+ *     different (cours vs doc), ce n est pas une repetition a signaler.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const DIR_QUESTIONS = path.join(__dirname, 'questions');
+const DIR_QUESTIONS_PREPCOURSE = path.join(__dirname, 'questions-prepcourse');
 const DIR_CORPUS = path.join(__dirname, 'docs-corpus');
 const FICHIER_INDEX = path.join(DIR_QUESTIONS, '_index-concepts.json');
+
+const BANQUES = [
+  { nom: 'doc', dir: DIR_QUESTIONS, label: 'banque doc' },
+  { nom: 'prepcourse', dir: DIR_QUESTIONS_PREPCOURSE, label: 'banque prepcourse' },
+];
 
 const CIBLES_NATURE = { judgment: 65, factual_semantic: 30, factual_magnitude: 5 };
 const PLAFOND_MAGNITUDE = 5; // pour cent, strict
@@ -60,14 +79,14 @@ function chargerUrlsCorpus() {
 
 // --- Chargement -------------------------------------------------------------
 
-function fichiersQuestions(filtre) {
-  if (!fs.existsSync(DIR_QUESTIONS)) return [];
+function fichiersQuestions(dir, filtre) {
+  if (!fs.existsSync(dir)) return [];
   return fs
-    .readdirSync(DIR_QUESTIONS)
+    .readdirSync(dir)
     .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
     .filter((f) => !filtre || f === path.basename(filtre))
     .sort()
-    .map((f) => path.join(DIR_QUESTIONS, f));
+    .map((f) => path.join(dir, f));
 }
 
 function charger(chemin) {
@@ -161,18 +180,10 @@ function analyser(questions) {
 
 // --- Programme principal ----------------------------------------------------
 
-function main() {
-  const args = process.argv.slice(2);
-  const reecrireIndex = args.includes('--index');
-  const filtre = args.find((a) => a.endsWith('.json'));
+function traiterBanque(banque, filtre, anomaliesGlobales) {
+  const fichiers = fichiersQuestions(banque.dir, filtre);
+  if (!fichiers.length) return null;
 
-  const fichiers = fichiersQuestions(filtre);
-  if (!fichiers.length) {
-    console.error('Aucun fichier de questions dans questions/');
-    process.exit(1);
-  }
-
-  const anomaliesGlobales = [];
   const index = [];
   const toutes = [];
 
@@ -195,7 +206,7 @@ function main() {
     }
 
     const a = analyser(questions);
-    console.log(`\n=== ${nom}`);
+    console.log(`\n=== [${banque.nom}] ${nom}`);
     console.log(`    ${meta.subdomain || '?'} — poids ${meta.weight || '?'} % — ${questions.length} questions` + (meta.target_questions ? ` (cible ${meta.target_questions})` : ''));
     console.log('\n  Nature :');
     for (const n of NATURES) console.log(ligneRepartition(n, a.parNature[n] || 0, questions.length, CIBLES_NATURE[n]));
@@ -217,66 +228,87 @@ function main() {
     if (anomalies.length) {
       console.log(`\n  ${anomalies.length} anomalie(s) :`);
       for (const x of anomalies) console.log('    ! ' + x);
-      anomaliesGlobales.push(...anomalies.map((x) => `${nom} : ${x}`));
+      anomaliesGlobales.push(...anomalies.map((x) => `[${banque.nom}] ${nom} : ${x}`));
     } else {
       console.log('\n  Aucune anomalie.');
     }
   }
 
-  // --- Synthese sur toute la banque ---
-  if (fichiers.length > 1 || toutes.length) {
-    const a = analyser(toutes);
-    console.log('\n' + '='.repeat(64));
-    console.log(`BANQUE COMPLETE : ${toutes.length} questions, ${fichiers.length} fichier(s)`);
-    console.log('\n  Nature :');
-    for (const n of NATURES) console.log(ligneRepartition(n, a.parNature[n] || 0, toutes.length, CIBLES_NATURE[n]));
-    console.log('\n  Difficulte :');
-    for (const d of DIFFICULTES) console.log(ligneRepartition(d, a.parDifficulte[d] || 0, toutes.length, CIBLES_DIFFICULTE[d]));
-    const pctMagnitude = pourcent(a.parNature.factual_magnitude || 0, toutes.length);
-    console.log(`\n  factual_magnitude : ${a.parNature.factual_magnitude || 0} questions, ${pctMagnitude.toFixed(1)} % (plafond ${PLAFOND_MAGNITUDE} % sur la banque)`);
-    if (pctMagnitude > PLAFOND_MAGNITUDE) {
-      anomaliesGlobales.push(`plafond depasse : ${pctMagnitude.toFixed(1)} % de factual_magnitude (max ${PLAFOND_MAGNITUDE} %)`);
-    }
+  // --- Synthese sur cette banque, jamais melangee avec l autre ---
+  const a = analyser(toutes);
+  console.log('\n' + '='.repeat(64));
+  console.log(`${banque.label.toUpperCase()} : ${toutes.length} questions, ${fichiers.length} fichier(s)`);
+  console.log('\n  Nature :');
+  for (const n of NATURES) console.log(ligneRepartition(n, a.parNature[n] || 0, toutes.length, CIBLES_NATURE[n]));
+  console.log('\n  Difficulte :');
+  for (const d of DIFFICULTES) console.log(ligneRepartition(d, a.parDifficulte[d] || 0, toutes.length, CIBLES_DIFFICULTE[d]));
+  const pctMagnitude = pourcent(a.parNature.factual_magnitude || 0, toutes.length);
+  console.log(`\n  factual_magnitude : ${a.parNature.factual_magnitude || 0} questions, ${pctMagnitude.toFixed(1)} % (plafond ${PLAFOND_MAGNITUDE} % sur ${banque.label})`);
+  if (pctMagnitude > PLAFOND_MAGNITUDE) {
+    anomaliesGlobales.push(`[${banque.nom}] plafond depasse : ${pctMagnitude.toFixed(1)} % de factual_magnitude (max ${PLAFOND_MAGNITUDE} %)`);
+  }
 
-    console.log(`\n  Questions portant sur une API beta : ${a.beta} (plafond ${PLAFOND_BETA})`);
-    if (a.beta > PLAFOND_BETA) anomaliesGlobales.push(`plafond beta depasse : ${a.beta} questions (max ${PLAFOND_BETA})`);
+  console.log(`\n  Questions portant sur une API beta : ${a.beta} (plafond ${PLAFOND_BETA})`);
+  if (a.beta > PLAFOND_BETA) anomaliesGlobales.push(`[${banque.nom}] plafond beta depasse : ${a.beta} questions (max ${PLAFOND_BETA})`);
 
-    // Identifiants dupliques entre fichiers. Le controle par fichier ne suffit
-    // pas : deux sous-domaines dont les initiales se rejoignent produisent le
-    // meme prefixe, et l'application indexe ses questions par identifiant --
-    // une collision y fait disparaitre une question au profit de son homonyme,
-    // et confond leur progression en repetition espacee.
-    const parId = new Map();
-    for (const e of index) {
-      if (!parId.has(e.id)) parId.set(e.id, []);
-      parId.get(e.id).push(e.fichier);
-    }
-    const idsEnDouble = [...parId.entries()].filter(([, f]) => f.length > 1);
-    if (idsEnDouble.length) {
-      console.log(`\n  ${idsEnDouble.length} identifiant(s) partage(s) par plusieurs fichiers :`);
-      for (const [id, f] of idsEnDouble) console.log(`    ! ${id} — ${[...new Set(f)].join(', ')}`);
-      anomaliesGlobales.push(`${idsEnDouble.length} identifiant(s) en double entre fichiers`);
-    }
+  // Identifiants dupliques entre fichiers DE CETTE BANQUE. Le controle par
+  // fichier ne suffit pas : deux sous-domaines/topics dont les initiales se
+  // rejoignent produisent le meme prefixe, et l'application indexe ses
+  // questions par identifiant -- une collision y fait disparaitre une
+  // question au profit de son homonyme, et confond leur progression en
+  // repetition espacee.
+  const parId = new Map();
+  for (const e of index) {
+    if (!parId.has(e.id)) parId.set(e.id, []);
+    parId.get(e.id).push(e.fichier);
+  }
+  const idsEnDouble = [...parId.entries()].filter(([, f]) => f.length > 1);
+  if (idsEnDouble.length) {
+    console.log(`\n  ${idsEnDouble.length} identifiant(s) partage(s) par plusieurs fichiers :`);
+    for (const [id, f] of idsEnDouble) console.log(`    ! ${id} — ${[...new Set(f)].join(', ')}`);
+    anomaliesGlobales.push(`[${banque.nom}] ${idsEnDouble.length} identifiant(s) en double entre fichiers`);
+  }
 
-    // Doublons de concept entre fichiers.
-    const parConcept = new Map();
-    for (const e of index) {
-      const cle = (e.concept || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-      if (!cle) continue;
-      if (!parConcept.has(cle)) parConcept.set(cle, []);
-      parConcept.get(cle).push(e.id);
-    }
-    const doublons = [...parConcept.entries()].filter(([, ids]) => ids.length > 1);
-    if (doublons.length) {
-      console.log(`\n  ${doublons.length} concept(s) teste(s) plus d une fois :`);
-      for (const [c, ids] of doublons) console.log(`    ! ${ids.join(', ')} — ${c}`);
-      anomaliesGlobales.push(`${doublons.length} concept(s) en double`);
-    }
+  // Doublons de concept entre fichiers DE CETTE BANQUE. Pas de comparaison
+  // avec l autre banque : voir la note en tete de fichier.
+  const parConcept = new Map();
+  for (const e of index) {
+    const cle = (e.concept || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    if (!cle) continue;
+    if (!parConcept.has(cle)) parConcept.set(cle, []);
+    parConcept.get(cle).push(e.id);
+  }
+  const doublons = [...parConcept.entries()].filter(([, ids]) => ids.length > 1);
+  if (doublons.length) {
+    console.log(`\n  ${doublons.length} concept(s) teste(s) plus d une fois :`);
+    for (const [c, ids] of doublons) console.log(`    ! ${ids.join(', ')} — ${c}`);
+    anomaliesGlobales.push(`[${banque.nom}] ${doublons.length} concept(s) en double`);
+  }
+
+  return { fichiers, index, toutes };
+}
+
+function main() {
+  const args = process.argv.slice(2);
+  const reecrireIndex = args.includes('--index');
+  const filtre = args.find((a) => a.endsWith('.json'));
+
+  const anomaliesGlobales = [];
+  const resultats = {};
+  for (const banque of BANQUES) {
+    resultats[banque.nom] = traiterBanque(banque, filtre, anomaliesGlobales);
+  }
+
+  const banquesTraitees = BANQUES.filter((b) => resultats[b.nom]);
+  if (!banquesTraitees.length) {
+    console.error(`Aucun fichier de questions dans ${BANQUES.map((b) => path.relative(__dirname, b.dir) + '/').join(' ni ')}`);
+    process.exit(1);
   }
 
   if (reecrireIndex) {
-    fs.writeFileSync(FICHIER_INDEX, JSON.stringify(index, null, 2), 'utf8');
-    console.log(`\n  Index des concepts reecrit : ${index.length} entrees -> questions/_index-concepts.json`);
+    const indexDoc = resultats.doc ? resultats.doc.index : [];
+    fs.writeFileSync(FICHIER_INDEX, JSON.stringify(indexDoc, null, 2), 'utf8');
+    console.log(`\n  Index des concepts reecrit : ${indexDoc.length} entrees -> questions/_index-concepts.json (banque doc)`);
   }
 
   console.log('');

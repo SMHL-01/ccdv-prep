@@ -1,0 +1,268 @@
+{
+  "topic": "m1-1.2-models-reasoning",
+  "source": "prepcourse",
+  "domain": "Model Selection and Optimization",
+  "subdomain": "LLM Fundamentals / Model Selection and Tradeoffs",
+  "weight": 7.9,
+  "corpus_ref": "prepcourse-corpus/m1-1.2-models-reasoning.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model",
+    "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "https://platform.claude.com/docs/en/about-claude/models/migration-guide"
+  ],
+  "questions": [
+    {
+      "id": "PC-MDR-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "La famille de modeles Claude comprend 4 niveaux : Fable, Opus, Sonnet, Haiku",
+      "question_en": "According to Anthropic's model overview, which four tiers currently make up the Claude model family?",
+      "question_fr": "D'après le guide de présentation des modèles d'Anthropic, quels sont les quatre niveaux qui composent actuellement la famille de modèles Claude ?",
+      "options": [
+        { "key": "A", "text_en": "Fable, Opus, Sonnet, and Haiku.", "text_fr": "Fable, Opus, Sonnet et Haiku." },
+        { "key": "B", "text_en": "Basic, Standard, Pro, and Ultra.", "text_fr": "Basic, Standard, Pro et Ultra." },
+        { "key": "C", "text_en": "Instant, Fast, Balanced, and Max.", "text_fr": "Instant, Fast, Balanced et Max." },
+        { "key": "D", "text_en": "Alpha, Beta, Gamma, and Delta.", "text_fr": "Alpha, Beta, Gamma et Delta." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le guide de présentation des modèles liste quatre niveaux : Claude Fable 5, Claude Opus 5, Claude Sonnet 5 et Claude Haiku 4.5, chacun avec sa propre description dans le tableau de comparaison (« Next-generation intelligence for long-running agents », « For complex agentic coding and enterprise work », « The best combination of speed and intelligence », « The fastest model with near-frontier intelligence »).",
+      "distractors_fr": {
+        "B": "Ce n'est pas la nomenclature d'Anthropic ; aucun de ces noms n'apparaît dans le guide de présentation des modèles.",
+        "C": "Nomenclature inventée : Anthropic nomme ses niveaux par des noms propres (Fable, Opus, Sonnet, Haiku), pas par des adjectifs de vitesse.",
+        "D": "Nomenclature générique inventée, absente de la documentation Anthropic."
+      },
+      "principe_fr": "Connaître la structure à quatre niveaux de la famille Claude est le préalable à toute décision de sélection de modèle : chaque niveau représente un point différent sur l'axe coût / latence / capacité.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/overview"
+    },
+    {
+      "id": "PC-MDR-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Choisir un niveau de modele selon la matrice besoin -> niveau, pas selon un classement lineaire cher = meilleur",
+      "question_en": "A team is building a real-time, high-volume feature that must stay cost-sensitive while still reasoning well on each request. Per Anthropic's model selection matrix, which tier should they start with?",
+      "question_fr": "Une équipe construit une fonctionnalité temps réel à fort volume, qui doit rester sobre en coût tout en raisonnant correctement à chaque requête. D'après la matrice de sélection de modèle d'Anthropic, par quel niveau devrait-elle commencer ?",
+      "options": [
+        { "key": "A", "text_en": "Claude Fable 5, the most capable tier, for the hardest reasoning tasks.", "text_fr": "Claude Fable 5, le niveau le plus capable, pour les tâches de raisonnement les plus exigeantes." },
+        { "key": "B", "text_en": "Claude Opus 5, built for complex agentic coding and enterprise work.", "text_fr": "Claude Opus 5, pensé pour le travail agentique complexe et le travail d'entreprise." },
+        { "key": "C", "text_en": "Claude Haiku 4.5, near-frontier performance, fastest and most economical.", "text_fr": "Claude Haiku 4.5, performance proche de la frontière, la plus rapide et la plus économique." },
+        { "key": "D", "text_en": "Claude Sonnet 5, frontier intelligence at scale for code and agents.", "text_fr": "Claude Sonnet 5, intelligence de pointe à grande échelle pour le code et les agents." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La matrice de sélection associe explicitement ce besoin à Haiku 4.5 : « Near-frontier performance with lightning-fast speed and extended thinking at the most economical price point → Claude Haiku 4.5 → Real-time applications, high-volume intelligent processing, cost-sensitive deployments needing strong reasoning, sub-agent tasks. »",
+      "distractors_fr": {
+        "A": "Fable 5 vise l'intelligence maximale sur des tâches de raisonnement long, pas la vitesse et le coût pour du temps réel à fort volume.",
+        "B": "Opus 5 cible le travail agentique complexe et l'entreprise, pas spécifiquement les contraintes de coût et de latence du temps réel.",
+        "D": "Sonnet 5 vise l'échelle pour le code et les agents ; la matrice réserve explicitement le cas temps réel / fort volume / sobriété de coût à Haiku 4.5."
+      },
+      "principe_fr": "Le choix de niveau part du cas d'usage documenté dans la matrice de sélection, pas d'une hiérarchie implicite où le modèle le plus cher serait toujours le meilleur choix.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+    },
+    {
+      "id": "PC-MDR-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le choix du modele et le mode de raisonnement sont deux reglages independants, pas un seul curseur",
+      "question_en": "On Claude Sonnet 5, a team wants Claude to reason more deeply before answering a given request. They assume the only way to do this is to switch to a larger model like Claude Opus 5. Is that assumption correct?",
+      "question_fr": "Sur Claude Sonnet 5, une équipe veut que Claude raisonne plus profondément avant de répondre à une requête donnée. Elle suppose que la seule façon d'y parvenir est de passer à un modèle plus grand comme Claude Opus 5. Cette hypothèse est-elle correcte ?",
+      "options": [
+        { "key": "A", "text_en": "Yes, reasoning depth is fixed by the model tier and cannot be tuned per request.", "text_fr": "Oui, la profondeur de raisonnement est fixée par le niveau du modèle et ne se règle pas requête par requête." },
+        { "key": "B", "text_en": "No, raising `effort` on the same model deepens reasoning without switching models.", "text_fr": "Non, il suffit de relever le paramètre `effort` sur ce même modèle pour approfondir le raisonnement, sans en changer." },
+        { "key": "C", "text_en": "Yes, but only by rewriting the prompt to repeat the question several times.", "text_fr": "Oui, mais uniquement en réécrivant le prompt pour répéter la question plusieurs fois." },
+        { "key": "D", "text_en": "No, because Claude Sonnet 5 ignores every reasoning-related parameter entirely.", "text_fr": "Non, car Claude Sonnet 5 ignore entièrement tout paramètre lié au raisonnement." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le cours est explicite : le choix du modèle et le mode de raisonnement sont deux décisions distinctes qui se combinent. Sur un modèle donné, la profondeur de raisonnement se règle via le paramètre `effort` ; la doc confirme : « You can raise the effort level to max for the absolute highest capability, or lower it to be more conservative. »",
+      "distractors_fr": {
+        "A": "Contredit le principe central du module : le mode de raisonnement se règle par requête, indépendamment du modèle choisi.",
+        "C": "Répéter la question dans le prompt n'est pas un levier documenté pour approfondir le raisonnement d'un modèle.",
+        "D": "Claude Sonnet 5 prend bien en charge le raisonnement adaptatif et le paramètre `effort`, qui sont justement les leviers pertinents ici."
+      },
+      "principe_fr": "Le choix du modèle et le réglage du raisonnement sont deux leviers indépendants qui se combinent : un modèle capable avec raisonnement réduit est rapide et direct, un modèle plus petit avec raisonnement élevé dépense plus de tokens à réfléchir.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/effort"
+    },
+    {
+      "id": "PC-MDR-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Sur Claude Sonnet 5, la configuration manuelle du thinking (budget_tokens) n est plus acceptee : erreur 400, le raisonnement est toujours adaptatif",
+      "question_en": "A codebase built for Claude Opus 4.6 sends `thinking: {\"type\": \"enabled\", \"budget_tokens\": 10000}` on every request. The team migrates the same code to Claude Sonnet 5 without changing this field. What happens?",
+      "question_fr": "Un code écrit pour Claude Opus 4.6 envoie `thinking: {\"type\": \"enabled\", \"budget_tokens\": 10000}` à chaque requête. L'équipe migre ce même code vers Claude Sonnet 5 sans modifier ce champ. Que se passe-t-il ?",
+      "options": [
+        { "key": "A", "text_en": "The request succeeds, but `budget_tokens` is silently ignored and replaced by a default.", "text_fr": "La requête réussit, mais `budget_tokens` est silencieusement ignoré et remplacé par la valeur par défaut." },
+        { "key": "B", "text_en": "The request succeeds normally, with `budget_tokens` still capping reasoning as before.", "text_fr": "La requête réussit normalement ; `budget_tokens` continue de plafonner le raisonnement comme avant." },
+        { "key": "C", "text_en": "The API accepts the request but disables reasoning entirely for that one call.", "text_fr": "L'API accepte la requête et désactive complètement le raisonnement pour cet appel." },
+        { "key": "D", "text_en": "The API returns a 400 error: reasoning is adaptive, `budget_tokens` has no replacement.", "text_fr": "L'API renvoie une erreur 400 ; sur Sonnet 5, le raisonnement est toujours adaptatif et `budget_tokens` n'a pas d'équivalent direct." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le guide de migration est explicite : « Remove manual extended thinking configuration (thinking: {type: \"enabled\", budget_tokens: N}). Adaptive thinking is always on, and no thinking field is required. » et « Remove budget_tokens. It has no direct replacement: thinking is adaptive, and the effort parameter is a separate output-level control, not a thinking budget. »",
+      "distractors_fr": {
+        "A": "Il n'y a pas d'ignorance silencieuse : la doc décrit un rejet explicite par erreur 400, pas un repli discret sur une valeur par défaut.",
+        "B": "C'est le comportement de l'ancien modèle ; sur Sonnet 5, cette configuration manuelle n'est plus acceptée du tout.",
+        "C": "Le raisonnement n'est pas désactivé : il reste actif en permanence (adaptatif), c'est la configuration manuelle qui est rejetée."
+      },
+      "principe_fr": "Un champ de configuration qui fonctionnait sur un modèle peut casser silencieusement une migration vers un modèle plus récent : vérifier le guide de migration avant de changer de modèle, pas seulement le comportement observé en test rapide.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/migration-guide"
+    },
+    {
+      "id": "PC-MDR-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le parametre effort controle combien de tokens Claude depense pour repondre (minutie vs efficacite)",
+      "question_en": "What does the `effort` parameter primarily control, per Anthropic's documentation?",
+      "question_fr": "Que contrôle principalement le paramètre `effort`, d'après la documentation Anthropic ?",
+      "options": [
+        { "key": "A", "text_en": "The maximum size of the context window available to the request.", "text_fr": "La taille maximale de la fenêtre de contexte disponible pour la requête." },
+        { "key": "B", "text_en": "How many tokens Claude spends replying, balancing thoroughness and cost.", "text_fr": "Combien de tokens Claude dépense pour répondre, en arbitrant minutie et efficacité." },
+        { "key": "C", "text_en": "Which cloud provider runs the inference (Anthropic or a third party).", "text_fr": "Le fournisseur cloud utilisé pour exécuter l'inférence (Anthropic ou tiers)." },
+        { "key": "D", "text_en": "How many prior conversation turns are kept in the message history.", "text_fr": "Le nombre de tours de conversation antérieurs conservés dans l'historique." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc l'introduit sans ambiguïté : « The effort parameter lets you control how many tokens Claude spends when responding to requests. You can trade off between response thoroughness and token efficiency with a single model. »",
+      "distractors_fr": {
+        "A": "La taille de la fenêtre de contexte dépend du modèle choisi, pas du paramètre `effort`.",
+        "C": "Le fournisseur d'inférence est un choix d'infrastructure indépendant de `effort`, qui agit sur le comportement du modèle.",
+        "D": "L'historique conservé dans les messages n'est pas ce que règle `effort` ; c'est une question de gestion du contexte, pas d'échantillonnage."
+      },
+      "principe_fr": "`effort` est le levier recommandé pour arbitrer profondeur de raisonnement, coût et latence sur un même modèle, plutôt que de changer de modèle pour cet arbitrage.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/effort"
+    },
+    {
+      "id": "PC-MDR-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "effort est un signal comportemental, pas un plafond de tokens strict, contrairement a l ancien budget_tokens",
+      "question_en": "A developer assumes `effort` works exactly like the deprecated `budget_tokens`: a hard ceiling that mechanically cuts off reasoning once the budget is spent. Per the documentation, is this an accurate mental model?",
+      "question_fr": "Un développeur suppose que `effort` fonctionne exactement comme l'ancien `budget_tokens` : un plafond strict qui coupe mécaniquement le raisonnement une fois le budget épuisé. D'après la documentation, ce modèle mental est-il exact ?",
+      "options": [
+        { "key": "A", "text_en": "Yes, `effort` and `budget_tokens` both impose a strict cap on reasoning tokens.", "text_fr": "Oui, `effort` et `budget_tokens` imposent tous deux une limite stricte en nombre de tokens de réflexion." },
+        { "key": "B", "text_en": "Yes, but `effort` applies only to the response text, never to tool calls.", "text_fr": "Oui, mais `effort` s'applique uniquement au texte de réponse, jamais aux appels d'outils." },
+        { "key": "C", "text_en": "No, `effort` is a signal, not a cap; low effort still reasons on hard problems.", "text_fr": "Non, `effort` est un signal comportemental : à un niveau bas, Claude peut encore réfléchir longuement sur un problème difficile, juste moins qu'à un niveau élevé." },
+        { "key": "D", "text_en": "No, because `effort` never changes how much reasoning the model produces.", "text_fr": "Non, car `effort` ne modifie jamais la quantité de raisonnement produite par le modèle." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc contredit directement le modèle mental « plafond strict » : « Effort is a behavioral signal, not a strict token budget. At lower effort levels, Claude will still think on sufficiently difficult problems, but it will think less than it would at higher effort levels for the same problem. »",
+      "distractors_fr": {
+        "A": "C'est exactement l'inverse de ce que dit la doc : `effort` est un signal, pas un plafond strict comme l'était `budget_tokens`.",
+        "B": "La doc précise que `effort` affecte « all tokens in the response, including... tool calls and function arguments », pas seulement le texte.",
+        "D": "`effort` modifie bien la profondeur de raisonnement ; c'est tout son objet, documenté par un tableau de niveaux (low à max)."
+      },
+      "principe_fr": "Un nouveau paramètre qui ressemble à l'ancien par son rôle général ne se comporte pas forcément de la même façon en pratique : vérifier la sémantique précise avant de porter un raisonnement d'un paramètre à l'autre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/effort"
+    },
+    {
+      "id": "PC-MDR-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "weight": 5.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Sur les modeles recents, le contenu de thinking est omis de la reponse par defaut ; thinking.display=summarized le restaure",
+      "question_en": "A product streams Claude's reasoning to end users as it thinks. After upgrading to a newer model generation where adaptive thinking is on by default, users now see a long silent pause instead of visible reasoning. What is the most likely cause, and the fix?",
+      "question_fr": "Un produit affiche en direct le raisonnement de Claude à mesure qu'il réfléchit. Après une mise à niveau vers une génération de modèle plus récente où le raisonnement adaptatif est actif par défaut, les utilisateurs voient désormais une longue pause silencieuse au lieu du raisonnement visible. Quelle est la cause la plus probable, et le correctif ?",
+      "options": [
+        { "key": "A", "text_en": "Adaptive thinking disabled streaming for the whole response; re-enable `stream: true`.", "text_fr": "Le raisonnement adaptatif a désactivé le streaming pour toute la réponse ; il faut réactiver `stream: true`." },
+        { "key": "B", "text_en": "The account lost access to the streaming API; contact Anthropic support.", "text_fr": "Le compte n'a plus accès à l'API de streaming ; il faut contacter le support Anthropic." },
+        { "key": "C", "text_en": "The model no longer reasons at all by default; fall back to manual `budget_tokens` configuration.", "text_fr": "Le modèle ne réfléchit plus du tout par défaut ; il faut repasser à la configuration manuelle `budget_tokens`." },
+        { "key": "D", "text_en": "Reasoning content is omitted by default here; `display: \"summarized\"` restores it.", "text_fr": "Le contenu du raisonnement est omis de la réponse par défaut sur ces modèles ; régler `thinking.display` sur `\"summarized\"` le restaure." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le guide de migration décrit précisément ce symptôme : « The default is \"omitted\" on Claude Opus 4.7 and later models. If your product streams reasoning to users, the new default appears as a long pause before output begins; set display: \"summarized\" to restore visible progress during thinking. »",
+      "distractors_fr": {
+        "A": "Le streaming de la réponse en tant que tel n'est pas désactivé ; c'est le contenu du raisonnement spécifiquement qui est omis par défaut.",
+        "B": "Rien dans la doc ne relie ce symptôme à une perte d'accès à l'API ; c'est un changement de comportement par défaut documenté, pas une panne de compte.",
+        "C": "Le modèle continue de réfléchir (le raisonnement adaptatif reste actif) ; seul son affichage est omis par défaut, et `budget_tokens` n'est de toute façon plus accepté sur ces modèles."
+      },
+      "principe_fr": "Un changement de valeur par défaut entre générations de modèles peut casser une expérience utilisateur sans qu'aucune erreur ne soit levée : le raisonnement continue, seule sa visibilité change.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/migration-guide"
+    },
+    {
+      "id": "PC-MDR-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Decider de changer de niveau de modele doit partir d evals sur son propre cas d usage, etape la plus importante",
+      "question_en": "Per Anthropic's guidance on deciding whether to upgrade or change models, what should be the first, most important step?",
+      "question_fr": "D'après les conseils d'Anthropic sur la décision de changer de niveau de modèle, quelle devrait être la première étape, la plus importante ?",
+      "options": [
+        { "key": "A", "text_en": "Create benchmark tests for your own use case; a good evaluation set matters most.", "text_fr": "Créer des tests de référence propres à son propre cas d'usage ; disposer d'un bon jeu d'évaluation est l'étape la plus importante." },
+        { "key": "B", "text_en": "Read the marketing announcements for new models to learn their public benchmark scores.", "text_fr": "Lire les annonces marketing des nouveaux modèles pour connaître leurs scores de benchmark publics." },
+        { "key": "C", "text_en": "Wait for other teams in the industry to publish their experience with the new model.", "text_fr": "Attendre que d'autres équipes du secteur publient leur retour d'expérience sur le nouveau modèle." },
+        { "key": "D", "text_en": "Switch models immediately whenever a newer version becomes available, then watch for user feedback.", "text_fr": "Changer immédiatement de modèle dès qu'une version plus récente est disponible, puis observer les retours utilisateurs." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc est explicite sur l'ordre des étapes : « To determine if you need to upgrade or change models, you should: 1. Create benchmark tests specific to your use case - having a good evaluation set is the most important step in the process. »",
+      "distractors_fr": {
+        "B": "Les benchmarks publics mesurent des tâches génériques, pas la performance sur son propre cas d'usage, que la doc place en premier.",
+        "C": "Attendre le retour d'autres équipes ne remplace pas une évaluation sur ses propres prompts et données, recommandée en premier lieu.",
+        "D": "Changer de modèle sans évaluation préalable inverse l'ordre recommandé : tester d'abord, décider ensuite."
+      },
+      "principe_fr": "La décision de changer de niveau de modèle doit s'appuyer sur des évaluations mesurées sur son propre cas d'usage, pas sur l'intuition ni sur des scores publics génériques.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+    },
+    {
+      "id": "PC-MDR-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Claude Haiku 4.5 est la seule des quatre familles recentes a ne pas prendre en charge le thinking adaptatif ; elle garde le thinking manuel",
+      "question_en": "A team reads that \"manual extended thinking (`budget_tokens`) is deprecated in favor of adaptive thinking\" and concludes this applies uniformly across the whole current Claude model lineup. Per the model comparison table, is this conclusion correct?",
+      "question_fr": "Une équipe lit que « le thinking manuel (`budget_tokens`) est déprécié au profit du thinking adaptatif » et en conclut que cela s'applique uniformément à toute la gamme actuelle de modèles Claude. D'après le tableau de comparaison des modèles, cette conclusion est-elle correcte ?",
+      "options": [
+        { "key": "A", "text_en": "Yes, all four current tiers have all switched to adaptive thinking only.", "text_fr": "Oui, les quatre niveaux actuels (Fable 5, Opus 5, Sonnet 5, Haiku 4.5) ont tous basculé sur le thinking adaptatif uniquement." },
+        { "key": "B", "text_en": "No, Haiku 4.5 is the exception: manual thinking yes, adaptive thinking no.", "text_fr": "Non, Claude Haiku 4.5 fait exception : il prend en charge le thinking manuel (`budget_tokens`) mais pas le thinking adaptatif, contrairement aux trois autres." },
+        { "key": "C", "text_en": "No, none of the four tiers support adaptive thinking; all four still rely on `budget_tokens`.", "text_fr": "Non, aucun des quatre niveaux actuels ne prend en charge le thinking adaptatif, tous restent sur `budget_tokens`." },
+        { "key": "D", "text_en": "Yes, but only for requests that use tools; tool-free requests keep `budget_tokens`.", "text_fr": "Oui, mais uniquement pour les requêtes qui utilisent des outils ; les requêtes sans outil gardent `budget_tokens`." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le tableau de comparaison des modèles donne, ligne par ligne : Extended thinking (`budget_tokens`) — Fable 5 non, Opus 5 non, Sonnet 5 non, Haiku 4.5 oui ; Adaptive thinking — Fable 5 oui (toujours actif), Opus 5 oui, Sonnet 5 oui, Haiku 4.5 non. Haiku 4.5 est donc la seule exception.",
+      "distractors_fr": {
+        "A": "Surgénéralisation : Haiku 4.5 est explicitement l'exception dans le tableau, il ne prend pas en charge le thinking adaptatif.",
+        "C": "Surgénéralisation inverse : Fable 5, Opus 5 et Sonnet 5 prennent tous en charge le thinking adaptatif d'après le tableau.",
+        "D": "Le tableau ne fait aucune distinction selon l'usage d'outils ; la différence porte sur le niveau de modèle, pas sur le type de requête."
+      },
+      "principe_fr": "Une règle du type « les modèles récents déprécient X » cache presque toujours une exception par niveau : vérifier le tableau de comparaison plutôt que de généraliser depuis un seul modèle, exactement le type de piège qui a fait se contredire deux questions précédentes sur la temperature.",
+      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/overview"
+    }
+  ]
+}

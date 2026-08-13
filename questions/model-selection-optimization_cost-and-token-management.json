@@ -18,6 +18,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Interet du prompt caching pour un prefixe repete",
       "question_en": "A team resends the same long system prompt on every API call. How does prompt caching reduce their cost?",
       "options": [
@@ -57,6 +58,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Deux facons d'activer le prompt caching",
       "question_en": "What are the two ways to enable prompt caching described in the documentation?",
       "options": [
@@ -96,6 +98,7 @@
       "type": "single",
       "nature": "factual_magnitude",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Taux de facturation de l'API Batches vs prix standard",
       "question_en": "The Message Batches API charges all usage at what share of standard API prices?",
       "options": [
@@ -135,6 +138,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Charge de travail adaptee a l'API Batches",
       "question_en": "Which workload is the best fit for the Message Batches API?",
       "options": [
@@ -174,6 +178,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Operation de cache la moins chere",
       "question_en": "Among prompt-caching operations, which is billed at the lowest multiplier of the base input price?",
       "options": [
@@ -213,6 +218,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Conditions de rentabilite du cache 5 minutes",
       "question_en": "Select TWO statements that are true about when the 5-minute prompt cache becomes cost-effective.",
       "options": [
@@ -252,6 +258,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Comportement du cache automatique en conversation multi-tour",
       "question_en": "How does automatic caching behave as a multi-turn conversation grows?",
       "question_fr": "Comment se comporte le cache automatique lorsqu'une conversation multi-tour s'allonge ?",
@@ -300,6 +307,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Raison d'appeler le comptage de tokens avant l'envoi",
       "question_en": "Why would a developer call the token counting endpoint before sending a message?",
       "question_fr": "Pourquoi un développeur appellerait-il l'endpoint de comptage de tokens avant d'envoyer un message ?",
@@ -348,6 +356,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Le comptage de tokens renvoie une estimation",
       "question_en": "What does the documentation say about the number returned by the token counting endpoint?",
       "question_fr": "Que dit la documentation sur le nombre renvoyé par l'endpoint de comptage de tokens ?",
@@ -396,6 +405,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Facturation exclut les tokens ajoutes par le systeme",
       "question_en": "Token counts may include tokens Anthropic adds for system optimizations. How are these billed?",
       "question_fr": "Le comptage de tokens peut inclure des tokens ajoutés par Anthropic pour des optimisations système. Comment sont-ils facturés ?",
@@ -444,6 +454,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Parametres non supportes dans une requete Batch",
       "question_en": "Select TWO Messages API parameters that are NOT supported inside a batch request.",
       "question_fr": "Sélectionnez DEUX paramètres de l'API Messages qui ne sont PAS supportés dans une requête batch.",
@@ -496,6 +507,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Recuperation asynchrone des resultats d'un batch",
       "question_en": "After you submit a Message Batch, how do you obtain the results?",
       "question_fr": "Après avoir soumis un Message Batch, comment récupérez-vous les résultats ?",
@@ -544,6 +556,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Choisir le cache 1 heure pour les batches partageant du contexte",
       "question_en": "The docs recommend which cache duration when batching requests that share context?",
       "options": [
@@ -583,6 +596,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Modeles supportant l'API Batches",
       "question_en": "Which Claude models support the Message Batches API?",
       "options": [
@@ -622,6 +636,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Cumul du multiplicateur de cache avec la remise Batch",
       "question_en": "A team caches a prefix AND submits the request through the Batch API. How do the discounts interact?",
       "options": [
@@ -661,6 +676,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Structure de tarification input, output et cache",
       "question_en": "Select TWO statements that match the model pricing structure described in the docs.",
       "options": [
@@ -700,6 +716,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Compter les tokens pour decider du routage de modele",
       "question_en": "Besides cost, what decision does token counting help a developer make before sending a request?",
       "options": [
@@ -739,6 +756,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Moment de facturation ecriture vs lecture de cache",
       "question_en": "When are cache write tokens versus cache read tokens charged?",
       "options": [
@@ -778,6 +796,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Surcout des endpoints regionaux face au global",
       "question_en": "How does choosing a regional endpoint affect pricing compared to the default global endpoint?",
       "question_fr": "Comment le choix d'un endpoint régional affecte-t-il la tarification par rapport à l'endpoint global par défaut ?",
@@ -826,6 +845,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Deux usages du comptage de tokens",
       "question_en": "Select TWO tasks that token counting is designed to help with.",
       "question_fr": "Sélectionnez DEUX tâches que le comptage de tokens est conçu pour faciliter.",

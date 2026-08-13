@@ -16,6 +16,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Les quatre etats du cycle de vie d'un modele",
       "question_en": "What are the model lifecycle states Anthropic uses?",
       "options": [
@@ -55,6 +56,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Comportement d'un modele retire : requetes en echec",
       "question_en": "What happens when you send a request to a retired model?",
       "options": [
@@ -94,6 +96,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Un modele deprecie reste fonctionnel avec date de retrait",
       "question_en": "A model is marked 'Deprecated'. What is true?",
       "options": [
@@ -133,6 +136,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Definition d'un modele legacy",
       "question_en": "What defines a 'Legacy' model?",
       "options": [
@@ -172,6 +176,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Un modele actif est pleinement supporte",
       "question_en": "What does 'Active' status mean for a model?",
       "options": [
@@ -211,6 +216,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Notification de retrait par email et documentation",
       "question_en": "How are customers informed about an upcoming model retirement?",
       "options": [
@@ -250,6 +256,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Migrer et tester avant la date de retrait",
       "question_en": "A model you use is deprecated with a retirement date. What is the recommended course?",
       "question_fr": "Un modèle que vous utilisez est déprécié, avec une date de retrait annoncée. Quelle est la conduite recommandée ?",
@@ -299,6 +306,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Auditer l'usage des modeles deprecies via l'export Console",
       "question_en": "How can you find where your app still calls deprecated models?",
       "question_fr": "Comment identifier les endroits où votre application appelle encore des modèles dépréciés ?",
@@ -347,6 +355,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Raison de la depreciation : capacite pour les nouveaux modeles",
       "question_en": "Why does Anthropic deprecate and retire older models?",
       "question_fr": "Pourquoi Anthropic déprécie et retire-t-il les modèles plus anciens ?",
@@ -394,6 +403,7 @@
       "type": "multi",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Caracteristiques d'un modele deprecie",
       "question_en": "Select the TWO statements that are true of a deprecated model.",
       "question_fr": "Sélectionnez les DEUX affirmations vraies à propos d'un modèle déprécié.",
@@ -443,6 +453,7 @@
       "type": "multi",
       "nature": "factual_semantic",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Compatibilite ascendante au sein d'une version d'API",
       "question_en": "Within a single Messages API version, select the TWO changes Anthropic may make.",
       "question_fr": "Au sein d'une même version de l'API Messages, sélectionnez les DEUX changements qu'Anthropic peut effectuer.",

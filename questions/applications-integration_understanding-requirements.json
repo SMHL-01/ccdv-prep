@@ -16,6 +16,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Definir les criteres de succes avant de concevoir les evaluations",
       "question_en": "When should you define your success criteria while building an LLM-based application?",
       "options": [
@@ -55,6 +56,7 @@
       "type": "multi",
       "nature": "factual_semantic",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Attributs d'un bon critere de succes : mesurable et atteignable",
       "question_en": "Select the TWO attributes that, per the guide, characterize a good success criterion.",
       "options": [
@@ -94,6 +96,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Critere specifique plutot que vague",
       "question_en": "Which statement is a 'Specific' success criterion rather than a vague one?",
       "options": [
@@ -133,6 +136,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Rendre mesurable un objectif flou comme la surete",
       "question_en": "Your goal 'safe outputs' is hard to quantify. What does the 'Measurable' principle recommend?",
       "options": [
@@ -172,6 +176,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Fixer une cible atteignable a partir de benchmarks",
       "question_en": "How should you set the target value of a success criterion so it stays 'Achievable'?",
       "options": [
@@ -211,6 +216,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Pertinence d'un critere selon la finalite de l'application",
       "question_en": "Why is citation accuracy a critical criterion for a medical-summary app but minor for a casual chatbot?",
       "options": [
@@ -250,6 +256,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Diagnostiquer les attributs manquants d'un critere faible",
       "question_en": "The criterion 'the model should classify sentiments well' is weak. Select the TWO attributes it clearly fails.",
       "options": [
@@ -289,6 +296,7 @@
       "type": "multi",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Criteres de succes courants : fidelite a la tache et latence",
       "question_en": "Select the TWO items the guide lists among common success criteria for LLM applications.",
       "options": [
@@ -328,6 +336,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Critere de coherence : entrees similaires, reponses similaires",
       "question_en": "What does the 'consistency' success criterion measure?",
       "options": [
@@ -367,6 +376,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Evaluation multidimensionnelle sur plusieurs criteres",
       "question_en": "According to the guide, how many success criteria do most use cases need to be evaluated against?",
       "options": [
@@ -406,6 +416,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Un critere n'est pas toujours resolu par le prompt engineering",
       "question_en": "You must cut your app's latency and cost. Is prompt engineering necessarily the right lever?",
       "options": [
@@ -445,6 +456,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Critere de fidelite a la tache incluant les cas limites",
       "question_en": "What does 'task fidelity' assess as a success criterion?",
       "options": [
@@ -484,6 +496,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Latence et prix comme contraintes operationnelles",
       "question_en": "How do success criteria like latency and price differ from a criterion like task fidelity?",
       "question_fr": "En quoi des critères de succès comme la latence et le prix diffèrent-ils d'un critère comme la fidélité à la tâche ?",
@@ -533,6 +546,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Critere de preservation de la vie privee",
       "question_en": "What does the 'privacy preservation' success criterion cover?",
       "question_fr": "Que couvre le critère de succès « privacy preservation » ?",

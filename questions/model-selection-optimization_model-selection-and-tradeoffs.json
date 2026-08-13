@@ -16,6 +16,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Trois criteres a arbitrer pour choisir un modele",
       "question_en": "According to the guide, selecting the optimal Claude model involves balancing which three considerations?",
       "options": [
@@ -55,6 +56,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Ajuster l'effort plutot que changer de modele",
       "question_en": "The docs say tuning the effort parameter is often a better lever than doing what?",
       "options": [
@@ -94,6 +96,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "facile",
+      "source": "doc",
       "concept": "Modele de depart de l'approche efficiency-first",
       "question_en": "In the efficiency-first approach, which model does the guide suggest beginning implementation with?",
       "options": [
@@ -133,6 +136,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Situation adaptee a l'approche capability-first",
       "question_en": "The capability-first approach is described as best for which situation?",
       "options": [
@@ -172,6 +176,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Etape la plus importante avant de changer de modele",
       "question_en": "When deciding whether to upgrade or change models, what does the guide call the most important step?",
       "options": [
@@ -211,6 +216,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Modele conseille pour la capacite maximale dans la matrice",
       "question_en": "In the model selection matrix, which model is suggested when you need the highest available capability?",
       "options": [
@@ -250,6 +256,7 @@
       "type": "single",
       "nature": "judgment",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Modele conseille pour du temps reel a fort volume economique",
       "question_en": "Which model does the matrix recommend for real-time, high-volume, cost-sensitive work that still needs strong reasoning?",
       "options": [
@@ -289,6 +296,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "moyen",
+      "source": "doc",
       "concept": "Valeur par defaut du parametre effort sur Opus 5 et 4.8",
       "question_en": "What is the default value of the effort parameter on Claude Opus 5 and Opus 4.8?",
       "options": [
@@ -328,6 +336,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Situations recommandant l'approche efficiency-first",
       "question_en": "Select TWO situations where the guide recommends the efficiency-first (start-with-Haiku) approach.",
       "options": [
@@ -367,6 +376,7 @@
       "type": "single",
       "nature": "factual_semantic",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Difference de classifieurs entre Fable 5 et Mythos 5",
       "question_en": "How does Claude Fable 5 differ from Claude Mythos 5 in the model documentation?",
       "options": [
@@ -406,6 +416,7 @@
       "type": "multi",
       "nature": "judgment",
       "difficulty": "difficile",
+      "source": "doc",
       "concept": "Dimensions a comparer entre modeles lors d'un benchmark",
       "question_en": "When comparing performance across models, select TWO dimensions the guide says to compare.",
       "options": [

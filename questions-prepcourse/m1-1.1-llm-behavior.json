@@ -242,9 +242,9 @@
       "nature": "judgment",
       "difficulty": "difficile",
       "source": "prepcourse",
-      "concept": "Meme a temperature=0, la sortie n est pas garantie totalement deterministe d un appel a l autre",
-      "question_en": "A team sets `temperature` to `0` expecting Claude to return byte-for-byte identical output for every identical request, so they can cache and diff responses. Is this expectation correct?",
-      "question_fr": "Une équipe fixe `temperature` à `0` en s'attendant à ce que Claude renvoie une sortie identique au bit près pour chaque requête identique, afin de mettre en cache et de comparer les réponses. Cette attente est-elle correcte ?",
+      "concept": "Meme a temperature=0, la sortie n est pas garantie totalement deterministe d un appel a l autre (sur un modele qui accepte encore ce parametre)",
+      "question_en": "On Claude Sonnet 4.6, a team sets `temperature` to `0` expecting Claude to return byte-for-byte identical output for every identical request, so they can cache and diff responses. Is this expectation correct?",
+      "question_fr": "Sur Claude Sonnet 4.6, une équipe fixe `temperature` à `0` en s'attendant à ce que Claude renvoie une sortie identique au bit près pour chaque requête identique, afin de mettre en cache et de comparer les réponses. Cette attente est-elle correcte ?",
       "options": [
         {
           "key": "A",
@@ -268,13 +268,13 @@
         }
       ],
       "correct": ["B"],
-      "explanation_fr": "Le glossaire est explicite : « Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls. This applies both to Anthropic's first-party inference service and to inference through third-party cloud providers. »",
+      "explanation_fr": "Le glossaire est explicite : « Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls. This applies both to Anthropic's first-party inference service and to inference through third-party cloud providers. » Ce raisonnement suppose un modèle où `temperature` est encore honoré comme paramètre d'échantillonnage : sur Claude Sonnet 5, une valeur non par défaut (dont 0) renvoie une erreur 400 plutôt que d'être appliquée — voir PC-LLB-007.",
       "distractors_fr": {
         "A": "La doc dit explicitement le contraire : temperature 0 rend la sortie plus répétable, pas totalement déterministe.",
         "C": "Le non-déterminisme à temperature 0 s'applique aussi bien au service Anthropic de premier niveau qu'aux fournisseurs cloud tiers.",
-        "D": "Seuls les modèles les plus récents refusent les valeurs non par défaut des paramètres d'échantillonnage (voir le changement documenté pour Sonnet 5) ; ce n'est pas une règle valable pour « tous les modèles actuels », et le sujet ici est le déterminisme, pas le rejet de la valeur."
+        "D": "Sur Claude Sonnet 4.6, temperature 0 est acceptée et appliquée normalement ; ce n'est que sur Claude Sonnet 5 que les valeurs non par défaut sont rejetées avec une erreur 400 (voir PC-LLB-007) — et même alors, le sujet est le rejet du paramètre, pas le déterminisme de la sortie."
       },
-      "principe_fr": "Le non-déterminisme n'est pas un défaut de configuration qu'on peut annuler en poussant un curseur à zéro : c'est une propriété structurelle de l'échantillonnage, à traiter comme une contrainte de conception plutôt que comme un bug à corriger.",
+      "principe_fr": "Le non-déterminisme n'est pas un défaut de configuration qu'on peut annuler en poussant un curseur à zéro : c'est une propriété structurelle de l'échantillonnage, à traiter comme une contrainte de conception plutôt que comme un bug à corriger. Ce constat vaut tant que le modèle honore encore le paramètre `temperature` : sur les modèles qui le rejettent (Sonnet 5), la question ne se pose plus dans les mêmes termes.",
       "doc_ref": "https://platform.claude.com/docs/en/about-claude/glossary"
     },
     {

@@ -1,0 +1,266 @@
+{
+  "topic": "m3-3.1-permission",
+  "source": "prepcourse",
+  "domain": "Security and Safety / Applications and Integration",
+  "subdomain": "AI Application Security / Configuration Management",
+  "weight": 7.3,
+  "corpus_ref": "prepcourse-corpus/m3-3.1-permission.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/permission-modes",
+    "https://code.claude.com/docs/en/permissions"
+  ],
+  "questions": [
+    {
+      "id": "PC-PMS-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le mode default n autorise automatiquement que la lecture ; tout le reste demande confirmation",
+      "question_en": "Per the permission modes documentation, what does `default` mode let Claude do without asking for approval?",
+      "question_fr": "D'après la documentation des modes de permission, que permet le mode `default` sans demander d'approbation ?",
+      "options": [
+        { "key": "A", "text_en": "Reads only; every edit, command, or network call still prompts.", "text_fr": "Uniquement la lecture ; toute édition, commande ou requête réseau demande une approbation." },
+        { "key": "B", "text_en": "Reads and file edits, but not shell commands or network requests.", "text_fr": "La lecture et les éditions de fichiers, mais pas les commandes shell ni les requêtes réseau." },
+        { "key": "C", "text_en": "Reads, edits, and common filesystem commands such as `mkdir` and `rm`.", "text_fr": "La lecture, les éditions, et des commandes système courantes comme `mkdir` et `rm`." },
+        { "key": "D", "text_en": "Everything: default mode auto-approves every tool call without asking.", "text_fr": "Tout : le mode default approuve automatiquement chaque appel d'outil sans rien demander." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le tableau des modes est explicite : `default` → « Reads only », recommandé pour « Getting started, sensitive work ». Tout le reste (éditions, commandes, réseau) déclenche une invite.",
+      "distractors_fr": {
+        "B": "Le mode default n'auto-approuve pas non plus les éditions de fichiers ; c'est le niveau `acceptEdits` qui ajoute ce comportement.",
+        "C": "Ce périmètre de commandes filesystem auto-approuvées décrit `acceptEdits`, pas `default`.",
+        "D": "C'est la description de `bypassPermissions`, pas de `default`, qui reste le mode le plus restrictif."
+      },
+      "principe_fr": "Le mode default est le point de référence le plus prudent : toute permission plus large (édition, commandes, réseau) est un choix explicite ajouté par un autre mode, jamais un comportement implicite.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "acceptEdits auto-approuve une liste precise de commandes filesystem directes (dont rm), mais pas l invocation d un script arbitraire",
+      "question_en": "In `acceptEdits` mode, a dev asks Claude to delete a temp file with a direct `rm` command, then separately asks it to run `./cleanup.sh`, a script that also deletes files internally. Per the documented scope of `acceptEdits`, which of these two actions prompts for confirmation?",
+      "question_fr": "En mode `acceptEdits`, un développeur demande à Claude de supprimer un fichier temporaire avec une commande `rm` directe, puis lui demande séparément d'exécuter `./cleanup.sh`, un script qui supprime aussi des fichiers en interne. D'après le périmètre documenté d'`acceptEdits`, laquelle de ces deux actions demande une confirmation ?",
+      "options": [
+        { "key": "A", "text_en": "Neither: `acceptEdits` auto-approves both direct commands and any script that runs them internally.", "text_fr": "Aucune des deux : `acceptEdits` auto-approuve les commandes directes et tout script qui les exécute en interne." },
+        { "key": "B", "text_en": "Both: `acceptEdits` never auto-approves a deletion, whether issued directly or from inside a script.", "text_fr": "Les deux : `acceptEdits` n'auto-approuve jamais une suppression, directe ou lancée depuis un script." },
+        { "key": "C", "text_en": "Only running the script; the direct `rm` command is on the auto-approved list and needs no confirmation.", "text_fr": "Seulement l'exécution du script ; la commande `rm` directe fait partie de la liste auto-approuvée et ne demande rien." },
+        { "key": "D", "text_en": "Only the direct `rm` command; a script invocation always requires confirmation in every mode.", "text_fr": "Seulement la commande `rm` directe ; l'exécution d'un script demande toujours confirmation, quel que soit le mode." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc énumère un ensemble précis de commandes filesystem auto-approuvées par `acceptEdits`, `rm` inclus : « acceptEdits mode also auto-approves common filesystem Bash commands: mkdir, touch, rm, rmdir, mv, cp, and sed... all other Bash commands except the built-in read-only set still prompt. » Lancer un script (`./cleanup.sh`) est un appel Bash distinct, absent de cette liste : il continue de demander confirmation, même si ce script supprime des fichiers en interne.",
+      "distractors_fr": {
+        "A": "La liste auto-approuvée par `acceptEdits` est un ensemble énuméré de commandes précises ; l'invocation d'un script n'y figure pas.",
+        "B": "`rm` figure explicitement dans la liste des commandes auto-approuvées par `acceptEdits`.",
+        "D": "C'est l'inverse : le `rm` direct est justement ce qu'`acceptEdits` auto-approuve dans son périmètre ; c'est le script qui continue de demander confirmation."
+      },
+      "principe_fr": "Le garde-fou se situe au niveau de la commande Bash invoquée, pas des effets de fichiers qu'elle produit indirectement : un script qui supprime des fichiers n'est pas équivalent, du point de vue des permissions, à un appel `rm` direct.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "bypassPermissions est le seul mode qui auto-approuve aussi les ecritures sur les protected paths",
+      "question_en": "Per the permission modes documentation, which mode is the only one where writes to protected paths (repository state, Claude's own configuration) are auto-approved without a prompt?",
+      "question_fr": "D'après la documentation des modes de permission, quel est le seul mode où les écritures sur les chemins protégés (état du dépôt, configuration de Claude elle-même) sont auto-approuvées sans invite ?",
+      "options": [
+        { "key": "A", "text_en": "`acceptEdits`, since it already auto-approves ordinary file edits in the working directory.", "text_fr": "`acceptEdits`, puisqu'il auto-approuve déjà les éditions de fichiers ordinaires dans le répertoire de travail." },
+        { "key": "B", "text_en": "`auto`, whose classifier is trusted to screen protected-path writes on its own.", "text_fr": "`auto`, dont le classifieur est censé filtrer lui-même les écritures sur les chemins protégés." },
+        { "key": "C", "text_en": "`default`, because reads and protected-path writes are both treated as low-risk.", "text_fr": "`default`, car lectures et écritures sur chemins protégés sont toutes deux traitées comme peu risquées." },
+        { "key": "D", "text_en": "`bypassPermissions`, which disables the protected-path guard along with every other check.", "text_fr": "`bypassPermissions`, qui désactive la garde des chemins protégés en même temps que tous les autres contrôles." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le tableau des chemins protégés est explicite : `default` et `acceptEdits` → prompted ; `auto` → routed to the classifier ; `bypassPermissions` → allowed. La doc résume : « Writes to protected paths are never auto-approved except in bypassPermissions mode. »",
+      "distractors_fr": {
+        "A": "`acceptEdits` exclut explicitement les écritures sur chemins protégés de son périmètre auto-approuvé ; elles continuent de demander confirmation.",
+        "B": "`auto` route ces écritures vers le classifieur, il ne les approuve pas silencieusement.",
+        "C": "`default` demande confirmation pour tout ce qui n'est pas une lecture, chemins protégés compris."
+      },
+      "principe_fr": "Les chemins protégés forment un garde-fou volontairement indépendant du reste : seul le mode qui désactive tous les contrôles de sécurité (bypass) le désactive lui aussi.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "En bypassPermissions, un pattern trop large declenche une suppression sans invite ; en default/acceptEdits, l invocation du script aurait demande confirmation",
+      "question_en": "In `bypassPermissions` mode, a dev asks Claude to rename references matching a file pattern; the pattern unexpectedly also matches files in a production config directory, which get deleted with no prompt. Had the session been running in `default` or `acceptEdits` mode instead, what would have changed?",
+      "question_fr": "En mode `bypassPermissions`, un développeur demande à Claude de renommer des références correspondant à un motif de fichiers ; le motif correspond aussi, sans que ce soit voulu, à des fichiers d'un répertoire de configuration de production, qui sont supprimés sans invite. Si la session avait tourné en mode `default` ou `acceptEdits`, qu'est-ce qui aurait changé ?",
+      "options": [
+        { "key": "A", "text_en": "Nothing: `acceptEdits` also auto-approves script invocations, so the deletion would still run silently.", "text_fr": "Rien : `acceptEdits` auto-approuve aussi l'invocation de scripts, donc la suppression se serait quand même faite silencieusement." },
+        { "key": "B", "text_en": "The cleanup script's invocation would have prompted, giving a chance to catch the scope mistake first.", "text_fr": "L'invocation du script de nettoyage aurait demandé une confirmation, laissant une chance de repérer l'erreur de portée avant coup." },
+        { "key": "C", "text_en": "Both modes would have blocked the pattern match itself as too broad, before any script ran.", "text_fr": "Les deux modes auraient bloqué le motif lui-même comme trop large, avant qu'aucun script ne s'exécute." },
+        { "key": "D", "text_en": "Only `default` differs from bypass here; `acceptEdits` behaves like `bypassPermissions` for scripts.", "text_fr": "Seul `default` diffère de bypass ici ; `acceptEdits` se comporte comme `bypassPermissions` pour les scripts." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le cours le formule directement : « In default or acceptEdits mode, the cleanup script would not have run without a confirmation, and the user could have stopped the deletion before it reached the production configuration files. »",
+      "distractors_fr": {
+        "A": "Contredit le cas : `acceptEdits` n'auto-approuve pas l'invocation de scripts arbitraires, seulement une liste précise de commandes filesystem directes.",
+        "C": "Aucun des deux modes n'analyse la portée sémantique d'un motif avant d'exécuter une commande ; le contrôle porte sur la commande elle-même, pas sur ce qu'elle va toucher.",
+        "D": "`acceptEdits` et `default` demandent tous deux confirmation pour l'invocation d'un script, contrairement à `bypassPermissions`."
+      },
+      "principe_fr": "L'invite de confirmation est le dernier filet avant qu'une erreur de portée (motif trop large) ne devienne irréversible ; la retirer retire ce filet, même quand l'agent s'est bien comporté jusque-là.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Les regles sont evaluees dans l ordre deny, ask, allow : un deny large bat un allow plus specifique",
+      "question_en": "A settings file contains an allow rule for `Bash(aws s3 ls)`. A separate, broader deny rule for `Bash(aws *)` also exists. Per the documented rule-evaluation order, what happens when Claude tries to run `aws s3 ls`?",
+      "question_fr": "Un fichier de settings contient une règle allow pour `Bash(aws s3 ls)`. Une règle deny séparée et plus large, `Bash(aws *)`, existe aussi. D'après l'ordre d'évaluation documenté, que se passe-t-il quand Claude tente d'exécuter `aws s3 ls` ?",
+      "options": [
+        { "key": "A", "text_en": "The call is blocked: deny rules are evaluated before allow, and a broad deny beats a narrower one.", "text_fr": "L'appel est bloqué : les règles deny sont évaluées avant les règles allow, et un deny large l'emporte sur un allow plus précis." },
+        { "key": "B", "text_en": "The call succeeds: the more specific allow rule always wins over any broader deny rule that matches.", "text_fr": "L'appel réussit : la règle allow la plus spécifique l'emporte toujours sur une règle deny plus large." },
+        { "key": "C", "text_en": "The call succeeds only if the allow rule sits in a higher-precedence settings file than the deny rule.", "text_fr": "L'appel réussit seulement si la règle allow se trouve dans un fichier de settings de priorité supérieure à celle du deny." },
+        { "key": "D", "text_en": "Claude Code raises a configuration error, since deny and allow rules cannot coexist for one tool.", "text_fr": "Claude Code lève une erreur de configuration, deny et allow ne pouvant coexister pour un même outil." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc l'énonce sans ambiguïté : « Rules are evaluated in order: deny, then ask, then allow... A broad deny rule like Bash(aws *) blocks every matching call, including calls that also match a narrower allow rule... so a deny rule can't carry allowlist exceptions. »",
+      "distractors_fr": {
+        "B": "La spécificité d'une règle ne change pas l'ordre deny-puis-allow ; la doc l'exclut explicitement.",
+        "C": "Le deny l'emporte quel que soit le niveau de configuration où chaque règle vit, pas seulement selon une priorité de fichier.",
+        "D": "Aucune erreur de ce type n'est documentée ; deny et allow coexistent couramment, le deny l'emportant simplement quand les deux correspondent."
+      },
+      "principe_fr": "L'ordre d'évaluation (deny, puis ask, puis allow) prime sur la spécificité de la règle : une règle deny large peut bloquer une règle allow plus précise.",
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "PC-PMS-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un deny d un niveau de settings quelconque bat un allow d un autre niveau, dans les deux sens",
+      "question_en": "A user's personal settings deny a tool. The project's checked-in settings allow that same tool. Per the documented settings precedence, which rule wins?",
+      "question_fr": "Les settings personnels d'un utilisateur refusent (deny) un outil. Les settings du projet, versionnés dans le dépôt, autorisent (allow) ce même outil. D'après la précédence documentée, quelle règle l'emporte ?",
+      "options": [
+        { "key": "A", "text_en": "The project-level allow wins, since project settings are shared by the whole team.", "text_fr": "L'allow du projet l'emporte, les settings de projet étant versionnés et partagés par toute l'équipe." },
+        { "key": "B", "text_en": "Whichever settings file happens to be loaded most recently in this session wins out.", "text_fr": "Le fichier de settings chargé le plus récemment dans la session l'emporte." },
+        { "key": "C", "text_en": "The user-level deny wins: a deny rule from any scope is evaluated before any allow rule.", "text_fr": "Le deny au niveau utilisateur l'emporte : une règle deny, quel que soit son niveau, est évaluée avant toute règle allow." },
+        { "key": "D", "text_en": "Neither rule wins outright; the conflict falls back to a prompt on every matching call.", "text_fr": "Aucune des deux règles ne l'emporte franchement ; le conflit retombe sur une invite à chaque appel correspondant." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc traite explicitement ce cas croisé : « if user settings allow a permission and project settings deny it, the deny rule blocks it. The reverse is also true: a user-level deny blocks a project-level allow, because deny rules from any scope are evaluated before allow rules. »",
+      "distractors_fr": {
+        "A": "Inverse le résultat documenté ; un allow de projet ne l'emporte pas sur un deny utilisateur.",
+        "B": "Aucun mécanisme d'ordre de chargement ou de récence n'est documenté ; la précédence est deny-avant-allow, pas chronologique.",
+        "D": "Aucun repli vers une invite n'est décrit pour ce conflit ; le deny le résout directement."
+      },
+      "principe_fr": "Le deny gagne toujours sur l'allow, quel que soit le niveau de configuration où chacun est défini : ce n'est pas une hiérarchie de niveaux mais une hiérarchie de type de règle.",
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "PC-PMS-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Le mode auto se met en pause apres 3 blocages consecutifs du classifieur (ou 20 au total)",
+      "question_en": "Per the documented behavior of `auto` mode, after how many consecutive classifier blocks does `auto` mode pause and Claude Code resume prompting for every action?",
+      "question_fr": "D'après le comportement documenté du mode `auto`, après combien de blocages consécutifs du classifieur ce mode se met-il en pause pour revenir à une invite systématique ?",
+      "options": [
+        { "key": "A", "text_en": "1 block in a row is already enough to pause `auto` mode.", "text_fr": "1 blocage suffit à mettre le mode `auto` en pause." },
+        { "key": "B", "text_en": "3 blocks in a row, matching the documented threshold value.", "text_fr": "3 blocages consécutifs, selon le seuil documenté." },
+        { "key": "C", "text_en": "10 blocks in a row, well above the documented threshold.", "text_fr": "10 blocages consécutifs avant que le mode ne se mette en pause." },
+        { "key": "D", "text_en": "No consecutive-block threshold exists, only a total count.", "text_fr": "Il n'existe pas de seuil de blocages consécutifs, seul un compte total entre en jeu." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc donne un chiffre précis : « If the classifier blocks an action 3 times in a row or 20 times total, auto mode pauses and Claude Code resumes prompting. »",
+      "distractors_fr": {
+        "A": "Sous-estime le seuil documenté ; un seul blocage ne suffit pas.",
+        "C": "Surestime le seuil documenté de plus du triple.",
+        "D": "Contredit la doc : un seuil de blocages consécutifs (3) existe bien, en plus du seuil cumulé (20)."
+      },
+      "principe_fr": "Un seuil documenté et précis (3 consécutifs, 20 au total) borne le comportement dégradé du mode auto ; vérifier ces chiffres évite de lui attribuer une tolérance plus grande ou plus stricte qu'elle ne l'est réellement.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Pour moins d invites sans perdre le filet de securite, le mode auto (classifieur) est la recommandation documentee, pas bypassPermissions",
+      "question_en": "A team finds `default` mode's per-call prompts too disruptive for a long task, but is uneasy about `bypassPermissions` removing the protected-path guard and all prompt-injection protection. Per documented guidance, what should they use instead?",
+      "question_fr": "Une équipe trouve les invites répétées du mode `default` trop pénibles pour une longue tâche, mais hésite à utiliser `bypassPermissions`, qui retire la garde des chemins protégés et toute protection contre l'injection de prompt. D'après les conseils documentés, que devrait-elle utiliser à la place ?",
+      "options": [
+        { "key": "A", "text_en": "`bypassPermissions` restricted to a single working directory, which restores the protected-path guard.", "text_fr": "`bypassPermissions` restreint à un seul répertoire de travail, ce qui restaure la garde des chemins protégés." },
+        { "key": "B", "text_en": "`acceptEdits` with every deny rule removed, behaving like a lighter, riskier version of bypass.", "text_fr": "`acceptEdits` avec toutes les règles deny retirées, se comportant comme une version allégée de bypass." },
+        { "key": "C", "text_en": "`default` mode with `--dangerously-skip-permissions` added for a few trusted commands.", "text_fr": "Le mode `default` avec `--dangerously-skip-permissions` ajouté seulement pour quelques commandes de confiance." },
+        { "key": "D", "text_en": "`auto` mode, whose classifier still blocks anything that escalates beyond the request.", "text_fr": "Le mode `auto`, dont le classifieur filtre les actions et bloque toujours ce qui dépasse la demande initiale." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le cours le recommande explicitement : « If you want fewer prompts without losing the safety net, use a classifier-gated mode (e.g., auto) instead of a full bypass. » La doc officielle confirme : « bypassPermissions offers no protection against prompt injection or unintended actions. For background safety checks with far fewer permission prompts, use auto mode instead. »",
+      "distractors_fr": {
+        "A": "`bypassPermissions` désactive toujours la garde des chemins protégés ; aucune variante restreinte à un répertoire ne la restaure.",
+        "B": "Retirer les règles deny élargit le périmètre auto-approuvé d'`acceptEdits`, mais n'ajoute pas le filtrage par classifieur qui rend `auto` plus sûr.",
+        "C": "`--dangerously-skip-permissions` est justement le flag qui active `bypassPermissions`, pas un moyen d'assouplir sélectivement `default`."
+      },
+      "principe_fr": "Le mode `auto` est conçu précisément pour ce compromis (moins d'invites, garde-fous actifs) ; bypass n'est pas une version « plus rapide » du même compromis, c'est un mode différent qui retire la protection.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "PC-PMS-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "bypassPermissions est documente pour des conteneurs/VM isoles ; un bon historique de comportement ne remplace pas cette isolation",
+      "question_en": "A developer sets `bypassPermissions` on their everyday laptop, reasoning that since the agent has behaved well for days, the isolation requirement mentioned in the docs is just extra caution they can skip. Per the documented guidance, is that reasoning sound?",
+      "question_fr": "Un développeur active `bypassPermissions` sur son ordinateur habituel, en estimant que, l'agent s'étant bien comporté pendant des jours, l'exigence d'isolation mentionnée dans la doc n'est qu'une précaution superflue. D'après les conseils documentés, ce raisonnement tient-il ?",
+      "options": [
+        { "key": "A", "text_en": "Yes: a good track record of agent behavior is the documented signal for using bypass outside isolation.", "text_fr": "Oui : un bon historique de comportement de l'agent est le signal documenté pour utiliser bypass hors isolation." },
+        { "key": "B", "text_en": "No: `bypassPermissions` is recommended only for isolated containers and VMs, not general use.", "text_fr": "Non : `bypassPermissions` est documenté comme adapté aux conteneurs et VM isolés, car il n'offre aucune protection contre des actions non voulues sur des fichiers réels." },
+        { "key": "C", "text_en": "Yes: the isolation requirement in the docs applies only to `acceptEdits`, not to `bypassPermissions`.", "text_fr": "Oui : l'exigence d'isolation de la doc ne concerne qu'`acceptEdits`, pas `bypassPermissions`." },
+        { "key": "D", "text_en": "No: `bypassPermissions` is unsafe everywhere, including inside isolated containers and VMs.", "text_fr": "Non : `bypassPermissions` est dangereux partout, y compris dans des conteneurs et VM isolés." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le tableau des modes place `bypassPermissions` avec « Best for: Isolated containers and VMs only », et la doc précise pourquoi : « bypassPermissions offers no protection against prompt injection or unintended actions. »",
+      "distractors_fr": {
+        "A": "La doc lie la sécurité de bypass à l'isolement de l'environnement, pas à un historique de bon comportement ; un bon historique ne change rien à ce qu'un seul appel mal ciblé peut casser.",
+        "C": "Inverse la cible : la recommandation d'isolement vise précisément `bypassPermissions`, le mode sans aucun filet de sécurité.",
+        "D": "Surestime la doc : l'isolement est justement ce qui rend l'absence de protection du mode acceptable, pas quelque chose d'accessoire."
+      },
+      "principe_fr": "Un historique de bon comportement de l'agent ne compense pas l'absence de garde-fou technique : la recommandation d'isolement porte sur ce qu'un seul appel mal ciblé peut faire, pas sur la fiabilité moyenne observée jusque-là.",
+      "doc_ref": "https://code.claude.com/docs/en/permission-modes"
+    }
+  ]
+}

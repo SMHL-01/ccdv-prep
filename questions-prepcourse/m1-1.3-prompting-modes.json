@@ -1,0 +1,267 @@
+{
+  "topic": "m1-1.3-prompting-modes",
+  "source": "prepcourse",
+  "domain": "Prompt and Context Engineering",
+  "subdomain": "Prompt Engineering",
+  "weight": 4.6,
+  "corpus_ref": "prepcourse-corpus/m1-1.3-prompting-modes.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+    "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+  ],
+  "questions": [
+    {
+      "id": "PC-PRM-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le few-shot / multishot prompting consiste a inclure des exemples dans le prompt pour orienter le format, le ton et la structure",
+      "question_en": "Per Anthropic's prompting best practices, what is few-shot (or multishot) prompting?",
+      "question_fr": "D'après les bonnes pratiques de prompting d'Anthropic, qu'est-ce que le few-shot (ou multishot) prompting ?",
+      "options": [
+        { "key": "A", "text_en": "Including well-crafted examples to steer output format, tone, and structure.", "text_fr": "Inclure des exemples bien conçus dans le prompt pour orienter le format, le ton et la structure de la sortie." },
+        { "key": "B", "text_en": "Fine-tuning the model weights on a small labeled dataset before deployment.", "text_fr": "Affiner les poids du modèle sur un petit jeu de données étiquetées avant le déploiement." },
+        { "key": "C", "text_en": "Sending the same request several times and keeping only the fastest response.", "text_fr": "Envoyer plusieurs fois la même requête et ne garder que la réponse la plus rapide." },
+        { "key": "D", "text_en": "Splitting a long prompt into several shorter API calls chained together.", "text_fr": "Découper un long prompt en plusieurs appels API plus courts, enchaînés." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc l'introduit sans ambiguïté : « Examples are one of the most reliable ways to steer Claude's output format, tone, and structure. A few well-crafted examples (known as few-shot or multishot prompting) improve accuracy and consistency. »",
+      "distractors_fr": {
+        "B": "Les exemples vivent dans le prompt, pas dans un réentraînement du modèle ; ce n'est pas du fine-tuning.",
+        "C": "Le few-shot prompting ne consiste pas à répéter la requête ; c'est une technique de rédaction du prompt, pas d'appel réseau.",
+        "D": "Le chaînage de prompts est une technique distincte (prompt chaining), pas le few-shot prompting."
+      },
+      "principe_fr": "Les exemples ne sont pas des données d'entraînement : ils vivent dans le prompt et montrent la forme exacte de réponse attendue, ce qu'une simple description peine souvent à fixer.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La doc recommande d inclure 3 a 5 exemples pour de meilleurs resultats",
+      "question_en": "Per Anthropic's prompting best practices, roughly how many examples should you include for best results?",
+      "question_fr": "D'après les bonnes pratiques de prompting d'Anthropic, combien d'exemples faut-il inclure pour obtenir les meilleurs résultats ?",
+      "options": [
+        { "key": "A", "text_en": "1 example, never more, to keep the prompt as short as possible.", "text_fr": "1 exemple, jamais plus, pour garder le prompt aussi court que possible." },
+        { "key": "B", "text_en": "Around 3 to 5 well-chosen examples, per the documented guidance.", "text_fr": "3 à 5 exemples." },
+        { "key": "C", "text_en": "15 to 20 examples, to cover as many edge cases as possible.", "text_fr": "15 à 20 exemples, pour couvrir un maximum de cas particuliers." },
+        { "key": "D", "text_en": "There is no useful upper bound; more examples always help.", "text_fr": "Il n'y a pas de limite utile ; plus il y a d'exemples, mieux c'est." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc est précise : « Include 3–5 examples for best results. You can also ask Claude to evaluate your examples for relevance and diversity, or to generate additional ones based on your initial set. »",
+      "distractors_fr": {
+        "A": "Un seul exemple est parfois suffisant pour un cas simple, mais ce n'est pas le repère documenté pour « les meilleurs résultats ».",
+        "C": "15 à 20 exemples dépasse largement la fourchette documentée et gonfle inutilement le coût en tokens.",
+        "D": "Chaque exemple coûte des tokens à chaque appel ; la doc donne une fourchette précise, pas une règle « plus il y en a, mieux c'est »."
+      },
+      "principe_fr": "Une fourchette chiffrée documentée (3 à 5) est un repère de calibrage concret, à préférer à l'intuition quand on décide combien d'exemples ajouter à un prompt.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "De bons exemples doivent etre pertinents, varies et structures (balises), pas juste nombreux",
+      "question_en": "A team adds five examples to a prompt, but all five share the exact same input length, phrasing pattern, and edge case. Per the documented criteria for good examples, is this set likely to work well?",
+      "question_fr": "Une équipe ajoute cinq exemples à un prompt, mais les cinq partagent exactement la même longueur d'entrée, le même schéma de formulation et le même cas limite. D'après les critères documentés pour de bons exemples, cet ensemble a-t-il de bonnes chances de bien fonctionner ?",
+      "options": [
+        { "key": "A", "text_en": "Yes, hitting the 3–5 count documented as best practice is what matters most.", "text_fr": "Oui, atteindre le nombre de 3 à 5 documenté comme bonne pratique est ce qui compte le plus." },
+        { "key": "B", "text_en": "Yes, as long as every example is wrapped in `<example>` tags, content variety is optional.", "text_fr": "Oui, du moment que chaque exemple est enveloppé dans des balises `<example>`, la variété du contenu est facultative." },
+        { "key": "C", "text_en": "No, examples also need to be relevant and diverse enough to avoid unintended patterns.", "text_fr": "Non, les exemples doivent aussi être pertinents et suffisamment variés pour éviter les schémas non voulus." },
+        { "key": "D", "text_en": "No, because five examples always exceeds the documented upper limit and will be truncated.", "text_fr": "Non, car cinq exemples dépassent toujours la limite documentée et seront tronqués." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc pose trois critères, pas un seul : « Relevant: Mirror your actual use case closely. Diverse: Cover edge cases and vary enough that Claude doesn't pick up unintended patterns. Structured: Wrap examples in `<example>` tags... » Le nombre seul ne suffit pas.",
+      "distractors_fr": {
+        "A": "Le nombre (3 à 5) est une des trois conditions, pas la seule ; des exemples homogènes restent un problème même au bon nombre.",
+        "B": "Le balisage structure les exemples mais ne remplace pas le critère de diversité, cité séparément par la doc.",
+        "D": "5 exemples est dans la fourchette documentée (3 à 5) ; rien dans la doc ne décrit une troncature automatique au-delà d'un seuil."
+      },
+      "principe_fr": "Un ensemble d'exemples se juge sur trois axes indépendants (pertinence, diversité, structure), pas sur le seul respect d'un compte cible.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ajouter des exemples aide surtout quand une description seule echoue a fixer une structure ou un cas limite precis",
+      "question_en": "A prompt already gives a clear written description of the task, but Claude keeps returning output in a slightly wrong structure. What does documented guidance suggest trying next?",
+      "question_fr": "Un prompt donne déjà une description écrite claire de la tâche, mais Claude renvoie systématiquement une sortie dans une structure légèrement incorrecte. Que suggère d'essayer la doc dans ce cas ?",
+      "options": [
+        { "key": "A", "text_en": "Lower the `temperature` parameter, since structure is a sampling setting.", "text_fr": "Baisser le paramètre `temperature`, la structure étant un réglage d'échantillonnage." },
+        { "key": "B", "text_en": "Remove the task description entirely and rely on the model's default behavior.", "text_fr": "Supprimer entièrement la description de la tâche et se fier au comportement par défaut du modèle." },
+        { "key": "C", "text_en": "Repeat the same written description three more times in the prompt.", "text_fr": "Répéter la même description écrite trois fois de plus dans le prompt." },
+        { "key": "D", "text_en": "Add a few well-crafted examples showing the exact output shape wanted.", "text_fr": "Ajouter quelques exemples bien conçus montrant la forme exacte de sortie attendue." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc positionne précisément les exemples comme le levier pour ce cas : « Examples are one of the most reliable ways to steer Claude's output format, tone, and structure. » — plus fiable qu'une description seule quand la forme exacte n'est pas respectée.",
+      "distractors_fr": {
+        "A": "La temperature règle le caractère aléatoire de l'échantillonnage, pas la structure de sortie ; ce n'est pas le levier pertinent ici.",
+        "B": "Retirer la description ne corrige pas un problème de structure ; ça enlève de l'information au modèle.",
+        "C": "Répéter la même description n'apporte pas d'information nouvelle sur la forme attendue ; les exemples montrent, la description ne fait que dire."
+      },
+      "principe_fr": "Une description explique ce qui est voulu ; un exemple montre à quoi ça ressemble. Quand la structure de sortie résiste à la description, montrer prime sur décrire.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Chaque exemple ajoute au prompt coute des tokens a chaque appel : ajouter des exemples est un arbitrage qualite / cout, pas gratuit",
+      "question_en": "A developer adds ten examples to a prompt template used on every API call, reasoning that examples only affect quality and cost nothing extra. Is this reasoning correct?",
+      "question_fr": "Un développeur ajoute dix exemples à un gabarit de prompt utilisé à chaque appel API, en estimant que les exemples n'affectent que la qualité et ne coûtent rien de plus. Ce raisonnement est-il correct ?",
+      "options": [
+        { "key": "A", "text_en": "Yes, only the first call in a session pays the token cost of the examples.", "text_fr": "Oui, seul le premier appel d'une session paie le coût en tokens des exemples." },
+        { "key": "B", "text_en": "Yes, examples are cached separately and never billed as regular input tokens.", "text_fr": "Oui, les exemples sont mis en cache à part et jamais facturés comme des tokens d'entrée normaux." },
+        { "key": "C", "text_en": "No, every example sits in the prompt and counts as input tokens on every single call.", "text_fr": "Non, chaque exemple fait partie du prompt et compte comme tokens d'entrée à chaque appel." },
+        { "key": "D", "text_en": "No, but only because examples count toward the output token limit, not the input one.", "text_fr": "Non, mais seulement parce que les exemples comptent dans la limite de tokens de sortie, pas d'entrée." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Tout ce qui figure dans le prompt compte comme tokens d'entrée à chaque requête (« Everything in the request counts toward the context window: the system prompt, every message... » — voir aussi le module sur les tokens) ; ajouter dix exemples au gabarit répète ce coût à chaque appel, ce qui fait de l'ajout d'exemples un arbitrage qualité / coût, pas un levier gratuit.",
+      "distractors_fr": {
+        "A": "Sans prompt caching configuré explicitement, chaque appel retraite et paie l'intégralité du prompt, exemples compris.",
+        "B": "Rien dans la doc ne réserve les exemples à un mécanisme de cache exempt de facturation ; ils sont des tokens d'entrée comme le reste du prompt.",
+        "D": "Les exemples font partie du prompt envoyé au modèle : ce sont des tokens d'entrée, pas des tokens de sortie générés par le modèle."
+      },
+      "principe_fr": "Ajouter des exemples déplace un curseur qualité / coût, pas un levier à sens unique : chaque exemple ajouté au gabarit se répercute sur le budget de tokens de chaque appel qui l'utilise.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+    },
+    {
+      "id": "PC-PRM-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Des exemples pas assez varies risquent de faire retenir a Claude un schema non voulu plutot que le motif recherche",
+      "question_en": "All five examples in a prompt happen to have their correct answer as the second item in a bulleted list. Per the documented risk of insufficiently diverse examples, what is the likely failure mode?",
+      "question_fr": "Dans les cinq exemples d'un prompt, la bonne réponse se trouve à chaque fois en deuxième position dans une liste à puces. D'après le risque documenté lié à des exemples pas assez variés, quel est le mode d'échec probable ?",
+      "options": [
+        { "key": "A", "text_en": "Claude will ignore all five examples completely and fall back to zero-shot behavior.", "text_fr": "Claude ignorera complètement les cinq exemples et reviendra à un comportement zero-shot." },
+        { "key": "B", "text_en": "Claude may learn to pick the second bullet regardless of content, not the real rule.", "text_fr": "Claude risque d'apprendre à choisir la deuxième puce quel que soit le contenu, un schéma non voulu plutôt que la vraie règle." },
+        { "key": "C", "text_en": "The API will reject the prompt outright for containing repeated structural patterns.", "text_fr": "L'API rejettera purement et simplement le prompt pour ses schémas structurels répétés." },
+        { "key": "D", "text_en": "Nothing changes; only the number of examples affects Claude's behavior, not their content pattern.", "text_fr": "Rien ne change ; seul le nombre d'exemples influence le comportement de Claude, pas leur schéma de contenu." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc nomme précisément ce risque dans le critère « Diverse » : « Cover edge cases and vary enough that Claude doesn't pick up unintended patterns. » Un schéma incident répété dans tous les exemples (ici, la position) peut être appris à la place du motif réellement visé.",
+      "distractors_fr": {
+        "A": "Rien n'indique que des exemples peu variés soient ignorés en bloc ; le risque documenté est l'inverse, un mauvais schéma appris malgré tout.",
+        "C": "Aucun mécanisme documenté ne rejette un prompt pour manque de diversité de ses exemples ; c'est un risque de qualité de sortie, pas d'erreur API.",
+        "D": "Le critère « Diverse » porte explicitement sur le contenu et la variation des exemples, pas seulement sur leur nombre."
+      },
+      "principe_fr": "Un motif incident partagé par tous les exemples (position, longueur, formulation) peut être appris à la place du motif réellement visé : la diversité des exemples protège contre ce sur-apprentissage de surface.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Modele et nombre d exemples sont des leviers lies : essayer le modele le plus simple et le moins d exemples qui satisfont l eval, avant d ajouter l un ou l autre",
+      "question_en": "A team wants the cheapest setup that still meets their eval. Per the discipline of combining model choice and example count, what should they try first?",
+      "question_fr": "Une équipe veut la configuration la moins coûteuse qui satisfait quand même son évaluation. D'après la discipline qui combine le choix du modèle et le nombre d'exemples, que devrait-elle essayer en premier ?",
+      "options": [
+        { "key": "A", "text_en": "Start with the most capable model and the maximum number of examples, then reduce both together.", "text_fr": "Commencer par le modèle le plus capable et le maximum d'exemples, puis réduire les deux ensemble." },
+        { "key": "B", "text_en": "Fix the example count at the documented 3–5 first, then search only over model choice.", "text_fr": "Fixer d'abord le nombre d'exemples à la fourchette documentée de 3 à 5, puis ne chercher que sur le choix du modèle." },
+        { "key": "C", "text_en": "Fix the model choice first and never revisit it, then tune only the example count.", "text_fr": "Fixer d'abord le choix du modèle sans jamais y revenir, puis n'ajuster que le nombre d'exemples." },
+        { "key": "D", "text_en": "Try the simplest model and fewest examples that meet the eval, adding either only if needed.", "text_fr": "Essayer le modèle le plus simple et le moins d'exemples qui satisfont l'évaluation, en n'ajoutant l'un ou l'autre que là où l'évaluation le montre nécessaire." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "Le cours l'énonce comme discipline générale : « The two decisions are worth making together: try the simplest model and the fewest examples that meet your eval, and add capability or examples only where the eval says you need them. » Le guide de prompt engineering d'Anthropic va dans le même sens : parfois, changer de modèle règle un problème de coût/latence plus simplement que d'ajuster le prompt.",
+      "distractors_fr": {
+        "A": "C'est l'inverse de la discipline recommandée : partir du plus capable et du plus chargé en exemples maximise le coût dès le départ, au lieu de le minimiser.",
+        "B": "Fixer le nombre d'exemples avant de tester le modèle ignore qu'un modèle plus capable peut réussir avec moins d'exemples, ou l'inverse.",
+        "C": "Traiter le modèle comme fixe casse le principe que les deux leviers se travaillent ensemble, pas l'un indépendamment de l'autre."
+      },
+      "principe_fr": "Modèle et nombre d'exemples sont deux leviers qui interagissent : un modèle plus capable a souvent besoin de moins d'exemples pour la même qualité, ce qui rend leur optimisation conjointe plus efficace qu'un réglage l'un après l'autre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+    },
+    {
+      "id": "PC-PRM-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les exemples doivent etre enveloppes dans des balises XML (example, examples) pour que Claude les distingue des instructions",
+      "question_en": "Per Anthropic's prompting best practices, how should multiple examples be marked up in a prompt?",
+      "question_fr": "D'après les bonnes pratiques de prompting d'Anthropic, comment plusieurs exemples doivent-ils être balisés dans un prompt ?",
+      "options": [
+        { "key": "A", "text_en": "Wrapped in `<example>` tags, with multiple examples inside `<examples>` tags.", "text_fr": "Enveloppés dans des balises `<example>`, plusieurs exemples étant regroupés dans des balises `<examples>`." },
+        { "key": "B", "text_en": "Numbered as plain text comments, since Claude does not parse markup of any kind.", "text_fr": "Numérotés en simples commentaires texte, car Claude ne traite aucune forme de balisage." },
+        { "key": "C", "text_en": "Sent as separate API requests, one request per example, before the real question.", "text_fr": "Envoyés en requêtes API séparées, une requête par exemple, avant la vraie question." },
+        { "key": "D", "text_en": "Placed only in the `system` parameter, never inside the `messages` array.", "text_fr": "Placés uniquement dans le paramètre `system`, jamais dans le tableau `messages`." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc le précise dans le critère « Structured » : « Wrap examples in `<example>` tags (multiple examples in `<examples>` tags) so Claude can distinguish them from instructions. »",
+      "distractors_fr": {
+        "B": "Claude traite bien le balisage XML dans le prompt ; c'est justement le mécanisme recommandé pour structurer les exemples.",
+        "C": "Les exemples vivent dans le même prompt que la question réelle, pas dans des appels API séparés.",
+        "D": "Rien n'impose que les exemples soient dans `system` plutôt que dans `messages` ; le critère porte sur le balisage, pas sur l'emplacement du paramètre."
+      },
+      "principe_fr": "Le balisage XML rend explicite la frontière entre instructions, exemples et contenu réel, ce qui réduit le risque que le modèle interprète un exemple comme une instruction ou vice versa.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PRM-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Le prompt engineering n est pas toujours le bon levier : un probleme de cout/latence se resout parfois plus simplement en changeant de modele",
+      "question_en": "An eval shows a feature is too slow and too expensive, but its output quality is already acceptable. A developer's first instinct is to keep tuning the prompt's examples and wording. Per Anthropic's guidance on when to prompt engineer, is that the best first move?",
+      "question_fr": "Une évaluation montre qu'une fonctionnalité est trop lente et trop coûteuse, mais sa qualité de sortie est déjà acceptable. Le premier réflexe d'un développeur est de continuer à peaufiner les exemples et la formulation du prompt. D'après les conseils d'Anthropic sur quand faire du prompt engineering, est-ce le meilleur premier geste ?",
+      "options": [
+        { "key": "A", "text_en": "No, not necessarily: latency and cost are sometimes solved more easily by another model.", "text_fr": "Non, pas forcément : un problème de latence et de coût se règle parfois plus facilement en choisissant un autre modèle." },
+        { "key": "B", "text_en": "Yes, prompt engineering is documented as the correct fix for every kind of failing eval.", "text_fr": "Oui, le prompt engineering est documenté comme le correctif adapté à tout type d'évaluation en échec." },
+        { "key": "C", "text_en": "Yes, because model choice can only affect output quality, never latency or cost.", "text_fr": "Oui, car le choix du modèle ne peut affecter que la qualité de sortie, jamais la latence ou le coût." },
+        { "key": "D", "text_en": "No, because examples must always be removed entirely before touching the model.", "text_fr": "Non, car il faut toujours retirer complètement les exemples avant de toucher au modèle." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc le dit explicitement : « Not every success criteria or failing eval is best solved by prompt engineering. For example, you can sometimes improve latency and cost more easily by selecting a different model. » Ici, la qualité est déjà bonne : le problème est justement latence/coût, exactement le cas visé.",
+      "distractors_fr": {
+        "B": "La doc dit le contraire : certains problèmes se règlent mieux par un autre levier que le prompt engineering.",
+        "C": "Le choix du modèle affecte aussi la vitesse et le coût, comme le montre justement le module sur la matrice de sélection de modèle.",
+        "D": "Rien n'impose de retirer les exemples avant de considérer un changement de modèle ; la doc propose les deux comme leviers distincts, pas comme étapes obligatoires dans un ordre fixe."
+      },
+      "principe_fr": "Le prompt engineering est un levier parmi d'autres, pas le réflexe par défaut : quand le problème est la latence ou le coût plutôt que la qualité, revoir le choix du modèle peut être le geste le plus direct.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+    }
+  ]
+}

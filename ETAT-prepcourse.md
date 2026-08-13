@@ -5,7 +5,7 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**2 / 27 topics valides, 2 reserves par Said, 22 proposes a Marie-Line**
+**3 / 27 topics valides, 2 reserves par Said, 22 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said prend ses 5 petits
 topics habituels (m1-1.1 a m1-1.4, m3-3.1), le reste des modules 2, 4, 5
@@ -22,7 +22,7 @@ documente s y prete, plutot que de viser systematiquement 0.
 | --- | --- | ---: | --- |
 | `[x]` | m1-1.1-llm-behavior | 8 | Said |
 | `[x]` | m1-1.2-models-reasoning | 9 | Said |
-| `[~]` | m1-1.3-prompting-modes | 0 | Said (reserve) |
+| `[x]` | m1-1.3-prompting-modes | 9 | Said |
 | `[~]` | m1-1.4-technical-substrate | 0 | Said (reserve) |
 
 ## Module 2 — Prompting, outils & agents

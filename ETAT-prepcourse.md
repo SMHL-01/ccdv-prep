@@ -5,18 +5,28 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**4 / 27 topics valides, 1 reserve par Said, 22 proposes a Marie-Line**
+**5 / 27 topics valides, 0 reserve par Said, 22 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
-questions). Repartition posee le 2026-08-13 : Said prend ses 5 petits
-topics habituels (m1-1.1 a m1-1.4, m3-3.1), le reste des modules 2, 4, 5
-et m3-3.2 a m3-3.5 est propose a Marie-Line, qui confirme en passant
-chaque topic a `reserve` dans `reservations-prepcourse.json` avant d'ecrire.
-Note calibrage (2026-08-13, mise a jour apres m1-1.4) : consigne tenue sur
-m1-1.3 et m1-1.4 (1 factual_magnitude documentee chacun). Sur les 35
-questions de la banque a ce stade, la repartition converge vers les
-cibles : judgment 65,7 % (cible 65), factual_semantic 28,6 % (cible 30),
-factual_magnitude 5,7 % (cible 5, plafond). Continuer sur cette lancee
-plutot que de re-forcer un chiffre par fichier.
+questions). Repartition posee le 2026-08-13 : Said a boucle ses 5 topics
+habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
+l'ensemble). Rien d'autre prevu de son cote pour l'instant. Reste
+propose a Marie-Line : le reste des modules 2, 4, 5 et m3-3.2 a m3-3.5 ;
+elle confirme en passant chaque topic a `reserve` dans
+`reservations-prepcourse.json` avant d'ecrire.
+
+Note calibrage (2026-08-13, cloturee sur les topics de Said) : consigne
+tenue sur m1-1.3, m1-1.4 et m3-3.1 (1 factual_magnitude documentee
+chacun). Sur les 44 questions ecrites a ce stade, la repartition colle
+aux cibles : judgment 65,9 % (cible 65), factual_semantic 27,3 % (cible
+30), factual_magnitude 6,8 % (cible 5, plafond) — a suivre sur les
+topics de Marie-Line plutot que de re-forcer un chiffre par fichier.
+
+Note methode (2026-08-13, apres m3-3.1) : m3-3.1 est le premier topic de
+Said dont le corpus est narratif (etude de cas incident) plutot qu'un
+resume de doc. Reflexe garde : ancrer quand meme chaque question sur la
+doc officielle (`permission-modes`, `permissions`) plutot que sur la
+seule narration, pour que `doc_ref` reste verifiable. A reappliquer sur
+les topics au profil similaire (guardrails, security incidents, etc.).
 
 ## Module 1 — Fondations LLM & modeles
 
@@ -44,7 +54,7 @@ plutot que de re-forcer un chiffre par fichier.
 
 | | Topic | Ecrites | Qui |
 | --- | --- | ---: | --- |
-| `[~]` | m3-3.1-permission | 0 | Said (reserve) |
+| `[x]` | m3-3.1-permission | 9 | Said |
 | `[ ]` | m3-3.2-claudemd | 0 | Marie-Line (propose) |
 | `[ ]` | m3-3.3-plugins | 0 | Marie-Line (propose) |
 | `[ ]` | m3-3.4-rag | 0 | Marie-Line (propose) |

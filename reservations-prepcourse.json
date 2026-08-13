@@ -17,7 +17,7 @@
     "m2-2.6-agent-loop": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.7-memory-scope": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.8-multimodal-batch": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
-    "m3-3.1-permission": { "qui": "said", "etat": "reserve", "depuis": "2026-08-13" },
+    "m3-3.1-permission": { "qui": "said", "etat": "fait" },
     "m3-3.2-claudemd": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m3-3.3-plugins": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m3-3.4-rag": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },

@@ -5,16 +5,18 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**3 / 27 topics valides, 2 reserves par Said, 22 proposes a Marie-Line**
+**4 / 27 topics valides, 1 reserve par Said, 22 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said prend ses 5 petits
 topics habituels (m1-1.1 a m1-1.4, m3-3.1), le reste des modules 2, 4, 5
 et m3-3.2 a m3-3.5 est propose a Marie-Line, qui confirme en passant
 chaque topic a `reserve` dans `reservations-prepcourse.json` avant d'ecrire.
-Note calibrage (2026-08-13) : m1-1.1 et m1-1.2 sont tous deux a 0 %
-factual_magnitude. Pas grave a ce volume, mais pour les topics suivants,
-inclure une question de grandeur des qu un chiffre/seuil/limite reellement
-documente s y prete, plutot que de viser systematiquement 0.
+Note calibrage (2026-08-13, mise a jour apres m1-1.4) : consigne tenue sur
+m1-1.3 et m1-1.4 (1 factual_magnitude documentee chacun). Sur les 35
+questions de la banque a ce stade, la repartition converge vers les
+cibles : judgment 65,7 % (cible 65), factual_semantic 28,6 % (cible 30),
+factual_magnitude 5,7 % (cible 5, plafond). Continuer sur cette lancee
+plutot que de re-forcer un chiffre par fichier.
 
 ## Module 1 — Fondations LLM & modeles
 
@@ -23,7 +25,7 @@ documente s y prete, plutot que de viser systematiquement 0.
 | `[x]` | m1-1.1-llm-behavior | 8 | Said |
 | `[x]` | m1-1.2-models-reasoning | 9 | Said |
 | `[x]` | m1-1.3-prompting-modes | 9 | Said |
-| `[~]` | m1-1.4-technical-substrate | 0 | Said (reserve) |
+| `[x]` | m1-1.4-technical-substrate | 9 | Said |
 
 ## Module 2 — Prompting, outils & agents
 

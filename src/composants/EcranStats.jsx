@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import IndicateurCouverture from './IndicateurCouverture.jsx'
-import { DOMAINES, metaParId, chargerQuestions } from '../banque.js'
+import { DOMAINES } from '../banque.js'
 import { lire, remplacer, statistiques, serieProgression, examens, reinitialiser } from '../stockage.js'
 import {
   construireExport,
@@ -20,10 +20,10 @@ import {
    ce que la moyenne brute ferait disparaitre.
    ============================================================ */
 
-export default function EcranStats({ couverture, onChangement }) {
-  const stats = statistiques(undefined, DOMAINES)
-  const progression = serieProgression()
-  const historiqueExamens = examens()
+export default function EcranStats({ couverture, banque, banqueActive, onChangement }) {
+  const stats = statistiques(lire(banque), DOMAINES)
+  const progression = serieProgression(lire(banque))
+  const historiqueExamens = examens(lire(banque))
 
   // Transfert : un fichier choisi n'est jamais applique tout de suite. Il est
   // d'abord lu, resume, et pose ici — c'est ce resume qui permet de decider
@@ -42,9 +42,9 @@ export default function EcranStats({ couverture, onChangement }) {
     setMessage(null)
     setOccupe(true)
     try {
-      const etat = lire()
-      const metas = idsCites(etat).map(metaParId).filter(Boolean)
-      const questions = await chargerQuestions(metas)
+      const etat = lire(banque)
+      const metas = idsCites(etat).map(banqueActive.metaParId).filter(Boolean)
+      const questions = await banqueActive.chargerQuestions(metas)
       const doc = construireExport(etat, new Map(questions.map((q) => [q.id, q])))
       telecharger(nomFichier(), JSON.stringify(doc, null, 2))
       setMessage(`Export téléchargé : ${doc.reponses.length} réponses, ${doc.fiches.length} fiches de révision.`)
@@ -73,7 +73,7 @@ export default function EcranStats({ couverture, onChangement }) {
   }
 
   function appliquer(mode) {
-    const actuel = lire()
+    const actuel = lire(banque)
     const rien = actuel.reponses.length === 0
     if (
       mode === 'remplacement' &&
@@ -85,7 +85,7 @@ export default function EcranStats({ couverture, onChangement }) {
       return
     }
     const resultat = mode === 'fusion' ? fusionner(actuel, enAttente.progression) : enAttente.progression
-    remplacer(resultat)
+    remplacer(resultat, banque)
     setEnAttente(null)
     setMessage(
       mode === 'fusion'
@@ -301,7 +301,7 @@ export default function EcranStats({ couverture, onChangement }) {
           className="bouton"
           onClick={() => {
             if (window.confirm('Effacer toute la progression enregistrée dans ce navigateur ?')) {
-              reinitialiser()
+              reinitialiser(banque)
               onChangement?.()
             }
           }}

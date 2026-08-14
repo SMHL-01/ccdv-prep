@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { METADONNEES, DOMAINES, SOUS_DOMAINES } from '../banque.js'
+import { DOMAINES, SOUS_DOMAINES } from '../banque.js'
 import { filtrerMetas } from '../tirage.js'
 
 /* ============================================================
@@ -14,25 +14,25 @@ import { filtrerMetas } from '../tirage.js'
    pourquoi.
    ============================================================ */
 
-export default function EcranEntrainement({ onLancer }) {
+export default function EcranEntrainement({ banqueActive, onLancer }) {
   const [domaine, setDomaine] = useState('')
   const [sousDomaine, setSousDomaine] = useState('')
   const [difficulte, setDifficulte] = useState('')
   const [limite, setLimite] = useState(20)
 
   const domainesDispo = useMemo(() => {
-    const avec = new Set(METADONNEES.map((m) => m.domain))
+    const avec = new Set(banqueActive.METADONNEES.map((m) => m.domain))
     return DOMAINES.filter((d) => avec.has(d.nom))
-  }, [])
+  }, [banqueActive])
 
   const sousDomainesDispo = useMemo(() => {
-    const avec = new Set(METADONNEES.map((m) => m.subdomain))
+    const avec = new Set(banqueActive.METADONNEES.map((m) => m.subdomain))
     return SOUS_DOMAINES.filter((sd) => avec.has(sd.nom)).filter((sd) => !domaine || sd.domaine === domaine)
-  }, [domaine])
+  }, [banqueActive, domaine])
 
   const selection = useMemo(
-    () => filtrerMetas({ domaine, sousDomaine, difficulte }),
-    [domaine, sousDomaine, difficulte]
+    () => filtrerMetas(banqueActive, { domaine, sousDomaine, difficulte }),
+    [banqueActive, domaine, sousDomaine, difficulte]
   )
 
   return (

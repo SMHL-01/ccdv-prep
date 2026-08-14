@@ -1,19 +1,21 @@
 import { useState, useMemo, useCallback } from 'react'
-import {
-  couverture as calculerCouverture,
-  metaParId,
-  chargerQuestions,
-  NB_QUESTIONS_EXAMEN,
-} from './banque.js'
+import { BANQUES, NB_QUESTIONS_EXAMEN } from './banque.js'
 import { tirerExamen, tirerEntrainement, melanger } from './tirage.js'
-import { idsDus } from './stockage.js'
+import { lire, idsDus } from './stockage.js'
+import EcranSelectionBanque from './composants/EcranSelectionBanque.jsx'
 import EcranAccueil from './composants/EcranAccueil.jsx'
 import EcranEntrainement from './composants/EcranEntrainement.jsx'
 import EcranStats from './composants/EcranStats.jsx'
 import Serie from './composants/Serie.jsx'
 
 /* ============================================================
-   APP — navigation par onglets et lancement des series.
+   APP — choix de la banque, navigation par onglets, lancement des series.
+
+   Le choix de banque ("doc" ou "prepcourse") precede tout le reste : tant
+   qu'il n'est pas fait, aucun onglet ne s'affiche. Une fois choisi, TOUT
+   ce qui suit — couverture, tirage, stockage de la progression — passe
+   par BANQUES[banque], jamais par un import global qui melangerait les
+   deux ensembles.
 
    Pas de routeur : trois onglets et un ecran de serie qui se
    superpose. Une dependance de moins, et le bouton « retour » du
@@ -30,7 +32,15 @@ const ONGLETS = [
   { cle: 'stats', libelle: 'Statistiques', icone: '◧' },
 ]
 
+const BANQUES_DISPO = [
+  { id: 'doc', nom: 'Doc officielle', nbQuestions: BANQUES.doc.METADONNEES.length },
+  { id: 'prepcourse', nom: 'Prep Course', nbQuestions: BANQUES.prepcourse.METADONNEES.length },
+]
+
 export default function App() {
+  // null tant que l'utilisateur n'a pas choisi sa banque : aucun ecran de
+  // contenu ne s'affiche avant ce choix.
+  const [banque, setBanque] = useState(null)
   const [onglet, setOnglet] = useState('accueil')
   const [serie, setSerie] = useState(null)
   const [chargement, setChargement] = useState(false)
@@ -38,10 +48,28 @@ export default function App() {
   // des statistiques, qui vivent dans le localStorage et non dans l'etat React.
   const [revision, setRevision] = useState(0)
 
-  const couverture = useMemo(() => calculerCouverture(), [])
-  const metasDues = useMemo(() => idsDus().map(metaParId).filter(Boolean), [revision])
+  const banqueActive = banque ? BANQUES[banque] : null
+
+  const couverture = useMemo(() => banqueActive?.couverture(), [banqueActive])
+  const metasDues = useMemo(() => {
+    if (!banqueActive) return []
+    return idsDus(lire(banque)).map(banqueActive.metaParId).filter(Boolean)
+  }, [banque, banqueActive, revision])
 
   const rafraichir = useCallback(() => setRevision((r) => r + 1), [])
+
+  function choisirBanque(id) {
+    setBanque(id)
+    setOnglet('accueil')
+    setSerie(null)
+    setRevision(0)
+  }
+
+  function changerBanque() {
+    setBanque(null)
+    setSerie(null)
+    setOnglet('accueil')
+  }
 
   function quitterSerie() {
     setSerie(null)
@@ -53,7 +81,7 @@ export default function App() {
     if (!metas.length) return
     setChargement(true)
     try {
-      const questions = await chargerQuestions(metas)
+      const questions = await banqueActive.chargerQuestions(metas)
       setSerie({ mode, titre, questions, info })
     } finally {
       setChargement(false)
@@ -61,7 +89,7 @@ export default function App() {
   }
 
   function lancerExamen() {
-    const tirage = tirerExamen(NB_QUESTIONS_EXAMEN)
+    const tirage = tirerExamen(banqueActive, NB_QUESTIONS_EXAMEN)
     ouvrirSerie({ metas: tirage.metas, mode: 'examen', titre: 'Examen blanc', info: tirage })
   }
 
@@ -70,7 +98,15 @@ export default function App() {
   }
 
   function lancerEntrainement(filtres) {
-    ouvrirSerie({ metas: tirerEntrainement(filtres), mode: 'libre', titre: 'Entraînement' })
+    ouvrirSerie({ metas: tirerEntrainement(banqueActive, filtres), mode: 'libre', titre: 'Entraînement' })
+  }
+
+  if (!banque) {
+    return (
+      <div className="coque">
+        <EcranSelectionBanque banques={BANQUES_DISPO} onChoisir={choisirBanque} />
+      </div>
+    )
   }
 
   if (chargement) {
@@ -92,7 +128,13 @@ export default function App() {
             Les poids relatifs du blueprint sont respectés sur {serie.info.poidsCouvert.toFixed(1)} % du programme.
           </div>
         )}
-        <Serie questions={serie.questions} mode={serie.mode} titre={serie.titre} onQuitter={quitterSerie} />
+        <Serie
+          questions={serie.questions}
+          mode={serie.mode}
+          titre={serie.titre}
+          banque={banque}
+          onQuitter={quitterSerie}
+        />
       </div>
     )
   }
@@ -100,6 +142,13 @@ export default function App() {
   return (
     <>
       <div className="coque">
+        <div className="barre-banque">
+          <span>{banqueActive.nom}</span>
+          <button type="button" className="lien-discret" onClick={changerBanque}>
+            ← Changer de banque
+          </button>
+        </div>
+
         {onglet === 'accueil' && (
           <EcranAccueil
             couverture={couverture}
@@ -109,8 +158,17 @@ export default function App() {
             onEntrainement={() => setOnglet('entrainement')}
           />
         )}
-        {onglet === 'entrainement' && <EcranEntrainement onLancer={lancerEntrainement} />}
-        {onglet === 'stats' && <EcranStats couverture={couverture} onChangement={rafraichir} />}
+        {onglet === 'entrainement' && (
+          <EcranEntrainement banqueActive={banqueActive} onLancer={lancerEntrainement} />
+        )}
+        {onglet === 'stats' && (
+          <EcranStats
+            couverture={couverture}
+            banque={banque}
+            banqueActive={banqueActive}
+            onChangement={rafraichir}
+          />
+        )}
       </div>
 
       <nav className="barre-onglets">

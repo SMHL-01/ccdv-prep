@@ -3,6 +3,7 @@ import CarteQuestion from './CarteQuestion.jsx'
 import ListeOptions from './ListeOptions.jsx'
 import Correction from './Correction.jsx'
 import RecapExamen from './RecapExamen.jsx'
+import BadgeSource from './BadgeSource.jsx'
 import { enregistrerReponse, enregistrerExamen } from '../stockage.js'
 import { DUREE_EXAMEN_MIN } from '../banque.js'
 
@@ -44,7 +45,7 @@ function ardoiseVierge(questions) {
   return questions.map(() => ({ choix: [], marquee: false, valide: false }))
 }
 
-export default function Serie({ questions, mode = 'libre', titre, onQuitter }) {
+export default function Serie({ questions, mode = 'libre', titre, banque = 'doc', onQuitter }) {
   const examen = mode === 'examen'
 
   const [index, setIndex] = useState(0)
@@ -82,24 +83,32 @@ export default function Serie({ questions, mode = 'libre', titre, onQuitter }) {
       if (bonne) juste++
       // Une question laissee sans reponse compte comme ratee : elle doit
       // revenir dans les revisions, c'est justement celle qu'on ne sait pas.
-      enregistrerReponse(q.id, bonne, {
-        domain: q.domain,
-        subdomain: q.subdomain,
-        difficulty: q.difficulty,
-        choix: etat[i].choix,
-        correct: q.correct,
-      })
+      enregistrerReponse(
+        q.id,
+        bonne,
+        {
+          domain: q.domain,
+          subdomain: q.subdomain,
+          difficulty: q.difficulty,
+          choix: etat[i].choix,
+          correct: q.correct,
+        },
+        banque
+      )
     })
 
-    enregistrerExamen({
-      total: questions.length,
-      repondu: etat.filter((r) => r.choix.length > 0).length,
-      juste,
-      score: Math.round((100 * juste) / questions.length),
-    })
+    enregistrerExamen(
+      {
+        total: questions.length,
+        repondu: etat.filter((r) => r.choix.length > 0).length,
+        juste,
+        score: Math.round((100 * juste) / questions.length),
+      },
+      banque
+    )
 
     setVue('bilan')
-  }, [questions])
+  }, [questions, banque])
 
   useEffect(() => {
     if (!examen || vue === 'bilan') return
@@ -143,13 +152,18 @@ export default function Serie({ questions, mode = 'libre', titre, onQuitter }) {
     const r = reponses[index]
     if (!r.choix.length || r.valide) return
     const bonne = memeEnsemble(r.choix, q.correct)
-    enregistrerReponse(q.id, bonne, {
-      domain: q.domain,
-      subdomain: q.subdomain,
-      difficulty: q.difficulty,
-      choix: r.choix,
-      correct: q.correct,
-    })
+    enregistrerReponse(
+      q.id,
+      bonne,
+      {
+        domain: q.domain,
+        subdomain: q.subdomain,
+        difficulty: q.difficulty,
+        choix: r.choix,
+        correct: q.correct,
+      },
+      banque
+    )
     setReponses((etat) => {
       const suivant = [...etat]
       suivant[index] = { ...suivant[index], valide: true }
@@ -391,6 +405,7 @@ function Bilan({ resultats, examen, onQuitter }) {
           {rates.map((r) => (
             <details key={r.question.id} className="revoir">
               <summary>
+                <BadgeSource source={r.question.source} />
                 <span className="revoir-enonce" lang="en">
                   {r.question.question_en}
                 </span>

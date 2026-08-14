@@ -1,0 +1,474 @@
+{
+  "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
+  "genere": "2026-08-14",
+  "nbQuestions": 44,
+  "fichiers": [
+    {
+      "fichier": "m1-1.1-llm-behavior.json",
+      "subdomain": "LLM Fundamentals",
+      "nb": 8
+    },
+    {
+      "fichier": "m1-1.2-models-reasoning.json",
+      "subdomain": "LLM Fundamentals / Model Selection and Tradeoffs",
+      "nb": 9
+    },
+    {
+      "fichier": "m1-1.3-prompting-modes.json",
+      "subdomain": "Prompt Engineering",
+      "nb": 9
+    },
+    {
+      "fichier": "m1-1.4-technical-substrate.json",
+      "subdomain": "Claude API Mechanics / Technical Fundamentals",
+      "nb": 9
+    },
+    {
+      "fichier": "m3-3.1-permission.json",
+      "subdomain": "AI Application Security / Configuration Management",
+      "nb": 9
+    }
+  ],
+  "questions": [
+    {
+      "id": "PC-LLB-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-LLB-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.1-llm-behavior.json"
+    },
+    {
+      "id": "PC-MDR-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "LLM Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-MDR-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.2-models-reasoning.json"
+    },
+    {
+      "id": "PC-PRM-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-PRM-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.3-prompting-modes.json"
+    },
+    {
+      "id": "PC-TSB-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-TSB-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Technical Fundamentals",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-PMS-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-PMS-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.1-permission.json"
+    }
+  ]
+}

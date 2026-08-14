@@ -1,6 +1,7 @@
 import TexteBilingue from './TexteBilingue.jsx'
 import ListeOptions from './ListeOptions.jsx'
 import Correction from './Correction.jsx'
+import BadgeSource from './BadgeSource.jsx'
 
 /* ============================================================
    CARTE QUESTION — affichage d'une question et de sa correction.
@@ -63,6 +64,7 @@ export default function CarteQuestion({
       )}
 
       <div className="meta-question">
+        <BadgeSource source={question.source} />
         <span className="etiquette etiquette-accent">{question.domain}</span>
         <span className="etiquette">{LIBELLE_NATURE[question.nature] || question.nature}</span>
         <span className="etiquette">

@@ -4,9 +4,24 @@
    Pas de compte, pas de serveur : toute la progression vit dans le
    navigateur. Le format est versionne, pour qu'une evolution future
    n'efface pas silencieusement l'historique.
+
+   DEUX BANQUES, DEUX CLES. La banque "doc" garde EXACTEMENT sa cle
+   d'origine (ccdv-prep:progression:v1) : la progression deja stockee par
+   des utilisateurs existants doit se relire a l'identique, sans migration
+   ni risque de collision avec la nouvelle banque "prepcourse", qui vit
+   dans sa propre cle. `banque` est un parametre FACULTATIF, en fin de
+   signature, qui vaut "doc" par defaut — tout appel ecrit avant
+   l'existence de plusieurs banques continue de cibler la meme cle qu'avant.
    ============================================================ */
 
-const CLE = 'ccdv-prep:progression:v1'
+const CLES = {
+  doc: 'ccdv-prep:progression:v1',
+  prepcourse: 'ccdv-prep:progression:prepcourse:v1',
+}
+
+function cleDe(banque) {
+  return CLES[banque] || CLES.doc
+}
 
 /* Champs d'une reponse enregistree :
      id, juste, date, domain, subdomain, difficulty  — depuis l'origine
@@ -40,9 +55,9 @@ function vide() {
   return { version: 1, reponses: [], fiches: {} }
 }
 
-export function lire() {
+export function lire(banque = 'doc') {
   try {
-    const brut = localStorage.getItem(CLE)
+    const brut = localStorage.getItem(cleDe(banque))
     if (!brut) return vide()
     const etat = JSON.parse(brut)
     if (etat.version !== 1) return vide()
@@ -54,9 +69,9 @@ export function lire() {
   }
 }
 
-function ecrire(etat) {
+function ecrire(etat, banque = 'doc') {
   try {
-    localStorage.setItem(CLE, JSON.stringify(etat))
+    localStorage.setItem(cleDe(banque), JSON.stringify(etat))
   } catch {
     /* quota plein ou stockage refuse : la session reste utilisable en memoire */
   }
@@ -74,9 +89,11 @@ function cles(v) {
  * @param {string} id identifiant de la question
  * @param {boolean} juste
  * @param {object} meta { domain, subdomain, difficulty, choix, correct }
+ * @param {string} banque "doc" (par defaut) ou "prepcourse" — cloisonne la
+ *   file de repetition espacee et les statistiques par banque.
  */
-export function enregistrerReponse(id, juste, meta = {}) {
-  const etat = lire()
+export function enregistrerReponse(id, juste, meta = {}, banque = 'doc') {
+  const etat = lire(banque)
   etat.reponses.push({
     id,
     juste,
@@ -113,7 +130,7 @@ export function enregistrerReponse(id, juste, meta = {}) {
     etat.fiches[id] = fiche
   }
 
-  ecrire(etat)
+  ecrire(etat, banque)
   return etat
 }
 
@@ -127,11 +144,11 @@ export function idsDus(etat = lire()) {
 }
 
 /** Sauvegarde d'un resultat d'examen blanc, pour la courbe de progression. */
-export function enregistrerExamen(resultat) {
-  const etat = lire()
+export function enregistrerExamen(resultat, banque = 'doc') {
+  const etat = lire(banque)
   etat.examens = etat.examens || []
   etat.examens.push({ date: Date.now(), ...resultat })
-  ecrire(etat)
+  ecrire(etat, banque)
   return etat
 }
 
@@ -202,15 +219,15 @@ export function serieProgression(etat = lire(), taille = 20) {
  * Remplace integralement la progression stockee. Utilise par l'import, seul
  * endroit ou l'on ecrit un etat qui ne vient pas d'une reponse donnee ici.
  */
-export function remplacer(progression) {
+export function remplacer(progression, banque = 'doc') {
   const etat = { ...vide(), ...progression, version: 1 }
-  ecrire(etat)
+  ecrire(etat, banque)
   return etat
 }
 
-export function reinitialiser() {
+export function reinitialiser(banque = 'doc') {
   try {
-    localStorage.removeItem(CLE)
+    localStorage.removeItem(cleDe(banque))
   } catch {
     /* rien a faire */
   }

@@ -10,9 +10,14 @@
    doit rester juste quand une partie du blueprint n'a pas encore de
    questions : on repartit sur ce qui EXISTE, en respectant les poids
    relatifs, et l'application affiche a cote la part reellement couverte.
+
+   Chaque fonction recoit la BANQUE ACTIVE en parametre (metaDe,
+   METADONNEES) plutot que de l'importer en dur : c'est ce qui permet aux
+   memes fonctions de tirer indifferemment dans la banque doc ou dans la
+   banque prepcourse, sans jamais les melanger.
    ============================================================ */
 
-import { SOUS_DOMAINES, metaDe, METADONNEES, NB_QUESTIONS_EXAMEN } from './banque.js'
+import { SOUS_DOMAINES, NB_QUESTIONS_EXAMEN } from './banque.js'
 
 /** Melange de Fisher-Yates. Sur une copie : l'index ne doit pas bouger. */
 export function melanger(tableau) {
@@ -67,9 +72,10 @@ function repartir(disponibles, total) {
  * Compose un examen blanc et renvoie des METADONNEES.
  * `complet` est faux si la banque n'a pas fourni le compte demande, ce que
  * l'ecran signale plutot que de le masquer.
+ * @param {object} banque instance de BANQUES[..] (banque.js) : { metaDe }
  */
-export function tirerExamen(total = NB_QUESTIONS_EXAMEN) {
-  const disponibles = SOUS_DOMAINES.map((sd) => ({ ...sd, nbDispo: metaDe(sd.nom).length })).filter(
+export function tirerExamen(banque, total = NB_QUESTIONS_EXAMEN) {
+  const disponibles = SOUS_DOMAINES.map((sd) => ({ ...sd, nbDispo: banque.metaDe(sd.nom).length })).filter(
     (sd) => sd.nbDispo > 0
   )
 
@@ -80,7 +86,7 @@ export function tirerExamen(total = NB_QUESTIONS_EXAMEN) {
   for (const sd of disponibles) {
     const n = quotas.get(sd.nom) || 0
     if (n === 0) continue
-    metas.push(...melanger(metaDe(sd.nom)).slice(0, n))
+    metas.push(...melanger(banque.metaDe(sd.nom)).slice(0, n))
     repartition.push({ nom: sd.nom, domaine: sd.domaine, poids: sd.poids, n })
   }
 
@@ -93,9 +99,12 @@ export function tirerExamen(total = NB_QUESTIONS_EXAMEN) {
   }
 }
 
-/** Selection d'entrainement, sur les metadonnees. */
-export function filtrerMetas({ domaine, sousDomaine, difficulte }) {
-  return METADONNEES.filter(
+/**
+ * Selection d'entrainement, sur les metadonnees.
+ * @param {object} banque instance de BANQUES[..] (banque.js) : { METADONNEES }
+ */
+export function filtrerMetas(banque, { domaine, sousDomaine, difficulte }) {
+  return banque.METADONNEES.filter(
     (m) =>
       (!domaine || m.domain === domaine) &&
       (!sousDomaine || m.subdomain === sousDomaine) &&
@@ -104,6 +113,6 @@ export function filtrerMetas({ domaine, sousDomaine, difficulte }) {
 }
 
 /** Tirage libre pour l'entrainement : filtres, melange, puis coupe. */
-export function tirerEntrainement({ domaine, sousDomaine, difficulte, limite = 20 }) {
-  return melanger(filtrerMetas({ domaine, sousDomaine, difficulte })).slice(0, limite)
+export function tirerEntrainement(banque, { domaine, sousDomaine, difficulte, limite = 20 }) {
+  return melanger(filtrerMetas(banque, { domaine, sousDomaine, difficulte })).slice(0, limite)
 }

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 /**
- * generer-manifeste.js — construit questions/_manifeste.json.
+ * generer-manifeste.js — construit un manifeste de metadonnees pour chaque
+ * banque de questions : questions/_manifeste.json (banque "doc") et
+ * questions-prepcourse/_manifeste.json (banque "prepcourse").
  *
  * Le manifeste ne contient que les METADONNEES de chaque question : de quoi
  * calculer la couverture, remplir les filtres et tirer un examen, sans charger
@@ -12,6 +14,11 @@
  * justifications de chaque distracteur pesent plusieurs mega-octets, dont on
  * n'a besoin qu'au moment ou une serie commence.
  *
+ * Deux manifestes distincts plutot qu'un seul filtre par "source" : ca laisse
+ * le manifeste de la banque doc bit a bit identique a ce qu'il etait avant
+ * l'existence de la banque prepcourse, et ca mappe naturellement aux deux
+ * import.meta.glob distincts de src/banque.js (un par dossier).
+ *
  * Lance automatiquement par "npm run build" et "npm run dev" (scripts prebuild
  * et predev), donc jamais a jour par accident.
  */
@@ -19,8 +26,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const DIR_QUESTIONS = path.join(__dirname, 'questions');
-const SORTIE = path.join(DIR_QUESTIONS, '_manifeste.json');
+const BANQUES = [
+  { dir: path.join(__dirname, 'questions'), sortie: 'questions/_manifeste.json' },
+  { dir: path.join(__dirname, 'questions-prepcourse'), sortie: 'questions-prepcourse/_manifeste.json' },
+];
 
 /** Champs retenus : strictement ce dont l'app a besoin avant une serie. */
 function metadonnees(q, fichier) {
@@ -31,18 +40,19 @@ function metadonnees(q, fichier) {
     difficulty: q.difficulty || 'moyen',
     nature: q.nature || 'judgment',
     type: q.type || (Array.isArray(q.correct) && q.correct.length > 1 ? 'multi' : 'single'),
+    source: q.source,
     fichier,
   };
 }
 
-function main() {
-  if (!fs.existsSync(DIR_QUESTIONS)) {
-    console.error(`Dossier introuvable : ${DIR_QUESTIONS}`);
+function genererManifeste({ dir, sortie }) {
+  if (!fs.existsSync(dir)) {
+    console.error(`Dossier introuvable : ${dir}`);
     process.exit(1);
   }
 
   const fichiers = fs
-    .readdirSync(DIR_QUESTIONS)
+    .readdirSync(dir)
     .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
     .sort();
 
@@ -50,7 +60,7 @@ function main() {
   const parFichier = [];
 
   for (const fichier of fichiers) {
-    const brut = JSON.parse(fs.readFileSync(path.join(DIR_QUESTIONS, fichier), 'utf8'));
+    const brut = JSON.parse(fs.readFileSync(path.join(dir, fichier), 'utf8'));
     const lot = Array.isArray(brut) ? brut : brut.questions || [];
     for (const q of lot) questions.push(metadonnees(q, fichier));
     parFichier.push({ fichier, subdomain: brut.subdomain || null, nb: lot.length });
@@ -65,12 +75,17 @@ function main() {
     questions,
   };
 
-  fs.writeFileSync(SORTIE, JSON.stringify(manifeste, null, 2) + '\n', 'utf8');
+  const cheminSortie = path.join(__dirname, sortie);
+  fs.writeFileSync(cheminSortie, JSON.stringify(manifeste, null, 2) + '\n', 'utf8');
 
-  const octets = fs.statSync(SORTIE).size;
+  const octets = fs.statSync(cheminSortie).size;
   console.log(
-    `Manifeste : ${questions.length} questions, ${fichiers.length} fichier(s), ${(octets / 1024).toFixed(1)} Ko -> questions/_manifeste.json`
+    `Manifeste : ${questions.length} questions, ${fichiers.length} fichier(s), ${(octets / 1024).toFixed(1)} Ko -> ${sortie}`
   );
+}
+
+function main() {
+  for (const banque of BANQUES) genererManifeste(banque);
 }
 
 main();

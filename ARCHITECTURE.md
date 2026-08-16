@@ -37,20 +37,23 @@ ccdv-prep/
 ├── verifier-couverture.js      le corpus couvre-t-il le blueprint ?
 ├── etat.js                     avancement réel, et écriture d'ETAT.md
 │
-├── questions/                  la banque — un fichier par sous-domaine
+├── questions/                   banque "doc" — un fichier par sous-domaine
 │   ├── _manifeste.json         généré : métadonnées seules
 │   ├── _index-concepts.json    généré : un concept par question, pour la dédup
 │   ├── _exemples.json          trois questions de référence stylistique
 │   └── <domaine>_<sous-domaine>.json
+├── questions-prepcourse/       banque "prepcourse" — même format, même manifeste généré,
+│   └── ...                     jamais mélangée à questions/ (voir §5.2 bis)
 │
 ├── src/                        l'application React
 │   ├── main.jsx                point d'entrée
-│   ├── App.jsx                 onglets, lancement des séries
-│   ├── banque.js               chargement des questions, couverture
+│   ├── App.jsx                 sélection de banque, onglets, lancement des séries
+│   ├── banque.js               chargement des questions, couverture — factory par banque
 │   ├── tirage.js               composition d'un examen blanc pondéré
-│   ├── stockage.js             progression et répétition espacée
-│   ├── composants/             6 composants
-│   └── styles/                 tokens.css, base.css, app.css (641 lignes)
+│   ├── stockage.js             progression et répétition espacée — cloisonnées par banque
+│   ├── transfert.js            export/import JSON de la progression
+│   ├── composants/             12 composants
+│   └── styles/                 tokens.css, base.css, app.css
 │
 ├── raw/                        cache de téléchargement — 59 Mo, non versionné
 ├── docs-corpus/                corpus assemblé — 17 Mo, non versionné
@@ -364,12 +367,34 @@ pour les fichiers concernés, chacun une fois (cache mémoire `cacheFichiers`).
 Un examen blanc qui pioche dans dix sous-domaines déclenche **dix** requêtes,
 pas cinquante-trois.
 
+### 5.2 bis Deux banques cloisonnées
+
+`doc` (`questions/`) et `prepcourse` (`questions-prepcourse/`) sont deux
+banques **indépendantes**, jamais mélangées : manifeste séparé, `import.meta.glob`
+séparé, cache de fichiers chargés séparé, et — voir §5.5 — clé `localStorage`
+séparée pour la progression et la répétition espacée. La séparation vit dans la
+structure des données, pas dans un filtre appliqué après coup sur un tas commun.
+
+`App.jsx` affiche `EcranSelectionBanque` tant qu'aucune banque n'est choisie ;
+rien d'autre ne s'affiche avant ce choix. Une fois choisie, tout ce qui suit —
+couverture, tirage, stockage — passe par `BANQUES[banque]`. `BadgeSource`
+affiche l'origine (`doc` / `Prep Course`) sur chaque question, en entraînement
+comme dans la correction d'un examen.
+
 ### 5.3 `banque.js`
 
-| Export | Rôle |
+`creerBanque(manifeste, chargeurs)` est une factory : chaque banque obtient son
+propre index par sous-domaine et par id, son propre cache de fichiers chargés.
+Le blueprint (`SOUS_DOMAINES`) est partagé — même taxonomie, même examen — seul
+le contenu diffère. `BANQUES = { doc, prepcourse }` expose les deux instances ;
+des exports plats (`METADONNEES`, `couverture`, etc.), alignés sur `doc` seule,
+restent disponibles pour rétrocompatibilité avec les scripts qui font du SSR de
+ce module (`verifier-transfert.js`) sans connaître l'existence de deux banques.
+
+| Export (par banque) | Rôle |
 | --- | --- |
 | `METADONNEES` | les métadonnées de toutes les questions, disponibles immédiatement |
-| `SOUS_DOMAINES`, `DOMAINES` | le blueprint aplati, chaque feuille portant son domaine parent |
+| `SOUS_DOMAINES`, `DOMAINES` | le blueprint aplati, chaque feuille portant son domaine parent — partagé entre banques |
 | `NB_QUESTIONS_EXAMEN`, `DUREE_EXAMEN_MIN` | 53 et 120, lus du blueprint |
 | `metaDe(sousDomaine)`, `metaParId(id)` | index en mémoire |
 | `chargerQuestions(metas)` | charge les fichiers nécessaires **en parallèle**, renvoie les questions complètes dans l'ordre demandé |
@@ -410,10 +435,23 @@ mélange puis coupe — 20 questions par défaut.
 
 ### 5.5 `stockage.js` — progression et répétition espacée
 
-Clé `localStorage` : **`ccdv-prep:progression:v1`**. Format versionné : une
-version inconnue repart d'un état vide plutôt que d'écraser silencieusement.
-Toutes les lectures et écritures sont protégées — en navigation privée stricte
-ou sur quota plein, la session reste utilisable en mémoire.
+**Deux clés `localStorage`, une par banque**, jamais lues ou écrites l'une pour
+l'autre : `ccdv-prep:progression:v1` (banque `doc`) et
+`ccdv-prep:progression:prepcourse:v1` (banque `prepcourse`). Toutes les
+fonctions (`enregistrerReponse`, `enregistrerExamen`, `statistiques`,
+`serieProgression`, `remplacer`, `reinitialiser`) prennent `banque` en dernier
+paramètre facultatif, `"doc"` par défaut.
+
+La banque `doc` garde **exactement** sa clé d'origine : aucune migration à
+faire, aucun risque de collision avec `prepcourse`. Une progression écrite
+avant l'existence de plusieurs banques se relit à l'identique. Vérifié via
+`verifier-transfert.js` et un scénario manuel rejouant une progression au
+format antérieur.
+
+Format versionné : une version inconnue repart d'un état vide plutôt que
+d'écraser silencieusement. Toutes les lectures et écritures sont protégées —
+en navigation privée stricte ou sur quota plein, la session reste utilisable
+en mémoire.
 
 ```json
 {
@@ -449,13 +487,15 @@ jusqu'à 20 points de taux de réussite.
 
 | Composant | Rôle |
 | --- | --- |
-| `App.jsx` | trois onglets, un écran de série en surimpression. **Pas de routeur** : une dépendance de moins, et le bouton « retour » du téléphone ne casse pas une série en cours |
+| `App.jsx` | choix de banque, trois onglets, un écran de série en surimpression. **Pas de routeur** : une dépendance de moins, et le bouton « retour » du téléphone ne casse pas une série en cours |
+| `EcranSelectionBanque` | premier écran, avant tout le reste : doc officielle ou Prep Course. Rien d'autre ne s'affiche tant qu'il n'est pas fait |
 | `EcranAccueil` | ce qu'il y a à faire aujourd'hui, et où en est la banque |
 | `EcranEntrainement` | choix du périmètre. Les listes ne montrent **que ce qui existe** : proposer un sous-domaine vide donnerait un écran « aucune question » sans dire pourquoi |
-| `EcranStats` | score pondéré par domaine, courbe de progression, historique des examens, remise à zéro |
+| `EcranStats` | score pondéré par domaine, courbe de progression, historique des examens, export/import, remise à zéro — tout scopé à la banque active |
 | `IndicateurCouverture` | présent en permanence : questions, sous-domaines sur 25, part du poids couverte, et ce qui manque trié par poids |
 | `Serie` | déroule une liste de questions, dans les trois modes |
 | `CarteQuestion` | affichage, saisie, correction |
+| `BadgeSource` | étiquette « Doc » / « Prep Course » sur une question, en entraînement et dans la correction d'examen |
 
 `App.jsx` maintient un compteur `revision` incrémenté après chaque série : il
 force le recalcul des révisions dues et des statistiques, qui vivent dans le

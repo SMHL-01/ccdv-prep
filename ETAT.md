@@ -1,6 +1,23 @@
 # Ou en est ccdv-prep
 
-> Genere par `node etat.js --ecrire` le 2026-08-03. Ne pas editer a la main : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`.
+> La partie "banque doc" ci-dessous est generee par `node etat.js --ecrire` le
+> 2026-08-03 — ne pas l'editer a la main, la seule facon de la faire bouger est
+> d'ecrire des questions ou de modifier `reservations.json`. La section
+> "Banque Prep Course" juste en dessous est un resume tenu a la main.
+
+## Les deux banques
+
+L'appli propose deux modes independants — **Doc** (documentation officielle)
+et **Prep Course** (corpus de formation) — avec repetition espacee,
+statistiques et progression **cloisonnees par banque** (cles `localStorage`
+separees, aucun melange), et un badge de source visible sur chaque question.
+
+| Banque | Etat | Suivi |
+| --- | --- | --- |
+| Doc | 406 / 400 questions — 100.0 % du poids de l'examen — 25 / 25 sous-domaines | `node etat.js` / `ETAT.md` (ci-dessous) |
+| Prep Course | 44 questions — 5 / 27 topics valides | `ETAT-prepcourse.md` (tenu a la main — pas encore de script `etat.js`-like pour cette banque) |
+
+---
 
 **406 / 400 questions** — **100.0 %** du poids de l'examen couvert — **25 / 25** sous-domaines termines.
 

@@ -5,7 +5,7 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**5 / 27 topics valides, 0 reserve par Said, 22 proposes a Marie-Line**
+**6 / 27 topics valides, 0 reserve par Said, 21 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said a boucle ses 5 topics
 habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
@@ -20,6 +20,17 @@ chacun). Sur les 44 questions ecrites a ce stade, la repartition colle
 aux cibles : judgment 65,9 % (cible 65), factual_semantic 27,3 % (cible
 30), factual_magnitude 6,8 % (cible 5, plafond) — a suivre sur les
 topics de Marie-Line plutot que de re-forcer un chiffre par fichier.
+
+Note calibrage (2026-08-25, apres m2-2.1) : le plafond `factual_magnitude`
+de la banque prepcourse est en depassement HERITE, pas cause par un fichier
+fautif -- les 3 questions viennent des topics de Said et chacun de ses fichiers
+passe seul. Le plafond etant evalue sur la banque entiere, il se resorbe par
+dilution : 3/44 = 6,8 % avant m2-2.1, 3/53 = 5,7 % apres, et il repassera sous
+les 5 % a 60 questions (3/60 = 5,0 %). Consigne pour les prochains topics :
+zero `factual_magnitude` jusqu'a ce que `npm run questions` affiche « Tous les
+controles passent » sur la banque prepcourse, puis reprendre le rythme d'une
+question de grandeur par fichier. Ne PAS retoucher les fichiers de Said pour
+faire tomber le chiffre.
 
 Note methode (2026-08-13, apres m3-3.1) : m3-3.1 est le premier topic de
 Said dont le corpus est narratif (etude de cas incident) plutot qu'un
@@ -41,7 +52,7 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 
 | | Topic | Ecrites | Qui |
 | --- | --- | ---: | --- |
-| `[ ]` | m2-2.1-prompting | 0 | Marie-Line (propose) |
+| `[x]` | m2-2.1-prompting | 9 | Marie-Line |
 | `[ ]` | m2-2.2-thinking | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.3-tools | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.4-streaming | 0 | Marie-Line (propose) |

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
-  "genere": "2026-08-14",
-  "nbQuestions": 44,
+  "genere": "2026-08-25",
+  "nbQuestions": 53,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -21,6 +21,11 @@
     {
       "fichier": "m1-1.4-technical-substrate.json",
       "subdomain": "Claude API Mechanics / Technical Fundamentals",
+      "nb": 9
+    },
+    {
+      "fichier": "m2-2.1-prompting.json",
+      "subdomain": "Prompt Engineering / Output Handling",
       "nb": 9
     },
     {
@@ -379,6 +384,96 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m1-1.4-technical-substrate.json"
+    },
+    {
+      "id": "PC-PMT-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-PMT-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.1-prompting.json"
     },
     {
       "id": "PC-PMS-001",

@@ -15,7 +15,7 @@ separees, aucun melange), et un badge de source visible sur chaque question.
 | Banque | Etat | Suivi |
 | --- | --- | --- |
 | Doc | 406 / 400 questions — 100.0 % du poids de l'examen — 25 / 25 sous-domaines | `node etat.js` / `ETAT.md` (ci-dessous) |
-| Prep Course | 44 questions — 5 / 27 topics valides | `ETAT-prepcourse.md` (tenu a la main — pas encore de script `etat.js`-like pour cette banque) |
+| Prep Course | 53 questions — 6 / 27 topics valides | `ETAT-prepcourse.md` (tenu a la main — pas encore de script `etat.js`-like pour cette banque) |
 
 ---
 

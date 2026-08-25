@@ -1,0 +1,430 @@
+{
+  "topic": "m2-2.1-prompting",
+  "source": "prepcourse",
+  "domain": "Prompt and Context Engineering",
+  "subdomain": "Prompt Engineering / Output Handling",
+  "weight": 7.2,
+  "corpus_ref": "prepcourse-corpus/m2-2.1-prompting.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+    "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use"
+  ],
+  "questions": [
+    {
+      "id": "PC-PMT-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Une forme de sortie qui varie d une execution a l autre signale une contrainte de sortie absente, pas une formulation a soigner",
+      "question_en": "A ticket classifier returns the right category, but as `Billing` on one run, `billing` on another, and occasionally as a full sentence. Per the prompting guidance, which piece is missing from the prompt?",
+      "question_fr": "Un classifieur de tickets renvoie la bonne catégorie, mais sous la forme `Billing` à une exécution, `billing` à une autre, et parfois sous forme de phrase complète. D'après les recommandations de prompting, quelle pièce manque au prompt ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "An output constraint naming the exact form to return.",
+          "text_fr": "Une contrainte de sortie qui nomme la forme exacte à renvoyer."
+        },
+        {
+          "key": "B",
+          "text_en": "A longer system prompt describing all three categories.",
+          "text_fr": "Un system prompt plus long décrivant les trois catégories."
+        },
+        {
+          "key": "C",
+          "text_en": "A higher token budget so the answer can finish.",
+          "text_fr": "Un budget de tokens plus élevé pour que la réponse aille au bout."
+        },
+        {
+          "key": "D",
+          "text_en": "A retry loop that re-asks until parsing works.",
+          "text_fr": "Une boucle de réessai qui redemande jusqu'à ce que le parsing passe."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc de prompting demande d'être « specific about the desired output format and constraints » et consacre une section entière au contrôle du format des réponses. Ici le contenu est juste : c'est la forme qui n'a jamais été spécifiée. Tant que le prompt ne fixe pas le jeu de libellés et la casse, chaque exécution renvoie une variante plausible que le routeur en aval ne sait pas lire.",
+      "distractors_fr": {
+        "B": "Décrire les catégories plus longuement précise le contenu, pas la forme : le classifieur trouvait déjà la bonne catégorie, il la restituait juste dans une enveloppe variable.",
+        "C": "Aucune réponse n'est tronquée ici — un libellé d'un mot ou une phrase courte tiennent tous les deux dans le budget. Le budget de tokens ne traite pas une variation de forme.",
+        "D": "Réessayer redemande la même chose au même prompt non contraint : le coût monte, la variabilité reste. Le réessai compense un défaut de contrainte au lieu de le corriger."
+      },
+      "principe_fr": "Une sortie dont le contenu est bon mais la forme instable se corrige en contraignant la forme, jamais en reformulant le contenu.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PMT-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Une tache comprise mais une structure inventee se corrige par des exemples few-shot, pas par une description plus longue",
+      "question_en": "Claude extracts the right fields but invents a different field layout on each run. The written description of the layout is already three paragraphs long. What should be added next?",
+      "question_fr": "Claude extrait les bons champs mais invente une disposition différente à chaque exécution. La description écrite de cette disposition fait déjà trois paragraphes. Qu'ajouter ensuite ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Three more paragraphs describing the exact layout.",
+          "text_fr": "Trois paragraphes de plus décrivant la disposition exacte."
+        },
+        {
+          "key": "B",
+          "text_en": "A stricter role sentence at the top of the system prompt.",
+          "text_fr": "Une phrase de rôle plus stricte en tête du system prompt."
+        },
+        {
+          "key": "C",
+          "text_en": "Two example input-output pairs in `<example>` tags.",
+          "text_fr": "Deux paires exemple entrée-sortie dans des balises `<example>`."
+        },
+        {
+          "key": "D",
+          "text_en": "An instruction to double-check its own output.",
+          "text_fr": "Une consigne de relire sa propre sortie avant de répondre."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc est explicite : les exemples sont « one of the most reliable ways to steer Claude's output format, tone, and structure », et elle recommande de les envelopper dans des balises `<example>`. Une structure exacte se montre ; elle se décrit mal. Trois paragraphes de description n'ont pas suffi précisément parce que la description est le mauvais outil pour ce type d'échec.",
+      "distractors_fr": {
+        "A": "C'est le réflexe que la doc et le cours désignent comme le piège : allonger la description sans changer de technique. Trois paragraphes ont déjà échoué, six échoueront de la même façon.",
+        "B": "Une phrase de rôle cadre le ton et le périmètre du comportement, pas la disposition exacte des champs. Le rôle n'est pas ce qui manque ici.",
+        "D": "L'auto-relecture demande au modèle de vérifier une cible qui n'a jamais été fixée : il ne peut pas comparer sa sortie à une structure qu'on ne lui a pas montrée."
+      },
+      "principe_fr": "Quand la tâche est comprise mais la structure inventée, il faut montrer un exemple, pas décrire davantage.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PMT-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les balises XML delimitent les exemples pour que Claude ne les lise pas comme des instructions",
+      "question_en": "In a few-shot prompt, what job do the XML tags wrapped around each example do?",
+      "question_fr": "Dans un prompt few-shot, à quoi servent les balises XML qui entourent chaque exemple ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "They tell the API to validate the output schema.",
+          "text_fr": "Elles demandent à l'API de valider le schéma de sortie."
+        },
+        {
+          "key": "B",
+          "text_en": "They mark examples off from the instructions.",
+          "text_fr": "Elles séparent les exemples des instructions."
+        },
+        {
+          "key": "C",
+          "text_en": "They cache the examples across later requests.",
+          "text_fr": "Elles mettent les exemples en cache pour les appels suivants."
+        },
+        {
+          "key": "D",
+          "text_en": "They raise the weight Claude gives each example.",
+          "text_fr": "Elles augmentent le poids que Claude accorde à chaque exemple."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc demande d'envelopper les exemples dans des balises `<example>` « so Claude can distinguish them from instructions », et la section sur les balises XML précise qu'elles aident Claude à analyser un prompte mêlant instructions, contexte, exemples et entrées variables sans confusion. Leur rôle est une frontière de lecture, rien de plus.",
+      "distractors_fr": {
+        "A": "La validation d'un schéma se demande à l'API via `output_config.format` ou `strict: true`, pas avec des balises dans le texte du prompt. Une balise XML n'engage aucune contrainte côté API.",
+        "C": "Le cache de prompt se pilote par des points de césure explicites, indépendamment du balisage XML : mettre un exemple entre balises ne le met pas en cache.",
+        "D": "Aucun mécanisme de pondération n'est attaché aux balises. Elles délimitent, elles ne hiérarchisent pas."
+      },
+      "principe_fr": "Une balise XML est une frontière de lecture pour le modèle, pas une instruction adressée à l'API.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PMT-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un prompt devenu verbeux induit une sortie verbeuse et une regression de latence sans gain d exactitude",
+      "question_en": "After five revision passes the prompt spans five paragraphs, replies now exceed 2,000 characters, latency has climbed and accuracy is unchanged. What does this pattern indicate?",
+      "question_fr": "Après cinq passes de révision, le prompt fait cinq paragraphes, les réponses dépassent 2 000 caractères, la latence a augmenté et l'exactitude n'a pas bougé. Que signale ce schéma ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The model needs a larger max_tokens budget.",
+          "text_fr": "Le modèle a besoin d'un budget max_tokens plus large."
+        },
+        {
+          "key": "B",
+          "text_en": "The task genuinely requires a longer answer.",
+          "text_fr": "La tâche exige réellement une réponse plus longue."
+        },
+        {
+          "key": "C",
+          "text_en": "The three categories are still described too vaguely.",
+          "text_fr": "Les trois catégories sont encore décrites trop vaguement."
+        },
+        {
+          "key": "D",
+          "text_en": "The prompt's own verbosity is driving the output.",
+          "text_fr": "C'est la verbosité du prompt qui tire la sortie."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La doc note que « the formatting style used in your prompt may influence Claude's response style » et conseille d'aligner le style du prompt sur celui de la sortie voulue. Un prompt long et non focalisé produit une sortie longue et non focalisée : la latence se dégrade sans que l'exactitude progresse. Le signal à lire est l'absence de gain malgré l'allongement, pas le contenu de la dernière passe.",
+      "distractors_fr": {
+        "A": "Rien n'est tronqué : les réponses sont trop longues, pas coupées. Augmenter `max_tokens` aggraverait la latence sans rien corriger.",
+        "B": "Un libellé de catégorie tient en un mot. Les 2 000 caractères ne viennent pas de la tâche mais du style du prompt.",
+        "C": "C'est l'hypothèse déjà testée aux passes 3 et 5, sans effet : le modèle identifiait correctement la catégorie, la description n'était pas le manque."
+      },
+      "principe_fr": "Un prompt qui s'allonge sans gagner en exactitude est un diagnostic à refaire, pas une passe à ajouter.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "PC-PMT-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Structured outputs contraignent la reponse finale via output_config format et les entrees d outils via strict true",
+      "question_en": "Structured outputs constrain generation at two distinct points. Which TWO of these does the feature actually cover?",
+      "question_fr": "Les structured outputs contraignent la génération en deux points distincts. Lesquels DEUX (TWO) le mécanisme couvre-t-il réellement ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The final response text, via `output_config.format`.",
+          "text_fr": "Le texte de la réponse finale, via `output_config.format`."
+        },
+        {
+          "key": "B",
+          "text_en": "The thinking blocks emitted before the final answer.",
+          "text_fr": "Les blocs de thinking émis avant la réponse finale."
+        },
+        {
+          "key": "C",
+          "text_en": "The tool input arguments, via `strict: true`.",
+          "text_fr": "Les arguments d'entrée des outils, via `strict: true`."
+        },
+        {
+          "key": "D",
+          "text_en": "The tool result blocks your code sends back.",
+          "text_fr": "Les blocs de résultat d'outil que votre code renvoie."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La page annonce deux fonctionnalités complémentaires : les JSON outputs (`output_config.format`) contraignent la réponse de Claude, et le strict tool use (`strict: true`) garantit la validation de schéma sur les entrées d'outils. Les deux s'utilisent séparément ou ensemble dans la même requête. La note sur le périmètre des grammaires précise le reste : elles s'appliquent à la sortie directe de Claude, pas aux appels d'outils, aux résultats d'outils ni aux balises de thinking.",
+      "distractors_fr": {
+        "B": "La doc exclut explicitement le thinking du périmètre de la grammaire : l'état de grammaire se réinitialise entre les sections, ce qui laisse Claude raisonner librement avant de produire une réponse structurée.",
+        "D": "Les blocs de résultat d'outil sont produits par votre code, pas par le modèle : l'API n'a rien à contraindre à la génération de ce côté."
+      },
+      "principe_fr": "Les structured outputs contraignent ce que le modèle génère — réponse finale et arguments d'outils — jamais ce que votre code lui renvoie.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "PC-PMT-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La grammaire compilee est mise en cache 24 h depuis le dernier usage donc un schema qui change a chaque appel repaie la compilation",
+      "question_en": "A pipeline sends a slightly different JSON schema on every request. Why does it keep paying the structured-outputs latency penalty instead of paying it once?",
+      "question_fr": "Un pipeline envoie un schéma JSON légèrement différent à chaque requête. Pourquoi paie-t-il en permanence la pénalité de latence des structured outputs au lieu de la payer une seule fois ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Grammar caching only works on batch requests.",
+          "text_fr": "Le cache de grammaire ne fonctionne qu'en mode batch."
+        },
+        {
+          "key": "B",
+          "text_en": "Each new schema recompiles its own grammar.",
+          "text_fr": "Chaque nouveau schéma recompile sa propre grammaire."
+        },
+        {
+          "key": "C",
+          "text_en": "The injected format system prompt grows steadily.",
+          "text_fr": "Le system prompt de format injecté grossit progressivement."
+        },
+        {
+          "key": "D",
+          "text_en": "Schema compilation is billed as output tokens.",
+          "text_fr": "La compilation du schéma est facturée en tokens de sortie."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc décrit une latence supplémentaire à la première utilisation d'un schéma donné, le temps que la grammaire compile, puis un cache des grammaires compilées de 24 heures à compter du dernier usage. Le cache est invalidé dès que la structure du schéma change — seuls les champs `name` et `description` peuvent bouger sans l'invalider. Un schéma neuf à chaque appel ne réutilise donc jamais rien.",
+      "distractors_fr": {
+        "A": "La compatibilité avec le batch est indiquée comme un avantage (traitement à l'échelle, remise de 50 %), pas comme une condition du cache : le cache de grammaire ne dépend pas du mode d'envoi.",
+        "C": "Le system prompt injecté par la fonctionnalité augmente légèrement le décompte de tokens d'entrée, mais il ne grossit pas d'appel en appel et ce n'est pas de la latence de compilation.",
+        "D": "La compilation n'est pas un poste de facturation en tokens de sortie ; ce qui coûte des tokens, c'est le system prompt de format injecté, côté entrée."
+      },
+      "principe_fr": "Un cache de grammaire ne rend service qu'à une charge dont le schéma est stable : le faire varier à chaque appel revient à désactiver le cache.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "PC-PMT-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Structured outputs ne garantissent pas la casse des valeurs enum et la reponse se termine sans stop_reason particulier",
+      "question_en": "Your schema pins a label set with `enum`, yet a response comes back with a differently capitalized value, no error and no unusual stop reason. What does the documentation say about this case?",
+      "question_fr": "Votre schéma fixe un jeu de libellés avec `enum`, et pourtant une réponse revient avec une valeur dont la casse diffère, sans erreur ni stop reason particulier. Que dit la documentation de ce cas ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is a refusal, so check `stop_reason` first.",
+          "text_fr": "C'est un refus : il faut d'abord regarder `stop_reason`."
+        },
+        {
+          "key": "B",
+          "text_en": "It means the grammar cache went stale mid-run.",
+          "text_fr": "Cela signifie que le cache de grammaire s'est périmé en cours."
+        },
+        {
+          "key": "C",
+          "text_en": "It only happens once `max_tokens` is reached.",
+          "text_fr": "Cela n'arrive qu'une fois `max_tokens` atteint."
+        },
+        {
+          "key": "D",
+          "text_en": "Enum casing is not guaranteed by the feature.",
+          "text_fr": "La casse des valeurs enum n'est pas garantie par la fonctionnalité."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La section « Invalid outputs » liste ce cas à part des deux autres : les structured outputs ne garantissent pas la capitalisation des valeurs `enum` et `const`, la divergence porte typiquement sur la première lettre d'un mot après une espace, et « the response completes normally, with no error and no special `stop_reason` ». La consigne qui suit est d'y répondre côté code : comparer les valeurs d'enum sans tenir compte de la casse, et éviter des valeurs qui ne diffèrent que par la capitalisation.",
+      "distractors_fr": {
+        "A": "Un refus se signale par `stop_reason: \"refusal\"` avec un code 200 ; ici la doc précise justement qu'il n'y a aucun `stop_reason` particulier.",
+        "B": "Un cache de grammaire périmé se traduit par une recompilation, donc par de la latence sur le premier appel — pas par une valeur d'enum mal capitalisée.",
+        "C": "Une troncature à `max_tokens` produit une sortie incomplète, coupée en pleine structure ; la réponse décrite ici se termine normalement."
+      },
+      "principe_fr": "Une garantie de schéma porte sur la structure, pas sur la casse : les comparaisons de libellés restent à faire sans tenir compte de la capitalisation.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "PC-PMT-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Output Handling",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Deux stop_reason signalent une sortie structuree qui peut ne pas respecter le schema : refusal et max_tokens",
+      "question_en": "Which TWO `stop_reason` values tell your code that a structured-output response may not match the schema you supplied?",
+      "question_fr": "Quelles DEUX (TWO) valeurs de `stop_reason` indiquent à votre code qu'une réponse en structured output peut ne pas respecter le schéma fourni ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`end_turn`, when the model finishes early.",
+          "text_fr": "`end_turn`, quand le modèle termine tôt."
+        },
+        {
+          "key": "B",
+          "text_en": "`refusal`, returned with a 200 status code.",
+          "text_fr": "`refusal`, renvoyé avec un code de statut 200."
+        },
+        {
+          "key": "C",
+          "text_en": "`max_tokens`, when the reply is truncated.",
+          "text_fr": "`max_tokens`, quand la réponse est tronquée."
+        },
+        {
+          "key": "D",
+          "text_en": "`invalid_schema`, raised by the validator.",
+          "text_fr": "`invalid_schema`, levé par le validateur."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La doc nomme deux scénarios où la sortie peut ne pas correspondre au schéma malgré la contrainte. Le refus : `stop_reason: \"refusal\"`, code 200, tokens facturés, et un message de refus qui prend le pas sur la contrainte de schéma. La troncature : `stop_reason: \"max_tokens\"`, sortie incomplète, à réessayer avec un `max_tokens` plus élevé. C'est ce qui justifie de tester `stop_reason` plutôt que de supposer que toute réponse se parse.",
+      "distractors_fr": {
+        "A": "`end_turn` est la fin normale d'une réponse : c'est précisément le cas où la garantie de schéma tient.",
+        "D": "Aucun `stop_reason` de ce nom n'existe côté API. Un schéma invalide est rejeté à la requête, pas signalé par un stop reason — la convention vient d'autres écosystèmes."
+      },
+      "principe_fr": "Une garantie de schéma n'exonère pas de lire `stop_reason` : deux terminaisons documentées la contournent légitimement.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    },
+    {
+      "id": "PC-PMT-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Prompt Engineering",
+      "weight": 4.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le prefill de la reponse assistant pour forcer du JSON se remplace par les structured outputs et non par un prefill mieux ecrit",
+      "question_en": "A service forces JSON by prefilling the assistant turn with `{`. After moving to a current model, those requests fail with a 400. What is the documented migration?",
+      "question_fr": "Un service force du JSON en préremplissant le tour assistant avec `{`. Après passage à un modèle récent, ces requêtes échouent en 400. Quelle est la migration documentée ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Replace the prefill with structured outputs.",
+          "text_fr": "Remplacer le préremplissage par les structured outputs."
+        },
+        {
+          "key": "B",
+          "text_en": "Keep the prefill but shorten it to one token.",
+          "text_fr": "Garder le préremplissage en le réduisant à un token."
+        },
+        {
+          "key": "C",
+          "text_en": "Move the prefill into an earlier user message.",
+          "text_fr": "Déplacer le préremplissage dans un message user antérieur."
+        },
+        {
+          "key": "D",
+          "text_en": "Add a retry that strips the stray preamble.",
+          "text_fr": "Ajouter un réessai qui retire le préambule parasite."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc indique qu'à partir des modèles Claude 4.6 le préremplissage de la dernière réponse assistant n'est plus pris en charge et renvoie une erreur 400, et elle donne la migration pour le cas « controlling output formatting » : la fonctionnalité Structured Outputs est faite pour contraindre la réponse à un schéma donné. La page des structured outputs ferme la porte de l'autre côté : les JSON outputs sont incompatibles avec le préremplissage de message.",
+      "distractors_fr": {
+        "B": "La longueur n'est pas le critère : c'est la présence d'un tour assistant prérempli en dernière position qui déclenche le 400, quelle que soit sa taille.",
+        "C": "Ajouter des messages assistant ailleurs dans la conversation reste permis, mais transposer le préremplissage dans un message user ne contraint plus rien : la forme redevient une simple demande.",
+        "D": "Nettoyer après coup traite le symptôme et laisse la requête en échec 400 : rien n'est renvoyé à filtrer."
+      },
+      "principe_fr": "Une contrainte de forme obtenue par préremplissage se remplace par une contrainte côté API, pas par une variante plus fine du même préremplissage.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    }
+  ]
+}

@@ -306,6 +306,14 @@ function main() {
   }
 
   if (reecrireIndex) {
+    // On n'ecrit jamais l'index a partir d'une banque qui ne passe pas les
+    // controles : sinon un `--index` lance par reflexe grave dans un fichier
+    // genere l'etat d'une banque cassee, et le probleme devient invisible.
+    if (anomaliesGlobales.length) {
+      console.error(`\n  Index des concepts NON reecrit : ${anomaliesGlobales.length} anomalie(s) a corriger d'abord.`);
+      console.error('  Corriger, relancer `npm run questions` jusqu\'au vert, puis `npm run index`.');
+      process.exit(1);
+    }
     const indexDoc = resultats.doc ? resultats.doc.index : [];
     fs.writeFileSync(FICHIER_INDEX, JSON.stringify(indexDoc, null, 2), 'utf8');
     console.log(`\n  Index des concepts reecrit : ${indexDoc.length} entrees -> questions/_index-concepts.json (banque doc)`);

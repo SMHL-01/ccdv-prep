@@ -15,7 +15,9 @@
     "transfert": "node verifier-transfert.js",
     "traduire": "node traduire-questions.js",
     "etat": "node etat.js",
-    "livrer": "node generer-manifeste.js && node verifier-questions.js --index && node etat.js --ecrire"
+    "index": "node verifier-questions.js --index",
+    "etat:ecrire": "node etat.js --ecrire",
+    "livrer": "node generer-manifeste.js && node verifier-questions.js"
   },
   "dependencies": {
     "react": "^19.2.7",

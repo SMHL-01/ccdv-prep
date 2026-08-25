@@ -1,9 +1,9 @@
 # Ou en est ccdv-prep
 
-> La partie "banque doc" ci-dessous est generee par `node etat.js --ecrire` le
-> 2026-08-03 — ne pas l'editer a la main, la seule facon de la faire bouger est
-> d'ecrire des questions ou de modifier `reservations.json`. La section
-> "Banque Prep Course" juste en dessous est un resume tenu a la main.
+> Ce fichier melange deux choses. Entre les marqueurs `etat:debut` et
+> `etat:fin`, tout est genere par `node etat.js --ecrire` (banque doc) : ne rien
+> y editer a la main. Tout le reste — dont la section "Les deux banques"
+> ci-dessous — est tenu a la main et n'est jamais touche par le script.
 
 ## Les deux banques
 
@@ -18,6 +18,10 @@ separees, aucun melange), et un badge de source visible sur chaque question.
 | Prep Course | 53 questions — 6 / 27 topics valides | `ETAT-prepcourse.md` (tenu a la main — pas encore de script `etat.js`-like pour cette banque) |
 
 ---
+
+<!-- etat:debut -->
+
+> Zone generee par `node etat.js --ecrire` le 2026-08-25 — banque doc uniquement. Ne rien editer a la main entre les marqueurs : la seule facon de faire bouger ce tableau est d'ecrire des questions, ou de modifier `reservations.json`. Ce qui est hors des marqueurs n'est jamais touche par le script.
 
 **406 / 400 questions** — **100.0 %** du poids de l'examen couvert — **25 / 25** sous-domaines termines.
 
@@ -98,3 +102,4 @@ separees, aucun melange), et un badge de source visible sur chaque question.
 | `[x]` | MCP Server Development | 8 | 8 | 2.1 % | Said (Claude Pro, quota limite -> petits sous-domaines) |
 | `[x]` | Agentic Customization | 16 | 16 | 4.1 % | Marie-Line (Claude Code, acces direct GitHub -> gros sous-domaines) |
 
+<!-- etat:fin -->

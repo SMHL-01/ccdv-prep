@@ -61,21 +61,30 @@ Un sous-domaine = un fichier `questions/<domaine>_<sous-domaine>.json`. Ne
 jamais toucher au fichier de quelqu'un d'autre. Ne jamais editer
 `_manifeste.json` ni `_index-concepts.json` a la main : ils sont generes.
 
-### 4. Avant de commiter — regenerer et verifier
+### 4. Avant de commiter — verifier, puis ecrire
+
+Verifier et ecrire sont deux gestes separes, jamais la meme commande. D'abord la
+verification, qui ne modifie aucun fichier de documentation :
 
 ```bash
 npm run livrer
 ```
 
-Cette commande enchaine les trois regenerations dans le bon ordre : manifeste,
-index des concepts, `ETAT.md`. Puis :
+Elle regenere `_manifeste.json` puis passe les controles. Elle doit afficher
+**« Tous les controles passent »**. Sinon on corrige avant de commiter — jamais
+apres. Une fois au vert, et une fois seulement, les deux ecritures :
 
 ```bash
-npm run questions
+npm run index
+npm run etat:ecrire
 ```
 
-Il doit afficher **« Tous les controles passent »**. Sinon on corrige avant de
-commiter — jamais apres.
+`npm run index` refuse d'ecrire si une anomalie subsiste. `npm run etat:ecrire`
+ne reecrit que la zone d'`ETAT.md` situee entre `<!-- etat:debut -->` et
+`<!-- etat:fin -->`, et echoue avec un code non nul si ces marqueurs manquent,
+sont en double ou inverses : tout ce qui est hors de la zone est tenu a la main
+et n'est jamais touche. `ETAT-prepcourse.md` n'a pas de generateur du tout, il
+s'edite entierement a la main.
 
 ### 5. Pousser
 
@@ -88,9 +97,12 @@ git push
 ```
 
 Le `git pull --rebase` avant chaque push est ce qui evite les divergences. S'il
-signale un conflit sur `_manifeste.json`, `_index-concepts.json` ou `ETAT.md` :
-ne pas le resoudre a la main, prendre n'importe quelle version puis relancer
-`npm run livrer`, qui les reconstruit correctement.
+signale un conflit sur `_manifeste.json` ou `_index-concepts.json` : ne pas le
+resoudre a la main, prendre n'importe quelle version puis relancer
+`npm run livrer` et `npm run index`, qui les reconstruisent correctement. Un
+conflit dans `ETAT.md` se resout par zone : dans la zone generee, prendre
+n'importe quelle version et relancer `npm run etat:ecrire` ; hors zone, lire les
+deux versions et fusionner a la main, c'est du texte que personne ne regenere.
 
 ---
 
@@ -145,8 +157,8 @@ git log origin/main..HEAD --oneline   # ce que j'ai en local
 
 Si deux personnes ont ecrit le meme fichier de questions, ne pas choisir un
 camp au hasard : les deux jeux contiennent du bon. Fusionner en gardant le
-nombre cible, renumeroter les identifiants en continu, puis `npm run livrer` et
-`npm run questions`. C'est ce qui a ete fait pour Software Engineering
+nombre cible, renumeroter les identifiants en continu, puis `npm run livrer`
+jusqu'au vert et enfin `npm run index`. C'est ce qui a ete fait pour Software Engineering
 Foundations le 2026-08-03.
 
 ---

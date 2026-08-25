@@ -12,6 +12,7 @@
  *   node verifier-questions.js                tous les fichiers, les deux banques
  *   node verifier-questions.js <fichier.json> un seul fichier (cherche dans les deux)
  *   node verifier-questions.js --index        reecrit questions/_index-concepts.json (banque doc)
+ *   node verifier-questions.js --hors-ligne  saute le controle des reservations sur origin/main
  *
  * Les deux banques sont verifiees avec les memes regles mais rapportees et
  * plafonnees SEPAREMENT (jamais melangees dans un seul total) : la banque doc
@@ -41,11 +42,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const DIR_QUESTIONS = path.join(__dirname, 'questions');
 const DIR_QUESTIONS_PREPCOURSE = path.join(__dirname, 'questions-prepcourse');
 const DIR_CORPUS = path.join(__dirname, 'docs-corpus');
 const FICHIER_INDEX = path.join(DIR_QUESTIONS, '_index-concepts.json');
+const RESERVATIONS_PREPCOURSE = path.join(__dirname, 'reservations-prepcourse.json');
+const CIBLE_DEFAUT_PREPCOURSE = 8;
 
 const BANQUES = [
   { nom: 'doc', dir: DIR_QUESTIONS, label: 'banque doc' },
@@ -178,6 +182,88 @@ function analyser(questions) {
   return { parNature, parDifficulte, parCle, multi, beta };
 }
 
+// --- Reservations de la banque prepcourse ------------------------------------
+//
+// Le protocole dit : on ne commence a ecrire un topic qu'APRES avoir POUSSE sa
+// reservation. Une reservation restee en local ne protege de rien, l'autre
+// personne ne la voit pas. C'est exactement ce qui s'est passe sur
+// m2-2.1-prompting : le commit de reservation et le commit de questions sont
+// partis dans le meme push, donc la reservation n'etait pas visible cote distant
+// pendant l'ecriture. D'ou la lecture de reservations-prepcourse.json sur
+// origin/main, et pas de la copie locale.
+
+function git(args) {
+  return execFileSync('git', args, { cwd: __dirname, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+}
+
+function reservationsDistantes() {
+  try {
+    git(['fetch', '--quiet', 'origin', 'main']);
+  } catch (e) {
+    return { ok: false, raison: `git fetch origin main a echoue : ${String(e.message || e).split('\n')[0]}` };
+  }
+  try {
+    return { ok: true, reservations: JSON.parse(git(['show', 'origin/main:reservations-prepcourse.json'])).reservations || {} };
+  } catch (e) {
+    return { ok: false, raison: `reservations-prepcourse.json illisible sur origin/main : ${String(e.message || e).split('\n')[0]}` };
+  }
+}
+
+function controlerReservationsPrepcourse(fichiers, horsLigne, anomalies) {
+  const locales = JSON.parse(fs.readFileSync(RESERVATIONS_PREPCOURSE, 'utf8')).reservations || {};
+  const distant = horsLigne ? null : reservationsDistantes();
+
+  console.log('\n=== [prepcourse] reservations');
+  if (horsLigne) {
+    console.log('  --hors-ligne : controle sur origin/main SAUTE, la reservation distante n\'est pas verifiee.');
+  } else if (!distant.ok) {
+    anomalies.push(`reservations prepcourse : ${distant.raison}`);
+    console.log(`  ${distant.raison}`);
+    console.log('  Impossible de savoir si les topics sont reserves cote distant. Relancer connecte, ou assumer avec --hors-ligne.');
+  }
+
+  // Une cible est obligatoire des qu'un topic est reserve ou fait, meme sans
+  // fichier de questions : elle se decide en reservant, pas en ecrivant.
+  for (const [topic, r] of Object.entries(locales)) {
+    if ((r.etat === 'reserve' || r.etat === 'fait') && r.cible === undefined) {
+      anomalies.push(`${topic} : etat "${r.etat}" sans champ "cible" dans reservations-prepcourse.json — la cible se fixe a la reservation`);
+    }
+  }
+
+  for (const chemin of fichiers) {
+    const topic = path.basename(chemin, '.json');
+    const l = locales[topic];
+
+    if (!l) {
+      anomalies.push(`${topic} : des questions sont ecrites alors que le topic n'est pas reserve du tout dans reservations-prepcourse.json`);
+      console.log(`  ${topic} : NON RESERVE, meme en local`);
+      continue;
+    }
+    if (l.cible === undefined) {
+      // Repli sur 8, mais jamais en silence : c'est une anomalie a corriger.
+      anomalies.push(`${topic} : reservation sans "cible" — repli sur ${CIBLE_DEFAUT_PREPCOURSE}, a fixer explicitement dans reservations-prepcourse.json`);
+      console.log(`  ${topic} : cible absente, repli sur ${CIBLE_DEFAUT_PREPCOURSE}`);
+    } else if (!Number.isInteger(l.cible) || l.cible <= 0) {
+      anomalies.push(`${topic} : cible invalide (${JSON.stringify(l.cible)}), entier strictement positif attendu`);
+    }
+
+    if (!distant || !distant.ok) continue;
+    const r = distant.reservations[topic];
+    if (!r) {
+      anomalies.push(`${topic} : reserve en local mais ABSENT de reservations-prepcourse.json sur origin/main — pousser la reservation AVANT d'ecrire les questions`);
+      console.log(`  ${topic} : absent d'origin/main`);
+    } else if (r.etat !== 'reserve' && r.etat !== 'fait') {
+      anomalies.push(`${topic} : etat "${r.etat}" sur origin/main — "propose" n'est pas une reservation, pousser l'etat "reserve" AVANT d'ecrire`);
+      console.log(`  ${topic} : etat "${r.etat}" sur origin/main, ce n'est pas une reservation`);
+    } else if (r.cible === undefined) {
+      anomalies.push(`${topic} : reserve sur origin/main sans "cible" — pousser la cible avec la reservation`);
+      console.log(`  ${topic} : reserve sur origin/main, mais sans cible`);
+    } else {
+      console.log(`  ${topic} : reserve sur origin/main (${r.etat}, cible ${r.cible})`);
+    }
+  }
+}
+
 // --- Programme principal ----------------------------------------------------
 
 function traiterBanque(banque, filtre, anomaliesGlobales) {
@@ -291,6 +377,7 @@ function traiterBanque(banque, filtre, anomaliesGlobales) {
 function main() {
   const args = process.argv.slice(2);
   const reecrireIndex = args.includes('--index');
+  const horsLigne = args.includes('--hors-ligne');
   const filtre = args.find((a) => a.endsWith('.json'));
 
   const anomaliesGlobales = [];
@@ -303,6 +390,10 @@ function main() {
   if (!banquesTraitees.length) {
     console.error(`Aucun fichier de questions dans ${BANQUES.map((b) => path.relative(__dirname, b.dir) + '/').join(' ni ')}`);
     process.exit(1);
+  }
+
+  if (resultats.prepcourse) {
+    controlerReservationsPrepcourse(resultats.prepcourse.fichiers, horsLigne, anomaliesGlobales);
   }
 
   if (reecrireIndex) {

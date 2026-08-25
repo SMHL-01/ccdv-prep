@@ -173,3 +173,29 @@ reserver un topic dans `reservations.json` ni un sous-domaine dans
 `reservations-prepcourse.json` : chaque banque a son fichier. Le contenu vient
 de `prepcourse-corpus/`, mais chaque `doc_ref` doit quand meme pointer vers une
 page reelle de `docs-corpus/` qui etaye le fait.
+
+### Reserver un topic Prep Course
+
+Une reservation qui n'est pas poussee ne protege personne : l'autre ne la voit
+pas. Donc, dans cet ordre, et en deux commits distincts :
+
+1. Passer le topic a `"etat": "reserve"` dans `reservations-prepcourse.json`,
+   **avec son champ `"cible"`** — le nombre de questions vise. La cible se fixe
+   en reservant, jamais apres coup, et il n'y a pas de convention implicite a 8 :
+   un topic mince merite une cible plus basse, un topic dense une cible plus
+   haute. La changer plus tard se voit dans le diff de ce fichier, c'est voulu.
+2. `git pull --rebase` puis `git push`. La reservation est maintenant sur
+   `origin/main`.
+3. Seulement alors, ecrire les questions.
+
+`npm run questions` verifie ces trois points a chaque lancement : il fait un
+`git fetch` et lit `reservations-prepcourse.json` **sur `origin/main`**, pas la
+copie locale. Un fichier de questions sur un topic absent, ou reste en
+`"propose"`, ou sans cible cote distant, leve une anomalie. Sans reseau,
+`npm run questions -- --hors-ligne` saute ce controle en le disant ; sans ce
+drapeau, un `git fetch` en echec est lui-meme une anomalie, jamais un vert par
+defaut.
+
+C'est ce qui manquait sur `m2-2.1-prompting` : le commit de reservation et le
+commit de questions sont partis dans le meme `git push`, donc la reservation
+n'etait visible de personne pendant l'ecriture.

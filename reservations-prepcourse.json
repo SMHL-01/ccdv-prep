@@ -1,15 +1,15 @@
 {
-  "commentaire": "Equivalent de reservations.json pour la banque Prep Course (source: prepcourse). Meme regle : on ne commence a ecrire un topic qu'APRES avoir pousse sa reservation ici. Un topic = un fichier questions-prepcourse/<id-topic>.json. Etat 'propose' : repartition suggeree par Said le 2026-08-13 pour les topics de Marie-Line, pas encore une reservation active de sa part -- elle passe a 'reserve' quand elle commence effectivement un topic, comme le veut la regle. Voir METHODE.md.",
+  "commentaire": "Equivalent de reservations.json pour la banque Prep Course (source: prepcourse). Meme regle : on ne commence a ecrire un topic qu'APRES avoir pousse sa reservation ici. Un topic = un fichier questions-prepcourse/<id-topic>.json. Etat 'propose' : repartition suggeree par Said le 2026-08-13 pour les topics de Marie-Line, pas encore une reservation active de sa part -- elle passe a 'reserve' quand elle commence effectivement un topic, comme le veut la regle. Champ 'cible' : nombre de questions vise pour le topic, FIXE AU MOMENT DE LA RESERVATION, pas par convention apres coup. Obligatoire des que etat vaut 'reserve' ou 'fait' ; un topic 'propose' n'en a pas encore, puisque la cible se decide en reservant. Si le champ manque alors que le topic est reserve, verifier-questions.js retombe sur 8 mais le signale : la valeur par defaut n'est jamais silencieuse. Modifier une cible deja poussee se voit dans le diff de ce fichier, c'est voulu. Voir METHODE.md.",
   "personnes": {
     "said": "Said (Claude Pro, quota limite -> petits topics)",
     "marie-line": "Marie-Line (Claude Code, acces direct GitHub -> gros topics)"
   },
   "reservations": {
-    "m1-1.1-llm-behavior": { "qui": "said", "etat": "fait" },
-    "m1-1.2-models-reasoning": { "qui": "said", "etat": "fait" },
-    "m1-1.3-prompting-modes": { "qui": "said", "etat": "fait" },
-    "m1-1.4-technical-substrate": { "qui": "said", "etat": "fait" },
-    "m2-2.1-prompting": { "qui": "marie-line", "etat": "fait" },
+    "m1-1.1-llm-behavior": { "qui": "said", "etat": "fait", "cible": 8 },
+    "m1-1.2-models-reasoning": { "qui": "said", "etat": "fait", "cible": 9 },
+    "m1-1.3-prompting-modes": { "qui": "said", "etat": "fait", "cible": 9 },
+    "m1-1.4-technical-substrate": { "qui": "said", "etat": "fait", "cible": 9 },
+    "m2-2.1-prompting": { "qui": "marie-line", "etat": "fait", "cible": 9 },
     "m2-2.2-thinking": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.3-tools": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.4-streaming": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
@@ -17,7 +17,7 @@
     "m2-2.6-agent-loop": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.7-memory-scope": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m2-2.8-multimodal-batch": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
-    "m3-3.1-permission": { "qui": "said", "etat": "fait" },
+    "m3-3.1-permission": { "qui": "said", "etat": "fait", "cible": 9 },
     "m3-3.2-claudemd": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m3-3.3-plugins": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },
     "m3-3.4-rag": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13" },

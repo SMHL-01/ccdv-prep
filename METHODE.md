@@ -134,6 +134,25 @@ reessais des SDK avec sept libelles differents : le controle passait au vert.
 Avant d'ecrire une question, verifier qu'elle teste un **fait distinct**, pas la
 meme phrase sous un autre angle.
 
+Geste concret, a faire AVANT de rediger un topic et non apres : lister les
+`concept` deja poses sur les topics voisins, y compris ceux de l'autre personne.
+
+```bash
+grep -h '"concept"' questions-prepcourse/*.json | sort
+```
+
+Le decoupage des 27 topics du Prep Course se recoupe : m2-2.2 (thinking)
+partageait quatre faits avec m1-1.2 (models-reasoning), ecartes a la lecture de
+cette liste. Ce controle n'est pas automatisable de facon fiable — mesure du
+2026-08-27 : sur les trois concepts qui auraient fait doublon, une detection de
+quasi-doublon lexical n'en attrape qu'un (Jaccard 0,69 / 0,26 / 0,20 pour un
+seuil realiste de 0,40). C'est une lecture, pas un script.
+
+Paire connue non tranchee : `PC-PRM-008` (m1-1.3, Said) et `PC-PMT-003`
+(m2-2.1, Marie-Line) testent tous deux les balises XML autour des exemples.
+A arbitrer a deux : on garde la formulation la plus utile et on remplace
+l'autre par un fait distinct du meme chapitre.
+
 **Un `doc_ref` present n'est pas un `doc_ref` qui etaye.** Le script verifie que
 l'URL existe dans le corpus, pas qu'elle soutient la reponse. Deux questions sur
 l'idempotence citaient la page des erreurs, ou le mot « idempotent » n'apparait

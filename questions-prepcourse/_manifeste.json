@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-27",
-  "nbQuestions": 62,
+  "nbQuestions": 75,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -32,6 +32,11 @@
       "fichier": "m2-2.2-thinking.json",
       "subdomain": "Model Selection and Tradeoffs / Cost and Token Management / Claude API Mechanics",
       "nb": 9
+    },
+    {
+      "fichier": "m2-2.3-tools.json",
+      "subdomain": "Tool Implementation / MCP Server Development",
+      "nb": 13
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -569,6 +574,136 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-TLS-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-011",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-012",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-TLS-013",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.3-tools.json"
     },
     {
       "id": "PC-PMS-001",

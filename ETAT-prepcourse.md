@@ -5,7 +5,7 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**7 / 27 topics valides, 0 reserve par Said, 20 proposes a Marie-Line**
+**8 / 27 topics valides, 0 reserve par Said, 19 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said a boucle ses 5 topics
 habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
@@ -16,7 +16,7 @@ elle confirme en passant chaque topic a `reserve` dans
 reservation avant la premiere question, ce que `npm run questions` verifie
 desormais en lisant le fichier sur `origin/main`.
 
-**Cibles : 284 questions pour la banque, 222 restant a ecrire sur 20 topics.**
+**Cibles : 284 questions pour la banque, 209 restant a ecrire sur 19 topics.**
 Posees en une passe le 2026-08-27, derivees et non arbitrees :
 `cible = 8 + arrondi(6 x densite normalisee du chapitre dans prepcourse-corpus/)`,
 bornes 8 a 14. Le plancher 8 sort du calibrage, pas du jugement : sous 8
@@ -58,8 +58,17 @@ resorbe. La banque prepcourse passe a 62 questions et 3 factual_magnitude,
 soit 4,8 % — sous le plafond de 5 %, et `npm run livrer` affiche « Tous les
 controles passent » pour la premiere fois. La dilution a suffi, aucun fichier
 de Said n'a ete touche. La consigne « zero factual_magnitude » est donc levee :
-reprise du rythme d'une question de grandeur par fichier a partir de m2-2.3,
-en surveillant que la banque ne repasse pas au-dessus de 5 %.
+reprise du rythme d'une question de grandeur par fichier des que le plafond le
+permet, en surveillant que la banque ne repasse pas au-dessus de 5 %.
+
+Correctif de cette note (2026-08-27, avant m2-2.3) : la levee etait annoncee
+« a partir de m2-2.3 », l'arithmetique dit le contraire. Une question de
+grandeur dans un fichier de 13 aurait porte la banque a 4 sur 75, soit 5,3 % —
+au-dessus du plafond, donc anomalie. m2-2.3 est donc ecrit a zero
+factual_magnitude (3 sur 75 = 4,0 %). La reprise devient possible au topic
+suivant : 4 sur 84 = 4,8 %. Regle a appliquer avant d'en poser une, plutot que
+de decider par fichier : verifier que (magnitude + 1) / (banque + cible) reste
+sous 5 %.
 
 Note sourcing (2026-08-27, apres m2-2.2) : quatre faits du chapitre thinking
 etaient deja couverts par m1-1.2 (`PC-MDR-004` budget_tokens en 400,
@@ -92,7 +101,7 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 | --- | --- | ---: | --- |
 | `[x]` | m2-2.1-prompting | 9 | Marie-Line |
 | `[x]` | m2-2.2-thinking | 9 | Marie-Line |
-| `[ ]` | m2-2.3-tools | 0 | Marie-Line (propose) |
+| `[x]` | m2-2.3-tools | 13 | Marie-Line |
 | `[ ]` | m2-2.4-streaming | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.5-model-budget | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.6-agent-loop | 0 | Marie-Line (propose) |

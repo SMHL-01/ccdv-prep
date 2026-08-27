@@ -1,0 +1,379 @@
+{
+  "topic": "m2-2.3-tools",
+  "source": "prepcourse",
+  "domain": "Tools and MCPs",
+  "subdomain": "Tool Implementation / MCP Server Development",
+  "weight": 6.5,
+  "corpus_ref": "prepcourse-corpus/m2-2.3-tools.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/troubleshooting-tool-use",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context",
+    "https://platform.claude.com/docs/en/agents-and-tools/mcp-connector"
+  ],
+  "questions": [
+    {
+      "id": "PC-TLS-001",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le modele n execute jamais l outil : il emet une demande structuree et c est le code appelant qui execute puis renvoie le resultat",
+      "question_en": "A teammate says the model \"runs\" the tools you declare. What actually happens when Claude decides a tool is needed?",
+      "question_fr": "Un collègue affirme que le modèle « exécute » les outils que vous déclarez. Que se passe-t-il réellement quand Claude décide qu'un outil est nécessaire ?",
+      "options": [
+        { "key": "A", "text_en": "The API executes the tool and returns its output to you.", "text_fr": "L'API exécute l'outil et vous renvoie sa sortie." },
+        { "key": "B", "text_en": "Claude emits a request; your code runs the tool.", "text_fr": "Claude émet une demande ; votre code exécute l'outil." },
+        { "key": "C", "text_en": "The tool runs inside the model's sandbox.", "text_fr": "L'outil s'exécute dans le bac à sable du modèle." },
+        { "key": "D", "text_en": "The tool runs only if strict mode is on.", "text_fr": "L'outil ne s'exécute que si le mode strict est actif." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La page « How tool use works » pose le contrat en une phrase : le modèle n'exécute jamais rien de lui-même. Il émet une demande structurée — un bloc `tool_use` avec le nom de l'outil et un objet JSON d'arguments — puis votre code exécute l'opération et renvoie le résultat dans un bloc `tool_result` à la requête suivante. Claude ne voit jamais votre implémentation, seulement le schéma que vous avez fourni et le résultat que vous avez retourné.",
+      "distractors_fr": {
+        "A": "C'est vrai des outils exécutés côté serveur (`web_search`, `web_fetch`, `code_execution`, `tool_search`), pas des outils que vous déclarez vous-même : ceux-là sont la très large majorité du trafic et sont exécutés côté client.",
+        "C": "Il n'y a pas de bac à sable qui exécuterait vos outils. Le seul sandbox documenté est celui de l'exécution de code d'Anthropic, utilisé par le programmatic tool calling, et il n'exécute pas vos fonctions applicatives.",
+        "D": "`strict: true` contraint la forme des entrées à respecter votre schéma. Cela ne change rien à qui exécute l'outil."
+      },
+      "principe_fr": "Tool use est un contrat typé : vous décrivez, Claude décide, votre code exécute.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+    },
+    {
+      "id": "PC-TLS-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "La boucle agentique cote client se pilote sur stop_reason : elle sort des que stop_reason n est plus tool_use",
+      "question_en": "In the client-tool agentic loop, what signals your application that the loop is over?",
+      "question_fr": "Dans la boucle agentique côté client, qu'est-ce qui indique à votre application que la boucle est terminée ?",
+      "options": [
+        { "key": "A", "text_en": "A response whose content has no text block.", "text_fr": "Une réponse dont le contenu n'a aucun bloc de texte." },
+        { "key": "B", "text_en": "A tool_result block carrying is_error true.", "text_fr": "Un bloc tool_result portant is_error à true." },
+        { "key": "C", "text_en": "A stop_reason other than tool_use.", "text_fr": "Un stop_reason autre que tool_use." },
+        { "key": "D", "text_en": "An empty tools array in the next request.", "text_fr": "Un tableau tools vide dans la requête suivante." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La forme canonique documentée est une boucle `while` indexée sur `stop_reason` : tant que `stop_reason == \"tool_use\"`, on exécute les outils et on poursuit la conversation. La boucle sort sur n'importe quel autre motif d'arrêt — `end_turn`, `max_tokens`, `stop_sequence` ou `refusal` — ce qui signifie soit une réponse finale, soit un arrêt que votre application doit traiter.",
+      "distractors_fr": {
+        "A": "L'absence de texte ne dit rien : un tour peut contenir un `tool_use` sans texte, comme il peut contenir du texte et un `tool_use` ensemble.",
+        "B": "`is_error` est un signal que **vous** envoyez à Claude sur l'échec d'une exécution. Claude l'intègre et continue ; ce n'est pas une fin de boucle.",
+        "D": "Vider le tableau `tools` est une action de votre côté, pas un signal reçu. Le tableau doit au contraire rester stable d'une requête à l'autre pendant la boucle."
+      },
+      "principe_fr": "On sort de la boucle sur un motif d'arrêt, jamais sur la forme du contenu.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+    },
+    {
+      "id": "PC-TLS-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "L API ne prescrit aucun ordre d execution : la strategie se choisit outil par outil selon les effets de bord, pas globalement",
+      "question_en": "One assistant turn returns three tool_use blocks: two read-only lookups and one write. How should your application run them?",
+      "question_fr": "Un tour assistant renvoie trois blocs tool_use : deux lectures seules et une écriture. Comment votre application doit-elle les exécuter ?",
+      "options": [
+        { "key": "A", "text_en": "Concurrently; the API guarantees isolation.", "text_fr": "En parallèle : l'API garantit l'isolation." },
+        { "key": "B", "text_en": "One per turn, replying after each single call.", "text_fr": "Un par tour, en répondant après chaque appel." },
+        { "key": "C", "text_en": "Refuse the write and return is_error for it.", "text_fr": "Refuser l'écriture et renvoyer is_error pour elle." },
+        { "key": "D", "text_en": "Decide per tool: parallel reads, sequenced write.", "text_fr": "Décider outil par outil : lectures en parallèle, écriture séquencée." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc est explicite : « The API doesn't prescribe an execution order ». Vous pouvez exécuter les appels en concurrence, séquentiellement dans l'ordre où ils apparaissent, ou dans toute combinaison qui convient à vos outils. Le critère donné est la nature de l'outil : les opérations indépendantes en lecture seule sont généralement sûres en parallèle pour réduire la latence, tandis que les outils à effets de bord, à état partagé ou à contrainte d'ordre gagnent à être séquencés. Quelle que soit la stratégie, les résultats reviennent tous ensemble dans le message user suivant.",
+      "distractors_fr": {
+        "A": "L'API ne garantit rien sur l'isolation de vos outils : elle ne les exécute pas. La concurrence est votre décision et c'est à vous d'en assumer les conflits d'état.",
+        "B": "Répondre un résultat par tour est précisément le formatage que la doc identifie comme « enseignant » à Claude d'arrêter de paralléliser. Les résultats se renvoient groupés, même si l'exécution a été séquentielle.",
+        "C": "Rien ne justifie de refuser l'écriture : Claude l'a demandée dans le cadre du contrat que vous avez défini. Séquencer n'est pas refuser."
+      },
+      "principe_fr": "La parallélisation est un choix d'exécution côté application ; le format de réponse, lui, ne change pas.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+    },
+    {
+      "id": "PC-TLS-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un appel volontairement non execute doit quand meme recevoir son tool_result avec is_error true : chaque tool_use exige un resultat",
+      "question_en": "You ran a batch of tool calls sequentially, the second failed, so you never executed the third. What must the next user message carry for that third call?",
+      "question_fr": "Vous avez exécuté un lot d'appels séquentiellement, le deuxième a échoué, vous n'avez donc jamais exécuté le troisième. Que doit porter le message user suivant pour ce troisième appel ?",
+      "options": [
+        { "key": "A", "text_en": "A tool_result with is_error and a reason.", "text_fr": "Un tool_result avec is_error et un motif." },
+        { "key": "B", "text_en": "Nothing; unexecuted calls need no result.", "text_fr": "Rien : un appel non exécuté n'a pas de résultat." },
+        { "key": "C", "text_en": "A text block explaining the skipped call.", "text_fr": "Un bloc de texte expliquant l'appel sauté." },
+        { "key": "D", "text_en": "A repeat of the failing tool_result block.", "text_fr": "Une copie du tool_result en échec." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La règle vaut pour tout bloc `tool_use`, exécuté ou non : « If you choose not to run a particular call (for example, because you ran the batch sequentially and an earlier call failed), still return a `tool_result` for it with `is_error: true` and a brief explanation. » L'exemple donné par la doc est littéralement `\"content\": \"Not executed: the preceding write_file call failed.\"` Sans ce bloc, la requête échoue sur `tool_use ids were found without tool_result blocks immediately after`.",
+      "distractors_fr": {
+        "B": "C'est l'erreur qui produit le 400 le plus courant du tool use : il faut un `tool_result` par bloc `tool_use` de la réponse assistant, sans exception.",
+        "C": "Le texte est autorisé mais seulement **après** tous les `tool_result`, et il ne remplace jamais le bloc de résultat manquant. Placé avant, il provoque lui-même une erreur 400.",
+        "D": "Réutiliser le résultat en échec associerait un `tool_use_id` au mauvais appel. Chaque résultat se rattache à son appel par son propre `tool_use_id`."
+      },
+      "principe_fr": "Un tool_use sans tool_result est une erreur de protocole, même quand la décision de ne pas exécuter est la bonne.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+    },
+    {
+      "id": "PC-TLS-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Claude qui cesse de paralleliser vient d abord du formatage de l historique puis d un prompt trop faible, pas d un parametre a basculer",
+      "question_en": "Claude has started calling your tools one at a time although parallel calls would be faster. Which TWO changes address the documented causes?",
+      "question_fr": "Claude s'est mis à appeler vos outils un par un alors que des appels parallèles seraient plus rapides. Lesquelles DEUX (TWO) de ces modifications traitent les causes documentées ?",
+      "options": [
+        { "key": "A", "text_en": "Set disable_parallel_tool_use to false.", "text_fr": "Passer disable_parallel_tool_use à false." },
+        { "key": "B", "text_en": "Return every tool_result in one user message.", "text_fr": "Renvoyer tous les tool_result dans un seul message user." },
+        { "key": "C", "text_en": "Split the results into one message per tool.", "text_fr": "Répartir les résultats en un message par outil." },
+        { "key": "D", "text_en": "Add the parallel-tool-use system prompt block.", "text_fr": "Ajouter au prompt système le bloc use_parallel_tool_calls." }
+      ],
+      "correct": ["B", "D"],
+      "explanation_fr": "La section « Troubleshooting » de la page liste les deux causes dans cet ordre. La première, la plus fréquente, est un mauvais formatage des résultats dans l'historique, qui « enseigne » à Claude d'éviter les appels parallèles : tous les `tool_result` doivent revenir dans un seul message user, et aucun texte ne doit précéder les résultats. La seconde est un prompt trop faible : la doc fournit un bloc `<use_parallel_tool_calls>` à ajouter au prompt système quand le comportement par défaut ne suffit pas.",
+      "distractors_fr": {
+        "A": "`false` est déjà la valeur par défaut : la parallélisation est active sans rien faire. La poser explicitement ne corrige rien.",
+        "C": "C'est exactement le contre-exemple donné par la doc — un message user par résultat — présenté sous l'étiquette « Wrong ». C'est la cause du problème, pas son remède."
+      },
+      "principe_fr": "Avant de chercher un paramètre, vérifier ce que l'historique enseigne au modèle.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use"
+    },
+    {
+      "id": "PC-TLS-006",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "disable_parallel_tool_use doit etre pose sur la requete qui renvoie les tool_use : pose plus tard il n a aucun effet sur les appels deja emis",
+      "question_en": "A team added disable_parallel_tool_use inside tool_choice, yet the assistant turn they are debugging still holds two tool_use blocks. What explains it?",
+      "question_fr": "Une équipe a ajouté disable_parallel_tool_use dans tool_choice, mais le tour assistant qu'elle débogue contient toujours deux blocs tool_use. Qu'est-ce qui l'explique ?",
+      "options": [
+        { "key": "A", "text_en": "The flag only works with tool_choice any.", "text_fr": "Le champ ne fonctionne qu'avec tool_choice any." },
+        { "key": "B", "text_en": "The flag belongs at the top level of the request.", "text_fr": "Le champ se place à la racine de la requête." },
+        { "key": "C", "text_en": "They set it on a later request, not that one.", "text_fr": "Ils l'ont posé sur une requête ultérieure, pas celle-là." },
+        { "key": "D", "text_en": "Two blocks are allowed; the cap is three.", "text_fr": "Deux blocs sont permis : le plafond est de trois." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le tableau de diagnostic est net sur ce symptôme : « `disable_parallel_tool_use` seems ignored » a pour cause « Set too late in the conversation », et pour correctif « Must be set on the request that returns `tool_use`. Setting it on a later request has no effect on earlier tool calls. » Le champ contraint la génération d'un tour donné ; il ne réécrit pas rétroactivement un tour déjà produit.",
+      "distractors_fr": {
+        "A": "Le champ fonctionne avec les quatre types de `tool_choice`, seul son effet change : avec `auto` Claude appelle **au plus** un outil, avec `any` ou `tool` il en appelle **exactement** un.",
+        "B": "L'emplacement est bien à l'intérieur de l'objet `tool_choice` et la doc précise « It is not a top-level request parameter ». Mais ici l'équipe l'a déjà placé au bon endroit : ce n'est pas la cause.",
+        "D": "Il n'existe aucun plafond de ce genre. Sans désactivation, un tour assistant peut contenir autant de blocs `tool_use` que Claude en juge utiles."
+      },
+      "principe_fr": "Un paramètre de génération agit sur la requête qui le porte, pas sur l'historique déjà écrit.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/troubleshooting-tool-use"
+    },
+    {
+      "id": "PC-TLS-007",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Deux outils dont les descriptions disent exactement QUOI ils font se departagent en disant QUAND les employer et quand s abstenir",
+      "question_en": "Your agent keeps calling search_knowledge_base when get_cached_result was the right choice. Both descriptions state accurately what each tool does. What is the fix?",
+      "question_fr": "Votre agent appelle sans cesse search_knowledge_base là où get_cached_result convenait. Les deux descriptions disent exactement ce que fait chaque outil. Quel est le correctif ?",
+      "options": [
+        { "key": "A", "text_en": "State when each tool applies and when not.", "text_fr": "Dire quand chaque outil s'applique et quand non." },
+        { "key": "B", "text_en": "Rename both tools with a shared prefix.", "text_fr": "Renommer les deux outils avec un préfixe commun." },
+        { "key": "C", "text_en": "Merge them into one tool with a type field.", "text_fr": "Les fusionner en un outil avec un champ type." },
+        { "key": "D", "text_en": "Add input_examples to both schemas.", "text_fr": "Ajouter input_examples aux deux schémas." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "Le symptôme « Claude calls tool A when you wanted tool B » a une cause unique dans le tableau de diagnostic — l'ambiguïté des descriptions — et un correctif formulé mot pour mot : « Differentiate tools by WHEN to use them, not only WHAT they do. » La page « Define tools » dit la même chose côté rédaction : une description doit couvrir ce que fait l'outil **et** quand il doit être employé, et quand il ne doit pas l'être.",
+      "distractors_fr": {
+        "B": "Le namespacing par service (`github_list_prs`, `slack_send_message`) lève l'ambiguïté entre outils de domaines différents. Ici les deux outils sont du même domaine : un préfixe partagé ne les départage pas.",
+        "C": "La fusion en un seul outil avec un paramètre discriminant est le recours documenté quand les descriptions ne **peuvent pas** être séparées. On y va après avoir essayé de les distinguer, pas avant.",
+        "D": "`input_examples` sert quand Claude choisit le bon outil mais se trompe sur la forme des entrées — types faux, paramètre inventé, valeur hors enum. Le problème ici est le routage, pas le schéma."
+      },
+      "principe_fr": "La description d'un outil est un texte de routage : elle doit trancher les cas, pas seulement définir.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/troubleshooting-tool-use"
+    },
+    {
+      "id": "PC-TLS-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un serveur MCP attache ne declenche pas d appel d outil sur une question de connaissance generale a propos du service",
+      "question_en": "A Notion MCP server is attached. The user asks \"how do Notion databases work?\". What does Claude do?",
+      "question_fr": "Un serveur MCP Notion est attaché. L'utilisateur demande « comment fonctionnent les bases Notion ? ». Que fait Claude ?",
+      "options": [
+        { "key": "A", "text_en": "Calls a tool to read the workspace schema.", "text_fr": "Appelle un outil pour lire le schéma de l'espace." },
+        { "key": "B", "text_en": "Returns an error until a database is named.", "text_fr": "Renvoie une erreur tant qu'aucune base n'est nommée." },
+        { "key": "C", "text_en": "Calls list_databases, then answers in prose.", "text_fr": "Appelle list_databases, puis répond en prose." },
+        { "key": "D", "text_en": "Answers directly, without calling a tool.", "text_fr": "Répond directement, sans appeler d'outil." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La page du MCP connector distingue les deux cas avec ce couple d'exemples exact : Claude n'appelle **pas** d'outil MCP pour une question de connaissance générale sur un service connecté. « How do Notion databases work? » avec un serveur Notion attaché reçoit une réponse directe ; « what's in my Projects database? » déclenche l'outil. Le déclencheur est que la demande corresponde à une capacité décrite par un outil, explicitement ou implicitement.",
+      "distractors_fr": {
+        "A": "Rien dans la question ne porte sur les données de l'utilisateur. Attacher un serveur ne transforme pas chaque mention du service en appel d'outil.",
+        "B": "Le connector ne produit pas d'erreur sur une question générale : il n'y a simplement pas d'appel à faire.",
+        "C": "C'est le comportement d'un agent qui appelle par réflexe. Il coûte un aller-retour et des tokens pour un résultat que la réponse directe fournissait déjà."
+      },
+      "principe_fr": "Un outil se déclenche sur un besoin de données, pas sur la présence d'un mot-clé du service.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/mcp-connector"
+    },
+    {
+      "id": "PC-TLS-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Vos propres instructions livrees dans le contenu d un tool_result sont traitees comme du tiers non fiable : elles se deplacent dans un tour user apres le resultat",
+      "question_en": "You put your formatting instructions inside the tool_result content. Claude now asks the user to confirm those instructions before acting. What is going on?",
+      "question_fr": "Vous avez placé vos consignes de formatage dans le contenu du tool_result. Claude demande maintenant à l'utilisateur de confirmer ces consignes avant d'agir. Que se passe-t-il ?",
+      "options": [
+        { "key": "A", "text_en": "The result payload is too long; truncate it.", "text_fr": "Le résultat est trop long : il faut le tronquer." },
+        { "key": "B", "text_en": "It reads them as untrusted; use a user turn.", "text_fr": "Il les lit comme non fiables : passer par un tour user." },
+        { "key": "C", "text_en": "is_error was omitted; you must set it to false.", "text_fr": "is_error a été omis : il faut le poser à false." },
+        { "key": "D", "text_en": "The tool_use_id no longer matches the call.", "text_fr": "Le tool_use_id ne correspond plus à l'appel." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "Le tableau « Claude flags tool results as prompt injection » décrit ce symptôme précis et sa cause : vos propres instructions sont livrées dans le contenu du `tool_result`. Claude est entraîné à traiter des instructions trouvées dans un résultat d'outil comme du contenu tiers potentiellement non fiable — c'est la défense contre l'injection de prompt indirecte. Le correctif est de sortir vos consignes du résultat : les envoyer dans un tour `user` après le bloc `tool_result`, ou dans un message système en cours de conversation sur les modèles qui le prennent en charge, et de ne laisser que les données dans le résultat.",
+      "distractors_fr": {
+        "A": "La longueur n'entre pas en jeu : le comportement se déclenche sur la présence d'instructions, pas sur la taille du contenu.",
+        "C": "`is_error` est optionnel et sa valeur par défaut convient. L'omettre ne provoque ni erreur ni méfiance.",
+        "D": "Un `tool_use_id` qui ne correspond pas produit une erreur 400 à la requête, pas une demande de confirmation adressée à l'utilisateur."
+      },
+      "principe_fr": "Le tool_result est un canal de données, jamais un canal d'instructions.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/troubleshooting-tool-use"
+    },
+    {
+      "id": "PC-TLS-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Limites du MCP connector de la Messages API : seuls les appels d outils de la spec sont couverts, et le serveur doit etre expose en HTTP, jamais en stdio local",
+      "question_en": "Which TWO statements describe documented limits of the MCP connector in the Messages API?",
+      "question_fr": "Lesquelles DEUX (TWO) de ces affirmations décrivent des limites documentées du MCP connector de la Messages API ?",
+      "options": [
+        { "key": "A", "text_en": "Only tool calls of the MCP spec are supported.", "text_fr": "Seuls les appels d'outils de la spec MCP sont couverts." },
+        { "key": "B", "text_en": "It runs local stdio servers as subprocesses.", "text_fr": "Il lance les serveurs stdio locaux en sous-processus." },
+        { "key": "C", "text_en": "The server must be reachable over HTTPS.", "text_fr": "Le serveur doit être joignable en HTTPS." },
+        { "key": "D", "text_en": "It is available on Amazon Bedrock as well.", "text_fr": "Il est également disponible sur Amazon Bedrock." }
+      ],
+      "correct": ["A", "C"],
+      "explanation_fr": "La section « Limitations » énonce les deux : de tout le jeu de fonctionnalités de la spec MCP, seuls les appels d'outils sont pris en charge aujourd'hui ; et le serveur doit être exposé publiquement en HTTP — l'`url` doit commencer par `https://` — les transports Streamable HTTP et SSE étant tous deux acceptés.",
+      "distractors_fr": {
+        "B": "C'est l'inverse de la limite documentée : « Local STDIO servers cannot be connected directly. » Un serveur stdio passe par un hôte MCP comme Claude Desktop ou Claude Code, pas par le connector de l'API.",
+        "D": "Le connector est disponible sur la Claude API, Claude Platform on AWS et Microsoft Foundry. La doc précise qu'il n'est pas disponible sur Amazon Bedrock ni Google Cloud."
+      },
+      "principe_fr": "Le connector remplace un client MCP, pas un hôte MCP : ce qui exige un processus local reste hors de sa portée.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/mcp-connector"
+    },
+    {
+      "id": "PC-TLS-011",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Interdire un outil MCP destructeur se fait par configuration du toolset, pas par une consigne de prompt qui reste une intention",
+      "question_en": "You are building a read-only assistant over a calendar MCP server that also exposes delete and share tools. How do you keep those two out of reach?",
+      "question_fr": "Vous construisez un assistant en lecture seule sur un serveur MCP d'agenda qui expose aussi des outils de suppression et de partage. Comment les mettre hors de portée ?",
+      "options": [
+        { "key": "A", "text_en": "Instruct Claude in the system prompt never to use them.", "text_fr": "Interdire leur usage dans le prompt système." },
+        { "key": "B", "text_en": "Set defer_loading true on those two tools.", "text_fr": "Poser defer_loading à true sur ces deux outils." },
+        { "key": "C", "text_en": "Remove the server and hand-author read tools.", "text_fr": "Retirer le serveur et réécrire des outils de lecture." },
+        { "key": "D", "text_en": "Set enabled false for them in the configs.", "text_fr": "Poser enabled à false pour eux dans configs." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "C'est le patron de denylist décrit par la doc : on garde tous les outils activés par défaut et on désactive nommément les indésirables dans `configs`, avec `enabled: false`. La page recommande explicitement le denylisting des outils d'écriture ou destructeurs quand on construit un assistant en lecture seule, ou quand on veut une étape de confirmation humaine avant tout changement d'état. Un outil désactivé n'est pas exposé au modèle : la garantie est structurelle, pas comportementale.",
+      "distractors_fr": {
+        "A": "Une consigne de prompt reste une intention : elle infléchit la probabilité d'un appel sans l'empêcher. Elle ne convient pas pour ce qui doit être impossible.",
+        "B": "`defer_loading` ne retire pas un outil : il retarde l'envoi de sa description au modèle, qui peut ensuite le découvrir via le tool search et l'appeler. C'est un levier de contexte, pas de permission.",
+        "C": "Réécrire à la main ce que le serveur expose déjà revient à jeter l'intérêt de MCP pour un problème que trois lignes de configuration résolvent."
+      },
+      "principe_fr": "Ce qui doit être interdit se configure ; ce qui doit être orienté se prompte.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/mcp-connector"
+    },
+    {
+      "id": "PC-TLS-012",
+      "domain": "Tools and MCPs",
+      "subdomain": "MCP Server Development",
+      "weight": 2.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Fusion de configuration d un mcp_toolset : configs prime sur default_config champ par champ, et un champ absent de configs herite du defaut au lieu d etre remis a zero",
+      "question_en": "An mcp_toolset sets default_config to enabled false with defer_loading true. Its configs enable search_events with defer_loading false, and enable list_events only. Which THREE outcomes follow?",
+      "question_fr": "Un mcp_toolset pose default_config à enabled false avec defer_loading true. Ses configs activent search_events avec defer_loading false, et activent list_events seulement. Lesquels TROIS (THREE) résultats en découlent ?",
+      "options": [
+        { "key": "A", "text_en": "search_events is enabled and loaded upfront.", "text_fr": "search_events est activé et chargé d'emblée." },
+        { "key": "B", "text_en": "list_events is enabled but stays deferred.", "text_fr": "list_events est activé mais reste différé." },
+        { "key": "C", "text_en": "Every other tool on the server stays off.", "text_fr": "Tous les autres outils du serveur restent inactifs." },
+        { "key": "D", "text_en": "list_events inherits enabled false and is off.", "text_fr": "list_events hérite d'enabled false et reste inactif." }
+      ],
+      "correct": ["A", "B", "C"],
+      "explanation_fr": "La fusion se fait champ par champ, avec la précédence documentée : réglages spécifiques de `configs`, puis `default_config` du toolset, puis valeurs par défaut du système. `search_events` prend donc `enabled: true` et `defer_loading: false` de `configs`. `list_events` prend `enabled: true` de `configs` et hérite `defer_loading: true` du `default_config`, faute de valeur propre. Tous les autres outils n'apparaissant pas dans `configs` restent sur `enabled: false`, ce qui fait de ce montage une allowlist.",
+      "distractors_fr": {
+        "D": "C'est la confusion à éviter : une entrée dans `configs` **écrase** le défaut sur le champ qu'elle porte. `list_events` y déclare `enabled: true`, qui prime sur le `enabled: false` du `default_config`."
+      },
+      "principe_fr": "Une entrée de configs surcharge les champs qu'elle nomme et hérite des autres : la fusion n'est ni globale ni exclusive.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/mcp-connector"
+    },
+    {
+      "id": "PC-TLS-013",
+      "domain": "Tools and MCPs",
+      "subdomain": "Tool Implementation",
+      "weight": 4.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Ajouter un outil en cours de conversation casse le cache en modifiant la tete du tableau tools ; defer_loading avec le tool search l ajoute en ligne a la place",
+      "question_en": "Your agent takes a cache miss on every request since it began adding a tool to the tools array mid-conversation. What does the documentation prescribe?",
+      "question_fr": "Votre agent subit un cache miss à chaque requête depuis qu'il ajoute un outil au tableau tools en cours de conversation. Que prescrit la documentation ?",
+      "options": [
+        { "key": "A", "text_en": "Move the cache_control breakpoint to the end.", "text_fr": "Déplacer le point de rupture cache_control à la fin." },
+        { "key": "B", "text_en": "Restart the conversation whenever tools change.", "text_fr": "Repartir d'une conversation neuve à chaque changement." },
+        { "key": "C", "text_en": "Use defer_loading with tool search to append it.", "text_fr": "Utiliser defer_loading avec le tool search pour l'ajouter." },
+        { "key": "D", "text_en": "Keep tool_choice stable across the requests.", "text_fr": "Garder tool_choice stable d'une requête à l'autre." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "Le tableau « Cache keeps invalidating » traite ce symptôme à part : « Adding a tool mid-conversation breaks cache », de cause « Tool prepended to the tools array », et de correctif « Use `defer_loading: true` with tool search to append the tool inline instead of modifying the array head. » Le cache se lit sur un préfixe : toucher à la tête du tableau `tools` invalide tout ce qui suit, alors qu'ajouter en fin de tableau laisse le préfixe intact.",
+      "distractors_fr": {
+        "A": "Placer le point de rupture avant le point de variation est le correctif de l'autre ligne du tableau, celle d'un `tool_choice` ou d'une configuration de thinking qui varient. Ici la variation est en tête du tableau : aucun placement de rupture ne la sauve.",
+        "B": "Repartir de zéro paie le plein tarif d'entrée à chaque changement d'outillage. C'est le coût que le correctif documenté évite.",
+        "D": "Un `tool_choice` instable est bien une cause de cache miss documentée, mais une autre. Le symptôme décrit ici est apparu avec l'ajout d'outils en cours de route."
+      },
+      "principe_fr": "Le cache se raisonne en préfixe : on ajoute en queue, on ne réécrit jamais la tête.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/troubleshooting-tool-use"
+    }
+  ]
+}

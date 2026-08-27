@@ -1,0 +1,266 @@
+{
+  "topic": "m2-2.2-thinking",
+  "source": "prepcourse",
+  "domain": "Model Selection and Optimization / Applications and Integration",
+  "subdomain": "Model Selection and Tradeoffs / Cost and Token Management / Claude API Mechanics",
+  "weight": 12.3,
+  "corpus_ref": "prepcourse-corpus/m2-2.2-thinking.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/thinking",
+    "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting",
+    "https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost",
+    "https://platform.claude.com/docs/en/build-with-claude/effort"
+  ],
+  "questions": [
+    {
+      "id": "PC-THK-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Dans une reponse ou Claude a reflechi les blocs thinking arrivent juste avant les blocs text et restent separes de la reponse canonique",
+      "question_en": "In a response where Claude thought, where do the `thinking` blocks sit relative to the answer?",
+      "question_fr": "Dans une réponse où Claude a réfléchi, où se situent les blocs `thinking` par rapport à la réponse ?",
+      "options": [
+        { "key": "A", "text_en": "Interleaved inside the text blocks.", "text_fr": "Entrelacés à l'intérieur des blocs text." },
+        { "key": "B", "text_en": "After the text blocks, as a trailer.", "text_fr": "Après les blocs text, en fin de réponse." },
+        { "key": "C", "text_en": "Immediately before the text blocks.", "text_fr": "Juste avant les blocs text." },
+        { "key": "D", "text_en": "In a separate response envelope.", "text_fr": "Dans une enveloppe de réponse séparée." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La doc décrit la forme de la réponse sans ambiguïté : un ou plusieurs blocs `thinking` arrivent avant les blocs `text`. Le bloc de thinking reste du contenu généré, comme le bloc `text` qui le suit, mais il est tenu à l'écart de la réponse canonique — c'est ce qui permet à une application de l'ignorer à l'affichage sans rien perdre de la réponse.",
+      "distractors_fr": {
+        "A": "L'entrelacement existe, mais il place le raisonnement entre les appels d'outils, pas à l'intérieur des blocs text : dans une réponse donnée l'ordre thinking puis text ne change pas.",
+        "B": "Placer le raisonnement après la réponse n'aurait pas de sens : Claude s'appuie sur ce raisonnement pour produire la réponse, il le génère donc d'abord.",
+        "D": "Tout arrive dans le même tableau `content` de la même réponse. Il n'y a pas de canal ni d'enveloppe distincts pour le thinking."
+      },
+      "principe_fr": "Le thinking est un bloc de contenu ordinaire de la réponse, émis avant le texte et séparé de la réponse canonique.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    },
+    {
+      "id": "PC-THK-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les tokens depenses a reflechir sont factures comme des tokens de sortie meme quand le texte du thinking n est pas renvoye",
+      "question_en": "Thinking runs, but your application never surfaces the reasoning. How are the thinking tokens billed?",
+      "question_fr": "Le thinking tourne, mais votre application n'affiche jamais le raisonnement. Comment les tokens de thinking sont-ils facturés ?",
+      "options": [
+        { "key": "A", "text_en": "Not billed, as nothing is shown.", "text_fr": "Non facturés, puisque rien n'est affiché." },
+        { "key": "B", "text_en": "As input tokens on the next turn.", "text_fr": "Comme des tokens d'entrée au tour suivant." },
+        { "key": "C", "text_en": "At a reduced summary rate.", "text_fr": "À un tarif réduit de résumé." },
+        { "key": "D", "text_en": "As output tokens, in full.", "text_fr": "Comme des tokens de sortie, en totalité." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc pose le coût dès l'introduction : les tokens que Claude dépense à raisonner sont facturés comme des tokens de sortie, même quand le texte du thinking ne vous est pas renvoyé, et ils comptent dans `max_tokens` au même titre que le texte de la réponse. La section Pricing le confirme : on est facturé sur le raisonnement complet généré, pas sur ce qui est visible dans le corps de la réponse.",
+      "distractors_fr": {
+        "A": "Ne pas afficher le raisonnement ne l'empêche pas d'être produit. La facturation suit la génération, pas l'affichage.",
+        "B": "Les tokens de thinking du tour courant sont de la sortie. Ils ne deviennent de l'entrée qu'au tour suivant, si le modèle conserve les blocs des tours précédents en contexte.",
+        "C": "Il n'existe pas de tarif de résumé : la génération du résumé n'est pas facturée, et le décompte facturé est celui du thinking complet."
+      },
+      "principe_fr": "Le thinking se paie au tarif des tokens de sortie dès qu'il est généré, indépendamment de ce que l'application en montre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost"
+    },
+    {
+      "id": "PC-THK-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "weight": 2.7,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Pour que Claude reflechisse moins souvent la doc fait baisser effort avant de recourir au pilotage par formulation du prompt",
+      "question_en": "Claude thinks on nearly every turn of a latency-sensitive workload. Which lever do the docs say to reach for first?",
+      "question_fr": "Claude réfléchit à presque chaque tour d'une charge sensible à la latence. Quel levier la doc recommande-t-elle d'actionner en premier ?",
+      "options": [
+        { "key": "A", "text_en": "Add wording to the system prompt.", "text_fr": "Ajouter une formulation au system prompt." },
+        { "key": "B", "text_en": "Lower the `effort` level.", "text_fr": "Baisser le niveau d'`effort`." },
+        { "key": "C", "text_en": "Set `display` to `\"omitted\"`.", "text_fr": "Mettre `display` à `\"omitted\"`." },
+        { "key": "D", "text_en": "Cut `max_tokens` on each request.", "text_fr": "Réduire `max_tokens` à chaque requête." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc énonce l'ordre des leviers : si l'on veut que Claude réfléchisse moins souvent, on baisse le niveau d'`effort` avant de recourir au pilotage par le prompt. L'avertissement de la page le justifie : `effort` est un contrôle calibré, alors que le pilotage par formulation est sensible au mot près. Le pilotage par prompt reste disponible ensuite, si le déclenchement ne convient toujours pas au niveau retenu.",
+      "distractors_fr": {
+        "A": "C'est le deuxième levier, pas le premier : la doc ne l'ajoute que si le déclenchement ne correspond toujours pas au besoin au niveau d'effort choisi, et prévient que son efficacité dépend de la formulation exacte.",
+        "C": "`display: \"omitted\"` accélère le premier token de texte en streaming, mais ne change pas la fréquence à laquelle Claude réfléchit — ni ce que cela coûte.",
+        "D": "`max_tokens` est un plafond dur sur la sortie totale, pas une consigne sur la fréquence du raisonnement : le baisser tronque les réponses au lieu de réduire le thinking."
+      },
+      "principe_fr": "La fréquence du raisonnement se règle d'abord avec le contrôle calibré, `effort`, et seulement ensuite avec des consignes en langage naturel.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost"
+    },
+    {
+      "id": "PC-THK-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "display omitted reduit la latence et non le cout : les tokens de thinking restent factures et les blocs restent a renvoyer inchanges",
+      "question_en": "A team switches to `display: \"omitted\"` expecting a smaller bill. Which TWO statements about that change hold?",
+      "question_fr": "Une équipe passe à `display: \"omitted\"` en espérant une facture plus légère. Lesquelles DEUX (TWO) de ces affirmations sont exactes ?",
+      "options": [
+        { "key": "A", "text_en": "Thinking output tokens leave the invoice.", "text_fr": "Les tokens de sortie du thinking quittent la facture." },
+        { "key": "B", "text_en": "You are still billed for every thinking token.", "text_fr": "Tous les tokens de thinking restent facturés." },
+        { "key": "C", "text_en": "Streaming reaches the first text token sooner.", "text_fr": "Le streaming atteint le premier token de texte plus tôt." },
+        { "key": "D", "text_en": "Thinking blocks no longer need passing back.", "text_fr": "Les blocs de thinking n'ont plus à être renvoyés." }
+      ],
+      "correct": ["B", "C"],
+      "explanation_fr": "La doc est explicite sur les deux points : avec `display: \"omitted\"` on est toujours facturé sur l'intégralité des tokens de thinking — omettre réduit la latence, pas le coût — et le bénéfice principal est justement un premier token de texte plus rapide en streaming, le serveur ne diffusant plus les tokens de thinking. Le tableau de la page Pricing le résume : ce qui est facturé est le même dans les deux modes d'affichage, seul ce que l'on voit change.",
+      "distractors_fr": {
+        "A": "C'est l'erreur de raisonnement que la doc corrige : le champ `thinking` est vide, mais le raisonnement complet a bien été généré et reste facturé comme sortie.",
+        "D": "Le champ `signature` continue de porter le thinking chiffré pour la continuité multi-tours : les blocs se renvoient inchangés exactement comme en mode `summarized`, et le texte placé dans un champ `thinking` vide est simplement ignoré."
+      },
+      "principe_fr": "Omettre l'affichage du thinking est un réglage de latence et de confidentialité d'interface, jamais un levier de coût.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    },
+    {
+      "id": "PC-THK-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La configuration de thinking et le niveau d effort sont rendus dans le prompt donc en changer demarre un nouveau prefixe de cache",
+      "question_en": "A service varies `effort` request by request to tune quality. Cache hit rates collapse. What explains it?",
+      "question_fr": "Un service fait varier `effort` d'une requête à l'autre pour ajuster la qualité. Le taux de cache hit s'effondre. Qu'est-ce qui l'explique ?",
+      "options": [
+        { "key": "A", "text_en": "The thinking config is part of the prompt.", "text_fr": "La configuration de thinking fait partie du prompt." },
+        { "key": "B", "text_en": "Cached prefixes expire after each stream.", "text_fr": "Les préfixes en cache expirent après chaque stream." },
+        { "key": "C", "text_en": "Thinking blocks cannot be cached at all.", "text_fr": "Les blocs de thinking ne sont jamais mis en cache." },
+        { "key": "D", "text_en": "Effort changes reset the 5-minute TTL only.", "text_fr": "Changer d'effort ne réinitialise que le TTL de 5 minutes." }
+      ],
+      "correct": ["A"],
+      "explanation_fr": "La doc explique le mécanisme : la configuration de thinking et le niveau d'`effort` résolu sont rendus dans le prompt lui-même, donc en changer démarre un nouveau préfixe de cache. Les breakpoints au niveau des messages manquent systématiquement, et ceux des outils ou du system prompt peuvent manquer aussi selon l'endroit où le modèle rend la configuration. Il faut traiter tout changement de thinking ou d'effort comme un redémarrage du cache — d'où la consigne de fixer un niveau d'effort au début d'une session longue et de s'y tenir.",
+      "distractors_fr": {
+        "B": "Le streaming n'invalide rien : des requêtes consécutives qui gardent la même configuration conservent le cache, streamées ou non.",
+        "C": "Les blocs de thinking sont au contraire mis en cache avec les résultats d'outils, automatiquement, même sans marqueur `cache_control` explicite.",
+        "D": "Ce n'est pas une affaire de durée de vie mais de contenu du préfixe : la clé de cache change, et une durée d'une heure n'y changerait rien."
+      },
+      "principe_fr": "Tout réglage rendu dans le prompt — dont thinking et effort — fait partie de la clé de cache : le faire varier, c'est repayer le préfixe.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    },
+    {
+      "id": "PC-THK-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "En changeant de modele en cours de conversation il faut retirer les blocs thinking et redacted_thinking des tours precedents",
+      "question_en": "After a refusal fallback, the conversation continues on a different model. What should your code do with the earlier `thinking` blocks?",
+      "question_fr": "Après un basculement lié à un refus, la conversation continue sur un autre modèle. Que doit faire votre code des blocs `thinking` antérieurs ?",
+      "options": [
+        { "key": "A", "text_en": "Re-sign them for the new model.", "text_fr": "Les re-signer pour le nouveau modèle." },
+        { "key": "B", "text_en": "Pass them through unchanged.", "text_fr": "Les transmettre inchangés." },
+        { "key": "C", "text_en": "Move them into the system prompt.", "text_fr": "Les déplacer dans le system prompt." },
+        { "key": "D", "text_en": "Strip them from prior turns.", "text_fr": "Les retirer des tours précédents." }
+      ],
+      "correct": ["D"],
+      "explanation_fr": "La doc traite ce cas nommément, y compris l'exemple du basculement après refus du classifieur : quand on change de modèle, on retire les blocs `thinking` et `redacted_thinking` des tours assistants antérieurs. Un bloc de thinking est lié au modèle qui l'a produit. Les autres modèles ne rejettent pas la requête, ils ignorent silencieusement ces blocs — mais des blocs ignorés continuent d'ajouter des tokens d'entrée, donc les laisser revient à payer pour rien.",
+      "distractors_fr": {
+        "A": "La signature est opaque et produite par l'API : le code appelant ne peut pas la recalculer, et la doc demande de ne pas l'interpréter.",
+        "B": "C'est la bonne règle tant qu'on reste sur le même modèle. Après un changement de modèle, transmettre les blocs ne casse rien mais gonfle les tokens d'entrée sans aucun bénéfice.",
+        "C": "Le thinking n'est pas du prompt à recopier : le déplacer dans le system prompt transformerait du raisonnement signé en texte ordinaire, sans continuité de raisonnement."
+      },
+      "principe_fr": "Un bloc de thinking appartient au modèle qui l'a produit : il ne suit pas la conversation quand le modèle change.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    },
+    {
+      "id": "PC-THK-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "redacted_thinking est un type de bloc distinct renvoye quand une partie du raisonnement est expurgee pour raison de securite",
+      "question_en": "A response contains a `redacted_thinking` block. What does its presence indicate, per the docs?",
+      "question_fr": "Une réponse contient un bloc `redacted_thinking`. Que signale sa présence, d'après la doc ?",
+      "options": [
+        { "key": "A", "text_en": "The `display` field was set to omitted.", "text_fr": "Le champ `display` était réglé sur omitted." },
+        { "key": "B", "text_en": "Part of the reasoning was safety-redacted.", "text_fr": "Une partie du raisonnement a été expurgée pour sécurité." },
+        { "key": "C", "text_en": "The signature failed verification.", "text_fr": "La vérification de la signature a échoué." },
+        { "key": "D", "text_en": "The summary model was unavailable.", "text_fr": "Le modèle de résumé était indisponible." }
+      ],
+      "correct": ["B"],
+      "explanation_fr": "La doc distingue deux choses qu'on confond facilement. Un bloc `redacted_thinking` est un type de bloc à part, renvoyé quand des portions du raisonnement de Claude sont expurgées pour raison de sécurité : son contenu chiffré est dans un champ `data`, sans texte lisible. C'est explicitement différent de l'option `display: \"omitted\"`, qui renvoie des blocs `thinking` normaux avec un champ `thinking` vide.",
+      "distractors_fr": {
+        "A": "`display: \"omitted\"` ne change pas le type du bloc : on reçoit un bloc `thinking` ordinaire dont le champ `thinking` est vide, avec sa `signature`.",
+        "C": "La signature sert à vérifier les blocs que vous renvoyez ; un échec de vérification produit une erreur 400 sur votre requête, pas un type de bloc dans la réponse.",
+        "D": "La génération du résumé n'a pas de mode dégradé documenté sous forme de bloc : quand le résumé n'est pas renvoyé, c'est le réglage `display` qui en décide."
+      },
+      "principe_fr": "Un raisonnement expurgé pour sécurité change le type du bloc ; un raisonnement seulement masqué à l'affichage ne change que son contenu.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    },
+    {
+      "id": "PC-THK-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Filtrer les blocs sur le type thinking supprime silencieusement les blocs redacted_thinking et casse le protocole de renvoi",
+      "question_en": "Tool-loop requests fail intermittently with a 400 saying thinking blocks in the latest assistant message cannot be modified. Your echo code keeps only blocks whose type is `thinking`. Where is the defect?",
+      "question_fr": "Des requêtes de boucle d'outils échouent par intermittence avec une 400 disant que les blocs de thinking du dernier message assistant ne peuvent pas être modifiés. Votre code de renvoi ne garde que les blocs de type `thinking`. Où est le défaut ?",
+      "options": [
+        { "key": "A", "text_en": "The signature must be recomputed.", "text_fr": "La signature doit être recalculée." },
+        { "key": "B", "text_en": "Tool results belong before thinking.", "text_fr": "Les résultats d'outils vont avant le thinking." },
+        { "key": "C", "text_en": "`redacted_thinking` blocks get dropped.", "text_fr": "Les blocs `redacted_thinking` sont supprimés." },
+        { "key": "D", "text_en": "Thinking needs `display: \"summarized\"`.", "text_fr": "Le thinking exige `display: \"summarized\"`." }
+      ],
+      "correct": ["C"],
+      "explanation_fr": "La page de dépannage donne cette cause en premier : l'erreur survient quand le message assistant renvoyé diffère de celui que l'API a produit, le plus souvent parce que le code filtre les blocs par type et laisse tomber les `redacted_thinking`. Filtrer sur `block.type == \"thinking\"` les supprime silencieusement. L'intermittence est le signe distinctif : les blocs expurgés n'apparaissent que sur certaines conversations, donc le même code passe la plupart du temps. Le remède est de renvoyer le tour assistant tel quel, blocs expurgés compris.",
+      "distractors_fr": {
+        "A": "La signature est opaque et ne se recalcule pas côté client : elle sert précisément à l'API pour vérifier que les blocs viennent bien de Claude et n'ont pas été touchés.",
+        "B": "L'ordre des blocs n'est pas en cause ici : le message échoue parce qu'un bloc manque, pas parce que la séquence a été réarrangée.",
+        "D": "Le réglage d'affichage ne conditionne pas le renvoi : la `signature` porte le thinking chiffré dans les deux modes, et un bloc omis se renvoie exactement comme un bloc résumé."
+      },
+      "principe_fr": "Le renvoi d'un tour assistant se fait à l'identique : tout filtrage par type de bloc est un point de rupture, pas une optimisation.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting"
+    },
+    {
+      "id": "PC-THK-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Un basculement du thinking en cours de tour ne renvoie pas d erreur : l API desactive silencieusement le thinking pour cette requete",
+      "question_en": "A harness enables thinking on the tool_use request, then omits it when returning the tool result. Which TWO outcomes does the API produce?",
+      "question_fr": "Un harnais active le thinking sur la requête tool_use, puis l'omet en renvoyant le résultat d'outil. Lesquels DEUX (TWO) comportements l'API produit-elle ?",
+      "options": [
+        { "key": "A", "text_en": "The request succeeds with no error.", "text_fr": "La requête aboutit sans erreur." },
+        { "key": "B", "text_en": "A 400 rejects the turn structure.", "text_fr": "Une 400 rejette la structure du tour." },
+        { "key": "C", "text_en": "The prior thinking blocks are re-signed.", "text_fr": "Les blocs de thinking antérieurs sont re-signés." },
+        { "key": "D", "text_en": "Thinking is disabled for that request.", "text_fr": "Le thinking est désactivé pour cette requête." }
+      ],
+      "correct": ["A", "D"],
+      "explanation_fr": "La doc appelle cela une dégradation en douceur : basculer le thinking en cours de tour — par exemple entre l'envoi de l'appel d'outil et le renvoi de son résultat — ne provoque pas d'erreur, l'API désactive silencieusement le thinking pour cette requête. Elle peut aussi retirer les blocs de thinking qui rendraient la structure du tour invalide. C'est précisément ce qui rend le défaut coûteux à diagnostiquer : rien ne remonte. Le seul moyen de savoir si le thinking était actif est de vérifier la présence de blocs `thinking` dans la réponse. La règle qui en découle : on bascule entre les tours, jamais à l'intérieur d'un tour, et une boucle d'outils entière compte pour un seul tour assistant.",
+      "distractors_fr": {
+        "B": "Une 400 serait plus confortable, mais l'API ne rejette pas : le silence est justement le piège que la doc signale.",
+        "C": "Rien n'est re-signé. Au contraire, l'API peut retirer des blocs de thinking incompatibles avec la structure du tour, et le contenu de thinking passé sur un tour dégradé est simplement supprimé de l'historique cachable."
+      },
+      "principe_fr": "Une configuration de thinking se fixe au début d'un tour assistant : la changer en cours de tour ne casse rien bruyamment, elle éteint le thinking sans le dire.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+    }
+  ]
+}

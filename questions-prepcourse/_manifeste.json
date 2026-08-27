@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
-  "genere": "2026-08-25",
-  "nbQuestions": 53,
+  "genere": "2026-08-27",
+  "nbQuestions": 62,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -26,6 +26,11 @@
     {
       "fichier": "m2-2.1-prompting.json",
       "subdomain": "Prompt Engineering / Output Handling",
+      "nb": 9
+    },
+    {
+      "fichier": "m2-2.2-thinking.json",
+      "subdomain": "Model Selection and Tradeoffs / Cost and Token Management / Claude API Mechanics",
       "nb": 9
     },
     {
@@ -474,6 +479,96 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.1-prompting.json"
+    },
+    {
+      "id": "PC-THK-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
+    },
+    {
+      "id": "PC-THK-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.2-thinking.json"
     },
     {
       "id": "PC-PMS-001",

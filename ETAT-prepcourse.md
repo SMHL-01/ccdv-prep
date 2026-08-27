@@ -12,7 +12,28 @@ habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
 l'ensemble). Rien d'autre prevu de son cote pour l'instant. Reste
 propose a Marie-Line : le reste des modules 2, 4, 5 et m3-3.2 a m3-3.5 ;
 elle confirme en passant chaque topic a `reserve` dans
-`reservations-prepcourse.json` avant d'ecrire.
+`reservations-prepcourse.json` avant d'ecrire — et en POUSSANT cette
+reservation avant la premiere question, ce que `npm run questions` verifie
+desormais en lisant le fichier sur `origin/main`.
+
+**Cibles : 284 questions pour la banque, 231 restant a ecrire sur 21 topics.**
+Posees en une passe le 2026-08-27, derivees et non arbitrees :
+`cible = 8 + arrondi(6 x densite normalisee du chapitre dans prepcourse-corpus/)`,
+bornes 8 a 14. Le plancher 8 sort du calibrage, pas du jugement : sous 8
+questions, 65/30/5 en nature, 25/50/25 en difficulte et ~20 % de multi ne
+tombent plus juste. La densite module au lieu d'allouer — sans borne, l'ecart
+x14 entre le chapitre le plus mince (m5-5.3-lifecycle, 2 090 car.) et le plus
+dense (m5-5.4-deployment, 25 608 car.) se propagerait tel quel, et une
+allocation proportionnelle a la densite des 6 topics deja faits (610 car. par
+question) donnerait une banque a 532 questions.
+
+Le poids d'examen du blueprint n'est pas la cle d'allocation de cette banque,
+pour deux raisons : un topic du cours couvre souvent deux domaines — `m1-1.4`
+(Applications 5 + Model Selection 4) et `m3-3.1` (Applications 5 + Security 4)
+le font deja — donc son poids n'est pas un nombre defini ; et la banque doc
+assure deja la proportionnalite au blueprint par construction, 406 questions
+pour 100 % du poids. Le mapping topic -> domaine reste a faire, mais comme axe
+d'audit de couverture (multi-valeur), pas comme cle d'allocation.
 
 Note calibrage (2026-08-13, cloturee sur les topics de Said) : consigne
 tenue sur m1-1.3, m1-1.4 et m3-3.1 (1 factual_magnitude documentee

@@ -209,9 +209,18 @@ function reservationsDistantes() {
   }
 }
 
-function controlerReservationsPrepcourse(fichiers, horsLigne, anomalies) {
+function controlerReservationsPrepcourse(horsLigne, anomalies) {
   const locales = JSON.parse(fs.readFileSync(RESERVATIONS_PREPCOURSE, 'utf8')).reservations || {};
   const distant = horsLigne ? null : reservationsDistantes();
+
+  // On regarde le repertoire, pas la liste des fichiers charges : le controle
+  // doit se declencher sur l'EXISTENCE du fichier de questions, pas sur son
+  // remplissage, sinon il suffirait de creer le fichier vide d'abord pour le
+  // contourner.
+  const avecFichier = new Set(
+    fichiersQuestions(DIR_QUESTIONS_PREPCOURSE, null).map((f) => path.basename(f, '.json'))
+  );
+  const topics = [...new Set([...Object.keys(locales), ...avecFichier])].sort();
 
   console.log('\n=== [prepcourse] reservations');
   if (horsLigne) {
@@ -230,9 +239,22 @@ function controlerReservationsPrepcourse(fichiers, horsLigne, anomalies) {
     }
   }
 
-  for (const chemin of fichiers) {
-    const topic = path.basename(chemin, '.json');
+  for (const topic of topics) {
     const l = locales[topic];
+    const ecrit = avecFichier.has(topic);
+
+    // Une cible est un engagement pris AVANT d'ecrire, pas une mesure ajustee
+    // apres. La reviser reste possible — un chapitre peut s'averer plus mince
+    // que prevu — mais jamais en silence : anomalie, pas blocage.
+    if (l && distant && distant.ok && ecrit) {
+      const r = distant.reservations[topic];
+      if (r && r.cible !== undefined && l.cible !== undefined && r.cible !== l.cible) {
+        anomalies.push(`${topic} : cible modifiee (${r.cible} sur origin/main -> ${l.cible} en local) alors que le fichier de questions existe deja. Une cible se revise AVANT d'ecrire. Si c'est voulu, le justifier dans le message de commit.`);
+        console.log(`  ${topic} : cible ${r.cible} -> ${l.cible} APRES creation du fichier de questions`);
+      }
+    }
+
+    if (!ecrit) continue;
 
     if (!l) {
       anomalies.push(`${topic} : des questions sont ecrites alors que le topic n'est pas reserve du tout dans reservations-prepcourse.json`);
@@ -274,8 +296,19 @@ function traiterBanque(banque, filtre, anomaliesGlobales) {
   const toutes = [];
 
   for (const chemin of fichiers) {
-    const { meta, questions } = charger(chemin);
     const nom = path.basename(chemin);
+    let charge;
+    try {
+      charge = charger(chemin);
+    } catch (e) {
+      // Un fichier vide ou casse doit produire une anomalie lisible, pas une
+      // stack trace : sinon il interrompt tous les autres controles au passage.
+      const msg = `[${banque.nom}] ${nom} : fichier illisible (${String(e.message || e).split('\n')[0]})`;
+      console.log(`\n=== ${msg}`);
+      anomaliesGlobales.push(msg);
+      continue;
+    }
+    const { meta, questions } = charge;
     const anomalies = [];
     const vusIds = new Set();
     const vusConcepts = new Map();
@@ -381,6 +414,13 @@ function main() {
   const filtre = args.find((a) => a.endsWith('.json'));
 
   const anomaliesGlobales = [];
+
+  // D'abord le protocole de reservation : il doit tourner meme si un fichier de
+  // questions est casse, sinon un fichier vide suffirait a le faire sauter.
+  if (fs.existsSync(RESERVATIONS_PREPCOURSE)) {
+    controlerReservationsPrepcourse(horsLigne, anomaliesGlobales);
+  }
+
   const resultats = {};
   for (const banque of BANQUES) {
     resultats[banque.nom] = traiterBanque(banque, filtre, anomaliesGlobales);
@@ -390,10 +430,6 @@ function main() {
   if (!banquesTraitees.length) {
     console.error(`Aucun fichier de questions dans ${BANQUES.map((b) => path.relative(__dirname, b.dir) + '/').join(' ni ')}`);
     process.exit(1);
-  }
-
-  if (resultats.prepcourse) {
-    controlerReservationsPrepcourse(resultats.prepcourse.fichiers, horsLigne, anomaliesGlobales);
   }
 
   if (reecrireIndex) {

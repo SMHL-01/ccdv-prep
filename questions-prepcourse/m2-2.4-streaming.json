@@ -24,12 +24,30 @@
       "question_en": "In a streamed response, what does the `index` carried by a content block event tell your handler?",
       "question_fr": "Dans une réponse streamée, qu'indique l'`index` porté par un événement de bloc de contenu à votre gestionnaire ?",
       "options": [
-        { "key": "A", "text_en": "The order in which deltas must be applied.", "text_fr": "L'ordre dans lequel appliquer les deltas." },
-        { "key": "B", "text_en": "The number of blocks left to stream.", "text_fr": "Le nombre de blocs restant à streamer." },
-        { "key": "C", "text_en": "Where the block sits in the final content array.", "text_fr": "La place du bloc dans le tableau content final." },
-        { "key": "D", "text_en": "Which of the models in the fallback chain produced it.", "text_fr": "Lequel des modèles de la chaîne de repli l'a produit." }
+        {
+          "key": "A",
+          "text_en": "The order in which deltas must be applied.",
+          "text_fr": "L'ordre dans lequel appliquer les deltas."
+        },
+        {
+          "key": "B",
+          "text_en": "The number of blocks left to stream.",
+          "text_fr": "Le nombre de blocs restant à streamer."
+        },
+        {
+          "key": "C",
+          "text_en": "Where the block sits in the final content array.",
+          "text_fr": "La place du bloc dans le tableau content final."
+        },
+        {
+          "key": "D",
+          "text_en": "Which of the models in the fallback chain produced it.",
+          "text_fr": "Lequel des modèles de la chaîne de repli l'a produit."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La doc décrit le flux ainsi : une série de blocs de contenu, chacun avec un `content_block_start`, un ou plusieurs `content_block_delta` et un `content_block_stop`, et « Each content block has an `index` that corresponds to its index in the final Message `content` array ». L'index est donc une adresse de destination : votre gestionnaire crée un emplacement à cet index et y applique les fragments, ce qui lui permet de reconstituer un message identique à celui qu'un appel non streamé aurait rendu.",
       "distractors_fr": {
         "A": "Les deltas d'un même bloc arrivent dans l'ordre où il faut les concaténer ; l'index ne sert pas à les ordonner mais à savoir à quel bloc ils appartiennent.",
@@ -52,12 +70,30 @@
       "question_en": "The `usage` field on a message_delta event reports token counts. How must you read them?",
       "question_fr": "Le champ `usage` d'un événement message_delta rapporte des comptes de tokens. Comment faut-il les lire ?",
       "options": [
-        { "key": "A", "text_en": "As cumulative totals for the message.", "text_fr": "Comme des totaux cumulés pour le message." },
-        { "key": "B", "text_en": "As the tokens in that single delta.", "text_fr": "Comme les tokens de ce seul delta." },
-        { "key": "C", "text_en": "As an estimate refined at message_stop.", "text_fr": "Comme une estimation affinée à message_stop." },
-        { "key": "D", "text_en": "As output tokens only, input excluded.", "text_fr": "Comme des tokens de sortie seuls, entrée exclue." }
+        {
+          "key": "A",
+          "text_en": "As cumulative totals for the message.",
+          "text_fr": "Comme des totaux cumulés pour le message."
+        },
+        {
+          "key": "B",
+          "text_en": "As the tokens in that single delta.",
+          "text_fr": "Comme les tokens de ce seul delta."
+        },
+        {
+          "key": "C",
+          "text_en": "As an estimate refined at message_stop.",
+          "text_fr": "Comme une estimation affinée à message_stop."
+        },
+        {
+          "key": "D",
+          "text_en": "As output tokens only, input excluded.",
+          "text_fr": "Comme des tokens de sortie seuls, entrée exclue."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La page porte un avertissement explicite sur ce point : « The token counts shown in the `usage` field of the `message_delta` event are *cumulative*. » Un gestionnaire qui additionne les `usage` reçus au fil des `message_delta` compte donc plusieurs fois les mêmes tokens — c'est une erreur de facturation silencieuse, jamais une erreur d'API.",
       "distractors_fr": {
         "B": "C'est précisément la lecture que l'avertissement de la doc cherche à empêcher : elle conduit à surestimer la consommation en additionnant des totaux successifs.",
@@ -76,24 +112,38 @@
       "nature": "judgment",
       "difficulty": "moyen",
       "source": "prepcourse",
-      "concept": "L input d un tool_use arrive en fragments de JSON partiel : le parser avant content_block_stop echoue ou execute avec des arguments manquants",
-      "question_en": "Your handler parses a tool_use block's `input` on every content_block_delta so it can start work early. What happens?",
-      "question_fr": "Votre gestionnaire parse l'`input` d'un bloc tool_use à chaque content_block_delta pour démarrer le travail plus tôt. Que se passe-t-il ?",
+      "concept": "Le streaming fin d entrees d outils supprime la validation serveur : le JSON recu peut rester invalide",
+      "question_en": "A tool parameter carries an entire generated file, and time to first fragment matters, so you set `eager_input_streaming: true` on that tool. What must your reader now cope with that it did not before?",
+      "question_fr": "Un parametre d outil transporte un fichier entier genere, et le delai jusqu au premier fragment compte, donc vous passez `eager_input_streaming` a `true` sur cet outil. Que votre lecteur doit-il desormais gerer qu il n avait pas a gerer avant ?",
       "options": [
-        { "key": "A", "text_en": "It works; the SDK repairs partial JSON.", "text_fr": "Ça marche : le SDK répare le JSON partiel." },
-        { "key": "B", "text_en": "The API rejects the request as malformed.", "text_fr": "L'API rejette la requête comme malformée." },
-        { "key": "C", "text_en": "Nothing changes; input arrives in one delta.", "text_fr": "Rien ne change : l'input arrive en un seul delta." },
-        { "key": "D", "text_en": "It chokes, or runs with arguments missing.", "text_fr": "Il échoue, ou s'exécute avec des arguments manquants." }
+        {
+          "key": "A",
+          "text_en": "Deltas arriving out of index order"
+        },
+        {
+          "key": "B",
+          "text_en": "Tool results before their tool_use"
+        },
+        {
+          "key": "C",
+          "text_en": "A second content_block_start event"
+        },
+        {
+          "key": "D",
+          "text_en": "Input JSON that may never be valid"
+        }
       ],
-      "correct": ["D"],
-      "explanation_fr": "La doc est nette sur la forme de ces deltas : « the deltas are *partial JSON strings*, whereas the final `tool_use.input` is always an *object* ». On accumule les fragments et on parse une fois reçu `content_block_stop`. Agir avant cet événement, c'est soit buter sur du JSON invalide, soit exécuter l'outil avec la moitié des arguments — et cette seconde issue est la pire, parce qu'elle ne lève aucune erreur.",
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "En streaming standard, l API tamponne et valide chaque valeur de parametre avant de la renvoyer : quand le bloc se ferme, le JSON accumule est valide. Le streaming fin supprime ce tampon pour reduire le delai jusqu au premier fragment, et la contrepartie est explicite : vous pouvez recevoir du JSON partiel ou invalide, et une reponse qui s arrete sur max_tokens peut couper un parametre en plein milieu. Il faut donc accumuler les fragments et proteger le parse, sans supposer qu il reussira.",
       "distractors_fr": {
-        "A": "Les SDK fournissent des aides pour accéder à des valeurs incrémentales parsées, mais elles ne rendent pas un `input` complet avant la fin du bloc. Rien ne peut inventer les clés qui ne sont pas encore arrivées.",
-        "B": "L'API n'a rien à rejeter : elle a envoyé des événements valides. Le problème est entièrement du côté du gestionnaire.",
-        "C": "Les modèles actuels n'émettent qu'une paire clé/valeur complète à la fois, et elle est elle-même découpée en plusieurs deltas de JSON partiel. Un `input` d'un seul delta n'est pas le cas général."
+        "A": "L index reste fiable : il designe la place du bloc dans le tableau content, et le streaming fin ne change pas cet ordonnancement.",
+        "B": "L ordre des blocs dans la reponse n est pas affecte : un resultat d outil vient toujours de votre code, apres le bloc tool_use.",
+        "C": "Le nombre d evenements de structure par bloc ne change pas ; ce qui change est le contenu des deltas, pas leur enveloppe."
       },
-      "principe_fr": "On ne lit un bloc qu'une fois fermé ; le streaming donne de la matière, pas de l'état.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+      "principe_fr": "Une optimisation de latence qui retire une etape serveur vous transfere la garantie que cette etape apportait.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming"
     },
     {
       "id": "PC-STR-004",
@@ -108,12 +158,31 @@
       "question_en": "A dropped stream left a truncated tool_use block in your conversation history. Which TWO changes prevent a repeat?",
       "question_fr": "Un flux interrompu a laissé un bloc tool_use tronqué dans votre historique de conversation. Lesquelles DEUX (TWO) modifications empêchent que cela recommence ?",
       "options": [
-        { "key": "A", "text_en": "Retry the request from the corrupted turn.", "text_fr": "Relancer la requête depuis le tour corrompu." },
-        { "key": "B", "text_en": "Append the assistant turn only after message_stop.", "text_fr": "N'ajouter le tour assistant qu'après message_stop." },
-        { "key": "C", "text_en": "Discard the partial turn, then retry the request.", "text_fr": "Jeter le tour partiel, puis relancer la requête." },
-        { "key": "D", "text_en": "Parse each delta so nothing is left unparsed.", "text_fr": "Parser chaque delta pour ne rien laisser non parsé." }
+        {
+          "key": "A",
+          "text_en": "Retry the request from the corrupted turn.",
+          "text_fr": "Relancer la requête depuis le tour corrompu."
+        },
+        {
+          "key": "B",
+          "text_en": "Append the assistant turn only after message_stop.",
+          "text_fr": "N'ajouter le tour assistant qu'après message_stop."
+        },
+        {
+          "key": "C",
+          "text_en": "Discard the partial turn, then retry the request.",
+          "text_fr": "Jeter le tour partiel, puis relancer la requête."
+        },
+        {
+          "key": "D",
+          "text_en": "Parse each delta so nothing is left unparsed.",
+          "text_fr": "Parser chaque delta pour ne rien laisser non parsé."
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "La cause racine est une équivalence fausse : le gestionnaire traitait « ma boucle de lecture s'est terminée » comme « le message est complet ». Les deux correctifs découlent de la distinction : conditionner l'ajout à l'historique à l'arrivée de `message_stop`, seul signal qu'un message est entier, et sur interruption jeter le tour assistant partiel avant de relancer depuis le dernier tour complet. La doc confirme qu'il n'y a rien à sauver dans ce bloc : « Tool use and extended thinking blocks cannot be partially recovered. »",
       "distractors_fr": {
         "A": "Relancer en gardant le tour corrompu dans l'historique est exactement ce qui a produit l'erreur de validation du postmortem : la requête de reprise réembarque le bloc tronqué.",
@@ -135,12 +204,30 @@
       "question_en": "A tool-use validation error shows up on a retry request, and the schema has not changed. What do you inspect first?",
       "question_fr": "Une erreur de validation d'outil apparaît sur une requête de reprise, et le schéma n'a pas changé. Qu'inspectez-vous en premier ?",
       "options": [
-        { "key": "A", "text_en": "Whether the prior turn came from a stream.", "text_fr": "Si le tour précédent vient d'un flux streamé." },
-        { "key": "B", "text_en": "The tool_choice value on the retry.", "text_fr": "La valeur de tool_choice sur la reprise." },
-        { "key": "C", "text_en": "The input_schema of the failing tool.", "text_fr": "L'input_schema de l'outil en échec." },
-        { "key": "D", "text_en": "The tool_result ids of the earlier turn.", "text_fr": "Les identifiants tool_result du tour antérieur." }
+        {
+          "key": "A",
+          "text_en": "Whether the prior turn came from a stream.",
+          "text_fr": "Si le tour précédent vient d'un flux streamé."
+        },
+        {
+          "key": "B",
+          "text_en": "The tool_choice value on the retry.",
+          "text_fr": "La valeur de tool_choice sur la reprise."
+        },
+        {
+          "key": "C",
+          "text_en": "The input_schema of the failing tool.",
+          "text_fr": "L'input_schema de l'outil en échec."
+        },
+        {
+          "key": "D",
+          "text_en": "The tool_result ids of the earlier turn.",
+          "text_fr": "Les identifiants tool_result du tour antérieur."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "C'est la leçon du postmortem : l'erreur se manifeste sur la requête de reprise, mais sa cause est en amont, dans le tour assemblé depuis un flux interrompu. L'équipe a passé une après-midi sur le schéma et la logique de relance parce que l'erreur pointait la mauvaise requête. Le réflexe à installer : devant une erreur d'outil sur une reprise, vérifier d'abord si le tour antérieur a été assemblé depuis un flux, avant de toucher au schéma.",
       "distractors_fr": {
         "B": "`tool_choice` contraint la génération du tour à venir. Il n'a aucun effet sur la validité d'un bloc déjà présent dans l'historique.",
@@ -163,12 +250,30 @@
       "question_en": "A backend job needs a very long generation and nobody watches the output, yet plain requests hit HTTP timeouts. What is the documented route?",
       "question_fr": "Un traitement backend a besoin d'une très longue génération et personne ne regarde la sortie, mais les requêtes simples butent sur des timeouts HTTP. Quelle est la voie documentée ?",
       "options": [
-        { "key": "A", "text_en": "Raise the client timeout and keep it plain.", "text_fr": "Augmenter le timeout client et rester en simple." },
-        { "key": "B", "text_en": "Split the prompt into several short calls.", "text_fr": "Découper le prompt en plusieurs appels courts." },
-        { "key": "C", "text_en": "Stream and render the deltas as they land.", "text_fr": "Streamer et afficher les deltas à mesure." },
-        { "key": "D", "text_en": "Stream internally, take the final message.", "text_fr": "Streamer en interne, prendre le message final." }
+        {
+          "key": "A",
+          "text_en": "Raise the client timeout and keep it plain.",
+          "text_fr": "Augmenter le timeout client et rester en simple."
+        },
+        {
+          "key": "B",
+          "text_en": "Split the prompt into several short calls.",
+          "text_fr": "Découper le prompt en plusieurs appels courts."
+        },
+        {
+          "key": "C",
+          "text_en": "Stream and render the deltas as they land.",
+          "text_fr": "Streamer et afficher les deltas à mesure."
+        },
+        {
+          "key": "D",
+          "text_en": "Stream internally, take the final message.",
+          "text_fr": "Streamer en interne, prendre le message final."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "La doc prévoit exactement ce cas : « If you don't need to process text as it arrives, the SDKs provide a way to use streaming internally while returning the complete `Message` object, identical to what `.create()` returns. This is especially useful for requests with large `max_tokens` values, where the SDKs require streaming to avoid HTTP timeouts. » On récupère le message complet — `get_final_message()` en Python — sans écrire un seul gestionnaire d'événements, donc sans hériter du risque d'état partiel.",
       "distractors_fr": {
         "A": "Le timeout n'est pas seulement côté client : les SDK exigent le streaming au-delà d'un certain `max_tokens`, ce n'est pas un réglage à contourner.",
@@ -187,23 +292,38 @@
       "nature": "factual_semantic",
       "difficulty": "moyen",
       "source": "prepcourse",
-      "concept": "Un flux peut contenir un nombre quelconque de ping et de nouveaux types d evenements peuvent apparaitre : le gestionnaire doit ignorer l inconnu sans casser",
-      "question_en": "Which TWO statements about events outside the main flow are true?",
-      "question_fr": "Lesquelles DEUX (TWO) de ces affirmations sur les événements hors du flux principal sont exactes ?",
+      "concept": "eager_input_streaming est un champ par outil : absent il laisse le streaming tamponne, a false il le force",
+      "question_en": "Which TWO statements about the per-tool `eager_input_streaming` field are correct?",
+      "question_fr": "Lesquelles de ces DEUX affirmations sur le champ `eager_input_streaming`, defini outil par outil, sont exactes ?",
       "options": [
-        { "key": "A", "text_en": "A ping event marks the end of a block.", "text_fr": "Un événement ping marque la fin d'un bloc." },
-        { "key": "B", "text_en": "A stream may include any number of pings.", "text_fr": "Un flux peut contenir un nombre quelconque de pings." },
-        { "key": "C", "text_en": "An unknown event type must abort the stream and retry.", "text_fr": "Un type d'événement inconnu doit interrompre le flux et relancer." },
-        { "key": "D", "text_en": "New event types may appear; handle them gracefully.", "text_fr": "De nouveaux types peuvent apparaître : les gérer sans casser." }
+        {
+          "key": "A",
+          "text_en": "It applies to every tool on the request"
+        },
+        {
+          "key": "B",
+          "text_en": "Leaving it unset keeps buffered streaming"
+        },
+        {
+          "key": "C",
+          "text_en": "It needs a beta header to work at all"
+        },
+        {
+          "key": "D",
+          "text_en": "An explicit false keeps buffering either way"
+        }
       ],
-      "correct": ["B", "D"],
-      "explanation_fr": "Deux phrases de la page couvrent ces cas. Pour les pings : « Event streams may also include any number of `ping` events. » Pour l'inconnu, au titre de la politique de versionnage : « new event types may be added, and your code should handle unknown event types gracefully ». Un gestionnaire correct ignore ce qu'il ne connaît pas et continue d'appliquer ce qu'il connaît.",
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Le champ est optionnel et se lit outil par outil. Non defini, l outil reste en streaming tamponne, ou l API tamponne et valide chaque valeur de parametre avant de la renvoyer. A true, l outil passe en streaming fin. A false explicitement, il reste tamponne meme si la requete envoie encore l en-tete beta legacy, qui sinon activerait le streaming fin sur les outils au champ absent. Le champ par outil est donc la source de verite, et false est le moyen de s en proteger.",
       "distractors_fr": {
-        "A": "La fin d'un bloc est signalée par `content_block_stop`, uniquement. Un `ping` ne porte aucune information sur l'état du message.",
-        "C": "C'est l'inverse de la consigne documentée. Interrompre sur un type inconnu rend le code fragile à toute évolution de l'API, alors que la doc annonce que de nouveaux types seront ajoutés."
+        "A": "Le champ se pose sur une definition d outil, pas sur la requete : vous pouvez ouvrir le streaming fin sur le seul outil qui transporte un gros parametre et laisser les autres tamponnes.",
+        "C": "Le champ par outil remplace l ancien en-tete beta dedie ; il fonctionne sans lui. L en-tete legacy ne sert plus qu a activer le streaming fin sur les outils qui laissent le champ non defini."
       },
-      "principe_fr": "Un consommateur d'événements robuste ignore l'inconnu au lieu de s'y arrêter.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/streaming"
+      "principe_fr": "Un reglage par element l emporte sur un reglage global herite : c est ce qui permet de migrer sans tout basculer d un coup.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming"
     },
     {
       "id": "PC-STR-008",
@@ -218,12 +338,30 @@
       "question_en": "On Claude Opus 5, a stream broke mid-text and you captured the partial text. How does the documented recovery differ from the Claude 4.5 recipe?",
       "question_fr": "Sur Claude Opus 5, un flux s'est coupé en plein texte et vous avez capturé le texte partiel. En quoi la reprise documentée diffère-t-elle de la recette Claude 4.5 ?",
       "options": [
-        { "key": "A", "text_en": "You cannot resume; restart the request.", "text_fr": "On ne peut pas reprendre : tout relancer." },
-        { "key": "B", "text_en": "The partial text goes in an assistant message.", "text_fr": "Le texte partiel va dans un message assistant." },
-        { "key": "C", "text_en": "The partial text goes in a user message.", "text_fr": "Le texte partiel va dans un message user." },
-        { "key": "D", "text_en": "You resend it as a tool_result block.", "text_fr": "On le renvoie dans un bloc tool_result." }
+        {
+          "key": "A",
+          "text_en": "You cannot resume; restart the request.",
+          "text_fr": "On ne peut pas reprendre : tout relancer."
+        },
+        {
+          "key": "B",
+          "text_en": "The partial text goes in an assistant message.",
+          "text_fr": "Le texte partiel va dans un message assistant."
+        },
+        {
+          "key": "C",
+          "text_en": "The partial text goes in a user message.",
+          "text_fr": "Le texte partiel va dans un message user."
+        },
+        {
+          "key": "D",
+          "text_en": "You resend it as a tool_result block.",
+          "text_fr": "On le renvoie dans un bloc tool_result."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La stratégie générale ne change pas — capturer le partiel, construire une requête de continuation, reprendre le flux — mais l'étape 2 diffère selon la génération de modèle. Pour Claude 4.5 et antérieurs, le partiel se place en début d'un message assistant. Pour Claude 4.6 et suivants, dont Opus 5 : « instead of placing the partial response in an assistant message, add a user message that instructs the model to continue from where it left off », sur le patron « Your previous response was interrupted and ended with [previous_response]. Continue from where you left off. »",
       "distractors_fr": {
         "A": "La reprise est documentée et évite de reconsommer toute la réponse. C'est précisément ce que la section « Error recovery » propose.",
@@ -246,12 +384,30 @@
       "question_en": "Your stream broke after a thinking block and a tool_use block had both opened. Which part of that response can you actually resume from?",
       "question_fr": "Votre flux s'est coupé après l'ouverture d'un bloc thinking et d'un bloc tool_use. Depuis quelle partie de cette réponse pouvez-vous réellement reprendre ?",
       "options": [
-        { "key": "A", "text_en": "The tool_use block, once its JSON is repaired.", "text_fr": "Le bloc tool_use, une fois son JSON réparé." },
-        { "key": "B", "text_en": "The most recent text block, nothing else.", "text_fr": "Le dernier bloc de texte, rien d'autre." },
-        { "key": "C", "text_en": "The thinking block, using its signature.", "text_fr": "Le bloc thinking, grâce à sa signature." },
-        { "key": "D", "text_en": "Any block whose content_block_start arrived.", "text_fr": "Tout bloc dont le content_block_start est arrivé." }
+        {
+          "key": "A",
+          "text_en": "The tool_use block, once its JSON is repaired.",
+          "text_fr": "Le bloc tool_use, une fois son JSON réparé."
+        },
+        {
+          "key": "B",
+          "text_en": "The most recent text block, nothing else.",
+          "text_fr": "Le dernier bloc de texte, rien d'autre."
+        },
+        {
+          "key": "C",
+          "text_en": "The thinking block, using its signature.",
+          "text_fr": "Le bloc thinking, grâce à sa signature."
+        },
+        {
+          "key": "D",
+          "text_en": "Any block whose content_block_start arrived.",
+          "text_fr": "Tout bloc dont le content_block_start est arrivé."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Les bonnes pratiques de récupération le posent sans nuance : « Tool use and extended thinking blocks cannot be partially recovered. You can resume streaming from the most recent text block. » Un message peut contenir plusieurs types de blocs, et seul le texte se reprend. Les deux autres types sont à jeter entiers, ce qui rejoint la règle de l'historique : un tour assemblé depuis un flux coupé n'est pas réparable, il est à écarter.",
       "distractors_fr": {
         "A": "Il n'y a rien à réparer : un JSON partiel ne contient pas les clés qui ne sont pas arrivées. « Cannot be partially recovered » signifie qu'aucune reconstruction n'est valide, pas qu'elle est difficile.",

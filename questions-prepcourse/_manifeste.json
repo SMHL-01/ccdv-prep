@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 84,
+  "nbQuestions": 96,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -42,6 +42,11 @@
       "fichier": "m2-2.4-streaming.json",
       "subdomain": "Claude API Mechanics",
       "nb": 9
+    },
+    {
+      "fichier": "m2-2.5-model-budget.json",
+      "subdomain": "Context Engineering",
+      "nb": 12
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -799,6 +804,126 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-MBG-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-002",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-003",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-004",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-005",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-006",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-007",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-MBG-012",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.5-model-budget.json"
     },
     {
       "id": "PC-PMS-001",

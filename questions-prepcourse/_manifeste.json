@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 254,
+  "nbQuestions": 262,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -122,6 +122,11 @@
       "fichier": "m5-5.1-packaging.json",
       "subdomain": "Understanding Requirements",
       "nb": 11
+    },
+    {
+      "fichier": "m5-5.2-requirements.json",
+      "subdomain": "Understanding Requirements",
+      "nb": 8
     }
   ],
   "questions": [
@@ -2664,6 +2669,86 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-REQ-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-REQ-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.2-requirements.json"
     }
   ]
 }

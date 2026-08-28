@@ -1,0 +1,351 @@
+{
+  "topic": "m5-5.2-requirements",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Understanding Requirements",
+  "weight": 3.4,
+  "corpus_ref": "prepcourse-corpus/m5-5.2-requirements.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/claude-apps-gateway",
+    "https://code.claude.com/docs/en/claude-apps-gateway-spend-limits",
+    "https://code.claude.com/docs/en/agent-sdk/secure-deployment"
+  ],
+  "questions": [
+    {
+      "id": "PC-REQ-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Axe identite : le protocole que la passerelle accepte reellement",
+      "question_en": "A requirement states that developers must sign in with the corporate identity provider rather than hold API keys. Which protocol does a self-hosted Claude apps gateway accept?",
+      "question_fr": "Une exigence dit que les developpeurs doivent s'authentifier aupres du fournisseur d'identite de l'entreprise au lieu de detenir des cles d'API. Quel protocole une passerelle Claude apps auto-hebergee accepte-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "SAML, with OIDC as a fallback path."
+        },
+        {
+          "key": "B",
+          "text_en": "OIDC only; SAML and LDAP are refused."
+        },
+        {
+          "key": "C",
+          "text_en": "Any of SAML, LDAP, or OIDC issuers."
+        },
+        {
+          "key": "D",
+          "text_en": "LDAP for groups, OIDC for sign-in."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La table des limitations est explicite : fournisseurs d'identite OIDC disponibles (n'importe quel IdP conforme OIDC, la passerelle faisant la decouverte OIDC standard et le flux code d'autorisation), et SAML, LDAP et toute autre authentification non OIDC non pris en charge, avec pour seule issue de placer un pont OIDC devant. Un seul emetteur par passerelle : le multi-tenant a plusieurs emetteurs OIDC n'est pas pris en charge non plus.",
+      "distractors_fr": {
+        "A": "Il n'y a pas de chemin de repli : SAML n'est pas pris en charge du tout.",
+        "C": "La passerelle fait de la decouverte OIDC standard et le flux code d'autorisation ; SAML et LDAP ne sont pas pris en charge.",
+        "D": "Les groupes viennent des revendications de l'id_token OIDC, pas d'un annuaire LDAP separe."
+      },
+      "principe_fr": "Une exigence d'identite se traduit en protocole : 's'authentifier aupres de l'IdP' n'est realisable que si cet IdP parle ce que la plateforme sait lire.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway"
+    },
+    {
+      "id": "PC-REQ-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le niveau de durcissement se deduit de ce que le deploiement traite",
+      "question_en": "A team applies the same hardening plan to a throwaway prototype that handles no regulated data and to a multi-tenant service processing customer data. What does the deployment guidance say?",
+      "question_fr": "Une equipe applique le meme plan de durcissement a un prototype jetable qui ne traite aucune donnee reglementee et a un service multi-locataire qui traite des donnees clients. Que dit la documentation de deploiement ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Maximum isolation applies to every deployment."
+        },
+        {
+          "key": "B",
+          "text_en": "Prototypes need no controls of any kind."
+        },
+        {
+          "key": "C",
+          "text_en": "Hardening depends on the language runtime used."
+        },
+        {
+          "key": "D",
+          "text_en": "Controls are chosen to fit the situation."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La documentation le pose noir sur blanc : tous les deploiements n'ont pas besoin d'une securite maximale, et un developpeur qui fait tourner Claude Code sur son portable n'a pas les memes exigences qu'une entreprise qui traite des donnees clients dans un environnement multi-locataire. Le guide presente donc une gamme, des fonctions integrees aux architectures durcies, a choisir selon la situation. C'est exactement le raisonnement du Prep Course : les exigences d'infrastructure se derivent du probleme, elles ne se plaquent pas.",
+      "distractors_fr": {
+        "A": "La documentation dit l'inverse : tous les deploiements n'ont pas besoin d'une securite maximale.",
+        "B": "Le prototype garde les fonctions de securite integrees, permissions et bac a sable ; ce qui varie, c'est le durcissement ajoute par dessus.",
+        "C": "Le langage d'execution n'entre pas dans le raisonnement : ce sont les donnees traitees et le modele de menace qui le font."
+      },
+      "principe_fr": "Deriver, pas plaquer : le meme jeu de controles est du gaspillage d'un cote et une faille de l'autre.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/secure-deployment"
+    },
+    {
+      "id": "PC-REQ-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Axe residence : ou passent les donnees quand la passerelle est auto-hebergee",
+      "question_en": "Legal requires that inference traffic and its logs stay inside infrastructure your organization controls. A self-hosted Claude apps gateway is proposed. What is the documented data-plane guarantee?",
+      "question_fr": "Le juridique exige que le trafic d'inference et ses journaux restent dans une infrastructure controlee par l'organisation. Une passerelle Claude apps auto-hebergee est proposee. Quelle est la garantie documentee sur le plan de donnees ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing reaches Anthropic unless its API is an upstream."
+        },
+        {
+          "key": "B",
+          "text_en": "Anthropic proxies the traffic to your chosen region."
+        },
+        {
+          "key": "C",
+          "text_en": "Residency follows the developer's laptop location."
+        },
+        {
+          "key": "D",
+          "text_en": "Telemetry always transits Anthropic for aggregation."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La note de la page est explicite : le plan de donnees de la passerelle n'envoie rien a l'infrastructure Anthropic sauf si l'API Anthropic est un amont configure. L'organisation controle ou vont la telemetrie, les journaux d'audit, les reglages geres et l'identite IdP de ses developpeurs, et la passerelle n'en envoie aucun a Anthropic. Une exigence de residence se satisfait donc en choisissant l'amont (Amazon Bedrock, Claude Platform on AWS, Google Cloud, Microsoft Foundry) et l'hebergement de la passerelle.",
+      "distractors_fr": {
+        "B": "La passerelle est auto-hebergee : elle tourne dans ton infrastructure et parle directement a l'amont que tu configures.",
+        "C": "L'emplacement du portable ne decide rien ; c'est l'amont configure et l'hebergement de la passerelle qui decident.",
+        "D": "La telemetrie part vers les destinations OTLP que tu configures, jamais vers Anthropic."
+      },
+      "principe_fr": "Une exigence de residence se verifie sur le chemin reel des donnees, pas sur la promesse du fournisseur.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway"
+    },
+    {
+      "id": "PC-REQ-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un plafond de groupe est un defaut par siege, pas une cagnotte partagee",
+      "question_en": "You set a 100-dollar daily spend cap scoped to a group of ten developers on the gateway. How much can that group spend in one day?",
+      "question_fr": "Tu poses un plafond de depense quotidien de 100 dollars sur un groupe de dix developpeurs de la passerelle. Combien ce groupe peut-il depenser en une journee ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "100 dollars shared across the ten members."
+        },
+        {
+          "key": "B",
+          "text_en": "100 dollars for the first member to request."
+        },
+        {
+          "key": "C",
+          "text_en": "100 dollars each, so up to 1000 in total."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing, until a per-user cap is also set."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation le dit sans ambiguite : un plafond de groupe ou d'organisation est un defaut par siege que chaque membre herite, pas une cagnotte partagee. Par periode, le plafond effectif d'un developpeur se resout dans cet ordre : surcharge par utilisateur, puis le plus restrictif de ses plafonds de groupe, puis le defaut de l'organisation, puis illimite. L'option admin.group_limit_mode: max inverse l'arbitrage multi-groupes vers le moins restrictif.",
+      "distractors_fr": {
+        "A": "C'est justement ce que la documentation exclut : ce n'est pas une cagnotte commune.",
+        "B": "Aucun ordre d'arrivee n'intervient ; chaque membre a son propre compteur.",
+        "D": "Le plafond de groupe s'applique seul ; un plafond par utilisateur ne fait que le surcharger quand il existe."
+      },
+      "principe_fr": "Verifie l'unite d'un plafond avant d'en deduire un budget : par siege et par cagnotte donnent un facteur egal a l'effectif.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway-spend-limits"
+    },
+    {
+      "id": "PC-REQ-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Circuit de securite estime contre facture faisant foi",
+      "question_en": "Finance wants per-developer chargeback figures from a gateway deployment. Which TWO statements match the documentation?",
+      "question_fr": "La direction financiere veut une refacturation par developpeur depuis un deploiement de passerelle. Quelles DEUX affirmations correspondent a la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The provider bill already breaks spend down per developer."
+        },
+        {
+          "key": "B",
+          "text_en": "The bill attributes everything to the one shared credential."
+        },
+        {
+          "key": "C",
+          "text_en": "Authoritative figures come from the provider's own reporting."
+        },
+        {
+          "key": "D",
+          "text_en": "Gateway counters are the invoice of record for chargeback."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "Une passerelle Claude apps fait passer toute l'inference par un seul identifiant amont partage, donc la facture du fournisseur attribue tout a cet identifiant et non aux developpeurs individuels. Les plafonds de depense sont la vue par developpeur et le coupe-circuit poses par dessus cette facture commune, mais ils estiment la depense depuis les comptages de tokens au tarif public : la documentation demande de reconcilier avec le reporting d'usage du fournisseur (Admin API Usage & Cost d'Anthropic, journaux d'invocation Amazon Bedrock, Cloud Monitoring sur Google Cloud) pour la facturation qui fait foi.",
+      "distractors_fr": {
+        "A": "C'est precisement le probleme que les plafonds de depense adressent : la facture ne distingue pas les developpeurs.",
+        "D": "Les compteurs estiment la depense a partir des tokens au tarif public : circuit de securite, pas facture."
+      },
+      "principe_fr": "Distingue l'instrument qui borne de l'instrument qui compte : un coupe-circuit protege, il ne facture pas.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway-spend-limits"
+    },
+    {
+      "id": "PC-REQ-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Ce que la contrainte de residence coute en fonctions cote client",
+      "question_en": "Your organization routes Claude Code through a self-hosted gateway to satisfy a residency requirement. Which capability do developers lose in that configuration?",
+      "question_fr": "Ton organisation fait passer Claude Code par une passerelle auto-hebergee pour satisfaire une exigence de residence. Quelle capacite les developpeurs perdent-ils dans cette configuration ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Prompt caching stops working altogether."
+        },
+        {
+          "key": "B",
+          "text_en": "Managed settings are no longer delivered."
+        },
+        {
+          "key": "C",
+          "text_en": "Failover between upstreams is disabled."
+        },
+        {
+          "key": "D",
+          "text_en": "Server-side web search and the 1-hour cache TTL."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La table des disponibilites liste deux pertes cote client. La recherche web cote serveur est indisponible : le CLI ne voit pas vers quel amont la passerelle route, donc il ne peut pas verifier la prise en charge et desactive WebSearch sur les sessions passerelle. Le TTL de cache d'une heure est indisponible aussi : le CLI omet le beta extended-cache-ttl parce que tous les amonts routables ne le prennent pas en charge, donc la mise en cache passe au TTL de cinq minutes. Les optimisations premiere partie comme la portee de cache globale et les outils economes en tokens tombent pour la meme raison.",
+      "distractors_fr": {
+        "A": "La mise en cache standard reste disponible : les points de rupture cache_control sont transmis a chaque amont.",
+        "B": "C'est le contraire : la passerelle livre elle-meme les reglages geres aux clients connectes, par groupe IdP.",
+        "C": "Le basculement entre amonts est justement une des fonctions de la passerelle."
+      },
+      "principe_fr": "Un choix de plateforme dicte par une exigence en sacrifie d'autres : liste ce que tu perds avant d'annoncer la decision.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway"
+    },
+    {
+      "id": "PC-REQ-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Delai maximal documente entre desactivation IdP et perte d'acces",
+      "question_en": "Security asks how quickly a developer disabled in the identity provider loses access through the gateway. What is the documented default bound?",
+      "question_fr": "La securite demande en combien de temps un developpeur desactive dans le fournisseur d'identite perd son acces via la passerelle. Quelle est la borne par defaut documentee ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Immediately, on the next request."
+        },
+        {
+          "key": "B",
+          "text_en": "Within fifteen minutes of disabling."
+        },
+        {
+          "key": "C",
+          "text_en": "Within the session lifetime, one hour."
+        },
+        {
+          "key": "D",
+          "text_en": "At the next daily token refresh cycle."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La page pose la garantie de deprovisionnement : une session dont l'utilisateur est desactive dans l'IdP expire dans les ttl_hours quand le prochain rafraichissement echoue. La valeur par defaut du bloc session est ttl_hours: 1, et le commentaire de configuration le dit explicitement, cette valeur borne aussi la latence de revocation lors d'un deprovisionnement IdP. Desactive un utilisateur et son acces a la passerelle expire dans la duree de vie de session, une heure par defaut.",
+      "distractors_fr": {
+        "A": "La session en cours reste valide jusqu'a l'echec du prochain rafraichissement, elle n'est pas revoquee a la requete suivante.",
+        "B": "Quinze minutes n'est pas la valeur documentee ; la borne est le ttl_hours de session.",
+        "D": "Le rafraichissement n'est pas quotidien : il est borne par la duree de vie de session."
+      },
+      "principe_fr": "Une exigence de revocation se chiffre : demande la borne, pas la promesse que l'acces sera coupe.",
+      "doc_ref": "https://code.claude.com/docs/en/claude-apps-gateway"
+    },
+    {
+      "id": "PC-REQ-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Faire agir un agent sans qu'il detienne l'identifiant du service tiers",
+      "question_en": "An agent must push to a Git remote without ever holding the token. Setting HTTPS_PROXY alone does not achieve it. Which TWO approaches does the guidance describe?",
+      "question_fr": "Un agent doit pousser vers un depot Git distant sans jamais detenir le jeton. Poser HTTPS_PROXY seul n'y suffit pas. Quelles DEUX approches la documentation decrit-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A tool that forwards to a service outside the boundary."
+        },
+        {
+          "key": "B",
+          "text_en": "Setting ANTHROPIC_BASE_URL to the internal proxy."
+        },
+        {
+          "key": "C",
+          "text_en": "Adding the token to the agent's environment block."
+        },
+        {
+          "key": "D",
+          "text_en": "A TLS-terminating proxy whose CA the agent trusts."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "Poser HTTP_PROXY ou HTTPS_PROXY sur du HTTPS tiers ne donne au mandataire qu'un tunnel TLS opaque : il ne peut pas injecter d'identifiant. La documentation decrit deux issues. Un outil dedie ou serveur MCP qui accepte la commande de l'agent et la fait executer par un service hors de la frontiere, lequel ajoute l'authentification (exemple donne : un serveur MCP git qui transmet a un mandataire git sur l'hote) ; l'agent ne voit que l'interface de l'outil. Ou un mandataire terminant le TLS, ce qui impose d'installer son certificat d'autorite dans le magasin de confiance de l'agent et de router le trafic par lui.",
+      "distractors_fr": {
+        "B": "ANTHROPIC_BASE_URL ne route que les requetes d'echantillonnage vers l'API Claude, pas le trafic vers les services tiers.",
+        "C": "Mettre le jeton dans l'environnement de l'agent, c'est exactement ce que la frontiere de securite cherche a eviter."
+      },
+      "principe_fr": "Un identifiant qui n'entre jamais dans la frontiere ne peut pas fuir : deplace l'appel authentifie, pas le secret.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/secure-deployment"
+    }
+  ]
+}

@@ -127,3 +127,50 @@ for ref, qs in byref.items():
 Le detecteur ne compare que des questions partageant le **meme `doc_ref` exact**.
 Deux questions qui posent le meme fait en citant deux pages differentes ne
 remontent pas. C'est le trou restant, et il se comble a la lecture, pas au script.
+
+## Cloture de mes 14 corrections (28 aout 2026)
+
+Les 14 sont corrigees et poussees, un commit par topic, nature / difficulte
+/ type / cle constants a chaque fois : les repartitions de la banque n ont
+pas bouge (`npm run livrer` : tous les controles passent, 229 questions,
+beta 6/8, magnitude 4.8 %).
+
+| Topic | Questions | Nouvelle ancre | Commit |
+| --- | --- | --- | --- |
+| m4-4.5-cost-caching | PC-CST-013 | code.claude.com/docs/en/costs | 5009344 |
+| m2-2.6-agent-loop | PC-AGL-002, 008 | managed-agents/migration | ce16367 |
+| m2-2.1-prompting | PC-PMT-003, 007, 008 | tool-use/strict-tool-use | 281af06 |
+| m2-2.4-streaming | PC-STR-003, 007 | fine-grained-tool-streaming | a45faf4 |
+| m2-2.5-model-budget | PC-MBG-001, 005, 009 | code.claude.com sessions + sub-agents | 540810c |
+| m3-3.2-claudemd | PC-CMD-009 | code.claude.com context-window | 2d2efbf |
+| m3-3.4-rag | PC-RAG-004 | code.claude.com large-codebases | 049ec96 |
+| m4-4.1-evals | PC-EVL-001, 002 | strengthen-guardrails/reduce-hallucinations | ddb4199 |
+
+Verification finale : le detecteur repasse sur les deux banques renvoie 49
+paires au-dessus de 0,38, et **aucune** n implique une des 15 questions
+reecrites. Les 49 restantes sont celles deja jugees plus haut : les faux
+positifs de vocabulaire, les 6 de Said, et les 3 paires internes a la
+banque doc.
+
+### Ce que le detecteur a rattrape en cours de route
+
+Trois remplacements deja rediges ont ete jetes avant d etre ecrits parce
+que le detecteur ou une recherche ciblee a montre que le fait etait deja
+pose ailleurs :
+
+- Skills non heritees par un sous-agent custom (m3-3.2) : deja PC-MSC-007.
+- Le prefill remplace par les sorties structurees (m4-4.1) : deja
+  PC-PMT-009, plus CAD-004 et PRE-015 dans la banque doc.
+- La specification precise du format de sortie (m4-4.1) : deja PRE-010,
+  PRE-016, PC-PMT-001.
+
+Un quatrieme a ete jete pour une autre raison : trois questions m2-2.5
+etaient redigees sur `build-with-claude/task-budgets`, page a zero
+question, avant que `grep` sur le corpus ne montre que le corpus m2-2.5 ne
+mentionne jamais les task budgets. Une page libre n est pas une
+autorisation d ecrire : le contenu vient du corpus.
+
+Reste ouvert et c est ta decision, Marie-Line : deux banques partitionnees
+doivent-elles etre disjointes en FAITS ou seulement en sources ? J ai
+tranche pour disjointes. Si tu veux l autre reponse, ces 14 corrections
+sont a annuler, pas a etendre.

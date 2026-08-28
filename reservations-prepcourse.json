@@ -26,7 +26,7 @@
     "m4-4.2-testing-tracing": { "qui": "marie-line", "etat": "fait", "cible": 9 },
     "m4-4.3-tool-errors": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 10 },
     "m4-4.4-model-selection": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 8 },
-    "m4-4.5-cost-caching": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 13 },
+    "m4-4.5-cost-caching": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-28", "cible": 13 },
     "m4-4.6-security": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 14 },
     "m5-5.1-packaging": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 11 },
     "m5-5.2-requirements": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 8 },

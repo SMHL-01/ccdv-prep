@@ -19,38 +19,38 @@
       "nature": "judgment",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "un critere de succes doit etre specifique et mesurable : meme la surete se quantifie, un objectif flou ne se verifie pas",
-      "question_en": "Your design document states that the feature must produce 'safe outputs'. Why is that unusable as a success criterion?",
-      "question_fr": "Votre document de conception dit que la fonctionnalite doit produire des « sorties sures ». Pourquoi ce critere est-il inutilisable ?",
+      "concept": "Restriction aux sources fournies : instruire explicitement de n utiliser que les documents passes en contexte",
+      "question_en": "Your eval set shows the assistant answering from general knowledge whenever the supplied document is silent on the point. Which documented instruction addresses that directly?",
+      "question_fr": "Votre jeu d eval montre l assistant qui repond depuis ses connaissances generales des que le document fourni ne dit rien sur le point demande. Quelle consigne documentee traite directement ce cas ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It states no threshold anyone can measure"
+          "text_en": "Restrict it to the provided documents"
         },
         {
           "key": "B",
-          "text_en": "Safety cannot be an eval criterion at all"
+          "text_en": "Lower the temperature on the request"
         },
         {
           "key": "C",
-          "text_en": "It needs a human grader, not a code check"
+          "text_en": "Add more examples of good answers"
         },
         {
           "key": "D",
-          "text_en": "Safety belongs in the trust boundary part"
+          "text_en": "Switch the grader to an LLM judge"
         }
       ],
       "correct": [
         "A"
       ],
-      "explanation_fr": "Un bon critere de succes est specifique et mesurable : au lieu de « bonne performance », « classification de sentiment exacte », et au lieu de « sorties sures », une part maximale de sorties signalees par le filtre de contenu sur un nombre d essais defini. Les mesures qualitatives gardent leur valeur si elles sont appliquees de facon constante A COTE de mesures quantitatives. La plupart des cas d usage demandent d ailleurs une evaluation multidimensionnelle, sur plusieurs criteres a la fois.",
+      "explanation_fr": "La restriction aux connaissances externes est une technique documentee a part entiere : instruire explicitement Claude de n utiliser que l information contenue dans les documents fournis et pas ses connaissances generales. C est la reponse a la derive precise que l eval revele, et elle se combine avec l autorisation de dire qu il ne sait pas, sans quoi la restriction pousse a inventer plutot qu a s abstenir.",
       "distractors_fr": {
-        "B": "La documentation dit l inverse : meme des sujets flous comme l ethique et la surete se quantifient, et elle en donne un exemple chiffre.",
-        "C": "Le probleme n est pas le graduateur mais l enonce : aucun graduateur, humain ou non, ne peut verifier un critere qui ne dit pas ce qu il faut atteindre.",
-        "D": "La frontiere de confiance dit quelles entrees sont non fiables et quelles actions sont permises. Elle ne remplace pas un seuil de qualite mesurable."
+        "B": "La temperature agit sur la variabilite du texte, pas sur la frontiere entre ce que le document dit et ce que le modele sait par ailleurs.",
+        "C": "Des exemples fixent une forme attendue. Ils ne disent pas d ou l information doit venir, donc la meme derive reste possible.",
+        "D": "Changer de methode de notation permet de mieux voir le probleme, pas de le corriger : le comportement du modele reste identique."
       },
-      "principe_fr": "Un critere qui ne porte pas de seuil verifiable n est pas un critere, c est une intention.",
-      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "principe_fr": "Quand une eval montre que l information vient de la mauvaise source, corrigez la source autorisee, pas la temperature ni la notation.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "PC-EVL-002",
@@ -61,38 +61,38 @@
       "nature": "judgment",
       "difficulty": "moyen",
       "source": "prepcourse",
-      "concept": "principe de conception d eval : privilegier le volume sur la qualite de notation, plus de cas notes automatiquement valent mieux que peu de cas notes a la main",
-      "question_en": "You can hand-grade thirty cases or auto-grade three hundred slightly noisier ones. Which does the documented design principle favour?",
-      "question_fr": "Vous pouvez noter trente cas a la main ou trois cents cas legerement plus bruites automatiquement. Que privilegie le principe de conception documente ?",
+      "concept": "Sur un document long, faire extraire les citations mot pour mot avant d executer la tache",
+      "question_en": "Extraction from 40,000-token contracts keeps inventing clause details that are not in the text. Which documented technique grounds the answer before the task itself runs?",
+      "question_fr": "L extraction sur des contrats de 40 000 tokens continue d inventer des details de clauses absents du texte. Quelle technique documentee ancre la reponse avant que la tache elle-meme ne tourne ?",
       "options": [
         {
           "key": "A",
-          "text_en": "The thirty, hand grading is the ground truth"
+          "text_en": "Ask for a confidence score per field"
         },
         {
           "key": "B",
-          "text_en": "The thirty, noise hides a real regression"
+          "text_en": "Run the prompt twice and compare"
         },
         {
           "key": "C",
-          "text_en": "The three hundred, volume beats grade quality"
+          "text_en": "Extract word-for-word quotes first"
         },
         {
           "key": "D",
-          "text_en": "Neither, split the budget evenly in two"
+          "text_en": "Restrict it to one clause per request"
         }
       ],
       "correct": [
         "C"
       ],
-      "explanation_fr": "Le troisieme principe de conception est explicite : plus de questions notees automatiquement avec un signal legerement plus faible vaut mieux que moins de questions notees a la main avec un signal de haute qualite. Les deux autres principes vont dans le meme sens : concevoir des evals qui refletent la distribution reelle de la tache, bords compris, et structurer les questions pour permettre une notation automatique. C est la couverture qui attrape le cas limite.",
+      "explanation_fr": "La technique documentee pour les documents longs, au-dela d une vingtaine de milliers de tokens, est de demander a Claude d extraire les citations mot pour mot avant d executer la tache. La reponse est ainsi construite sur des extraits recopies du document plutot que sur un souvenir du document, et l ordre compte : l ancrage vient avant la tache, pas apres. C est distinct de la verification par citations, qui rend la reponse auditable une fois qu elle est produite.",
       "distractors_fr": {
-        "A": "La notation humaine reste la plus fine, mais le principe documente la place derriere le volume : elle est lente et couteuse, donc a eviter quand on peut automatiser.",
-        "B": "Un peu de bruit se dilue sur un grand nombre de cas. Ce qui rend une regression invisible, c est l absence du cas qui l exerce, pas le bruit de notation.",
-        "D": "Repartir le budget ne repond pas a la question posee : le principe tranche, il ne partage pas."
+        "A": "Un score de confiance est produit par le meme mecanisme que la reponse : il peut etre eleve sur un detail invente, donc il ne l ancre pas.",
+        "B": "Comparer plusieurs sorties du meme prompt sert a reperer les incoherences apres coup ; l ancrage se joue avant, dans le prompt.",
+        "D": "Decouper la requete reduit la surface, mais rien n empeche l invention a l interieur d une clause si le texte n a jamais ete cite."
       },
-      "principe_fr": "La couverture attrape ce que la finesse ne voit pas : un jeu large et imparfait bat un jeu petit et parfait.",
-      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "principe_fr": "Ancrer avant de produire coute une etape ; verifier apres avoir produit coute une reprise.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "PC-EVL-003",

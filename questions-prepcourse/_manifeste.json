@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 216,
+  "nbQuestions": 229,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -107,6 +107,11 @@
       "fichier": "m4-4.4-model-selection.json",
       "subdomain": "Model Selection and Tradeoffs",
       "nb": 8
+    },
+    {
+      "fichier": "m4-4.5-cost-caching.json",
+      "subdomain": "Cost and Token Management",
+      "nb": 13
     }
   ],
   "questions": [
@@ -2269,6 +2274,136 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-CST-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-CST-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.5-cost-caching.json"
     }
   ]
 }

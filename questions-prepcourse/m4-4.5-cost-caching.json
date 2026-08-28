@@ -1,0 +1,563 @@
+{
+  "topic": "m4-4.5-cost-caching",
+  "source": "prepcourse",
+  "domain": "Model Selection and Optimization",
+  "subdomain": "Cost and Token Management",
+  "weight": 2.8,
+  "corpus_ref": "prepcourse-corpus/m4-4.5-cost-caching.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/prompt-caching",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching",
+    "https://code.claude.com/docs/en/costs",
+    "https://code.claude.com/docs/en/analytics",
+    "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+  ],
+  "questions": [
+    {
+      "id": "PC-CST-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les couches de la requete sont ordonnees du plus stable au plus volatil",
+      "question_en": "Claude Code orders every request so that rarely-changing content comes first: system prompt, then project context, then the conversation. What does that ordering buy?",
+      "question_fr": "Claude Code ordonne chaque requete en placant d'abord ce qui change le moins : prompt systeme, puis contexte projet, puis la conversation. Qu'est-ce que cet ordre fait gagner ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The API caches each file and each tool definition on its own."
+        },
+        {
+          "key": "B",
+          "text_en": "A conversation change still reads the earlier layers from cache."
+        },
+        {
+          "key": "C",
+          "text_en": "The request gets shorter, so fewer input tokens are billed."
+        },
+        {
+          "key": "D",
+          "text_en": "The prefix is cached locally instead of on the server side."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le cache s'apparie sur le debut de la requete. Un changement dans une couche invalide cette couche et tout ce qui la suit : en mettant le prompt systeme et le contexte projet devant, un tour de conversation ordinaire ne remet en cause que la fin, et les deux couches amont restent lues au tarif cache.",
+      "distractors_fr": {
+        "A": "Il n'y a pas de cache par fichier ni par segment : l'appariement porte sur le prefixe de la requete, en un seul bloc.",
+        "C": "L'ordre ne raccourcit rien. La requete porte le meme contenu ; c'est le tarif applique a la partie deja traitee qui change.",
+        "D": "Le cache est cote serveur, dans l'infrastructure qui sert le modele, jamais sur la machine du developpeur."
+      },
+      "principe_fr": "Placer devant ce qui change le moins souvent maximise la part de la requete qui reste appariee.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le modele et le niveau d effort appartiennent a la cle de cache sans figurer dans le texte du prompt",
+      "question_en": "Mid-session a developer switches from Sonnet to Opus with /model. The conversation text is byte-identical afterwards. Why is the next turn slower and more expensive?",
+      "question_fr": "En cours de session, un developpeur passe de Sonnet a Opus avec /model. Le texte de la conversation reste identique octet pour octet. Pourquoi le tour suivant est-il plus lent et plus cher ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Opus reprocesses tool results that Sonnet had already summarised."
+        },
+        {
+          "key": "B",
+          "text_en": "The switch appends a notice that lands ahead of the cached prefix."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Code re-reads CLAUDE.md from disk on every model change."
+        },
+        {
+          "key": "D",
+          "text_en": "Each model keeps its own cache, so nothing matches on the next call."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le modele et le niveau d'effort font partie de la cle de cache alors qu'ils ne figurent pas dans le texte du prompt. Chaque modele a son propre cache : basculer avec /model fait relire tout l'historique sans aucun hit, meme a contenu strictement identique. Le changement d'effort se comporte pareil, et Claude Code demande confirmation avant de l'appliquer en cours de conversation.",
+      "distractors_fr": {
+        "A": "Aucun modele ne retraite les resultats d'outils d'un autre : les blocs de la conversation sont envoyes tels quels.",
+        "B": "Rien n'est insere avant le prefixe. Ce qui s'ajoute a une conversation s'ajoute toujours a la fin.",
+        "C": "Claude Code relit CLAUDE.md au demarrage, apres /clear ou apres /compact, pas a chaque changement de modele."
+      },
+      "principe_fr": "Une entree de cache est identifiee par le contenu ET par les parametres de service : meme texte plus autre modele donne un autre cache.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Ce que coute /compact selon que le cache est chaud ou expire",
+      "question_en": "Select the TWO statements the documentation supports about what /compact costs.",
+      "question_fr": "Selectionnez les DEUX affirmations que la documentation etaye sur le cout de /compact.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "With a warm cache it costs a fraction of what the context size suggests."
+        },
+        {
+          "key": "B",
+          "text_en": "It always costs the full context, since the summary is a fresh request."
+        },
+        {
+          "key": "C",
+          "text_en": "It is most expensive when it runs on a session resumed after a long break."
+        },
+        {
+          "key": "D",
+          "text_en": "The turn right after compaction is the slow one, not the compaction itself."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Pour produire le resume, Claude Code envoie une requete separee avec le meme prefixe que la conversation plus une consigne de resume en dernier message utilisateur. Cache chaud, ce prefixe est lu depuis le cache et l'essentiel du temps part dans la generation du resume : le cout est une fraction de ce que la taille du contexte laisse craindre. Passe la duree de vie du cache, il n'y a plus rien a lire et l'historique complet est retraite en entree non mise en cache, ce qui fait de la reprise d'une vieille session le cas le plus cher.",
+      "distractors_fr": {
+        "B": "La requete de resume porte le meme prompt systeme, les memes outils et le meme historique : tant que le cache est chaud, elle lit ce prefixe au tarif cache.",
+        "D": "C'est l'inverse : le tour qui suit la compaction reconstruit le cache d'une conversation devenue courte, donc il n'est pas la partie lente."
+      },
+      "principe_fr": "Le cout d'une operation de contexte ne se lit pas sur la taille du contexte mais sur l'etat du cache au moment ou elle part.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un subagent construit son propre cache, un fork lit celui du parent",
+      "question_en": "How does the cache behave when the parent spawns a subagent, compared with forking the conversation?",
+      "question_fr": "Comment se comporte le cache quand le parent lance un subagent, par rapport a un fork de la conversation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both start empty, and both invalidate the parent's prefix."
+        },
+        {
+          "key": "B",
+          "text_en": "The subagent inherits the parent's cache; a fork starts from nothing."
+        },
+        {
+          "key": "C",
+          "text_en": "The subagent builds its own cache; a fork reads the parent's."
+        },
+        {
+          "key": "D",
+          "text_en": "Both inherit the parent's cache, but only the fork keeps its TTL."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Un subagent ouvre sa propre conversation, avec son prompt systeme et son jeu d'outils : il construit son cache a partir de zero et se rechauffe au fil de ses propres tours, avec la TTL de cinq minutes meme sur abonnement. Un fork, lui, herite exactement du prompt systeme, des outils et de l'historique du parent, donc sa premiere requete lit le cache du parent. Dans les deux cas le prefixe du parent reste intact.",
+      "distractors_fr": {
+        "A": "Le prefixe du parent n'est jamais invalide : l'appel et le resultat s'ajoutent a la fin de sa conversation.",
+        "B": "C'est l'inverse. Le subagent part avec son propre prompt systeme et son propre jeu d'outils, donc aucun hit au premier appel.",
+        "D": "Le subagent n'herite de rien ; et sur abonnement il utilise la TTL de cinq minutes, pas celle d'une heure du fil principal."
+      },
+      "principe_fr": "Heriter du prefixe ou en ouvrir un nouveau : c'est cette difference qui decide du cout du premier appel d'un agent derive.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Le cache est de fait borne a une machine et un repertoire de travail",
+      "question_en": "A team runs the same repository in two git worktrees and expects the second one to read the first one's cache. Why does it not?",
+      "question_fr": "Une equipe travaille sur le meme depot dans deux worktrees git et s'attend a ce que le second lise le cache du premier. Pourquoi cela n'arrive-t-il pas ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Worktrees share a prefix, but the git status snapshot differs each time."
+        },
+        {
+          "key": "B",
+          "text_en": "The system prompt embeds the working directory, so the prefixes differ."
+        },
+        {
+          "key": "C",
+          "text_en": "The cache is scoped per branch, and each worktree checks out its own."
+        },
+        {
+          "key": "D",
+          "text_en": "A second session in the same repository always invalidates the first."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le prompt systeme embarque le repertoire de travail, la plateforme, le shell, la version de l'OS et les chemins de memoire automatique. Deux sessions lancees dans des repertoires differents construisent donc des prefixes differents et se manquent, et un worktree a par definition son propre repertoire de travail. A l'inverse, des sessions paralleles dans le meme repertoire s'apparient.",
+      "distractors_fr": {
+        "A": "L'instantane git compte pour deux sessions successives dans le meme repertoire ; ici les prefixes divergent des le repertoire de travail.",
+        "C": "Le cache n'est pas decoupe par branche. C'est le repertoire de travail inscrit dans le prompt systeme qui separe les prefixes.",
+        "D": "Deux sessions paralleles dans le meme repertoire construisent des prefixes identiques et lisent le cache l'une de l'autre, sans rien invalider."
+      },
+      "principe_fr": "Le cache est effectivement borne a une machine et un repertoire parce que le prompt systeme decrit cet environnement.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les deux compteurs de tokens qui mesurent la performance du cache",
+      "question_en": "Which pair of token counts does the documentation point to for judging cache performance?",
+      "question_fr": "Quel couple de compteurs de tokens la documentation designe-t-elle pour juger la performance du cache ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "cache_hit_ratio and cache_miss_ratio, on the usage object"
+        },
+        {
+          "key": "B",
+          "text_en": "input_tokens and output_tokens, compared turn over turn"
+        },
+        {
+          "key": "C",
+          "text_en": "ephemeral_5m_input_tokens and ephemeral_1h_input_tokens"
+        },
+        {
+          "key": "D",
+          "text_en": "cache_creation_input_tokens and cache_read_input_tokens"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "L'API renvoie sur chaque reponse cache_creation_input_tokens, les tokens ecrits dans le cache a ce tour et factures au tarif d'ecriture, et cache_read_input_tokens, ceux servis depuis le cache et factures autour de dix pour cent du tarif d'entree standard. Un rapport lectures sur ecritures eleve signale un cache qui travaille ; une creation qui reste haute tour apres tour signale un prefixe qui bouge.",
+      "distractors_fr": {
+        "A": "L'API ne renvoie aucun ratio pret a l'emploi : le rapport se calcule a partir des deux compteurs de tokens.",
+        "B": "Ces deux champs mesurent le volume traite et genere, sans dire ce qui a ete relu depuis le cache.",
+        "C": "Ces champs detaillent les ecritures de cache par duree de vie ; ils ne donnent pas les lectures."
+      },
+      "principe_fr": "La sante d'un cache se lit dans le rapport entre ce qu'on y ecrit et ce qu'on y relit, pas dans un total de tokens.",
+      "doc_ref": "https://code.claude.com/docs/en/prompt-caching"
+    },
+    {
+      "id": "PC-CST-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ou placer le point de rupture de cache sur des definitions d outils, mcp_toolset compris",
+      "question_en": "Where does the documentation say to place a cache_control breakpoint so a whole tool set is cached, including an mcp_toolset?",
+      "question_fr": "Ou la documentation dit-elle de placer un point de rupture cache_control pour mettre en cache tout un jeu d'outils, y compris un mcp_toolset ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "On the first tool of the array, and on each mcp_toolset entry."
+        },
+        {
+          "key": "B",
+          "text_en": "On every tool of the array, so each definition is cached apart."
+        },
+        {
+          "key": "C",
+          "text_en": "In the system block, since tool definitions are rendered there."
+        },
+        {
+          "key": "D",
+          "text_en": "On the last tool, and on the mcp_toolset entry for a toolset."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "cache_control se pose sur le dernier outil du tableau tools : cela met en cache tout le prefixe des definitions, du premier outil jusqu'au point marque. Pour un mcp_toolset, l'ordre des outils a l'interieur du jeu n'est pas sous votre controle : on pose donc le marqueur sur l'entree mcp_toolset elle-meme et l'API l'applique au dernier outil issu de l'expansion.",
+      "distractors_fr": {
+        "A": "Un point de rupture met en cache tout ce qui le precede, jusqu'a lui inclus : place sur le premier outil, il ne couvre que celui-la.",
+        "B": "Il n'y a pas de cache par definition d'outil. Le cache porte sur un prefixe continu, pas sur des elements isoles.",
+        "C": "Le marqueur se pose sur les definitions d'outils elles-memes, dans le tableau tools, pas dans le bloc system."
+      },
+      "principe_fr": "Un point de rupture designe une fin de prefixe : ce qui compte est ce qu'il laisse derriere lui, pas l'element sur lequel il est ecrit.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching"
+    },
+    {
+      "id": "PC-CST-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "La recherche d outils ne casse pas le cache alors que modifier le tableau tools le casse",
+      "question_en": "Adding a tool to the tools array mid-conversation costs a full cache rebuild. Why does a tool discovered through tool search not?",
+      "question_fr": "Ajouter un outil au tableau tools en cours de conversation coute une reconstruction complete du cache. Pourquoi un outil decouvert par la recherche d'outils ne coute-t-il pas cela ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Tool search rebuilds the prefix in the background before the next turn."
+        },
+        {
+          "key": "B",
+          "text_en": "Discovered tools are cached apart, under their own five-minute TTL."
+        },
+        {
+          "key": "C",
+          "text_en": "Its definition is appended in the conversation, so the prefix is untouched."
+        },
+        {
+          "key": "D",
+          "text_en": "Deferred tools are excluded from the cache key until they are called."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Un outil en defer_loading n'est pas inclus dans le prefixe du prompt systeme. Quand le modele le decouvre par la recherche d'outils, sa definition est ajoutee en ligne dans l'historique de la conversation sous forme de bloc tool_reference : le prefixe reste intact et le cache est preserve. On peut donc demarrer avec un petit jeu d'outils toujours charges, mis en cache, laisser le modele en decouvrir d'autres au besoin, et garder le meme hit a chaque tour. Modifier les definitions du tableau tools, a l'inverse, invalide le cache entier.",
+      "distractors_fr": {
+        "A": "Rien n'est reconstruit en arriere-plan. Le prefixe n'a pas besoin de l'etre puisqu'il n'a pas change.",
+        "B": "Il n'existe pas de cache separe pour les outils decouverts : leur definition rejoint l'historique de la conversation.",
+        "D": "Ce n'est pas une exclusion de la cle de cache : les definitions differees ne sont simplement jamais entrees dans le prefixe."
+      },
+      "principe_fr": "Ce qui casse un cache n'est pas l'arrivee de contenu nouveau mais sa position : ajoute apres le prefixe, il ne coute que lui-meme.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching"
+    },
+    {
+      "id": "PC-CST-009",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Les changements qui n invalident que le cache des messages",
+      "question_en": "Select the TWO changes that the invalidation table limits to the messages cache alone.",
+      "question_fr": "Selectionnez les DEUX changements que le tableau d'invalidation limite au seul cache des messages.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Changing tool_choice between turns"
+        },
+        {
+          "key": "B",
+          "text_en": "Modifying a tool definition in the array"
+        },
+        {
+          "key": "C",
+          "text_en": "Changing disable_parallel_tool_use"
+        },
+        {
+          "key": "D",
+          "text_en": "Toggling web search on or off"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Le cache suit une hierarchie de prefixe, tools puis system puis messages : un changement a un niveau invalide ce niveau et tout ce qui suit. tool_choice et disable_parallel_tool_use se rendent apres les definitions d'outils et le prompt systeme, donc ils n'atteignent que le cache des messages. La documentation suggere d'ailleurs, si tool_choice doit varier en cours de conversation, de placer les points de rupture avant le point de variation.",
+      "distractors_fr": {
+        "B": "Modifier une definition d'outil invalide le cache entier : outils, systeme et messages.",
+        "D": "Activer ou desactiver la recherche web invalide les caches systeme et messages, pas seulement celui des messages."
+      },
+      "principe_fr": "Le cout d'un parametre se deduit de sa position dans la hierarchie tools, system, messages.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching"
+    },
+    {
+      "id": "PC-CST-010",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le tableau de bord d analytique mesure l adoption, pas les tokens par utilisateur",
+      "question_en": "An admin opens the Claude Code analytics dashboard to get per-user token counts for a chargeback report. What should they be told?",
+      "question_fr": "Un administrateur ouvre le tableau de bord d'analytique Claude Code pour obtenir les tokens par utilisateur en vue d'une refacturation interne. Que faut-il lui dire ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The dashboard reports tokens per user once GitHub analytics is enabled."
+        },
+        {
+          "key": "B",
+          "text_en": "It reports adoption and contribution; token counts need OpenTelemetry."
+        },
+        {
+          "key": "C",
+          "text_en": "Token counts appear there within 24 hours of the first session."
+        },
+        {
+          "key": "D",
+          "text_en": "The dashboard is the authoritative source, and the bill is an estimate."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le tableau de bord d'analytique porte sur l'adoption et la velocite : lignes acceptees, taux d'acceptation, utilisateurs actifs, sessions, PR et lignes livrees avec Claude Code, classement, export CSV. Pour des comptes de tokens et des estimations de cout par utilisateur, la documentation renvoie a l'export OpenTelemetry ou au rapport de depense de l'organisation.",
+      "distractors_fr": {
+        "A": "L'integration GitHub debloque les metriques de contribution, PR et lignes de code, jamais des comptes de tokens.",
+        "C": "Le delai de vingt-quatre heures concerne l'apparition des donnees de contribution apres activation, pas des tokens.",
+        "D": "L'inverse : le tableau de bord est deliberement conservateur et sous-estime, et la facturation autoritaire est cote Console."
+      },
+      "principe_fr": "Un tableau de bord d'adoption et un instrument de cout repondent a deux questions differentes : ne pas demander a l'un le chiffre de l'autre.",
+      "doc_ref": "https://code.claude.com/docs/en/analytics"
+    },
+    {
+      "id": "PC-CST-011",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ordre de grandeur du surcout en tokens d une equipe d agents en mode plan",
+      "question_en": "By roughly what factor do agent teams multiply token usage over a standard session when teammates run in plan mode?",
+      "question_fr": "De quel facteur, en ordre de grandeur, une equipe d'agents multiplie-t-elle la consommation de tokens par rapport a une session standard quand les equipiers travaillent en mode plan ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "About seven times"
+        },
+        {
+          "key": "B",
+          "text_en": "About twice"
+        },
+        {
+          "key": "C",
+          "text_en": "About fifteen times"
+        },
+        {
+          "key": "D",
+          "text_en": "About forty times"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La documentation chiffre les equipes d'agents a environ sept fois la consommation en tokens d'une session standard quand les equipiers tournent en mode plan, parce que chaque equipier tient sa propre fenetre de contexte et s'execute comme une instance Claude distincte. D'ou les consignes qui suivent : garder les taches d'equipe petites et autonomes, prendre Sonnet pour les equipiers, et arreter un equipier des que son travail est fini puisqu'il consomme jusqu'a sa sortie.",
+      "distractors_fr": {
+        "B": "Doubler correspondrait a un second contexte ; une equipe en mode plan en ouvre plusieurs, chacun avec son propre historique.",
+        "C": "Ce n'est pas le chiffre que la documentation Claude Code retient pour les equipes d'agents en mode plan.",
+        "D": "Aucun facteur de cet ordre n'est documente ; il depasserait largement ce que mesure la documentation."
+      },
+      "principe_fr": "Un multiplicateur de tokens se lit au nombre de contextes ouverts en parallele, pas au nombre de taches.",
+      "doc_ref": "https://code.claude.com/docs/en/costs"
+    },
+    {
+      "id": "PC-CST-012",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Pourquoi la consommation grimpe dans une session ouverte depuis des heures",
+      "question_en": "A session left open all day draws far more usage than the day's activity suggests. Select the TWO causes the documentation names.",
+      "question_fr": "Une session laissee ouverte toute la journee consomme bien plus que l'activite du jour ne le suggere. Selectionnez les DEUX causes que la documentation nomme.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Every request carries the whole conversation, re-read at the cached rate."
+        },
+        {
+          "key": "B",
+          "text_en": "Idle sessions are re-billed hourly until they are explicitly closed."
+        },
+        {
+          "key": "C",
+          "text_en": "The cache write is re-charged on each turn once the context is large."
+        },
+        {
+          "key": "D",
+          "text_en": "A scheduled task fires on its interval and sends the full context."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "Claude Code renvoie la conversation complete a chaque requete, et chaque usage d'outil declenche une requete de plus portant ce lot de resultats. Avec le cache, cet historique est relu au tarif cache, mais il est relu : une question d'une ligne dans une session ouverte depuis le matin tire de la consommation pour toute la conversation. Une tache planifiee, elle, part a son intervalle meme session inactive, avec le contexte entier. Les autres causes citees sont les manques de cache apres une pause, les equipiers actifs et la compaction.",
+      "distractors_fr": {
+        "B": "Il n'y a aucune facturation horaire d'une session inactive : ce qui coute, c'est une requete envoyee.",
+        "C": "L'ecriture de cache n'est pas rejouee a chaque tour ; c'est la relecture du prefixe qui revient, et au tarif cache."
+      },
+      "principe_fr": "Dans une session longue, ce n'est pas l'activite qui dicte la facture mais la taille de ce qui repart a chaque requete.",
+      "doc_ref": "https://code.claude.com/docs/en/costs"
+    },
+    {
+      "id": "PC-CST-013",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Regler la qualite du prompt avant d attaquer la latence",
+      "question_en": "A team wants to cut latency on a prompt that is still being tuned for quality. What does the latency guide advise?",
+      "question_fr": "Une equipe veut reduire la latence d'un prompt encore en cours de reglage sur la qualite. Que conseille le guide de latence ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Cap max_tokens first, then tune the prompt against that ceiling."
+        },
+        {
+          "key": "B",
+          "text_en": "Turn on streaming, which lowers the measured time to first token."
+        },
+        {
+          "key": "C",
+          "text_en": "Get the prompt working well first, then reduce latency afterwards."
+        },
+        {
+          "key": "D",
+          "text_en": "Move to the smallest model, then add quality back with examples."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le guide est explicite : mieux vaut d'abord construire un prompt qui fonctionne bien sans contrainte de modele ni de prompt, puis appliquer les strategies de reduction de latence. Chercher a reduire la latence trop tot empeche de decouvrir a quoi ressemble la performance maximale, donc de savoir ce que chaque optimisation coute en qualite.",
+      "distractors_fr": {
+        "A": "max_tokens est une coupe brutale, qui tronque en pleine phrase : en faire le point de depart fausse le reglage de la qualite.",
+        "B": "Le flux ameliore la reactivite percue et sert a afficher la sortie au fil de l'eau ; il ne fait pas baisser le temps de traitement.",
+        "D": "Choisir le modele fait partie des leviers de latence, mais l'appliquer avant de savoir ce que vaut le prompt empeche de mesurer ce qu'on perd."
+      },
+      "principe_fr": "On n'optimise pas un systeme dont on ne connait pas encore le plafond de qualite : la reference se pose avant les compromis.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+    }
+  ]
+}

@@ -31,6 +31,6 @@
     "m5-5.1-packaging": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 11 },
     "m5-5.2-requirements": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 8 },
     "m5-5.3-lifecycle": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 8 },
-    "m5-5.4-deployment": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-28", "cible": 14 }
+    "m5-5.4-deployment": { "qui": "marie-line", "etat": "fait", "depuis": "2026-08-28", "cible": 14 }
   }
 }

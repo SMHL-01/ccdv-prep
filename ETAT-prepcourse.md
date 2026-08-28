@@ -5,7 +5,7 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**22 / 27 topics valides, 0 reserve par Said, 5 proposes a Marie-Line**
+**27 / 27 topics valides, 0 reserve, 0 restant a ecrire** (banque Prep Course complete depuis 2026-08-28)
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said a boucle ses 5 topics
 habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
@@ -16,7 +16,7 @@ elle confirme en passant chaque topic a `reserve` dans
 reservation avant la premiere question, ce que `npm run questions` verifie
 desormais en lisant le fichier sur `origin/main`.
 
-**Cibles : 284 questions pour la banque, 55 restant a ecrire sur 5 topics.**
+**Cibles : 284 questions pour la banque — atteintes exactement : 284 ecrites, 0 restant.**
 Posees en une passe le 2026-08-27, derivees et non arbitrees :
 `cible = 8 + arrondi(6 x densite normalisee du chapitre dans prepcourse-corpus/)`,
 bornes 8 a 14. Le plancher 8 sort du calibrage, pas du jugement : sous 8
@@ -136,6 +136,6 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 | `[x]` | m5-5.1-packaging | 11 | Marie-Line |
 | `[x]` | m5-5.2-requirements | 8 | Marie-Line |
 | `[x]` | m5-5.3-lifecycle | 8 | Marie-Line |
-| `[ ]` | m5-5.4-deployment | 0 | Marie-Line (propose) |
+| `[x]` | m5-5.4-deployment | 14 | Marie-Line |
 
 `[x]` termine · `[~]` reserve, pas encore ecrit · `[ ]` propose ou libre, rien d'ecrit

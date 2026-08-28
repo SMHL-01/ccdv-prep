@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 270,
+  "nbQuestions": 284,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -132,6 +132,11 @@
       "fichier": "m5-5.3-lifecycle.json",
       "subdomain": "Systems Life Cycle",
       "nb": 8
+    },
+    {
+      "fichier": "m5-5.4-deployment.json",
+      "subdomain": "Configuration Management",
+      "nb": 14
     }
   ],
   "questions": [
@@ -2834,6 +2839,146 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-DEP-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
+    },
+    {
+      "id": "PC-DEP-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.4-deployment.json"
     }
   ]
 }

@@ -1,0 +1,604 @@
+{
+  "topic": "m5-5.4-deployment",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Configuration Management",
+  "weight": 4.1,
+  "corpus_ref": "prepcourse-corpus/m5-5.4-deployment.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+  ],
+  "questions": [
+    {
+      "id": "PC-DEP-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les deux options d hebergement de Microsoft Foundry se choisissent a la configuration du deploiement",
+      "question_en": "In Microsoft Foundry, when is the choice between the Hosted on Azure and Hosted on Anthropic options made?",
+      "question_fr": "Dans Microsoft Foundry, a quel moment choisit-on entre les options Hosted on Azure et Hosted on Anthropic ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "At deployment configuration time, per deployment."
+        },
+        {
+          "key": "B",
+          "text_en": "Per request, with a header on each API call."
+        },
+        {
+          "key": "C",
+          "text_en": "Once per Azure subscription, by Microsoft support."
+        },
+        {
+          "key": "D",
+          "text_en": "Automatically, from the model family you request."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La doc presente deux options d hebergement pour Claude dans Microsoft Foundry et precise que l option se choisit au moment de configurer le deploiement. Hosted on Azure fait tourner un service opere par Anthropic sur l infrastructure Azure, propose les derniers modeles Opus, Sonnet et Haiku, accepte les types Global Standard et US Data Zone Standard, et c est l option recommandee pour la plupart des charges. Hosted on Anthropic fait tourner le meme service opere par Anthropic sur l infrastructure Anthropic, donne acces a tous les modeles Claude disponibles sur Foundry, en Global Standard seulement, et sert quand il faut des fonctions ou des modeles pas encore heberges sur Azure.",
+      "distractors_fr": {
+        "B": "Aucun en-tete de requete ne bascule l hebergement : l option est figee par le deploiement que tu appelles.",
+        "C": "Le choix n est pas au niveau de l abonnement Azure et ne passe pas par le support Microsoft ; rien n empeche deux deploiements differents dans la meme ressource.",
+        "D": "La famille de modele demandee ne determine pas l hebergement ; c est l inverse, l option d hebergement determine quels modeles sont disponibles."
+      },
+      "principe_fr": "Une option d hebergement est un parametre de deploiement, pas un parametre de requete.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry"
+    },
+    {
+      "id": "PC-DEP-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Type d endpoint recommande sur Vertex quand la contrainte de residence est flexible",
+      "question_en": "A new Vertex AI workload has no data-residency constraint. Which endpoint type does the documentation recommend?",
+      "question_fr": "Une nouvelle charge sur Vertex AI n a aucune contrainte de residence des donnees. Quel type d endpoint la documentation recommande-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Regional, because it is the documented default."
+        },
+        {
+          "key": "B",
+          "text_en": "Multi-region us, to keep failover inside one area."
+        },
+        {
+          "key": "C",
+          "text_en": "Whichever region is closest, to cut latency."
+        },
+        {
+          "key": "D",
+          "text_en": "Global, for maximum availability and no premium."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Vertex propose trois types d endpoint. Le global fait du routage dynamique pour une disponibilite maximale, sans surcout, et la doc le marque explicitement recommande, adapte aux applications dont la residence est flexible. Le multi-region route dynamiquement dans une geographie donnee, us ou eu. Le regional garantit le passage par des regions precises. Le regional et le multi-region portent tous deux un surcout par rapport au global.",
+      "distractors_fr": {
+        "A": "Le regional n est pas le defaut documente : il est reserve a la residence mono-region, aux mandats de conformite stricts et au debit provisionne, et il porte un surcout.",
+        "B": "Le multi-region sert quand il faut une residence a l echelle d une geographie ; sans contrainte de residence il ajoute un surcout sans rien apporter.",
+        "C": "La proximite geographique n est pas le critere de choix documente entre les trois types d endpoint ; le global route dynamiquement vers la capacite disponible."
+      },
+      "principe_fr": "Sans contrainte de residence, le defaut recommande est celui qui maximise la disponibilite sans surcout.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "PC-DEP-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Delta de migration depuis l integration Bedrock actuelle vers Claude Platform on AWS",
+      "question_en": "Your service already calls Claude in Amazon Bedrock through the Messages API. What does migrating it to Claude Platform on AWS require?",
+      "question_fr": "Ton service appelle deja Claude in Amazon Bedrock via la Messages API. Que demande sa migration vers Claude Platform on AWS ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A full rewrite of request and response shapes."
+        },
+        {
+          "key": "B",
+          "text_en": "Nothing beyond swapping the model identifier."
+        },
+        {
+          "key": "C",
+          "text_en": "New base URL, SigV4 service name, model IDs, header."
+        },
+        {
+          "key": "D",
+          "text_en": "Only a new IAM policy; the endpoint is unchanged."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc distingue les deux points de depart. Depuis l integration Bedrock actuelle, le corps de requete est deja au format Messages API : les changements sont l URL de base, le nom de service SigV4, les identifiants de modele et l ajout de l en-tete anthropic-workspace-id. Depuis le legacy InvokeModel ou Converse, il faut en plus reecrire les formes de requete et de reponse. Dans les deux cas Claude Platform on AWS cree une nouvelle organisation Anthropic, et il faut activer une fois par compte la federation d identite web sortante, faute de quoi toutes les requetes echouent.",
+      "distractors_fr": {
+        "A": "La reecriture complete des formes de requete et de reponse concerne la migration depuis l integration legacy InvokeModel ou Converse, pas depuis l integration Bedrock actuelle qui est deja en Messages API.",
+        "B": "Les identifiants de modele changent, mais ils ne sont qu une partie du delta : l URL de base, le nom de service SigV4 et l en-tete de workspace changent aussi.",
+        "D": "L endpoint change : on passe de bedrock-mantle a aws-external-anthropic, donc une simple politique IAM ne suffit pas."
+      },
+      "principe_fr": "Le cout d une migration de plateforme depend du format d API dont on part, pas seulement de la plateforme d arrivee.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    },
+    {
+      "id": "PC-DEP-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Ou passent le modele et anthropic_version dans une requete Vertex",
+      "question_en": "How does a Vertex AI request to Claude differ in shape from a first-party Claude API request?",
+      "question_fr": "En quoi la forme d une requete Vertex AI vers Claude differe-t-elle d une requete a l API Claude en premiere partie ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Model in the body; anthropic_version as a header."
+        },
+        {
+          "key": "B",
+          "text_en": "Both in the body, as on the first-party API."
+        },
+        {
+          "key": "C",
+          "text_en": "Both as headers, signed with the project ID."
+        },
+        {
+          "key": "D",
+          "text_en": "Model in the URL; anthropic_version in the body."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Sur Vertex l identifiant de modele fait partie de l URL de l endpoint et non du corps de la requete, et anthropic_version est passe dans le corps plutot qu en en-tete, avec la valeur obligatoire vertex-2023-10-16. C est un point de configuration a part entiere : le meme code applicatif ne peut pas viser Vertex et l API en premiere partie sans une couche qui deplace ces deux champs.",
+      "distractors_fr": {
+        "A": "C est exactement l inverse de ce que documente Vertex : le modele quitte le corps pour l URL et anthropic_version quitte les en-tetes pour le corps.",
+        "B": "Sur l API en premiere partie, anthropic_version est un en-tete, pas un champ du corps ; et le modele n est jamais dans l URL.",
+        "C": "Aucun des deux ne passe en en-tete sur Vertex ; l authentification Google Cloud est un sujet distinct du placement de ces deux champs."
+      },
+      "principe_fr": "Changer de plateforme deplace des champs de configuration entre URL, corps et en-tetes.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "PC-DEP-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Choisir l endpoint Vertex pour une residence a l echelle de l Union europeenne avec haute disponibilite",
+      "question_en": "Legal requires that inference stay inside the European Union, and the team wants better availability than a single region. Which Vertex endpoint fits?",
+      "question_fr": "Le juridique exige que l inference reste dans l Union europeenne, et l equipe veut une meilleure disponibilite qu une region unique. Quel endpoint Vertex convient ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Global, which already routes within the EU."
+        },
+        {
+          "key": "B",
+          "text_en": "Multi-region eu, which balances across EU regions."
+        },
+        {
+          "key": "C",
+          "text_en": "Regional europe-west1, the only compliant option."
+        },
+        {
+          "key": "D",
+          "text_en": "Global with a residency flag on each request."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le multi-region est precisement decrit pour ce cas : routage dynamique dans une geographie donnee, actuellement us ou eu, pour obtenir la residence a l echelle d une large geographie tout en gardant une disponibilite superieure a celle d une region unique. Il porte un surcout par rapport au global, comme le regional. Le regional reste requis si la contrainte est une residence mono-region, un mandat de conformite strict ou du debit provisionne.",
+      "distractors_fr": {
+        "A": "Le global route dynamiquement vers n importe quelle region disponible : il ne garantit rien sur la geographie et ne satisfait donc pas une exigence de residence.",
+        "C": "Un endpoint regional satisfait la contrainte mais n est pas la seule option conforme, et il concentre le trafic sur une region unique, ce que l equipe cherche justement a eviter.",
+        "D": "Vertex ne documente aucun drapeau de residence par requete sur l endpoint global : la residence se choisit par le type d endpoint."
+      },
+      "principe_fr": "Le grain de la contrainte de residence, geographie ou region unique, designe le type d endpoint.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "PC-DEP-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le debit provisionne exige un endpoint regional sur Vertex",
+      "question_en": "Which Vertex endpoint types support provisioned throughput?",
+      "question_fr": "Quels types d endpoint Vertex prennent en charge le debit provisionne ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Global and multi-region, but not regional."
+        },
+        {
+          "key": "B",
+          "text_en": "All three, at the same 10 percent premium."
+        },
+        {
+          "key": "C",
+          "text_en": "Regional only; the others are pay-as-you-go."
+        },
+        {
+          "key": "D",
+          "text_en": "Multi-region and regional, but not global."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La doc Vertex l ecrit pour le global et pour le multi-region : ces deux types ne prennent en charge que le trafic pay-as-you-go, le debit provisionne exigeant un endpoint regional. Le regional accepte les deux modes, et c est aussi lui qui est requis pour une residence mono-region ou un mandat de conformite strict.",
+      "distractors_fr": {
+        "A": "C est l inverse : ce sont le global et le multi-region qui ne prennent en charge que le pay-as-you-go.",
+        "B": "Le global ne porte aucun surcout et n accepte pas le debit provisionne, donc ni le tarif ni la capacite ne sont uniformes entre les trois types.",
+        "D": "Le multi-region est limite au pay-as-you-go, exactement comme le global."
+      },
+      "principe_fr": "Un mode de capacite reserve se paie en flexibilite de routage.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "PC-DEP-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La region AWS du workspace ne fixe pas ou tourne l inference sur Claude Platform on AWS",
+      "question_en": "On Claude Platform on AWS, a reviewer assumes that binding the workspace to eu-central-1 keeps inference in Europe. What does the documentation say?",
+      "question_fr": "Sur Claude Platform on AWS, un relecteur suppose que rattacher le workspace a eu-central-1 maintient l inference en Europe. Que dit la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It does; the workspace region pins inference."
+        },
+        {
+          "key": "B",
+          "text_en": "It does, provided CloudTrail logging is enabled."
+        },
+        {
+          "key": "C",
+          "text_en": "It only pins where inference runs for batch calls."
+        },
+        {
+          "key": "D",
+          "text_en": "It does not; pin inference with inference_geo."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Claude Platform on AWS fait tourner les modeles sur une infrastructure geree par Anthropic : les donnees peuvent ne pas resider dans AWS et l inference peut etre routee vers le cloud principal d Anthropic. La region AWS a laquelle le workspace est rattache controle l endpoint de passerelle appele et le perimetre des ressources cote AWS, IAM, CloudTrail et facturation ; elle ne fixe pas ou tourne l inference. Pour epingler une geographie il faut le parametre inference_geo par requete, ou un defaut de workspace, avec les valeurs US et Global. Attention, inference_geo n est accepte qu a partir des modeles 4.6 : sur Opus 4.5, Sonnet 4.5 ou Haiku 4.5 la requete renvoie une erreur 400.",
+      "distractors_fr": {
+        "A": "La region du workspace determine l endpoint appele et le perimetre des ressources cote AWS, pas l emplacement de l inference.",
+        "B": "CloudTrail journalise des appels ; activer une journalisation ne deplace pas l inference.",
+        "C": "La doc ne fait aucune exception pour le batch : la region du workspace ne fixe pas l emplacement de l inference, quel que soit le type d appel."
+      },
+      "principe_fr": "Le perimetre de facturation et d identite d une plateforme n est pas son perimetre de traitement.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    },
+    {
+      "id": "PC-DEP-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ce que coute cote fonctionnalites une option d hebergement Foundry sur Azure",
+      "question_en": "Your Foundry deployment is Hosted on Azure and a service calling it starts failing on structured outputs and on web search. Select the TWO documented facts.",
+      "question_fr": "Ton deploiement Foundry est Hosted on Azure et un service qui l appelle commence a echouer sur les structured outputs et sur la recherche web. Choisis les DEUX faits documentes.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Those features are unsupported on Azure-hosted."
+        },
+        {
+          "key": "B",
+          "text_en": "The calls return 429 until the quota resets."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Code adapts its feature set automatically."
+        },
+        {
+          "key": "D",
+          "text_en": "Switching to Global Standard restores both."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La doc liste les fonctions disponibles pour un deploiement heberge chez Anthropic et non prises en charge quand l hebergement est sur Azure : structured outputs, outils cote serveur dont la recherche web, le web fetch, l execution de code et la recherche d outils, connecteur MCP, Agent Skills, appel d outils programmatique et Files API. Les requetes qui les utilisent contre un deploiement heberge sur Azure renvoient 400 Bad Request par conception. Claude Code detecte les deploiements heberges sur Azure et adapte automatiquement son jeu de fonctions. C est le cout fonctionnel du choix conforme : sur Azure, les prompts et les completions restent dans Azure, seules les metadonnees d usage et les contenus signales par les systemes de securite d Anthropic en sortent.",
+      "distractors_fr": {
+        "B": "Ce n est pas un probleme de quota : les requetes qui utilisent ces fonctions renvoient 400 Bad Request par conception, pas 429.",
+        "D": "Global Standard est un type de deploiement disponible dans les deux options d hebergement : en changer ne change pas l hebergement et ne restitue donc pas les fonctions."
+      },
+      "principe_fr": "Le choix d hebergement le plus contenant est aussi celui qui retire le plus de fonctions.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry"
+    },
+    {
+      "id": "PC-DEP-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Outils cote serveur et infrastructure d agent non pris en charge par Claude in Amazon Bedrock",
+      "question_en": "A team on Claude in Amazon Bedrock plans to add the web search tool and Agent Skills. What does the platform documentation say?",
+      "question_fr": "Une equipe sur Claude in Amazon Bedrock prevoit d ajouter l outil de recherche web et les Agent Skills. Que dit la documentation de la plateforme ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Web search is available; Agent Skills are not."
+        },
+        {
+          "key": "B",
+          "text_en": "Neither is supported on Amazon Bedrock."
+        },
+        {
+          "key": "C",
+          "text_en": "Both are supported once you request access."
+        },
+        {
+          "key": "D",
+          "text_en": "Agent Skills work; web search needs a beta header."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La page Bedrock separe explicitement le pris en charge du non pris en charge. Ne sont pas pris en charge : les sources d entree, dont les sources URL et la Files API ; les outils cote serveur, dont l execution de code, la recherche web, le web fetch et l advisor ; l infrastructure d agent, dont les Agent Skills, le connecteur MCP et l appel d outils programmatique ; plusieurs endpoints d API ; les Claude Managed Agents ; et le repli cote serveur. Sur Claude Platform on AWS, a l inverse, les Agent Skills sont disponibles en beta et l en-tete anthropic-beta passe, alors qu il n est pris en charge sur aucune des deux integrations Bedrock.",
+      "distractors_fr": {
+        "A": "La recherche web figure dans la liste des outils cote serveur non pris en charge sur Bedrock, aux cotes de l execution de code, du web fetch et de l advisor.",
+        "C": "Le formulaire d acces aux modeles de Bedrock ouvre l acces a des modeles, pas a des fonctions de plateforme : aucune demande n active ces deux fonctions.",
+        "D": "Les Agent Skills ne sont pas disponibles sur Bedrock, et l en-tete anthropic-beta n y est pas pris en charge, donc les deux moities de la reponse sont fausses."
+      },
+      "principe_fr": "La disponibilite d une fonction se lit sur la page de la plateforme visee, pas sur celle de l API en premiere partie.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock"
+    },
+    {
+      "id": "PC-DEP-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Pool de capacite distinct de Claude Platform on AWS et basculement entre plateformes",
+      "question_en": "What does the documented capacity arrangement for Claude Platform on AWS allow? Select the TWO accurate statements.",
+      "question_fr": "Que permet l organisation de capacite documentee pour Claude Platform on AWS ? Choisis les DEUX affirmations exactes.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It draws on the same pool as Amazon Bedrock."
+        },
+        {
+          "key": "B",
+          "text_en": "Its capacity pool is separate from the API's."
+        },
+        {
+          "key": "C",
+          "text_en": "You can run on two platforms and fail over."
+        },
+        {
+          "key": "D",
+          "text_en": "Failover requires an Anthropic-approved waiver."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "Claude Platform on AWS utilise un pool de capacite distinct de celui de l API Claude en premiere partie et de celui d Amazon Bedrock, et la doc precise qu on peut faire tourner des charges sur plus d une plateforme et basculer entre elles. C est un levier de disponibilite : une saturation sur une plateforme ne se propage pas mecaniquement a l autre. Le prix de cette redondance est ailleurs, dans le delta de configuration entre plateformes, URL de base, nom de service SigV4, identifiants de modele et en-tetes.",
+      "distractors_fr": {
+        "A": "La doc dit exactement le contraire : le pool est distinct de celui de Bedrock comme de celui de l API en premiere partie.",
+        "D": "Aucune derogation n est mentionnee : la doc autorise directement a faire tourner des charges sur plusieurs plateformes et a basculer entre elles."
+      },
+      "principe_fr": "Deux plateformes sur des pools distincts se replient l une sur l autre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    },
+    {
+      "id": "PC-DEP-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Duree de journalisation d activite recommandee sur Vertex et acces au contenu",
+      "question_en": "Vertex AI offers request-response logging. What does Anthropic recommend, and what does enabling it grant?",
+      "question_fr": "Vertex AI propose une journalisation requete-reponse. Que recommande Anthropic, et qu ouvre son activation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "7-day retention; Google gains content access."
+        },
+        {
+          "key": "B",
+          "text_en": "90-day retention; Anthropic gains content access."
+        },
+        {
+          "key": "C",
+          "text_en": "A 30-day rolling basis; no content access is granted."
+        },
+        {
+          "key": "D",
+          "text_en": "No logging, so neither party can read content."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Vertex fournit un service de journalisation requete-reponse qui permet de conserver les prompts et les completions. Anthropic recommande de journaliser son activite sur une base glissante d au moins 30 jours, pour comprendre son activite et pouvoir enqueter en cas d abus. Une note explicite ajoute que l activation de ce service ne donne ni a Google ni a Anthropic un acces a ton contenu : la journalisation reste dans le perimetre Google Cloud, qui gouverne par ailleurs le traitement des donnees pour cette offre.",
+      "distractors_fr": {
+        "A": "La duree recommandee est de 30 jours au minimum, pas 7, et l activation ne donne aucun acces au contenu a Google.",
+        "B": "La recommandation n est pas de 90 jours, et l activation ne donne pas davantage acces au contenu a Anthropic.",
+        "D": "Anthropic recommande d activer la journalisation, pas de s en passer ; c est ce qui permet de comprendre son activite et d enqueter sur un usage abusif."
+      },
+      "principe_fr": "Journaliser pour pouvoir enqueter n implique pas d ouvrir le contenu au fournisseur.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "PC-DEP-012",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Ce qui change cote traitement des donnees quand une charge de production quitte Bedrock pour Claude Platform on AWS",
+      "question_en": "A production workload with a data-retention commitment is moving from Amazon Bedrock to Claude Platform on AWS. Select the TWO documented consequences.",
+      "question_fr": "Une charge de production soumise a un engagement de conservation des donnees quitte Amazon Bedrock pour Claude Platform on AWS. Choisis les DEUX consequences documentees.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Anthropic becomes the inference data processor."
+        },
+        {
+          "key": "B",
+          "text_en": "The Bedrock ZDR enrollment carries over intact."
+        },
+        {
+          "key": "C",
+          "text_en": "ZDR is opt-in and must be requested to apply."
+        },
+        {
+          "key": "D",
+          "text_en": "Retention drops to zero by default after migration."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "L avertissement de la page est explicite. Sur Bedrock, AWS est le processeur de donnees et Anthropic ne conserve pas les entrees ni les sorties d inference : le programme ZDR d Anthropic n y a pas d objet. Sur Claude Platform on AWS, Anthropic traite les donnees d inference en tant que processeur independant et le ZDR suit le modele de l API en premiere partie, disponible sur demande via le representant du compte. La doc demande donc de confirmer l inscription au ZDR avant de migrer des charges de production qui dependent de garanties de conservation.",
+      "distractors_fr": {
+        "B": "Il n y a rien a transferer : sur Bedrock c est AWS qui est processeur et Anthropic ne conserve pas les entrees ni les sorties d inference, donc le programme ZDR d Anthropic ne s y applique pas.",
+        "D": "C est l inverse du defaut : Claude Platform on AWS suit la politique de conservation de l API en premiere partie, et le ZDR n est actif que s il a ete demande et accorde."
+      },
+      "principe_fr": "Un changement de plateforme change qui traite les donnees, donc quelles garanties doivent etre redemandees.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    },
+    {
+      "id": "PC-DEP-013",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Contraintes de conformite qui imposent Bedrock plutot que Claude Platform on AWS",
+      "question_en": "Your program must be FedRAMP High and IL5 authorized, and AWS must be the sole data processor. Which AWS path does the documentation direct you to?",
+      "question_fr": "Ton programme doit etre autorise FedRAMP High et IL5, et AWS doit etre le seul processeur de donnees. Vers quel chemin AWS la documentation t oriente-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Claude Platform on AWS, with PrivateLink enabled."
+        },
+        {
+          "key": "B",
+          "text_en": "Claude in Amazon Bedrock, AWS-operated throughout."
+        },
+        {
+          "key": "C",
+          "text_en": "Claude Platform on AWS, using inference_geo US."
+        },
+        {
+          "key": "D",
+          "text_en": "Either one; both run inside the AWS boundary."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La doc tranche nommement : les organisations en secteur regule qui exigent FedRAMP High, IL4, IL5 ou une conformite HIPAA-ready, ou qui ont besoin qu AWS soit le seul processeur de donnees, doivent utiliser Claude in Amazon Bedrock, qui tourne entierement sur une infrastructure controlee par AWS avec AWS comme partie operante. Le tableau de comparaison le confirme ligne par ligne : operateur de la pile AWS contre Anthropic, processeur des donnees d inference AWS contre Anthropic, limites de debit gerees par AWS contre Anthropic. La preparation HIPAA ne fait d ailleurs pas partie des capacites disponibles sur Claude Platform on AWS.",
+      "distractors_fr": {
+        "A": "PrivateLink est bien pris en charge pour joindre l endpoint depuis ton VPC, mais un lien reseau prive ne change ni l operateur de la pile ni le processeur de donnees d inference.",
+        "C": "inference_geo epingle une geographie d inference, pas l operateur : la pile reste geree par Anthropic, qui reste le processeur des donnees d inference.",
+        "D": "Les deux offres ne sont pas equivalentes de ce point de vue : sur Claude Platform on AWS les donnees peuvent ne pas resider dans AWS et l inference peut etre routee vers le cloud principal d Anthropic."
+      },
+      "principe_fr": "Une exigence sur l identite du processeur de donnees se resout par le choix de plateforme, pas par un parametre.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    },
+    {
+      "id": "PC-DEP-014",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Ce que CloudTrail capture par defaut sur Claude Platform on AWS et ce qui demande une configuration explicite",
+      "question_en": "An audit requires a trail of every inference call on Claude Platform on AWS. CloudTrail is on with default settings. What is the documented gap?",
+      "question_fr": "Un audit exige une trace de chaque appel d inference sur Claude Platform on AWS. CloudTrail est actif avec ses reglages par defaut. Quel est le manque documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Inference is a Data event, off until configured."
+        },
+        {
+          "key": "B",
+          "text_en": "CloudTrail cannot capture inference calls at all."
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing; all operations are logged by default."
+        },
+        {
+          "key": "D",
+          "text_en": "Inference is logged, but only for batch requests."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "CloudTrail peut capturer toutes les requetes vers Claude Platform on AWS, mais la classification des evenements decide de ce qui arrive sans rien configurer. Les operations de workspace, de coffre et de webhook sont journalisees par defaut comme Management events. L inference, le batch, les fichiers, les skills, les modeles, le profil utilisateur et les operations Claude Managed Agents autres que coffres et webhooks sont classes comme Data events : ils exigent une configuration explicite de la journalisation des Data events, qui entraine des frais CloudTrail supplementaires. Un audit qui suppose la trace complete par defaut se decouvre incomplet au moment ou on la lui demande.",
+      "distractors_fr": {
+        "B": "CloudTrail peut capturer toutes les requetes vers Claude Platform on AWS : ce qui manque est une configuration, pas une capacite.",
+        "C": "Seules les operations de workspace, de coffre et de webhook sont journalisees par defaut, en tant que Management events.",
+        "D": "Le batch est classe comme Data event exactement comme l inference : il n est pas mieux traite par defaut."
+      },
+      "principe_fr": "Une piste d audit par defaut ne couvre pas forcement l acte que l audit veut voir.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws"
+    }
+  ]
+}

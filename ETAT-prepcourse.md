@@ -5,7 +5,7 @@
 > ponctuelle : `reservations-prepcourse.json`. Mettre a jour ce fichier a
 > chaque reservation ou topic termine, comme `ETAT.md` pour la banque doc.
 
-**8 / 27 topics valides, 0 reserve par Said, 19 proposes a Marie-Line**
+**9 / 27 topics valides, 0 reserve par Said, 18 proposes a Marie-Line**
 (glossaire `00-glossaire.md` exclu : reference transverse, pas un topic a
 questions). Repartition posee le 2026-08-13 : Said a boucle ses 5 topics
 habituels (m1-1.1 a m1-1.4, m3-3.1 — 44 questions, 0 anomalie sur
@@ -16,7 +16,7 @@ elle confirme en passant chaque topic a `reserve` dans
 reservation avant la premiere question, ce que `npm run questions` verifie
 desormais en lisant le fichier sur `origin/main`.
 
-**Cibles : 284 questions pour la banque, 209 restant a ecrire sur 19 topics.**
+**Cibles : 284 questions pour la banque, 200 restant a ecrire sur 18 topics.**
 Posees en une passe le 2026-08-27, derivees et non arbitrees :
 `cible = 8 + arrondi(6 x densite normalisee du chapitre dans prepcourse-corpus/)`,
 bornes 8 a 14. Le plancher 8 sort du calibrage, pas du jugement : sous 8
@@ -102,7 +102,7 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 | `[x]` | m2-2.1-prompting | 9 | Marie-Line |
 | `[x]` | m2-2.2-thinking | 9 | Marie-Line |
 | `[x]` | m2-2.3-tools | 13 | Marie-Line |
-| `[ ]` | m2-2.4-streaming | 0 | Marie-Line (propose) |
+| `[x]` | m2-2.4-streaming | 9 | Marie-Line |
 | `[ ]` | m2-2.5-model-budget | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.6-agent-loop | 0 | Marie-Line (propose) |
 | `[ ]` | m2-2.7-memory-scope | 0 | Marie-Line (propose) |

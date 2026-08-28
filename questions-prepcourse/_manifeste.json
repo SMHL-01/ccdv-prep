@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
-  "genere": "2026-08-27",
-  "nbQuestions": 75,
+  "genere": "2026-08-28",
+  "nbQuestions": 84,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -37,6 +37,11 @@
       "fichier": "m2-2.3-tools.json",
       "subdomain": "Tool Implementation / MCP Server Development",
       "nb": 13
+    },
+    {
+      "fichier": "m2-2.4-streaming.json",
+      "subdomain": "Claude API Mechanics",
+      "nb": 9
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -704,6 +709,96 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.3-tools.json"
+    },
+    {
+      "id": "PC-STR-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
+    },
+    {
+      "id": "PC-STR-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.4-streaming.json"
     },
     {
       "id": "PC-PMS-001",

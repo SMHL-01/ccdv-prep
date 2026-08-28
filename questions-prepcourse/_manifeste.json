@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 141,
+  "nbQuestions": 153,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -72,6 +72,11 @@
       "fichier": "m3-3.2-claudemd.json",
       "subdomain": "Configuration Management / Claude Code",
       "nb": 11
+    },
+    {
+      "fichier": "m3-3.3-plugins.json",
+      "subdomain": "Agentic Customization / Claude Code",
+      "nb": 12
     }
   ],
   "questions": [
@@ -1484,6 +1489,126 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-PLG-001",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-006",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-007",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-011",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-PLG-012",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.3-plugins.json"
     }
   ]
 }

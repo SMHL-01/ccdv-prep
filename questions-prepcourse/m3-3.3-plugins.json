@@ -1,0 +1,521 @@
+{
+  "topic": "m3-3.3-plugins",
+  "source": "prepcourse",
+  "domain": "Tools and MCPs / Claude Code",
+  "subdomain": "Agentic Customization / Claude Code",
+  "weight": 7.2,
+  "corpus_ref": "prepcourse-corpus/m3-3.3-plugins.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/plugins",
+    "https://code.claude.com/docs/en/plugins-reference",
+    "https://code.claude.com/docs/en/plugin-marketplaces",
+    "https://code.claude.com/docs/en/mcp",
+    "https://code.claude.com/docs/en/skills"
+  ],
+  "questions": [
+    {
+      "id": "PC-PLG-001",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A team moves its `/deploy` skill into a plugin named `release-kit`. How is that skill invoked once the plugin is installed?",
+      "question_fr": "Une equipe deplace sa Skill `/deploy` dans un plugin nomme `release-kit`. Comment cette Skill s invoque-t-elle une fois le plugin installe ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "As `/deploy`, exactly as the standalone version was"
+        },
+        {
+          "key": "B",
+          "text_en": "As `/release-kit:deploy`, namespaced by the plugin"
+        },
+        {
+          "key": "C",
+          "text_en": "As `/deploy` unless a second plugin claims that name"
+        },
+        {
+          "key": "D",
+          "text_en": "As `/deploy:release-kit`, with the plugin name last"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "distractors_fr": {
+        "A": "C est justement ce que le passage en plugin change : la forme courte appartient a la configuration standalone dans `.claude/`.",
+        "C": "Le prefixe n est pas conditionnel. Il est applique systematiquement, precisement pour que le conflit ne puisse pas survenir.",
+        "D": "L ordre est inverse : le namespace precede le nom de la Skill, separe par deux-points."
+      },
+      "explanation_fr": "Les Skills d un plugin sont toujours nommees `/nom-du-plugin:nom-de-la-skill`. Le prefixe vient du champ `name` du manifeste et sert a empecher les collisions entre plugins qui exposeraient une Skill du meme nom.",
+      "principe_fr": "Le namespace n est pas une option de confort : c est la contrepartie assumee de la distribution.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins",
+      "concept": "Une Skill livree par un plugin s invoque toujours prefixee par le nom du plugin"
+    },
+    {
+      "id": "PC-PLG-002",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A plugin published as `payments` is renamed `billing` in its manifest. What happens to the skills it ships?",
+      "question_fr": "Un plugin publie sous le nom `payments` est renomme `billing` dans son manifeste. Qu arrive-t-il aux Skills qu il livre ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing: skill names are frozen at install time"
+        },
+        {
+          "key": "B",
+          "text_en": "Only skills that spell out the old prefix change"
+        },
+        {
+          "key": "C",
+          "text_en": "Every skill prefix changes, being taken from `name`"
+        },
+        {
+          "key": "D",
+          "text_en": "The skills stop loading until each one is renamed"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "distractors_fr": {
+        "A": "Rien n est fige a l installation : le prefixe est recalcule a partir du manifeste a chaque chargement du plugin.",
+        "B": "Les Skills n ecrivent jamais leur prefixe elles-memes. Il est derive du manifeste, donc aucune ne peut y echapper.",
+        "D": "Les Skills continuent de se charger. C est leur nom d invocation qui change, pas leur validite."
+      },
+      "explanation_fr": "Le champ `name` du manifeste sert de namespace a tous les composants du plugin. Le renommer change d un coup le prefixe de chaque Skill, agent et commande livres : les invocations que l equipe avait apprises et scriptees cessent de resoudre.",
+      "principe_fr": "Renommer un plugin est une rupture d interface publique, pas un detail de metadonnee.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins-reference",
+      "concept": "Le prefixe de namespace vient du champ name du manifeste : renommer le plugin renomme toutes ses Skills"
+    },
+    {
+      "id": "PC-PLG-003",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A plugin's hook calls `/Users/alexmorgan/projects/utils/validate.sh`. It installs cleanly for three teammates, then fails on first use. What is the fix?",
+      "question_fr": "Le hook d un plugin appelle `/Users/alexmorgan/projects/utils/validate.sh`. Il s installe sans erreur chez trois collegues, puis echoue au premier usage. Quelle est la correction ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Call the bundled script via `${CLAUDE_PLUGIN_ROOT}`"
+        },
+        {
+          "key": "B",
+          "text_en": "Serve the plugin from a share everyone has mounted"
+        },
+        {
+          "key": "C",
+          "text_en": "Declare the path in the marketplace entry to check it"
+        },
+        {
+          "key": "D",
+          "text_en": "Have each teammate clone utils to that same path"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "distractors_fr": {
+        "B": "Cela deplace la dependance externe sans la supprimer : le plugin reste inutilisable des qu un poste n a pas le partage monte.",
+        "C": "L entree de marketplace decrit ou trouver le plugin, pas quoi verifier sur le poste. Aucun controle de chemin n a lieu a l installation.",
+        "D": "Imposer une arborescence identique a tous les postes est exactement la contrainte que le plugin est cense supprimer."
+      },
+      "explanation_fr": "L installation copie des fichiers, elle n execute ni ne valide les chemins qu ils contiennent : le plugin s installe partout et n echoue qu au premier declenchement du hook. Un script livre avec le plugin se reference par `${CLAUDE_PLUGIN_ROOT}`, qui resout vers le repertoire d installation du plugin sur le poste courant.",
+      "principe_fr": "Une installation reussie ne prouve rien sur l execution : elle ne teste aucun chemin.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins-reference",
+      "concept": "Un chemin absolu code en dur dans un plugin s installe sans erreur et echoue a l execution : referencer le script livre via CLAUDE_PLUGIN_ROOT"
+    },
+    {
+      "id": "PC-PLG-004",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A plugin installs `node_modules` on first run. Where must they be written so they survive a plugin update?",
+      "question_fr": "Un plugin installe des `node_modules` au premier lancement. Ou doivent-ils etre ecrits pour survivre a une mise a jour du plugin ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Under `${CLAUDE_PLUGIN_ROOT}`, beside the scripts"
+        },
+        {
+          "key": "B",
+          "text_en": "Under `${CLAUDE_PROJECT_DIR}`, at the project root"
+        },
+        {
+          "key": "C",
+          "text_en": "Anywhere: an update leaves the old tree untouched"
+        },
+        {
+          "key": "D",
+          "text_en": "Under `${CLAUDE_PLUGIN_DATA}`, kept across updates"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "distractors_fr": {
+        "A": "`${CLAUDE_PLUGIN_ROOT}` change de valeur a chaque mise a jour : l ancien repertoire est traite comme ephemere et finit nettoye.",
+        "B": "La racine du projet est le bon endroit pour des scripts propres au depot, pas pour des dependances appartenant au plugin et partagees entre projets.",
+        "C": "L ancienne version reste sur disque un temps, mais elle est explicitement decrite comme ephemere : rien ne doit y etre ecrit."
+      },
+      "explanation_fr": "Claude Code expose trois variables de chemin : `${CLAUDE_PLUGIN_ROOT}` pour ce que le plugin livre, `${CLAUDE_PROJECT_DIR}` pour la racine du projet, et `${CLAUDE_PLUGIN_DATA}` pour un repertoire persistant cree a la premiere reference et concu pour survivre aux mises a jour.",
+      "principe_fr": "Distinguer ce qui est livre, ce qui appartient au projet, et ce qui doit persister.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins-reference",
+      "concept": "CLAUDE_PLUGIN_DATA est le repertoire persistant qui survit aux mises a jour, contrairement a CLAUDE_PLUGIN_ROOT"
+    },
+    {
+      "id": "PC-PLG-005",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "multi",
+      "question_en": "A team copies its `.claude/agents/` and `.claude/skills/` into a plugin named `kit` but leaves the originals in place. Which TWO statements hold?",
+      "question_fr": "Une equipe recopie ses `.claude/agents/` et `.claude/skills/` dans un plugin nomme `kit` mais laisse les originaux en place. Quelles DEUX affirmations sont exactes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The project agent overrides the plugin's namesake"
+        },
+        {
+          "key": "B",
+          "text_en": "The plugin agent wins, its scope being the higher"
+        },
+        {
+          "key": "C",
+          "text_en": "Both `/deploy` and `/kit:deploy` stay invocable"
+        },
+        {
+          "key": "D",
+          "text_en": "The duplicate stops the plugin loading altogether"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "distractors_fr": {
+        "B": "La precedence va dans l autre sens : une definition d agent presente dans `.claude/agents/` du projet ou de l utilisateur masque celle du plugin.",
+        "D": "Rien n est bloque. Le doublon est silencieux, ce qui est precisement le piege : l equipe croit tester le plugin et execute l original."
+      },
+      "explanation_fr": "Les agents se resolvent par nom : celui du projet masque l homonyme du plugin, donc la version packagee ne prend effet qu une fois les originaux supprimes. Les Skills, elles, sont namespacees : `/deploy` et `/kit:deploy` designent deux entrees distinctes et restent toutes deux disponibles.",
+      "principe_fr": "Apres migration, supprimer les originaux : sinon on teste l ancien en croyant tester le nouveau.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins",
+      "concept": "Migration vers un plugin : un agent projet homonyme prime sur celui du plugin, alors que les Skills coexistent grace au namespace"
+    },
+    {
+      "id": "PC-PLG-006",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "An admin allowlists only the official Anthropic marketplace via `strictKnownMarketplaces`. CI machines report no marketplace at all. Why?",
+      "question_fr": "Un administrateur n autorise que le marketplace officiel Anthropic via `strictKnownMarketplaces`. Les machines de CI ne voient aucun marketplace. Pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The allowlist blocks the official source as well"
+        },
+        {
+          "key": "B",
+          "text_en": "An allowlist permits, it does not register a source"
+        },
+        {
+          "key": "C",
+          "text_en": "Managed settings load too late for a headless run"
+        },
+        {
+          "key": "D",
+          "text_en": "CI has no git credentials to reach the catalog"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "distractors_fr": {
+        "A": "Une entree explicite pour la source officielle l autorise bel et bien. Seule la liste vide bloque tout, y compris le marketplace officiel.",
+        "C": "Les reglages manages sont lus au demarrage comme ailleurs. Le probleme n est pas leur moment de chargement mais leur portee.",
+        "D": "Les identifiants git conditionnent le clonage d une source deja enregistree, pas l enregistrement lui-meme, qui n a pas eu lieu ici."
+      },
+      "explanation_fr": "`strictKnownMarketplaces` filtre ce que les utilisateurs ont le droit d ajouter, il n ajoute rien. Le marketplace officiel est le seul que Claude Code enregistre de lui-meme, et seulement au premier demarrage interactif : les environnements non interactifs comme la CI sont manques. Il faut le declarer aussi dans `extraKnownMarketplaces`, dans le meme `managed-settings.json`.",
+      "principe_fr": "Autoriser n est pas deployer : une politique restrictive ne remplace jamais un enregistrement explicite.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-marketplaces",
+      "concept": "strictKnownMarketplaces restreint les sources autorisees mais n enregistre aucun marketplace : il faut le doubler d extraKnownMarketplaces"
+    },
+    {
+      "id": "PC-PLG-007",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "Half a team is refused plugin installs, though the marketplace repository is allowlisted by its `https://` URL. What explains the split?",
+      "question_fr": "La moitie d une equipe se voit refuser les installations de plugins alors que le depot du marketplace est bien autorise par son URL `https://`. Qu est-ce qui explique la difference ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Their client predates the allowlist setting itself"
+        },
+        {
+          "key": "B",
+          "text_en": "Their project settings override the managed policy"
+        },
+        {
+          "key": "C",
+          "text_en": "They added it in another URL form; matching is exact"
+        },
+        {
+          "key": "D",
+          "text_en": "The policy covers installs but not marketplace adds"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "distractors_fr": {
+        "A": "Une version trop ancienne ignorerait la politique et laisserait tout passer. Ici la politique s applique, mais ne reconnait pas la source.",
+        "B": "Les reglages manages sont precisement ceux qu un utilisateur ou un projet ne peut pas surcharger.",
+        "D": "Le controle intervient a l ajout du marketplace comme a l installation, la mise a jour et l auto-update."
+      },
+      "explanation_fr": "La comparaison est litterale et ne normalise pas les URL : un suffixe `.git`, une barre finale ou une forme `ssh://` sont autant de valeurs differentes de l entree autorisee. Quand un depot peut etre clone sous plusieurs formes, une entree `hostPattern` couvre les variantes la ou une URL litterale n en couvre qu une.",
+      "principe_fr": "Une regle de securite qui compare des chaines echoue sur les variantes d ecriture, pas sur les intentions.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-marketplaces",
+      "concept": "L allowlist de marketplaces compare les sources a l identique, sans normaliser les URL : privilegier hostPattern quand plusieurs formes de clonage coexistent"
+    },
+    {
+      "id": "PC-PLG-008",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "What does a Claude Code plugin package?",
+      "question_fr": "Que regroupe un plugin Claude Code ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Skills, hooks, subagents and MCP servers, as one unit"
+        },
+        {
+          "key": "B",
+          "text_en": "Only a project's skills, versioned for a marketplace"
+        },
+        {
+          "key": "C",
+          "text_en": "A frozen copy of the settings files of one project"
+        },
+        {
+          "key": "D",
+          "text_en": "Permission rules layered on top of managed settings"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "distractors_fr": {
+        "B": "Le perimetre est plus large : hooks, sous-agents et serveurs MCP voyagent dans le meme paquet.",
+        "C": "Un plugin livre des composants reutilisables, pas un instantane de la configuration d un depot donne.",
+        "D": "Les regles de permission relevent des fichiers de reglages. Un plugin peut embarquer des hooks, ce qui n en fait pas un mecanisme de permissions."
+      },
+      "explanation_fr": "Un plugin est un repertoire autonome regroupant Skills, hooks, sous-agents et serveurs MCP, avec un manifeste `.claude-plugin/plugin.json`. Il se distribue par un marketplace, catalogue que l on ajoute par exemple avec `/plugin marketplace add <owner/repo>`, et remplace une page d etapes manuelles par une installation versionnee et auditable.",
+      "principe_fr": "Un plugin transforme une procedure de setup en artefact versionne.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins",
+      "concept": "Un plugin regroupe Skills, hooks, sous-agents et serveurs MCP en une unite installable et versionnee, distribuee par un marketplace"
+    },
+    {
+      "id": "PC-PLG-009",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A server should let Claude Code pull one issue by address, read-only, without adding another callable tool. What should it expose?",
+      "question_fr": "Un serveur doit permettre a Claude Code de recuperer une issue par son adresse, en lecture seule, sans ajouter d outil appelable. Que doit-il exposer ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A tool taking the issue identifier as its parameter"
+        },
+        {
+          "key": "B",
+          "text_en": "A prompt returning the issue, invoked by its name"
+        },
+        {
+          "key": "C",
+          "text_en": "An HTTP endpoint the client polls for that issue"
+        },
+        {
+          "key": "D",
+          "text_en": "A resource, cited as `@server:protocol://path`"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "distractors_fr": {
+        "A": "C est exactement ce que la contrainte exclut : un outil de plus dans le catalogue, appele par le modele au lieu d etre adresse par l utilisateur.",
+        "B": "Un prompt MCP est un modele d instructions invoque comme commande. Il sert a lancer une procedure, pas a adresser une donnee.",
+        "C": "Le transport dit comment le client parle au serveur. Il ne remplace pas la capacite exposee."
+      },
+      "explanation_fr": "Un serveur MCP expose trois sortes de capacites : des outils appelables, des resources en lecture seule adressables, et des prompts. Une donnee que l utilisateur veut designer explicitement se publie en resource : elle se cite dans le prompt sous la forme `@serveur:protocole://chemin` et son contenu est recupere puis joint automatiquement.",
+      "principe_fr": "Choisir la capacite d apres qui declenche l acces : le modele, ou l utilisateur.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp",
+      "concept": "Une donnee en lecture seule adressable se publie comme resource MCP, referencee par mention @serveur:protocole://chemin, plutot que comme outil"
+    },
+    {
+      "id": "PC-PLG-010",
+      "domain": "Tools and MCPs",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "type": "multi",
+      "question_en": "An MCP server exposes prompts to Claude Code. Which TWO statements are correct?",
+      "question_fr": "Un serveur MCP expose des prompts a Claude Code. Quelles DEUX affirmations sont exactes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Each one must be enabled by hand in the settings"
+        },
+        {
+          "key": "B",
+          "text_en": "They surface as commands `/mcp__server__prompt`"
+        },
+        {
+          "key": "C",
+          "text_en": "They run only once a matching tool is approved"
+        },
+        {
+          "key": "D",
+          "text_en": "They are discovered live and can take arguments"
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "distractors_fr": {
+        "A": "Aucune declaration manuelle n est requise : les prompts sont decouverts a la connexion au serveur.",
+        "C": "Les prompts ne dependent pas des outils du serveur. Ils forment une capacite distincte, invoquee directement."
+      },
+      "explanation_fr": "Les prompts exposes par un serveur MCP deviennent des commandes visibles en tapant `/`, sous la forme `/mcp__nomserveur__nomprompt`. Ils sont decouverts dynamiquement depuis les serveurs connectes et acceptent des arguments passes apres la commande, separes par des espaces.",
+      "principe_fr": "Le serveur MCP ne fournit pas que des outils : il fournit aussi des points d entree pour l utilisateur.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp",
+      "concept": "Les prompts d un serveur MCP apparaissent comme commandes /mcp__serveur__prompt, decouvertes dynamiquement et acceptant des arguments"
+    },
+    {
+      "id": "PC-PLG-011",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A `/deploy` skill must never run unless a human types it. What belongs in its frontmatter?",
+      "question_fr": "Une Skill `/deploy` ne doit jamais s executer sans qu un humain la tape. Que faut-il mettre dans son frontmatter ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A description that never mentions deployment at all"
+        },
+        {
+          "key": "B",
+          "text_en": "An empty `allowed-tools` list, blocking every run"
+        },
+        {
+          "key": "C",
+          "text_en": "`disable-model-invocation: true`, reserving it to you"
+        },
+        {
+          "key": "D",
+          "text_en": "`context: fork`, so that it runs in its own subagent"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "distractors_fr": {
+        "A": "Obscurcir la description degrade le declenchement sans le supprimer, et rend la Skill illisible pour l equipe.",
+        "B": "Priver la Skill d outils l empeche de travailler quand on l appelle vraiment. On veut restreindre le declencheur, pas la capacite.",
+        "D": "`context: fork` change l endroit ou la Skill s execute, pas qui decide de l executer."
+      },
+      "explanation_fr": "`disable-model-invocation: true` empeche Claude de charger la Skill automatiquement : seule l invocation explicite `/deploy` la declenche. C est le reglage prevu pour les procedures a effet de bord, ou l on ne veut pas que le modele decide du moment.",
+      "principe_fr": "Pour tout ce qui a un effet de bord, le declencheur doit rester humain.",
+      "doc_ref": "https://code.claude.com/docs/en/skills",
+      "concept": "disable-model-invocation reserve une Skill a l invocation explicite, pour les procedures a effet de bord"
+    },
+    {
+      "id": "PC-PLG-012",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "type": "single",
+      "question_en": "A plugin updates mid-session, and its hook keeps calling the previous version's script. What is happening?",
+      "question_fr": "Un plugin se met a jour en cours de session, et son hook continue d appeler le script de la version precedente. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Components keep the old path until `/reload-plugins`"
+        },
+        {
+          "key": "B",
+          "text_en": "The update failed quietly; reinstall the plugin now"
+        },
+        {
+          "key": "C",
+          "text_en": "Hook paths are cached two weeks and cannot refresh"
+        },
+        {
+          "key": "D",
+          "text_en": "The manifest version must be bumped for hooks to see"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "distractors_fr": {
+        "B": "La mise a jour a bien eu lieu. Ce sont les composants deja demarres qui conservent le chemin resolu au lancement de la session.",
+        "C": "Les deux semaines decrivent la duree de retention de l ancien repertoire sur disque, pas un cache de chemins inalterable.",
+        "D": "La version du manifeste declenche la mise a jour. Elle ne pilote pas la resolution du chemin par les composants deja actifs."
+      },
+      "explanation_fr": "`${CLAUDE_PLUGIN_ROOT}` change de valeur a chaque mise a jour, mais hooks, moniteurs et serveurs MCP ou LSP deja actifs gardent le chemin de la version precedente. `/reload-plugins` bascule hooks, serveurs MCP et LSP vers le nouveau chemin ; les moniteurs exigent un redemarrage de session.",
+      "principe_fr": "Une mise a jour a chaud ne recharge pas ce qui tourne deja.",
+      "doc_ref": "https://code.claude.com/docs/en/plugins-reference",
+      "concept": "Apres une mise a jour de plugin en cours de session, hooks et serveurs continuent d utiliser l ancien chemin jusqu a /reload-plugins"
+    }
+  ]
+}

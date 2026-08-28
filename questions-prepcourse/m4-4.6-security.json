@@ -1,0 +1,604 @@
+{
+  "topic": "m4-4.6-security",
+  "source": "prepcourse",
+  "domain": "Security and Safety",
+  "subdomain": "AI Application Security",
+  "weight": 3.2,
+  "corpus_ref": "prepcourse-corpus/m4-4.6-security.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/sandbox-environments",
+    "https://code.claude.com/docs/en/sandboxing",
+    "https://code.claude.com/docs/en/security-guidance",
+    "https://code.claude.com/docs/en/zero-data-retention"
+  ],
+  "questions": [
+    {
+      "id": "PC-SEC-001",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Modes de permission et isolation repondent a deux questions distinctes",
+      "question_en": "A reviewer asks you to state what a permission mode governs and what an isolation boundary governs. Which pairing is correct?",
+      "question_fr": "Un auditeur te demande d'enoncer ce que gouverne un mode de permission et ce que gouverne une frontiere d'isolation. Quel appariement est correct ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both decide whether a given tool call is allowed to run."
+        },
+        {
+          "key": "B",
+          "text_en": "The mode decides if a call runs; isolation limits its reach."
+        },
+        {
+          "key": "C",
+          "text_en": "The mode limits reach; isolation decides if a call runs."
+        },
+        {
+          "key": "D",
+          "text_en": "Both restrict what a command reaches once it has started."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation les distingue explicitement : les modes de permission decident si un appel d'outil s'execute et s'il faut te demander d'abord ; l'isolation restreint ce qu'une commande peut atteindre une fois lancee. Les deux se combinent : quand un mode laisse des actions passer sans demander, la frontiere d'isolation limite leur portee.",
+      "distractors_fr": {
+        "A": "Redondant : l'isolation ne se prononce pas sur l'autorisation d'un appel, elle borne son acces une fois l'appel lance.",
+        "C": "L'appariement est inverse : c'est le mode qui autorise, l'isolation qui borne.",
+        "D": "L'un des deux agit avant l'execution : le mode tranche l'autorisation et l'invite eventuelle."
+      },
+      "principe_fr": "Autorisation et confinement sont deux couches distinctes : l'une filtre l'appel, l'autre borne ses effets.",
+      "doc_ref": "https://code.claude.com/docs/en/sandbox-environments"
+    },
+    {
+      "id": "PC-SEC-002",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "L'isolation ne change pas ce qui est envoye au modele",
+      "question_en": "Your legal team accepts the integration provided a sandbox is enabled, arguing it will keep the source files Claude reads from leaving the machine. What is wrong with that reasoning?",
+      "question_fr": "Le service juridique accepte l'integration a condition qu'un bac a sable soit active, au motif qu'il empechera les fichiers sources lus par Claude de quitter la machine. Qu'est-ce qui cloche ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A sandbox blocks reads, so no file would be read at all."
+        },
+        {
+          "key": "B",
+          "text_en": "The sandbox encrypts the payload, so review is unneeded."
+        },
+        {
+          "key": "C",
+          "text_en": "Sandboxes apply to Bash only, so file reads are unaffected."
+        },
+        {
+          "key": "D",
+          "text_en": "Prompts and read files reach the provider either way."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La documentation le dit sans detour : l'isolation ne change pas ce qui est envoye au modele. Tes prompts et les fichiers que Claude lit sont transmis a l'API Anthropic ou au fournisseur configure, avec ou sans bac a sable. Une frontiere d'isolation borne les acces locaux, pas le flux sortant.",
+      "distractors_fr": {
+        "A": "La politique de lecture par defaut est large, pas bloquante : les fichiers se lisent normalement.",
+        "B": "L'isolation ne chiffre rien de plus et ne dispense d'aucune revue du flux sortant.",
+        "C": "Vrai du seul outil Bash isole, mais ce n'est pas ce qui invalide l'argument : meme un perimetre plus large n'empeche pas l'envoi au modele."
+      },
+      "principe_fr": "Un bac a sable borne ce qu'une commande atteint sur la machine, pas ce que le modele recoit.",
+      "doc_ref": "https://code.claude.com/docs/en/sandbox-environments"
+    },
+    {
+      "id": "PC-SEC-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Perimetre de l'outil Bash isole : les hooks et serveurs MCP restent sur l'hote",
+      "question_en": "You plan a fully unattended nightly run and enable the built-in sandboxed Bash tool as the only isolation. Why is that not sufficient?",
+      "question_fr": "Tu prevois une execution nocturne sans surveillance et actives l'outil Bash isole comme seule isolation. Pourquoi cela ne suffit-il pas ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "File tools, MCP servers and hooks still run on the host."
+        },
+        {
+          "key": "B",
+          "text_en": "It expires after a fixed number of commands per session."
+        },
+        {
+          "key": "C",
+          "text_en": "It requires an interactive confirmation for each command."
+        },
+        {
+          "key": "D",
+          "text_en": "It stops working as soon as permission prompts are off."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "L'outil Bash isole est integre a Claude Code mais ne restreint que les commandes Bash. Les outils fichiers integres, les serveurs MCP et les hooks continuent de s'executer directement sur l'hote. Les autres approches placent tout le processus Claude Code dans la frontiere d'isolation ; celle-ci ne couvre qu'un canal, d'ou l'insuffisance documentee pour une execution sans surveillance.",
+      "distractors_fr": {
+        "B": "Aucune limite de ce genre n'existe : l'outil isole n'expire pas au bout de N commandes.",
+        "C": "L'interet est justement de laisser passer sans demander ; l'isolation n'ajoute pas de confirmation.",
+        "D": "L'isolation est independante des invites de permission et continue de s'appliquer sans elles."
+      },
+      "principe_fr": "Verifie le perimetre d'une isolation avant de compter sur elle : ce qui reste dehors reste sur l'hote.",
+      "doc_ref": "https://code.claude.com/docs/en/sandbox-environments"
+    },
+    {
+      "id": "PC-SEC-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Sous WSL2 un binaire Windows passe par un socket que le bac a sable refuse",
+      "question_en": "On WSL2, a sandboxed build step that calls `powershell.exe` fails. Per the documented behavior, what is happening and what is the documented fix?",
+      "question_fr": "Sous WSL2, une etape de build isolee qui appelle `powershell.exe` echoue. Selon le comportement documente, que se passe-t-il et quel est le correctif ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "WSL2 is unsupported; downgrade the distribution to WSL1."
+        },
+        {
+          "key": "B",
+          "text_en": "Windows binaries need a separate flag; enable Apple Events."
+        },
+        {
+          "key": "C",
+          "text_en": "WSL routes it over a socket the sandbox blocks; exclude it."
+        },
+        {
+          "key": "D",
+          "text_en": "The proxy rejects the hostname; add the host to allowedDomains."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Sous WSL2, les commandes isolees ne peuvent pas lancer de binaire Windows comme `cmd.exe` ou `powershell.exe`, ni rien sous `/mnt/c/`. WSL delegue ces appels a l'hote Windows via un socket Unix, que le bac a sable bloque. Le correctif documente est d'ajouter la commande a `excludedCommands` pour qu'elle s'execute hors du bac a sable.",
+      "distractors_fr": {
+        "A": "L'inverse : WSL1 n'est pas pris en charge parce que bubblewrap exige des fonctions noyau propres a WSL2.",
+        "B": "Les Apple Events concernent macOS ; ils n'ont aucun rapport avec un binaire Windows.",
+        "D": "Il ne s'agit pas d'un refus reseau : rien ne sort vers un domaine dans ce cas."
+      },
+      "principe_fr": "Quand une commande isolee echoue, cherche d'abord par quel canal elle sortait du bac a sable.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-005",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La politique de lecture par defaut laisse les fichiers de secrets lisibles",
+      "question_en": "You enable the Bash sandbox and tell the team credentials are now out of reach. Which correction does the documented default read policy force?",
+      "question_fr": "Tu actives le bac a sable Bash et annonces a l'equipe que les secrets sont hors de portee. Quelle correction impose la politique de lecture par defaut ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Reads are denied outside the working directory by default."
+        },
+        {
+          "key": "B",
+          "text_en": "Read access spans the machine, credential files included."
+        },
+        {
+          "key": "C",
+          "text_en": "Credential files are covered, but only from v2.1.199 on."
+        },
+        {
+          "key": "D",
+          "text_en": "Only environment variables are exposed; files are denied."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La lecture par defaut porte sur l'ordinateur entier, hors quelques repertoires refuses, et la documentation precise que ce defaut autorise encore la lecture de fichiers de secrets comme `~/.aws/credentials` et `~/.ssh/`. Il n'existe pas de liste de refus integree : seuls les chemins et variables que tu declares dans `sandbox.credentials`, ou ajoutes a `denyRead`, sont restreints.",
+      "distractors_fr": {
+        "A": "C'est la regle d'ecriture, pas de lecture : la lecture par defaut est large.",
+        "C": "Aucune couverture automatique n'apparait a une version donnee : il faut declarer les fichiers a proteger.",
+        "D": "Les deux surfaces sont exposees : les variables heritees et les fichiers restent lisibles tant que rien ne les interdit."
+      },
+      "principe_fr": "Un defaut permissif en lecture n'est pas une protection : ce qui n'est pas declare reste lisible.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Modes deny et mask des variables de secrets : effet sur les outils qui authentifient",
+      "question_en": "Which TWO statements about the `deny` and `mask` modes for credential environment variables are correct?",
+      "question_fr": "Quelles DEUX affirmations sur les modes `deny` et `mask` des variables de secrets sont correctes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`deny` keeps the variable but rewrites it per request."
+        },
+        {
+          "key": "B",
+          "text_en": "`deny` unsets it, which breaks tools such as `gh` or `npm`."
+        },
+        {
+          "key": "C",
+          "text_en": "`mask` shows a sentinel the proxy swaps on injectHosts."
+        },
+        {
+          "key": "D",
+          "text_en": "`mask` works without the proxy terminating TLS itself."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "`deny` retire la variable de l'environnement avant chaque commande isolee, ce qui casse aussi les outils qui en ont besoin, comme `gh` ou `npm`. `mask` protege le secret tout en gardant ces outils fonctionnels : la commande ne voit qu'une sentinelle propre a la session, et le proxy du bac a sable la remplace par la vraie valeur quand la requete part vers un hote de `injectHosts`. Le proxy doit voir le contenu de la requete, donc `mask` exige `network.tlsTerminate`.",
+      "distractors_fr": {
+        "A": "C'est la description de `mask`, pas de `deny` : `deny` supprime purement la variable.",
+        "D": "Sans `network.tlsTerminate`, le masquage echoue en fermeture : la sentinelle part telle quelle et l'authentification echoue."
+      },
+      "principe_fr": "Choisis entre supprimer un secret et le masquer selon que l'outil doit encore s'authentifier.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Verrou administrateur sur les chemins de lecture approuves",
+      "question_en": "An administrator deploys sandbox read paths in managed settings and wants developers unable to widen them. Which setting does that, and how?",
+      "question_fr": "Un administrateur deploie des chemins de lecture dans les reglages geres et veut empecher les developpeurs de les elargir. Quel reglage le fait, et comment ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "`allowManagedReadPathsOnly`: local allowRead is ignored."
+        },
+        {
+          "key": "B",
+          "text_en": "`allowManagedReadPathsOnly`: local entries need approval."
+        },
+        {
+          "key": "C",
+          "text_en": "`strictAllowlist`: read paths merge but writes are denied."
+        },
+        {
+          "key": "D",
+          "text_en": "`failIfUnavailable`: startup aborts if a path is widened."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "En mettant `allowManagedReadPathsOnly` a `true` dans les reglages geres, seules les entrees `allowRead` des reglages geres sont honorees : celles des reglages utilisateur, projet et locaux sont ignorees. C'est ce qui empeche un developpeur d'elargir la lecture au-dela des chemins approuves par l'organisation. Le pendant reseau est `allowManagedDomainsOnly`.",
+      "distractors_fr": {
+        "B": "Le bon reglage n'ajoute pas une etape d'approbation : il ignore purement les entrees locales.",
+        "C": "`strictAllowlist` porte sur les domaines reseau, pas sur les chemins de lecture.",
+        "D": "`failIfUnavailable` concerne l'indisponibilite du bac a sable au demarrage, pas l'elargissement d'un chemin."
+      },
+      "principe_fr": "Une politique administrateur ne tient que si les portees inferieures sont ignorees, pas seulement surchargees.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ecriture refusee sur les settings.json a toutes les portees",
+      "question_en": "A sandboxed command tries to append its own path to `allowWrite` in `.claude/settings.json`. What happens, per the documented protection?",
+      "question_fr": "Une commande isolee tente d'ajouter son propre chemin a `allowWrite` dans `.claude/settings.json`. Que se passe-t-il, selon la protection documentee ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It succeeds, since the file sits in the working directory."
+        },
+        {
+          "key": "B",
+          "text_en": "It succeeds, but the change applies only after a restart."
+        },
+        {
+          "key": "C",
+          "text_en": "It is denied for project scope; user scope stays writable."
+        },
+        {
+          "key": "D",
+          "text_en": "It is denied: settings files are protected at every scope."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le bac a sable refuse automatiquement l'ecriture des fichiers `settings.json` de Claude Code a toutes les portees ainsi que du repertoire des reglages geres : une commande isolee ne peut donc pas modifier sa propre politique. Ce refus tombe uniquement si tu desactives la couche fichiers. Depuis la v2.1.210, les regles resolvent les liens symboliques, pour qu'un fichier de reglages lie ne soit pas modifiable par le lien.",
+      "distractors_fr": {
+        "A": "L'appartenance au repertoire de travail ne suffit pas : ces fichiers font l'objet d'un refus specifique.",
+        "B": "Le probleme n'est pas le moment d'application : l'ecriture elle-meme est refusee.",
+        "C": "Le refus ne distingue pas les portees : il couvre chaque portee et le repertoire des reglages geres."
+      },
+      "principe_fr": "Une politique n'est un controle que si ce qu'elle contraint ne peut pas la reecrire.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le plugin de revue securite ne bloque ni ecriture ni commit",
+      "question_en": "Your lead wants the security-review plugin recorded as the control that stops insecure code from being committed. What must you tell them?",
+      "question_fr": "Ton responsable veut inscrire le plugin de revue securite comme le controle qui empeche du code non sur d'etre commite. Que dois-tu lui dire ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It blocks the commit whenever the review finds an issue."
+        },
+        {
+          "key": "B",
+          "text_en": "It blocks the edit, but never the commit that follows."
+        },
+        {
+          "key": "C",
+          "text_en": "No layer blocks: findings return as instructions to Claude."
+        },
+        {
+          "key": "D",
+          "text_en": "It blocks only when the same instance wrote the code."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation est explicite : aucune des couches ne bloque une ecriture ni un commit. Les constats reviennent au Claude qui a ecrit le code sous forme d'instructions, il les traite dans la conversation, et le modele de revue peut manquer des problemes. Le plugin est une couche de defense en profondeur, pas une solution de securite complete.",
+      "distractors_fr": {
+        "A": "Aucune des couches ne bloque un commit : la revue signale, elle n'interrompt pas.",
+        "B": "La verification par edition est une comparaison de chaines deterministe qui ne bloque pas davantage.",
+        "D": "La revue tourne justement dans un appel Claude distinct au contexte neuf ; cela ne lui donne pas pouvoir de blocage."
+      },
+      "principe_fr": "Ce qui signale n'est pas ce qui empeche : un controle exige une couche qui refuse.",
+      "doc_ref": "https://code.claude.com/docs/en/security-guidance"
+    },
+    {
+      "id": "PC-SEC-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Fusion des cles tableau entre portees et absence de verrou sur excludedCommands",
+      "question_en": "Which TWO statements about how managed sandbox settings resist local widening are correct?",
+      "question_fr": "Quelles DEUX affirmations sur la resistance des reglages geres du bac a sable a un elargissement local sont correctes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Boolean keys such as `enabled` use the managed value."
+        },
+        {
+          "key": "B",
+          "text_en": "Array keys are locked to managed entries as well."
+        },
+        {
+          "key": "C",
+          "text_en": "`excludedCommands` can always be appended to locally."
+        },
+        {
+          "key": "D",
+          "text_en": "Local settings are ignored entirely once managed exist."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Pour les cles booleennes comme `enabled` et `failIfUnavailable`, Claude Code retient la valeur geree et ignore ce qu'un developpeur pose localement. Pour les cles tableau comme `excludedCommands` et `allowRead`, il fusionne les entrees de chaque portee : un developpeur peut donc ajouter des entrees qui elargissent la politique. `excludedCommands` n'a pas d'equivalent du verrou geres seulement, d'ou la consigne de garder la liste geree etroite.",
+      "distractors_fr": {
+        "B": "Les cles tableau fusionnent au contraire les entrees de toutes les portees.",
+        "D": "Les reglages locaux ne sont pas ignores en bloc : le comportement depend du type de cle."
+      },
+      "principe_fr": "Lis le type de cle avant de croire un verrou : une cle qui fusionne s'elargit toujours par le bas.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Un domaine large ouvre une voie d'exfiltration faute d'inspection TLS",
+      "question_en": "Your allowlist contains `github.com` so tooling works. A reviewer calls the network isolation weaker than it looks. On what documented grounds?",
+      "question_fr": "Ta liste d'autorisation contient `github.com` pour que l'outillage fonctionne. Un auditeur juge l'isolation reseau plus faible qu'elle n'y parait. Sur quel fondement documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The proxy allows any host once one domain is allowed."
+        },
+        {
+          "key": "B",
+          "text_en": "It allows on the client hostname, without inspecting TLS."
+        },
+        {
+          "key": "C",
+          "text_en": "Allowlist entries expire, so the check silently stops."
+        },
+        {
+          "key": "D",
+          "text_en": "Subdomains bypass the allowlist unless listed one by one."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Autoriser des domaines larges comme `github.com` cree des voies d'exfiltration : le proxy prend sa decision d'autorisation sur le nom d'hote fourni par le client, sans inspecter TLS. Du code tournant dans le bac a sable peut donc recourir au domain fronting ou a des techniques voisines pour joindre des hotes hors liste. Si le modele de menace l'exige, il faut un proxy personnalise qui termine TLS et inspecte le trafic, avec son certificat d'autorite installe dans le bac a sable.",
+      "distractors_fr": {
+        "A": "La liste reste appliquee : le probleme n'est pas son abandon mais la facon dont la decision est prise.",
+        "C": "Aucune expiration n'est documentee ; le controle ne cesse pas de lui-meme.",
+        "D": "Ce serait un defaut de couverture ; le point documente porte sur l'absence d'inspection du trafic chiffre."
+      },
+      "principe_fr": "Un filtre qui croit le client sur parole borne les erreurs, pas un adversaire.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Un socket Unix autorise peut rendre l'hote accessible",
+      "question_en": "A developer asks to add `/var/run/docker.sock` to `allowUnixSockets` so `docker build` works inside the sandbox. What does that grant?",
+      "question_fr": "Un developpeur demande d'ajouter `/var/run/docker.sock` a `allowUnixSockets` pour que `docker build` fonctionne dans le bac a sable. Qu'est-ce que cela accorde ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Access to the host system through the Docker socket."
+        },
+        {
+          "key": "B",
+          "text_en": "Access to the daemon logs, with no build capability."
+        },
+        {
+          "key": "C",
+          "text_en": "Access limited to containers started in this session."
+        },
+        {
+          "key": "D",
+          "text_en": "Access to the socket only after TLS termination is on."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La documentation classe ce cas en escalade de privileges : `allowUnixSockets` peut accorder par inadvertance l'acces a des services systeme puissants et mener a des contournements du bac a sable. Autoriser `/var/run/docker.sock` donne de fait acces au systeme hote a travers le socket Docker. Chaque socket Unix autorise doit donc etre examine pour lui-meme. La voie documentee pour `docker` est de l'ajouter a `excludedCommands`.",
+      "distractors_fr": {
+        "B": "Le socket n'est pas un canal de lecture de journaux : il pilote le demon.",
+        "C": "Aucun cloisonnement par session n'existe sur ce socket.",
+        "D": "La terminaison TLS concerne le proxy reseau, pas l'acces a un socket Unix local."
+      },
+      "principe_fr": "Une exception ne vaut pas ce qu'elle debloque, mais ce qu'elle rend atteignable.",
+      "doc_ref": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "PC-SEC-013",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Perimetre du ZDR : par organisation et par identite de connexion",
+      "question_en": "Your organization has ZDR enabled. Which TWO situations are documented as falling outside that coverage?",
+      "question_fr": "Ton organisation a le ZDR active. Quelles DEUX situations sont documentees comme hors de cette couverture ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Requests from a second API key in the same organization."
+        },
+        {
+          "key": "B",
+          "text_en": "A developer signed in with a personal Claude account."
+        },
+        {
+          "key": "C",
+          "text_en": "Requests routed through your own configured gateway."
+        },
+        {
+          "key": "D",
+          "text_en": "A new organization created under the same account."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Le ZDR s'active par organisation et chaque nouvelle organisation exige une activation distincte par l'equipe de compte Anthropic : il ne s'etend pas automatiquement aux organisations creees sous le meme compte. Il couvre les requetes qui s'authentifient dans une organisation ZDR ; une session ouverte avec un compte personnel, ou avec une cle d'API d'une autre organisation, n'est pas couverte. Les reglages geres `forceLoginMethod` et `forceLoginOrgUUID` servent a restreindre la connexion.",
+      "distractors_fr": {
+        "A": "Le ZDR s'applique aux requetes qui s'authentifient dans l'organisation concernee, quelle que soit la cle.",
+        "C": "Rien dans la documentation ne retire la couverture au motif d'une passerelle configuree par toi."
+      },
+      "principe_fr": "Une garantie contractuelle suit l'identite qui s'authentifie, pas la machine du developpeur.",
+      "doc_ref": "https://code.claude.com/docs/en/zero-data-retention"
+    },
+    {
+      "id": "PC-SEC-014",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "weight": 2.3,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Duree de conservation en cas de signalement pour violation de la politique d'usage",
+      "question_en": "Under ZDR, a session is flagged for a Usage Policy violation. For how long may Anthropic retain the associated inputs and outputs?",
+      "question_fr": "Sous ZDR, une session est signalee pour violation de la politique d'usage. Pendant combien de temps Anthropic peut-il conserver les entrees et sorties associees ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Up to 30 days, the standard retention window."
+        },
+        {
+          "key": "B",
+          "text_en": "Up to 6 months, then deletion is automatic."
+        },
+        {
+          "key": "C",
+          "text_en": "Up to 2 years, per the standard ZDR policy."
+        },
+        {
+          "key": "D",
+          "text_en": "Indefinitely, since the flag removes ZDR."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Meme avec le ZDR active, Anthropic peut conserver des donnees lorsque la loi l'exige ou pour traiter des violations de la politique d'usage. Si une session est signalee pour une telle violation, les entrees et sorties associees peuvent etre conservees jusqu'a 2 ans, conformement a la politique ZDR standard. C'est la reserve a porter dans une revue reglementee, en plus de la liste des services non couverts.",
+      "distractors_fr": {
+        "A": "Trop court : ce n'est pas la duree documentee pour une session signalee.",
+        "B": "Aucun palier intermediaire de ce genre n'est documente.",
+        "D": "Le signalement n'annule pas le ZDR : il ouvre une conservation bornee dans le temps."
+      },
+      "principe_fr": "Toute garantie de non-conservation garde une reserve : connais sa duree avant de l'annoncer.",
+      "doc_ref": "https://code.claude.com/docs/en/zero-data-retention"
+    }
+  ]
+}

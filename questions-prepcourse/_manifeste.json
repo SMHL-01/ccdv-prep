@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 229,
+  "nbQuestions": 243,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -112,6 +112,11 @@
       "fichier": "m4-4.5-cost-caching.json",
       "subdomain": "Cost and Token Management",
       "nb": 13
+    },
+    {
+      "fichier": "m4-4.6-security.json",
+      "subdomain": "AI Application Security",
+      "nb": 14
     }
   ],
   "questions": [
@@ -2404,6 +2409,146 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m4-4.5-cost-caching.json"
+    },
+    {
+      "id": "PC-SEC-001",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-002",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-003",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-004",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-005",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-013",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-SEC-014",
+      "domain": "Security and Safety",
+      "subdomain": "Guardrails and Safe Deployment",
+      "difficulty": "difficile",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.6-security.json"
     }
   ]
 }

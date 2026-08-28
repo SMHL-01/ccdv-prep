@@ -127,7 +127,7 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 | `[x]` | m4-4.3-tool-errors | 10 | Marie-Line |
 | `[x]` | m4-4.4-model-selection | 8 | Marie-Line |
 | `[x]` | m4-4.5-cost-caching | 13 | Marie-Line |
-| `[ ]` | m4-4.6-security | 0 | Marie-Line (propose) |
+| `[x]` | m4-4.6-security | 14 | Marie-Line |
 
 ## Module 5 — Cycle de vie applicatif
 

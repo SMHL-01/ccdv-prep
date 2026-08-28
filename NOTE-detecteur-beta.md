@@ -1,0 +1,111 @@
+# Detecteur beta : ligne de base mesuree avant tout correctif
+
+> Ecrit le 2026-08-28, a la demande de Said (« notez la ligne de faux
+> positifs actuelle quelque part, pour qu'on voie ce que le changement a
+> libere »). **Conclusion : aucun correctif pousse. La mesure contredit
+> l'hypothese sur laquelle le correctif etait demande.** A arbitrer a
+> trois avant de toucher a `verifier-questions.js`.
+
+## La regle actuelle
+
+`verifier-questions.js:180`
+
+```js
+if (/api\/beta|managed-agents/.test(q.doc_ref || '')) beta++;
+```
+
+Plafond : `PLAFOND_BETA = 8`, par banque. Mesure sur 690 questions
+(406 doc + 284 prepcourse) : **6 doc, 6 prepcourse**.
+
+## Faux positifs mesures : zero
+
+Hypothese de depart : le motif confond l'emplacement et le statut, donc
+une page `managed-agents/*` stable est comptee a tort, et 6 slots sur 8
+sont manges par l'artefact.
+
+Les 6 questions prepcourse comptees sont toutes dans
+`m2-2.6-agent-loop.json`, sur deux pages :
+`managed-agents/overview` (PC-AGL-001, 004, 005, 009) et
+`managed-agents/migration` (PC-AGL-002, 008).
+
+Ce que dit `managed-agents/overview`, section « Beta access » :
+
+> Claude Managed Agents is in beta. All Managed Agents endpoints require
+> the `managed-agents-2026-04-01` beta header.
+
+Et `managed-agents/migration` :
+
+> Managed Agents API requests require the `managed-agents-2026-04-01`
+> beta header, except memory store endpoints, which use
+> `agent-memory-2026-07-22` instead.
+
+Donc les 6 questions portent bien sur une API beta, au sens exact du
+plafond. Le motif est grossier dans sa forme — il teste une URL — mais
+sur ce corpus il tombe juste : **toute page `managed-agents/*` documente
+une surface gatee par en-tete beta**. Il n'y a rien a liberer.
+
+## Le vrai defaut est l'inverse : le silence, pas le bruit
+
+La seconde moitie du raisonnement de Said tient : une vraie page beta
+hebergee ailleurs passe sous le radar. C'est mesurable.
+
+42 des 479 pages du corpus contiennent « in beta ». 10 questions
+prepcourse mentionnent un mecanisme beta dans leur propre texte
+(`anthropic-beta`, `betas`, `beta header`, `(beta)`, `in beta`) et
+**une seule** est attrapee par le motif URL :
+
+```
+PC-STR-007  PC-MBG-004  PC-MBG-008  PC-AGL-005*  PC-MSC-005
+PC-MSC-010  PC-MMB-003  PC-RAG-003  PC-TTR-002   PC-DEP-009
+                        (* la seule vue par le motif actuel)
+```
+
+## Pourquoi « tester le contenu » au niveau de la page ne marche pas
+
+Regle testee : la page declare son propre sujet en beta
+(`## Beta access`, `is in beta`, `requires the ... beta header`).
+Resultat : **50 pages sur 479**, et cote questions **44 doc + 26
+prepcourse = 70** contre un plafond de 8. `npm run livrer` echouerait
+sur les deux banques, ce qui bloquerait exactement le gel demande.
+
+Et la regle est fausse en plus d'etre inutilisable. Exemple :
+`build-with-claude/context-windows` porte 12 questions et serait
+marquee beta parce qu'elle mentionne en passant `task budgets`, la
+compaction, `interleaved-thinking-2025-05-14` et
+`model-context-window-exceeded-2025-08-26`. C'est une page stable qui
+cite des sous-fonctions beta. La page est la mauvaise unite : le plafond
+parle de la question, pas de la page.
+
+## Ce que je propose a la place
+
+Union de deux tests, la ou la reponse testee se trouve reellement :
+
+1. le motif URL actuel, qui ne produit aucun faux positif mesure ;
+2. un motif de mecanisme beta (`anthropic-beta`, `betas`,
+   `beta header`, `(beta)`, `in beta`) applique **a l'enonce et a la
+   bonne reponse uniquement** — pas a `explanation_fr` ni aux
+   distracteurs, ou une mention est du contexte et non le fait teste.
+
+Mesure de cette union sur les 690 questions :
+
+| regle | doc | prepcourse |
+|---|---|---|
+| URL seule (actuelle) | 6 | 6 |
+| enonce + bonne reponse seuls | 1 | 2 |
+| **union** | **7** | **7** |
+
+Les deux restent sous 8, le point aveugle se ferme, et le gel n'est pas
+menace. Les deux questions ajoutees sont `CAD-029` cote doc et
+`PC-MSC-005` cote prepcourse.
+
+Reserve honnete : a 7 sur 8, la marge disparait. Si on adopte cette
+regle, la prochaine question beta fait echouer `livrer`. Soit on
+rehausse le plafond en meme temps, sur mesure et non au jugement, soit
+on assume que la banque est fermee et que la marge n'a plus d'usage.
+
+## Commandes pour rejouer la mesure
+
+Toutes les mesures ci-dessus viennent de scripts jetables lances sur
+`docs-corpus/`, `questions/` et `questions-prepcourse/`. Rien n'est
+cache dans l'outillage : la ligne de base a reproduire est
+`6 doc / 6 prepcourse` avec la regle actuelle, sur 690 questions.

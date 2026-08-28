@@ -1,0 +1,352 @@
+{
+  "topic": "m5-5.3-lifecycle",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Systems Life Cycle",
+  "weight": 2.8,
+  "corpus_ref": "prepcourse-corpus/m5-5.3-lifecycle.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise",
+    "https://code.claude.com/docs/en/llm-gateway-rollout",
+    "https://modelcontextprotocol.io/specification/2026-07-28/deprecated",
+    "https://modelcontextprotocol.io/registry/versioning"
+  ],
+  "questions": [
+    {
+      "id": "PC-LIF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Politique de version en production : epingler et retraiter comme un deploiement",
+      "question_en": "Which statement matches the documented production policy for a Skill your organization has approved?",
+      "question_fr": "Quelle affirmation correspond a la politique de production documentee pour un Skill que ton organisation a approuve ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Latest versions in production, pinned in testing."
+        },
+        {
+          "key": "B",
+          "text_en": "Pin in production; security review only at first approval."
+        },
+        {
+          "key": "C",
+          "text_en": "Pin in production; every update is a new deployment."
+        },
+        {
+          "key": "D",
+          "text_en": "Pin in production; evals only after a failure appears."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La strategie de version documentee separe deux regimes. En production : epingler les Skills a des versions precises, faire passer la suite d'evaluation complete avant de promouvoir une nouvelle version, et traiter chaque mise a jour comme un nouveau deploiement exigeant une revue de securite complete. En developpement et test : utiliser les versions latest pour valider les changements avant la promotion. S'y ajoutent un plan de retour arriere, garder la version precedente comme repli et revenir immediatement a la derniere version bonne connue, et la verification d'integrite par sommes de controle plus commits signes.",
+      "distractors_fr": {
+        "A": "C'est l'inverse : les versions latest servent au developpement et au test, la production est epinglee.",
+        "B": "La documentation demande de traiter chaque mise a jour comme un nouveau deploiement exigeant une revue de securite complete.",
+        "D": "La suite d'evaluation complete doit passer AVANT la promotion, pas apres qu'une panne se manifeste."
+      },
+      "principe_fr": "Une version epinglee n'est pas de la rigidite : c'est ce qui rend un retour arriere possible et une promotion decidable.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-LIF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le passage avant distribution : l'administrateur eprouve la chaine lui-meme",
+      "question_en": "Before distributing a gateway configuration fleet-wide, what does the rollout procedure have the administrator do first?",
+      "question_fr": "Avant de distribuer une configuration de passerelle a tout le parc, que la procedure de deploiement demande-t-elle a l'administrateur de faire d'abord ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Run Claude Code through the gateway themselves first."
+        },
+        {
+          "key": "B",
+          "text_en": "Ship to a pilot group and watch the error rate."
+        },
+        {
+          "key": "C",
+          "text_en": "Ask the vendor to certify the gateway product."
+        },
+        {
+          "key": "D",
+          "text_en": "Write the settings file and validate its schema."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La procedure est explicite : faire tourner Claude Code a travers la passerelle soi-meme avant de distribuer quoi que ce soit, avec la meme configuration que le deploiement livrera au parc. Les variables se posent directement dans le terminal, pas dans un fichier .env ou de reglages, pour qu'elles ne durent que la session et que la machine revienne d'elle-meme a sa configuration normale. Le point de controle est double : le prompt renvoie une reponse ET la requete apparait dans le journal de la passerelle en POST sur /v1/messages avec un statut 200.",
+      "distractors_fr": {
+        "B": "Le groupe pilote vient apres : la procedure fait d'abord eprouver la chaine par l'administrateur lui-meme.",
+        "C": "Aucune certification fournisseur n'est demandee ; ce sont les exigences de passerelle qui servent de contrat.",
+        "D": "Valider un schema ne prouve pas qu'une requete traverse la passerelle et revient."
+      },
+      "principe_fr": "Un passage de phase se franchit sur une preuve produite avec la configuration reelle, pas sur une configuration approchante.",
+      "doc_ref": "https://code.claude.com/docs/en/llm-gateway-rollout"
+    },
+    {
+      "id": "PC-LIF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Verifier depuis une machine de developpeur, pas depuis l'hote de la passerelle",
+      "question_en": "The gateway answers correctly when tested from the gateway host itself. Why does the procedure still require the verification to run somewhere else?",
+      "question_fr": "La passerelle repond correctement quand on la teste depuis son propre hote. Pourquoi la procedure exige-t-elle malgre tout que la verification se fasse ailleurs ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The host's log format hides streaming failures."
+        },
+        {
+          "key": "B",
+          "text_en": "Only a developer machine covers their network path."
+        },
+        {
+          "key": "C",
+          "text_en": "The host holds credentials developers never get."
+        },
+        {
+          "key": "D",
+          "text_en": "Model routing is evaluated per calling machine."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La procedure demande de confirmer que tout fonctionne depuis une machine de developpeur, pas depuis l'hote de la passerelle, pour que le test couvre le chemin reseau que les developpeurs empruntent reellement. La requete de verification est envoyee en streaming, ce qui controle d'un coup le point d'entree, la retransmission des evenements et le routage du modele : des lignes data: qui arrivent au fur et a mesure valident, une reponse entiere apres une pause signale une passerelle qui tamponne, un 404 signale un nom de modele non route.",
+      "distractors_fr": {
+        "A": "Le journal est le meme ; ce qui change, c'est le chemin parcouru par la requete.",
+        "C": "Le test utilise justement une cle de developpeur, pas l'identifiant amont detenu par la passerelle.",
+        "D": "Le routage de modele est une table dans la passerelle, il ne depend pas de l'appelant."
+      },
+      "principe_fr": "Teste la ou l'utilisateur se trouve : un test execute a cote du service saute precisement ce que le service ne controle pas.",
+      "doc_ref": "https://code.claude.com/docs/en/llm-gateway-rollout"
+    },
+    {
+      "id": "PC-LIF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Une requete de test courte ne prouve rien d'une session reelle",
+      "question_en": "Short test requests through a new gateway return 200, but real Claude Code sessions fail with 403. Which TWO statements explain it and fix it?",
+      "question_fr": "Des requetes de test courtes vers une passerelle neuve renvoient 200, mais les vraies sessions Claude Code echouent en 403. Quelles DEUX affirmations l'expliquent et la corrigent ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Real prompts carry code and tags that match WAF rules."
+        },
+        {
+          "key": "B",
+          "text_en": "The gateway buffers responses instead of streaming them."
+        },
+        {
+          "key": "C",
+          "text_en": "The gateway path must be exempt from body inspection."
+        },
+        {
+          "key": "D",
+          "text_en": "Developer keys are rate-limited after the first request."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Les exigences de passerelle demandent d'exempter le chemin de l'inspection WAF du corps de requete : les prompts de Claude Code transportent du code source et des balises de style XML qui declenchent les regles de corps contre le cross-site-scripting, si bien qu'un WAF place devant la passerelle renvoie 403 sur les vraies sessions alors que les requetes de test courtes passent. C'est le cas d'ecole du controle qui valide un echantillon non representatif : le passage de phase est franchi sur une preuve que la charge reelle contredit.",
+      "distractors_fr": {
+        "B": "Le tamponnage produit un autre symptome : la reponse arrive d'un coup apres une pause, sans 403.",
+        "D": "Une limite de debit renvoie 429 avec un Retry-After, pas 403."
+      },
+      "principe_fr": "Un test qui passe sur un echantillon plus petit que la charge reelle ne franchit rien : dimensionne la preuve sur ce qui sera envoye.",
+      "doc_ref": "https://code.claude.com/docs/en/llm-gateway-rollout"
+    },
+    {
+      "id": "PC-LIF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Signal d'evaluation et action attachee : echecs persistants au fil des versions",
+      "question_en": "A Skill's evaluation suite keeps failing across successive updates. Which action does the documentation attach to that particular signal?",
+      "question_fr": "La suite d'evaluation d'un Skill continue d'echouer au fil des versions successives. Quelle action la documentation attache-t-elle a ce signal precis ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Narrow the description to reduce conflicts."
+        },
+        {
+          "key": "B",
+          "text_en": "Add validation steps to the instructions."
+        },
+        {
+          "key": "C",
+          "text_en": "Rewrite the description and instructions."
+        },
+        {
+          "key": "D",
+          "text_en": "Deprecate it rather than update it again."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La documentation associe chaque signal d'evaluation a une action : precision de declenchement qui baisse, mettre a jour la description ou les instructions ; conflits de coexistence, consolider les Skills qui se recouvrent ou restreindre les descriptions ; qualite de sortie durablement faible, reecrire les instructions ou ajouter des etapes de validation ; echecs persistants au fil des mises a jour, deprecier le Skill. La phase d'iteration reprend la meme regle : deprecier quand les evaluations echouent systematiquement ou quand le flux de travail est retire.",
+      "distractors_fr": {
+        "A": "Reduire la description repond aux conflits de coexistence entre Skills qui se recouvrent, pas a l'echec repete.",
+        "B": "Ajouter des etapes de validation repond a une qualite de sortie durablement faible.",
+        "C": "Reecrire les instructions repond a une precision de declenchement qui baisse, un signal distinct."
+      },
+      "principe_fr": "Un cycle de vie a une sortie : sans decision de depreciation ecrite, un actif casse se maintient indefiniment.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-LIF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Phase de suivi : l'API Skills ne fournit pas d'analytique d'usage",
+      "question_en": "In the Monitor phase, how does the documentation say to track which Skills are actually included in requests?",
+      "question_fr": "Dans la phase de suivi, comment la documentation dit-elle de savoir quels Skills sont reellement inclus dans les requetes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The Skills API exposes usage analytics."
+        },
+        {
+          "key": "B",
+          "text_en": "Application-level logging, as the API has none."
+        },
+        {
+          "key": "C",
+          "text_en": "The internal registry records each invocation."
+        },
+        {
+          "key": "D",
+          "text_en": "Evaluation reruns report per-Skill usage counts."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La phase de suivi demande de suivre les motifs d'usage et de recueillir les retours utilisateurs, et de relancer les evaluations periodiquement pour detecter la derive ou les regressions a mesure que les flux de travail et les modeles evoluent. Sur l'usage, la documentation pose une limite nette : l'analytique d'usage n'est pas disponible aujourd'hui via l'API Skills, donc il faut mettre en place une journalisation au niveau applicatif pour savoir quels Skills sont inclus dans quelles requetes.",
+      "distractors_fr": {
+        "A": "La documentation dit explicitement que l'analytique d'usage n'est pas disponible via l'API Skills.",
+        "C": "Le registre interne porte l'objet, le proprietaire et la version : c'est un inventaire, pas un journal d'appels.",
+        "D": "Les reevaluations detectent la derive et les regressions ; elles ne comptent pas les usages en production."
+      },
+      "principe_fr": "Instrumente ce que la plateforme ne mesure pas pour toi : une phase d'exploitation sans donnee d'usage ne peut rien reinjecter en amont.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-LIF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Date de retrait au plus tot : un seuil d'eligibilite, pas une echeance",
+      "question_en": "An MCP specification feature's row shows an earliest removal date, and a team reads it as the date the feature will disappear. What does the deprecation registry say?",
+      "question_fr": "La ligne d'une fonction de la specification MCP affiche une date de retrait au plus tot, et une equipe la lit comme la date de disparition de la fonction. Que dit le registre de depreciation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is the date the feature stops being served."
+        },
+        {
+          "key": "B",
+          "text_en": "It is the date the migration path stops working."
+        },
+        {
+          "key": "C",
+          "text_en": "It is when removal becomes eligible, nothing more."
+        },
+        {
+          "key": "D",
+          "text_en": "It is the date the deprecation notice was filed."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le registre est explicite : une fonction depreciee reste partie de la specification mais est programmee pour retrait, les nouvelles implementations NE DEVRAIENT PAS l'adopter et les implementations existantes DEVRAIENT migrer avant le retrait au plus tot. Cette date marque le moment ou la fonction devient ELIGIBLE au retrait ; le retrait effectif est une decision des mainteneurs principaux prise pendant la preparation d'une version et peut arriver plus tard. Le registre lui-meme est une vue derivee : les enregistrements normatifs sont les avis de depreciation par fonction et les entrees de journal des modifications.",
+      "distractors_fr": {
+        "A": "Une fonction depreciee reste dans la specification ; la date n'arrete rien par elle-meme.",
+        "B": "Le chemin de migration ne comporte pas d'echeance propre dans le registre.",
+        "D": "La date de depreciation est une colonne distincte, celle de la revision qui a deprecie la fonction."
+      },
+      "principe_fr": "Ne prends pas une date d'eligibilite pour un engagement : planifie ta migration sur la borne basse, pas sur la date reelle de retrait.",
+      "doc_ref": "https://modelcontextprotocol.io/specification/2026-07-28/deprecated"
+    },
+    {
+      "id": "PC-LIF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "weight": 2.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Chaine de version unique par publication et interdiction des plages",
+      "question_en": "A team wants to correct a published MCP server entry by re-publishing it under the version string `1.0.x`. Which TWO registry rules stand in the way?",
+      "question_fr": "Une equipe veut corriger une fiche de serveur MCP deja publiee en la republiant sous la chaine de version `1.0.x`. Quelles DEUX regles du registre s'y opposent ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only a marketplace can publish a correction."
+        },
+        {
+          "key": "B",
+          "text_en": "Each publication needs a version string of its own."
+        },
+        {
+          "key": "C",
+          "text_en": "The registry rejects any string outside semantic versioning."
+        },
+        {
+          "key": "D",
+          "text_en": "Strings that look like version ranges are refused."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Deux regles bloquent la manoeuvre. La chaine de version DOIT etre unique pour chaque publication du serveur, et une fois publiee, la chaine de version et les autres metadonnees ne peuvent plus etre changees : republier a l'identique pour corriger est impossible. Et par prevention d'erreur, le registre interdit les chaines de version qui semblent designer des plages de versions, ce que `1.0.x` fait. A noter aussi : le registre tente d'analyser la version comme du versionnement semantique pour le tri et marque latest en consequence, mais si l'analyse echoue la version est toujours marquee latest, y compris quand elle se trierait avant les versions semantiques existantes.",
+      "distractors_fr": {
+        "A": "Rien de tel : la publication reste le fait du proprietaire du serveur.",
+        "C": "Le registre recommande le versionnement semantique mais accepte n'importe quel format de chaine."
+      },
+      "principe_fr": "Une fiche immuable oblige a versionner la correction : le correctif est une nouvelle version, jamais une reecriture.",
+      "doc_ref": "https://modelcontextprotocol.io/registry/versioning"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 262,
+  "nbQuestions": 270,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -126,6 +126,11 @@
     {
       "fichier": "m5-5.2-requirements.json",
       "subdomain": "Understanding Requirements",
+      "nb": 8
+    },
+    {
+      "fichier": "m5-5.3-lifecycle.json",
+      "subdomain": "Systems Life Cycle",
       "nb": 8
     }
   ],
@@ -2749,6 +2754,86 @@
       "type": "multi",
       "source": "prepcourse",
       "fichier": "m5-5.2-requirements.json"
+    },
+    {
+      "id": "PC-LIF-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
+    },
+    {
+      "id": "PC-LIF-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Systems Life Cycle",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.3-lifecycle.json"
     }
   ]
 }

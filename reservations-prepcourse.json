@@ -16,7 +16,7 @@
     "m2-2.5-model-budget": { "qui": "marie-line", "etat": "fait", "cible": 12 },
     "m2-2.6-agent-loop": { "qui": "marie-line", "etat": "fait", "cible": 13 },
     "m2-2.7-memory-scope": { "qui": "marie-line", "etat": "fait", "cible": 11 },
-    "m2-2.8-multimodal-batch": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 10 },
+    "m2-2.8-multimodal-batch": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-28", "cible": 10 },
     "m3-3.1-permission": { "qui": "said", "etat": "fait", "cible": 9 },
     "m3-3.2-claudemd": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 11 },
     "m3-3.3-plugins": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 12 },

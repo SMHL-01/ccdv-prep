@@ -23,24 +23,38 @@
       "nature": "factual_semantic",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "Le context rot designe la degradation de l exactitude et du rappel quand le nombre de tokens croit : plus de contexte n est pas automatiquement mieux",
-      "question_en": "The docs name a phenomenon called *context rot*. What does it describe?",
-      "question_fr": "La documentation nomme un phénomène appelé *context rot*. Que décrit-il ?",
+      "concept": "Vider le contexte n efface pas la session : la transcription reste sur le disque et se reprend",
+      "question_en": "You run `/clear` in Claude Code to start the next task with an empty context. What becomes of the conversation you just cleared?",
+      "question_fr": "Vous lancez `/clear` dans Claude Code pour attaquer la tache suivante avec un contexte vide. Que devient la conversation que vous venez de vider ?",
       "options": [
-        { "key": "A", "text_en": "Cached prefixes expiring between two turns.", "text_fr": "L'expiration des préfixes en cache entre deux tours." },
-        { "key": "B", "text_en": "Accuracy and recall degrading as tokens grow.", "text_fr": "L'exactitude et le rappel qui se dégradent quand les tokens s'accumulent." },
-        { "key": "C", "text_en": "Old tool results being dropped by the API.", "text_fr": "Les anciens résultats d'outils supprimés par l'API." },
-        { "key": "D", "text_en": "A summary losing the detail it replaced.", "text_fr": "Un résumé qui perd le détail qu'il remplace." }
+        {
+          "key": "A",
+          "text_en": "It is deleted from disk at once"
+        },
+        {
+          "key": "B",
+          "text_en": "It stays on disk and can be resumed"
+        },
+        {
+          "key": "C",
+          "text_en": "It is compacted into a short summary"
+        },
+        {
+          "key": "D",
+          "text_en": "It is kept only until you exit"
+        }
       ],
-      "correct": ["B"],
-      "explanation_fr": "La page sur la fenêtre de contexte le pose ainsi : « A larger context window allows the model to handle more complex and lengthy prompts, but more context isn't automatically better. As token count grows, accuracy and recall degrade, a phenomenon known as *context rot*. » La conséquence pratique suit dans la même phrase : « This makes curating what's in context just as important as how much space is available. » Autrement dit, une fenêtre de 1M ne dispense pas de trier.",
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les sessions sont ecrites en continu dans des fichiers de transcription locaux au fil du travail, precisement pour qu on puisse y revenir apres etre sorti ou apres un `/clear`. La strategie de vidage repart donc d un contexte vide sans rien detruire : ce qui ne passe pas la frontiere, c est le contexte, pas la conversation. Si vous vous apercevez apres coup qu il vous manquait quelque chose, `claude --continue` ou `--resume` la ramene.",
       "distractors_fr": {
-        "A": "L'expiration d'un préfixe en cache est un mécanisme de facturation, pas une dégradation de qualité. Elle ne change rien à ce que le modèle sait.",
-        "C": "La suppression d'anciens résultats d'outils est une stratégie que vous configurez (tool result clearing), donc un remède possible, pas le phénomène.",
-        "D": "La perte de détail dans un résumé est le coût connu de la compaction. Le context rot survient sans aucun résumé, par simple accumulation."
+        "A": "Vider le contexte de travail et supprimer la trace sont deux choses differentes : rien n est efface du disque.",
+        "C": "C est la compaction qui remplace l historique par un resume. `/clear` ne resume rien, il repart d un contexte vide.",
+        "D": "La transcription ne depend pas du processus en cours : elle survit a la sortie, c est ce qui rend `--continue` possible."
       },
-      "principe_fr": "La place disponible et la qualité d'usage de cette place sont deux grandeurs distinctes.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+      "principe_fr": "Distinguez ce qui quitte le contexte de ce qui quitte le disque : une strategie de budget agit sur le premier.",
+      "doc_ref": "https://code.claude.com/docs/en/sessions"
     },
     {
       "id": "PC-MBG-002",
@@ -55,12 +69,30 @@
       "question_en": "To free room in the window, a teammate proposes caching the 30k-token system prompt. What is wrong with the reasoning?",
       "question_fr": "Pour libérer de la place dans la fenêtre, un collègue propose de mettre en cache le prompt système de 30k tokens. Qu'est-ce qui cloche dans le raisonnement ?",
       "options": [
-        { "key": "A", "text_en": "Caching a system prompt is not supported.", "text_fr": "Mettre un prompt système en cache n'est pas pris en charge." },
-        { "key": "B", "text_en": "Cache reads are billed above the window cost.", "text_fr": "Les lectures de cache sont facturées en plus du coût de fenêtre." },
-        { "key": "C", "text_en": "A cached prefix still occupies the window.", "text_fr": "Un préfixe en cache occupe toujours la fenêtre." },
-        { "key": "D", "text_en": "The prefix must be under 1024 tokens to cache.", "text_fr": "Le préfixe doit faire moins de 1024 tokens pour être caché." }
+        {
+          "key": "A",
+          "text_en": "Caching a system prompt is not supported.",
+          "text_fr": "Mettre un prompt système en cache n'est pas pris en charge."
+        },
+        {
+          "key": "B",
+          "text_en": "Cache reads are billed above the window cost.",
+          "text_fr": "Les lectures de cache sont facturées en plus du coût de fenêtre."
+        },
+        {
+          "key": "C",
+          "text_en": "A cached prefix still occupies the window.",
+          "text_fr": "Un préfixe en cache occupe toujours la fenêtre."
+        },
+        {
+          "key": "D",
+          "text_en": "The prefix must be under 1024 tokens to cache.",
+          "text_fr": "Le préfixe doit faire moins de 1024 tokens pour être caché."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La page sur la fenêtre de contexte coupe court : « Cached prompt prefixes still occupy the context window: prompt caching changes what you pay for those tokens, not whether they count. » Le cache est un levier de coût, pas un levier de place. Elle précise d'ailleurs que l'entrée est répartie entre `input_tokens`, `cache_read_input_tokens` et `cache_creation_input_tokens`, et que « all three count toward the window ». Pour libérer de la place, il faut compacter, élaguer ou déléguer.",
       "distractors_fr": {
         "A": "Un long prompt système est au contraire le candidat type au cache, parce qu'il est stable d'un tour à l'autre.",
@@ -83,12 +115,30 @@
       "question_en": "On Claude Sonnet 5 you send a request whose input plus `max_tokens` exceeds the context window. What does the API do?",
       "question_fr": "Sur Claude Sonnet 5, vous envoyez une requête dont l'entrée plus `max_tokens` dépasse la fenêtre de contexte. Que fait l'API ?",
       "options": [
-        { "key": "A", "text_en": "Rejects it with a 400 before generating.", "text_fr": "La rejette avec une 400 avant de générer." },
-        { "key": "B", "text_en": "Silently drops the oldest messages, then runs.", "text_fr": "Supprime silencieusement les plus anciens messages, puis exécute." },
-        { "key": "C", "text_en": "Lowers `max_tokens` to fit, then generates.", "text_fr": "Abaisse `max_tokens` pour que ça rentre, puis génère." },
-        { "key": "D", "text_en": "Accepts it, then stops on hitting the ceiling.", "text_fr": "L'accepte, puis s'arrête en atteignant le plafond." }
+        {
+          "key": "A",
+          "text_en": "Rejects it with a 400 before generating.",
+          "text_fr": "La rejette avec une 400 avant de générer."
+        },
+        {
+          "key": "B",
+          "text_en": "Silently drops the oldest messages, then runs.",
+          "text_fr": "Supprime silencieusement les plus anciens messages, puis exécute."
+        },
+        {
+          "key": "C",
+          "text_en": "Lowers `max_tokens` to fit, then generates.",
+          "text_fr": "Abaisse `max_tokens` pour que ça rentre, puis génère."
+        },
+        {
+          "key": "D",
+          "text_en": "Accepts it, then stops on hitting the ceiling.",
+          "text_fr": "L'accepte, puis s'arrête en atteignant le plafond."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "Il y a deux chemins d'engorgement à ne pas confondre. Si l'entrée seule dépasse déjà la fenêtre, c'est une 400 `invalid_request_error` sur tous les modèles. Mais : « On Claude 4.5 models and newer, if input tokens plus `max_tokens` exceeds the context window size, the API accepts the request. If generation then reaches the context window limit, it stops with `stop_reason: \"model_context_window_exceeded\"`. » Vous récupérez donc ce qui a été généré, et c'est le `stop_reason` qu'il faut lire, pas un code d'erreur.",
       "distractors_fr": {
         "A": "La 400 est réservée au cas où l'entrée seule est déjà trop grande. Ici la requête est admissible : c'est la génération qui pourrait ne pas tenir.",
@@ -111,12 +161,30 @@
       "question_en": "Your Sonnet 5 agent paced itself against its remaining context. Ported to Opus 5, it no longer does. Why?",
       "question_fr": "Votre agent Sonnet 5 se rythmait sur le contexte qui lui restait. Porté sur Opus 5, il ne le fait plus. Pourquoi ?",
       "options": [
-        { "key": "A", "text_en": "Opus 5 gets no injected budget tags.", "text_fr": "Opus 5 ne reçoit pas les balises de budget injectées." },
-        { "key": "B", "text_en": "Its 1M window makes the budget irrelevant.", "text_fr": "Sa fenêtre de 1M rend le budget sans objet." },
-        { "key": "C", "text_en": "You must now send the budget tags yourself.", "text_fr": "Vous devez désormais envoyer les balises vous-même." },
-        { "key": "D", "text_en": "Context awareness needs a beta header on Opus.", "text_fr": "La conscience du contexte exige un en-tête beta sur Opus." }
+        {
+          "key": "A",
+          "text_en": "Opus 5 gets no injected budget tags.",
+          "text_fr": "Opus 5 ne reçoit pas les balises de budget injectées."
+        },
+        {
+          "key": "B",
+          "text_en": "Its 1M window makes the budget irrelevant.",
+          "text_fr": "Sa fenêtre de 1M rend le budget sans objet."
+        },
+        {
+          "key": "C",
+          "text_en": "You must now send the budget tags yourself.",
+          "text_fr": "Vous devez désormais envoyer les balises vous-même."
+        },
+        {
+          "key": "D",
+          "text_en": "Context awareness needs a beta header on Opus.",
+          "text_fr": "La conscience du contexte exige un en-tête beta sur Opus."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "La conscience du contexte n'est pas universelle : Claude Sonnet 5, Sonnet 4.6, Sonnet 4.5 et Haiku 4.5 reçoivent de l'API, dans le prompt système, leur budget total (`<budget:token_budget>`) puis une mise à jour après chaque appel d'outil (`<system_warning>Token usage: ... remaining</system_warning>`). Or « Claude Opus 4.7 and later Opus models, Claude Fable 5, and Claude Mythos 5 don't receive these injected tags. » Sur ces modèles, le levier documenté est autre : « you can give the model an explicit budget with task budgets, which are in beta ».",
       "distractors_fr": {
         "B": "Sonnet 5 a lui aussi une fenêtre de 1M et reçoit pourtant les balises. La taille de la fenêtre ne détermine pas qui est informé de sa consommation.",
@@ -135,24 +203,38 @@
       "nature": "judgment",
       "difficulty": "moyen",
       "source": "prepcourse",
-      "concept": "Avec la compaction serveur on ajoute la reponse a l historique et l API laisse tomber d elle-meme les blocs anterieurs au bloc compaction",
-      "question_en": "A response comes back containing a `compaction` block. What should your client do with the earlier turns?",
-      "question_fr": "Une réponse revient en contenant un bloc `compaction`. Que doit faire votre client des tours antérieurs ?",
+      "concept": "Le choix resume contre historique complet a la reprise porte sur les requetes suivantes, pas sur la premiere",
+      "question_en": "You resume a 180,000-token session after two hours away and pick Resume from summary to avoid paying for the whole history. Why does that first request cost the same either way?",
+      "question_fr": "Vous reprenez une session de 180 000 tokens apres deux heures d absence et choisissez la reprise depuis le resume pour ne pas payer tout l historique. Pourquoi cette premiere requete coute-t-elle la meme chose dans les deux cas ?",
       "options": [
-        { "key": "A", "text_en": "Delete them from your stored messages.", "text_fr": "Les supprimer de vos messages stockés." },
-        { "key": "B", "text_en": "Replace them with the summary text yourself.", "text_fr": "Les remplacer soi-même par le texte du résumé." },
-        { "key": "C", "text_en": "Nothing: append the response and send it back.", "text_fr": "Rien : ajouter la réponse et la renvoyer." },
-        { "key": "D", "text_en": "Resend them, but strip every tool result.", "text_fr": "Les renvoyer, mais en retirant chaque résultat d'outil." }
+        {
+          "key": "A",
+          "text_en": "The summary is billed at the output rate"
+        },
+        {
+          "key": "B",
+          "text_en": "The summary keeps the five newest files"
+        },
+        {
+          "key": "C",
+          "text_en": "Summarizing reads the full history once"
+        },
+        {
+          "key": "D",
+          "text_en": "Both options replay the tool results"
+        }
       ],
-      "correct": ["C"],
-      "explanation_fr": "Tout l'intérêt de la compaction serveur est qu'il n'y a pas de code de résumé côté client à écrire. La doc décrit la suite exacte : « On subsequent requests, append the response to your messages. The API automatically drops all content blocks prior to the `compaction` block, continuing the conversation from the summary. » Votre client garde donc son historique intact et laisse l'API décider de ce qui entre réellement dans la fenêtre.",
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le dialogue ne s ouvre qu au-dela d une heure d inactivite et de 100 000 tokens, et a ce moment le cache de prompt a expire. La premiere requete traite donc l historique complet une fois quoi qu il arrive : la reprise a l identique le retraite et le remet en cache, la reprise depuis le resume envoie une requete de resume sur ce meme historique complet. Le choix se joue sur les requetes d apres, ou l une porte l historique entier et l autre le resume plus les echanges recents.",
       "distractors_fr": {
-        "A": "Supprimer localement vous prive de la trace complète de la conversation sans rien gagner : c'est l'API, et non votre stockage, qui décide ce qui compte dans la fenêtre.",
-        "B": "Réécrire l'historique à la main, c'est la compaction manuelle côté client — l'alternative que la compaction serveur est précisément là pour remplacer.",
-        "D": "Le retrait des anciens résultats d'outils est une autre stratégie (tool result clearing), qui se configure et ne s'improvise pas en réaction à un bloc `compaction`."
+        "A": "Le tarif n est pas le sujet : ce qui coute, c est le volume d historique traite une fois a la reprise, quelle que soit l option.",
+        "B": "Les fichiers recemment lus reintroduits font partie de ce que le resume conserve, mais ils n expliquent pas le cout de la premiere requete.",
+        "D": "L option a l identique recharge bien l historique, mais l option resume ne le rejoue pas : elle le lit une fois pour le resumer."
       },
-      "principe_fr": "Quand le serveur gère l'état, le client transmet et n'interprète pas.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/compaction"
+      "principe_fr": "Une economie de contexte se mesure sur le regime permanent, pas sur la requete de bascule qui la met en place.",
+      "doc_ref": "https://code.claude.com/docs/en/sessions"
     },
     {
       "id": "PC-MBG-006",
@@ -167,12 +249,30 @@
       "question_en": "You set `instructions` to \"Focus on preserving code snippets and variable names.\" After compaction the agent forgets its next steps. Why?",
       "question_fr": "Vous fixez `instructions` à « Focus on preserving code snippets and variable names. » Après compaction, l'agent oublie ses étapes suivantes. Pourquoi ?",
       "options": [
-        { "key": "A", "text_en": "The trigger fired before the plan was written.", "text_fr": "Le déclencheur s'est activé avant l'écriture du plan." },
-        { "key": "B", "text_en": "Custom instructions replace the default prompt.", "text_fr": "Les instructions personnalisées remplacent le prompt par défaut." },
-        { "key": "C", "text_en": "Plans live outside the summarizable history.", "text_fr": "Les plans vivent hors de l'historique résumable." },
-        { "key": "D", "text_en": "The summary is capped and the plan was cut.", "text_fr": "Le résumé est plafonné et le plan a été coupé." }
+        {
+          "key": "A",
+          "text_en": "The trigger fired before the plan was written.",
+          "text_fr": "Le déclencheur s'est activé avant l'écriture du plan."
+        },
+        {
+          "key": "B",
+          "text_en": "Custom instructions replace the default prompt.",
+          "text_fr": "Les instructions personnalisées remplacent le prompt par défaut."
+        },
+        {
+          "key": "C",
+          "text_en": "Plans live outside the summarizable history.",
+          "text_fr": "Les plans vivent hors de l'historique résumable."
+        },
+        {
+          "key": "D",
+          "text_en": "The summary is capped and the plan was cut.",
+          "text_fr": "Le résumé est plafonné et le plan a été coupé."
+        }
       ],
-      "correct": ["B"],
+      "correct": [
+        "B"
+      ],
       "explanation_fr": "Le piège est dans un seul mot de la doc : « Custom instructions don't supplement the default prompt. They replace it completely. » Le prompt par défaut demandait un résumé portant « the state, next steps, learnings etc. » ; en le remplaçant par une consigne centrée sur le code, vous avez retiré les étapes suivantes du périmètre du résumé. C'est exactement la perte d'état critique par résumeur sous-spécifié : la consigne personnalisée doit rappeler tout ce qu'il faut conserver, pas seulement ce que l'on veut ajouter.",
       "distractors_fr": {
         "A": "Le moment du déclenchement ne change pas ce que le résumeur retient. Avec le prompt par défaut, un plan déjà écrit aurait été résumé.",
@@ -195,12 +295,31 @@
       "question_en": "Compaction returned a `compaction` block with `content: null`. Which TWO statements apply?",
       "question_fr": "La compaction a renvoyé un bloc `compaction` avec `content: null`. Lesquelles DEUX (TWO) affirmations s'appliquent ?",
       "options": [
-        { "key": "A", "text_en": "Your trigger threshold was set too low.", "text_fr": "Votre seuil de déclenchement était trop bas." },
-        { "key": "B", "text_en": "The model called a tool while summarizing.", "text_fr": "Le modèle a appelé un outil pendant le résumé." },
-        { "key": "C", "text_en": "Instructions banning tool calls prevent it.", "text_fr": "Une consigne interdisant les appels d'outils l'évite." },
-        { "key": "D", "text_en": "The conversation exceeded the window limit.", "text_fr": "La conversation a dépassé la limite de fenêtre." }
+        {
+          "key": "A",
+          "text_en": "Your trigger threshold was set too low.",
+          "text_fr": "Votre seuil de déclenchement était trop bas."
+        },
+        {
+          "key": "B",
+          "text_en": "The model called a tool while summarizing.",
+          "text_fr": "Le modèle a appelé un outil pendant le résumé."
+        },
+        {
+          "key": "C",
+          "text_en": "Instructions banning tool calls prevent it.",
+          "text_fr": "Une consigne interdisant les appels d'outils l'évite."
+        },
+        {
+          "key": "D",
+          "text_en": "The conversation exceeded the window limit.",
+          "text_fr": "La conversation a dépassé la limite de fenêtre."
+        }
       ],
-      "correct": ["B", "C"],
+      "correct": [
+        "B",
+        "C"
+      ],
       "explanation_fr": "C'est une limitation nommée de la fonctionnalité : « When your request includes `tools`, the model occasionally calls a tool during the internal summarization step instead of writing a summary. When this occurs, the response contains a `compaction` block with `content: null`. » Le remède est donné dans la même puce : fixer `instructions` sur un prompt qui interdit explicitement les appels d'outils, du type « Do not call any tools while writing this summary; respond with text only. »",
       "distractors_fr": {
         "A": "Un seuil bas déclenche la compaction plus tôt, plus souvent. Il ne produit pas un résumé vide.",
@@ -222,12 +341,31 @@
       "question_en": "Which TWO statements about server-side compaction are accurate today?",
       "question_fr": "Lesquelles DEUX (TWO) affirmations sur la compaction serveur sont exactes aujourd'hui ?",
       "options": [
-        { "key": "A", "text_en": "It is beta and needs a dedicated header.", "text_fr": "Elle est en beta et exige un en-tête dédié." },
-        { "key": "B", "text_en": "It is enabled by default on supported models.", "text_fr": "Elle est activée par défaut sur les modèles pris en charge." },
-        { "key": "C", "text_en": "You may route the summary to a cheaper model.", "text_fr": "On peut router le résumé vers un modèle moins cher." },
-        { "key": "D", "text_en": "The request's own model writes the summary.", "text_fr": "Le modèle de la requête écrit lui-même le résumé." }
+        {
+          "key": "A",
+          "text_en": "It is beta and needs a dedicated header.",
+          "text_fr": "Elle est en beta et exige un en-tête dédié."
+        },
+        {
+          "key": "B",
+          "text_en": "It is enabled by default on supported models.",
+          "text_fr": "Elle est activée par défaut sur les modèles pris en charge."
+        },
+        {
+          "key": "C",
+          "text_en": "You may route the summary to a cheaper model.",
+          "text_fr": "On peut router le résumé vers un modèle moins cher."
+        },
+        {
+          "key": "D",
+          "text_en": "The request's own model writes the summary.",
+          "text_fr": "Le modèle de la requête écrit lui-même le résumé."
+        }
       ],
-      "correct": ["A", "D"],
+      "correct": [
+        "A",
+        "D"
+      ],
       "explanation_fr": "Deux points à retenir avant de compter sur la fonctionnalité. Le statut : « Compaction is in beta. Include the beta header `compact-2026-01-12` in your API requests to use this feature. » Et une limitation actuelle, sous « Same model for summarization » : « The model specified in your request is used for summarization. There is no option to use a different (for example, cheaper) model for the summary. » Résumer avec Opus 5 se paie donc au tarif d'Opus 5.",
       "distractors_fr": {
         "B": "Rien n'est automatique : on l'active en ajoutant la stratégie `compact_20260112` à `context_management.edits`, en plus de l'en-tête beta.",
@@ -245,24 +383,38 @@
       "nature": "judgment",
       "difficulty": "moyen",
       "source": "prepcourse",
-      "concept": "Regler le parametre effort est souvent un meilleur levier que changer de modele pour arbitrer intelligence contre latence et cout",
-      "question_en": "An Opus 5 workload meets the quality bar but costs and latency run high. Which lever do the docs put first?",
-      "question_fr": "Une charge sur Opus 5 atteint le niveau de qualité mais coûte cher et répond lentement. Quel levier la doc met-elle en premier ?",
+      "concept": "Sur l API Claude le modele herite par Explore est plafonne a Opus : la delegation ne monte jamais en gamme",
+      "question_en": "Your main conversation runs on the Claude API on a tier above Opus, and Claude delegates a codebase search to the Explore subagent. What does Claude Code guarantee about that subagent's model?",
+      "question_fr": "Votre conversation principale tourne sur l API Claude sur un palier au-dessus d Opus, et Claude delegue une recherche dans le code au subagent Explore. Que garantit Claude Code sur le modele de ce subagent ?",
       "options": [
-        { "key": "A", "text_en": "Move the workload down to Haiku 4.5.", "text_fr": "Faire redescendre la charge sur Haiku 4.5." },
-        { "key": "B", "text_en": "Shorten the system prompt and the tools.", "text_fr": "Raccourcir le prompt système et les outils." },
-        { "key": "C", "text_en": "Turn on fast mode for higher output speed.", "text_fr": "Activer le fast mode pour accélérer la sortie." },
-        { "key": "D", "text_en": "Adjust `effort` before changing the model.", "text_fr": "Ajuster `effort` avant de changer de modèle." }
+        {
+          "key": "A",
+          "text_en": "It always runs Explore on Haiku"
+        },
+        {
+          "key": "B",
+          "text_en": "It matches the main model exactly"
+        },
+        {
+          "key": "C",
+          "text_en": "It picks the cheapest tier available"
+        },
+        {
+          "key": "D",
+          "text_en": "It caps the inherited model at Opus"
+        }
       ],
-      "correct": ["D"],
-      "explanation_fr": "La page de choix de modèle range `effort` parmi les critères de départ, et tranche : « Recent Opus and Sonnet models support an effort parameter that trades intelligence for latency and cost within a single model. Tuning effort is often a better lever than switching models. » Sur Opus 5, la consigne est de partir du défaut (`high`) et d'ajuster à la hausse ou à la baisse selon ses evals. On garde ainsi le modèle validé au lieu de rouvrir tout le travail de qualité.",
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Explore herite du modele de la conversation principale, et sur l API Claude cet heritage est plafonne a Opus : un principal sur un palier superieur fait tourner Explore sur Opus, un principal sur Sonnet ou Haiku le fait tourner sur ce meme modele. Explore ne tourne donc jamais sur un modele plus cher que celui que vous avez deja choisi pour la session. Chez les autres fournisseurs, l heritage est direct, sans plafond.",
       "distractors_fr": {
-        "A": "Descendre de niveau change le modèle validé et rouvre la question de la qualité. C'est un mouvement à mesurer par des evals, pas le premier réglage.",
-        "B": "Raccourcir l'entrée réduit le coût par appel mais touche au prompt déjà validé, et ne change pas la latence de génération.",
-        "C": "Le fast mode augmente la vitesse de sortie, jusqu'à 2,5x, mais à tarif premium : il traite la latence en aggravant le coût, alors que l'énoncé cite les deux."
+        "A": "C etait le comportement d avant : Explore tournait systematiquement sur Haiku. Il herite desormais du modele de la conversation principale.",
+        "B": "L heritage exact est le comportement chez les autres fournisseurs. Sur l API Claude il passe par un plafond.",
+        "C": "Rien ne descend en gamme automatiquement : un principal sur Sonnet ou Haiku fait tourner Explore sur ce meme modele, pas sur un moins cher."
       },
-      "principe_fr": "Un réglage à l'intérieur du modèle se rétracte ; un changement de modèle se revalide.",
-      "doc_ref": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+      "principe_fr": "Deleguer une sous-tache ne doit pas pouvoir augmenter le prix unitaire que vous avez choisi pour la session.",
+      "doc_ref": "https://code.claude.com/docs/en/sub-agents"
     },
     {
       "id": "PC-MBG-010",
@@ -277,12 +429,30 @@
       "question_en": "What does the token counting endpoint give you that a `usage` field cannot?",
       "question_fr": "Qu'apporte l'endpoint de comptage de tokens que le champ `usage` ne peut pas donner ?",
       "options": [
-        { "key": "A", "text_en": "The input count before any inference runs.", "text_fr": "Le compte d'entrée avant toute inférence." },
-        { "key": "B", "text_en": "A guaranteed exact count, never an estimate.", "text_fr": "Un compte exact garanti, jamais une estimation." },
-        { "key": "C", "text_en": "The number of output tokens Claude will use.", "text_fr": "Le nombre de tokens de sortie que Claude utilisera." },
-        { "key": "D", "text_en": "A count that excludes tools and documents.", "text_fr": "Un compte qui exclut les outils et les documents." }
+        {
+          "key": "A",
+          "text_en": "The input count before any inference runs.",
+          "text_fr": "Le compte d'entrée avant toute inférence."
+        },
+        {
+          "key": "B",
+          "text_en": "A guaranteed exact count, never an estimate.",
+          "text_fr": "Un compte exact garanti, jamais une estimation."
+        },
+        {
+          "key": "C",
+          "text_en": "The number of output tokens Claude will use.",
+          "text_fr": "Le nombre de tokens de sortie que Claude utilisera."
+        },
+        {
+          "key": "D",
+          "text_en": "A count that excludes tools and documents.",
+          "text_fr": "Un compte qui exclut les outils et les documents."
+        }
       ],
-      "correct": ["A"],
+      "correct": [
+        "A"
+      ],
       "explanation_fr": "L'endpoint « accepts the same structured list of inputs for creating a message » et « The response contains the total number of input tokens », sans générer de réponse. C'est ce qui permet de mesurer la pression sur le contexte avant l'envoi et de bloquer une requête qui dépasserait la fenêtre, plutôt que de le découvrir dans une erreur. Le champ `usage`, lui, n'existe qu'après l'appel.",
       "distractors_fr": {
         "B": "La doc dit l'inverse : « The token count is an **estimate**. In some cases, the actual number of input tokens used when creating a message might differ by a small amount. »",
@@ -305,12 +475,30 @@
       "question_en": "You reuse token counts measured on an older model. On Claude 4.7 and later, the same text counts roughly:",
       "question_fr": "Vous réutilisez des comptes de tokens mesurés sur un modèle plus ancien. Sur Claude 4.7 et suivants, le même texte compte environ :",
       "options": [
-        { "key": "A", "text_en": "10 percent more tokens.", "text_fr": "10 pour cent de tokens en plus." },
-        { "key": "B", "text_en": "The same, within noise.", "text_fr": "Autant, au bruit près." },
-        { "key": "C", "text_en": "30 percent more tokens.", "text_fr": "30 pour cent de tokens en plus." },
-        { "key": "D", "text_en": "30 percent fewer tokens.", "text_fr": "30 pour cent de tokens en moins." }
+        {
+          "key": "A",
+          "text_en": "10 percent more tokens.",
+          "text_fr": "10 pour cent de tokens en plus."
+        },
+        {
+          "key": "B",
+          "text_en": "The same, within noise.",
+          "text_fr": "Autant, au bruit près."
+        },
+        {
+          "key": "C",
+          "text_en": "30 percent more tokens.",
+          "text_fr": "30 pour cent de tokens en plus."
+        },
+        {
+          "key": "D",
+          "text_en": "30 percent fewer tokens.",
+          "text_fr": "30 pour cent de tokens en moins."
+        }
       ],
-      "correct": ["C"],
+      "correct": [
+        "C"
+      ],
       "explanation_fr": "La page de comptage porte cet avertissement : « Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer. The same input text produces approximately 30 percent more tokens than on earlier models. » Elle ajoute que l'ampleur exacte dépend du contenu, et en tire la consigne : « Recount prompts against the model you plan to use rather than reusing counts measured against earlier models. » Un budget de contexte calibré sur un ancien modèle est donc sous-évalué d'environ un tiers.",
       "distractors_fr": {
         "A": "L'écart annoncé est trois fois plus grand. Le sous-estimer, c'est reconduire un budget de fenêtre qui ne tient plus.",
@@ -333,12 +521,30 @@
       "question_en": "In production, tool selection degrades from turn eight onward, every time. What do you check before the schemas?",
       "question_fr": "En production, le choix des outils se dégrade à partir du tour huit, chaque fois. Que vérifiez-vous avant les schémas ?",
       "options": [
-        { "key": "A", "text_en": "Whether the tool names collide.", "text_fr": "Si les noms d'outils entrent en collision." },
-        { "key": "B", "text_en": "Whether a retry loop resends the turn.", "text_fr": "Si une boucle de reprise renvoie le tour." },
-        { "key": "C", "text_en": "Whether the model version changed.", "text_fr": "Si la version du modèle a changé." },
-        { "key": "D", "text_en": "Whether the context window is filling up.", "text_fr": "Si la fenêtre de contexte se remplit." }
+        {
+          "key": "A",
+          "text_en": "Whether the tool names collide.",
+          "text_fr": "Si les noms d'outils entrent en collision."
+        },
+        {
+          "key": "B",
+          "text_en": "Whether a retry loop resends the turn.",
+          "text_fr": "Si une boucle de reprise renvoie le tour."
+        },
+        {
+          "key": "C",
+          "text_en": "Whether the model version changed.",
+          "text_fr": "Si la version du modèle a changé."
+        },
+        {
+          "key": "D",
+          "text_en": "Whether the context window is filling up.",
+          "text_fr": "Si la fenêtre de contexte se remplit."
+        }
       ],
-      "correct": ["D"],
+      "correct": [
+        "D"
+      ],
       "explanation_fr": "Un seuil qui tombe toujours au même tour désigne une accumulation, pas un schéma : chaque tour ajoute ses résultats d'outils au total courant. Et la dégradation est documentée — « As token count grows, accuracy and recall degrade » — jusqu'au point où le prompt système et les premières instructions se retrouvent noyés sous des résultats jamais élagués. Le symptôme ressemble à un mauvais choix d'outil, la cause est le budget. On mesure avec le comptage de tokens avant de toucher au schéma.",
       "distractors_fr": {
         "A": "Une collision de noms casserait dès le premier appel concerné, pas à partir d'un tour donné.",

@@ -388,42 +388,38 @@
       "nature": "factual_semantic",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "CLAUDE.md est du contexte, pas de la configuration appliquee",
-      "question_en": "How is CLAUDE.md content delivered to the model, and what does that imply about compliance?",
-      "question_fr": "Comment le contenu d un CLAUDE.md parvient-il au modele, et qu est-ce que cela implique sur son respect ?",
+      "concept": "Un hook ne traverse pas la compaction parce qu il n y est pas soumis : c est du code, pas du contexte",
+      "question_en": "A long session compacts in the middle of your task. What happens to the PreToolUse hook you configured in your settings file?",
+      "question_fr": "Une longue session se compacte au milieu de votre tache. Qu advient-il du hook PreToolUse que vous avez configure dans votre fichier de reglages ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It joins the system prompt, which is why compliance is enforced",
-          "text_fr": "Il rejoint le prompt systeme, d ou un respect garanti des instructions"
+          "text_en": "It is re-injected from disk"
         },
         {
           "key": "B",
-          "text_en": "It is compiled into the permission rules of the session at launch",
-          "text_fr": "Il est compile dans les regles de permission de la session au lancement"
+          "text_en": "It is lost until you reload it"
         },
         {
           "key": "C",
-          "text_en": "It is re-sent to the model before every single tool call in a turn",
-          "text_fr": "Il est renvoye au modele avant chaque appel d outil d un meme tour"
+          "text_en": "It is summarized with the history"
         },
         {
           "key": "D",
-          "text_en": "It arrives as a user message, so it is context, not enforced config",
-          "text_fr": "Il arrive comme message utilisateur : c est du contexte, pas de la configuration"
+          "text_en": "Nothing: it runs as code, not context"
         }
       ],
       "correct": [
         "D"
       ],
-      "explanation_fr": "Le contenu d un CLAUDE.md est livre comme un message utilisateur place apres le prompt systeme, et non comme une partie du prompt systeme. Claude le lit et essaie de le suivre, mais il n y a aucune garantie de conformite stricte, particulierement pour des instructions vagues ou contradictoires. C est du contexte, pas de la configuration appliquee : d ou l importance d instructions specifiques et verifiables.",
+      "explanation_fr": "La compaction resume l historique des messages, donc elle n affecte que ce qui vivait dans ce contexte. Le tableau documente de ce qui survit met les hooks a part avec une mention explicite : non applicable, les hooks tournent comme du code, pas comme du contexte. Un hook lie a PreToolUse continue donc a intercepter chaque appel d outil apres la compaction exactement comme avant, ce qui est precisement l argument pour porter une contrainte critique par un hook plutot que par une phrase dans le CLAUDE.md.",
       "distractors_fr": {
-        "A": "Ce n est justement pas le prompt systeme. Pour une instruction au niveau du prompt systeme, la documentation renvoie a --append-system-prompt.",
-        "B": "Les regles de permission sont un mecanisme distinct, declare dans les fichiers de settings. CLAUDE.md ne s y compile pas.",
-        "C": "Le contenu est injecte au demarrage de la session, pas repete avant chaque appel d outil."
+        "A": "La reinjection depuis le disque concerne des instructions qui occupent du contexte, comme le CLAUDE.md de la racine. Un hook n en occupe pas.",
+        "B": "Rien a recharger : le hook est lu dans les reglages et declenche sur un evenement de cycle de vie, independamment de l etat du contexte.",
+        "C": "Le resume porte sur l historique des messages. Un hook n est pas un message, il n entre donc pas dans le perimetre du resume."
       },
-      "principe_fr": "Distinguer contexte et configuration appliquee, c est distinguer une instruction generalement suivie d une contrainte toujours respectee.",
-      "doc_ref": "https://code.claude.com/docs/en/memory"
+      "principe_fr": "Une contrainte executee par du code survit aux manipulations de contexte ; une contrainte ecrite dans le contexte en depend.",
+      "doc_ref": "https://code.claude.com/docs/en/context-window"
     },
     {
       "id": "PC-CMD-010",

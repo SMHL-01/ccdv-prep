@@ -526,38 +526,38 @@
       "nature": "judgment",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "Regler la qualite du prompt avant d attaquer la latence",
-      "question_en": "A team wants to cut latency on a prompt that is still being tuned for quality. What does the latency guide advise?",
-      "question_fr": "Une equipe veut reduire la latence d'un prompt encore en cours de reglage sur la qualite. Que conseille le guide de latence ?",
+      "concept": "Un outil CLI n ajoute aucun listing par outil, meme si les definitions MCP sont differees",
+      "question_en": "MCP tool definitions are deferred by default, yet the cost guide still recommends preferring a CLI tool such as `gh` or `gcloud` over an equivalent MCP server. What is the reason given?",
+      "question_fr": "Les definitions d outils MCP sont differees par defaut, et pourtant le guide de cout recommande toujours de preferer un outil CLI comme `gh` ou `gcloud` a un serveur MCP equivalent. Quelle raison est donnee ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Cap max_tokens first, then tune the prompt against that ceiling."
+          "text_en": "Deferral only applies to user-scope MCP servers"
         },
         {
           "key": "B",
-          "text_en": "Turn on streaming, which lowers the measured time to first token."
+          "text_en": "CLI commands are billed at the cached input rate"
         },
         {
           "key": "C",
-          "text_en": "Get the prompt working well first, then reduce latency afterwards."
+          "text_en": "A CLI tool adds no per-tool listing to context"
         },
         {
           "key": "D",
-          "text_en": "Move to the smallest model, then add quality back with examples."
+          "text_en": "MCP definitions are re-sent on every request"
         }
       ],
       "correct": [
         "C"
       ],
-      "explanation_fr": "Le guide est explicite : mieux vaut d'abord construire un prompt qui fonctionne bien sans contrainte de modele ni de prompt, puis appliquer les strategies de reduction de latence. Chercher a reduire la latence trop tot empeche de decouvrir a quoi ressemble la performance maximale, donc de savoir ce que chaque optimisation coute en qualite.",
+      "explanation_fr": "Le differement fait que seuls les noms d outils entrent dans le contexte jusqu a ce que Claude en utilise un, mais un outil CLI va plus loin : il n ajoute aucun listing par outil, Claude l appelle directement comme une commande. Le guide de cout le presente donc comme encore plus econome en contexte qu un serveur MCP, differement compris. Le complement pratique est /context pour voir ce qui consomme la place et /mcp pour desactiver les serveurs inutilises.",
       "distractors_fr": {
-        "A": "max_tokens est une coupe brutale, qui tronque en pleine phrase : en faire le point de depart fausse le reglage de la qualite.",
-        "B": "Le flux ameliore la reactivite percue et sert a afficher la sortie au fil de l'eau ; il ne fait pas baisser le temps de traitement.",
-        "D": "Choisir le modele fait partie des leviers de latence, mais l'appliquer avant de savoir ce que vaut le prompt empeche de mesurer ce qu'on perd."
+        "A": "Le differement est le comportement par defaut, sans distinction de portee de configuration.",
+        "B": "Une commande CLI n est pas un poste de facturation de tokens : elle s execute hors du modele, il n y a pas de tarif d entree en cache a lui appliquer.",
+        "D": "Faux, et c est justement ce que le differement evite : les definitions n entrent pas dans le contexte tant qu un outil n est pas utilise. L avantage du CLI n est pas la, il est dans l absence totale de listing."
       },
-      "principe_fr": "On n'optimise pas un systeme dont on ne connait pas encore le plafond de qualite : la reference se pose avant les compromis.",
-      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-latency"
+      "principe_fr": "Deux leviers de contexte se cumulent sans se confondre : le differement retarde le chargement des definitions MCP, l outil CLI supprime le listing lui-meme.",
+      "doc_ref": "https://code.claude.com/docs/en/costs"
     }
   ]
 }

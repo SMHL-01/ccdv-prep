@@ -1,0 +1,478 @@
+{
+  "topic": "m5-5.1-packaging",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Understanding Requirements",
+  "weight": 3.4,
+  "corpus_ref": "prepcourse-corpus/m5-5.1-packaging.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise",
+    "https://code.claude.com/docs/en/plugin-dependencies",
+    "https://code.claude.com/docs/en/managed-mcp",
+    "https://modelcontextprotocol.io/registry/package-types"
+  ],
+  "questions": [
+    {
+      "id": "PC-PKG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Fiche de registre interne : ce qu'un repreneur ne deduit pas du code",
+      "question_en": "You package a working build and add a registry entry so the next team is not left reading source. Which set of fields does the documented registry hold?",
+      "question_fr": "Tu empaquettes un build qui tourne et ajoutes une fiche de registre pour que l'equipe suivante n'ait pas a lire le code. Quel jeu de champs le registre documente contient-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The commit range, the reviewer, and the open issues."
+        },
+        {
+          "key": "B",
+          "text_en": "Purpose, owner, version, dependencies, eval status."
+        },
+        {
+          "key": "C",
+          "text_en": "Purpose, licence, author email, and the demo script."
+        },
+        {
+          "key": "D",
+          "text_en": "Version, changelog, roadmap, and the support channel."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation demande de tenir un registre interne pour chaque actif, avec son objet (le flux qu'il sert), son proprietaire (l'equipe responsable de la maintenance), sa version deployee, ses dependances (serveurs MCP, paquets, services externes requis) et son etat d'evaluation (date et resultats de la derniere evaluation). C'est exactement ce qu'un repreneur ne peut pas inferer du code source.",
+      "distractors_fr": {
+        "A": "Ces elements vivent deja dans l'historique Git : le registre porte ce que le code ne dit pas.",
+        "C": "Le script de demonstration ne remplace pas les dependances ni l'etat d'evaluation.",
+        "D": "Feuille de route et canal de support ne repondent pas a la question de savoir si l'actif fonctionne encore."
+      },
+      "principe_fr": "Le code decrit le comportement ; la fiche porte les hypotheses, les dependances et la preuve que l'actif marche encore.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-PKG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Separation des roles : l'auteur d'un actif n'en est pas le relecteur",
+      "question_en": "Your team wants one engineer to write an asset, review it and approve it, to save a handoff. What does the documented review process require instead?",
+      "question_fr": "Ton equipe veut qu'un seul ingenieur ecrive un actif, le relise et l'approuve, pour eviter une passation. Qu'exige a la place le processus de revue documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Two engineers write it, then one of them approves."
+        },
+        {
+          "key": "B",
+          "text_en": "The author approves, then a reviewer signs off later."
+        },
+        {
+          "key": "C",
+          "text_en": "Authors must not be the reviewers of their own asset."
+        },
+        {
+          "key": "D",
+          "text_en": "Approval sits with whoever installs the asset first."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "L'etape de creation et de revue impose une separation des roles : les auteurs d'un actif ne doivent pas etre leurs propres relecteurs. La revue de securite suivant la liste de controle et la remise d'une suite d'evaluation sont exigees avant approbation. C'est la traduction organisationnelle du principe selon lequel un actif est verifiable par un tiers, non par celui qui l'a ecrit.",
+      "distractors_fr": {
+        "A": "Coecrire ne retablit pas la separation : l'approbateur reste un auteur.",
+        "B": "L'ordre ne change rien au probleme : l'approbation par l'auteur est justement ce que la separation interdit.",
+        "D": "L'installation n'est pas une revue et arrive apres la porte d'approbation."
+      },
+      "principe_fr": "Un actif est pret quand quelqu'un d'autre peut le verifier, pas quand son auteur le declare pret.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-PKG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Empaqueter un jeu curate derriere une seule installation",
+      "question_en": "You want engineers to get a curated set of plugins from a single install. What does the documented bundle approach look like?",
+      "question_fr": "Tu veux que tes ingenieurs obtiennent un jeu curate de plugins en une seule installation. A quoi ressemble l'approche par lot documentee ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A manifest holding only a name and a dependency list."
+        },
+        {
+          "key": "B",
+          "text_en": "A manifest listing each plugin under a bundles key."
+        },
+        {
+          "key": "C",
+          "text_en": "A marketplace whose entries are marked as required."
+        },
+        {
+          "key": "D",
+          "text_en": "A managed setting that installs a plugin group at start."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "En dehors du champ `name` obligatoire, un manifeste de plugin peut ne contenir qu'un tableau `dependencies` : l'installer tire toutes ses dependances, ce qui en fait un moyen d'empaqueter un jeu curate derriere une seule installation. Une equipe plateforme publie ainsi des lots par role dans un marketplace interne, et le deploiement a l'echelle de l'organisation se fait en ajoutant le plugin de lot a `enabledPlugins` dans les reglages geres.",
+      "distractors_fr": {
+        "B": "Aucune cle de ce nom n'existe : le lot passe par le tableau de dependances.",
+        "C": "Un marketplace publie des plugins ; il ne marque pas d'entrees comme obligatoires.",
+        "D": "Les reglages geres servent a deployer le lot dans l'organisation, mais le lot lui-meme reste un plugin de dependances."
+      },
+      "principe_fr": "Un actif reutilisable se distribue comme une unite installable, pas comme une liste d'instructions a suivre.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-dependencies"
+    },
+    {
+      "id": "PC-PKG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Ce que la suite d'evaluation livree avec l'actif doit couvrir",
+      "question_en": "Your organization requires an evaluation suite with every submitted asset. Which TWO requirements does the documented gate place on that suite?",
+      "question_fr": "Ton organisation exige une suite d'evaluation avec chaque actif soumis. Quelles DEUX exigences la porte documentee impose-t-elle a cette suite ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It must be authored by the reviewing team, not the author."
+        },
+        {
+          "key": "B",
+          "text_en": "It must include queries where the asset should not fire."
+        },
+        {
+          "key": "C",
+          "text_en": "It must be rerun only when the asset itself changes."
+        },
+        {
+          "key": "D",
+          "text_en": "It must be run across the models the organization uses."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "La documentation exige des auteurs une suite d'evaluation de trois a cinq requetes representatives par actif, couvrant les cas ou l'actif doit se declencher, ceux ou il ne doit pas se declencher, et les cas limites ambigus. Elle exige aussi de tester sur les modeles que l'organisation utilise, parce que l'efficacite d'un actif varie d'un modele a l'autre. La suite est ce qui permet a une nouvelle equipe de confirmer que l'actif marche encore chez elle.",
+      "distractors_fr": {
+        "A": "La documentation demande aux auteurs de remettre la suite ; c'est la revue qui reste separee, pas la redaction de l'evaluation.",
+        "C": "Les evaluations sont a rejouer periodiquement pour detecter une derive, meme sans changement de l'actif."
+      },
+      "principe_fr": "Livrer l'evaluation avec l'actif, c'est livrer la definition de fonctionne, pas seulement le code.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-PKG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Test qui autorise la fusion d'actifs etroits en un lot par role",
+      "question_en": "Three narrow assets look like candidates to merge into one role-level asset. What does the documented guidance make the deciding test?",
+      "question_fr": "Trois actifs etroits semblent candidats a la fusion en un actif de niveau role. Quel test la consigne documentee retient-elle pour trancher ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The three assets share more than half their instructions."
+        },
+        {
+          "key": "B",
+          "text_en": "The merged asset stays under the per-request asset limit."
+        },
+        {
+          "key": "C",
+          "text_en": "The merged asset's evals match the ones it replaces."
+        },
+        {
+          "key": "D",
+          "text_en": "The owning team agrees to maintain the merged asset."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La consigne est de commencer par des actifs etroits et propres a un flux, puis de consolider a mesure que des motifs se dessinent, en groupant par role. Le test qui autorise la fusion est explicite : ne fusionner des actifs etroits en un actif plus large que lorsque les evaluations de l'actif consolide confirment une performance equivalente a celle des actifs qu'il remplace.",
+      "distractors_fr": {
+        "A": "Le recouvrement textuel n'est pas le critere retenu : c'est la performance mesuree qui tranche.",
+        "B": "La limite par requete est une contrainte de plateforme, pas le test qui autorise la fusion.",
+        "D": "L'accord de maintenance est necessaire en pratique mais ne dit rien de la performance apres fusion."
+      },
+      "principe_fr": "Une consolidation se justifie par une mesure d'equivalence, pas par une impression de redondance.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-PKG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Absence de synchronisation entre surfaces et source de verite unique",
+      "question_en": "An asset uploaded through the API works well, so a colleague expects it in Claude Code too. What does the documented behavior say, and what does it imply?",
+      "question_fr": "Un actif charge via l'API fonctionne bien, si bien qu'un collegue s'attend a le retrouver dans Claude Code. Que dit le comportement documente, et qu'implique-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It does not appear there: keep the source in Git and sync."
+        },
+        {
+          "key": "B",
+          "text_en": "It appears after the next login refresh on that surface."
+        },
+        {
+          "key": "C",
+          "text_en": "It appears only if the workspace enables cross-surface use."
+        },
+        {
+          "key": "D",
+          "text_en": "It does not appear, and no supported workaround exists."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Les actifs personnalises ne se synchronisent pas entre surfaces : ce qui est charge via l'API n'est disponible ni sur claude.ai ni dans Claude Code, et reciproquement. Chaque surface exige son propre chargement et sa propre gestion. La voie documentee est de garder les fichiers source dans Git comme source de verite unique et, si l'organisation deploie sur plusieurs surfaces, d'implementer son propre processus de synchronisation.",
+      "distractors_fr": {
+        "B": "Aucun rafraichissement ne fait apparaitre l'actif : il n'y a pas de synchronisation du tout.",
+        "C": "Aucun reglage d'espace de travail n'active une diffusion entre surfaces.",
+        "D": "Le constat est bon mais la conclusion est fausse : la documentation decrit une voie, la synchronisation que tu mets en place."
+      },
+      "principe_fr": "Un actif empaquete pour une surface n'est pas portable : la portabilite vient de la source, pas du depot d'arrivee.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise"
+    },
+    {
+      "id": "PC-PKG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Secrets par reference dans une configuration MCP deployee a une flotte",
+      "question_en": "You package an MCP server for a fleet by deploying `managed-mcp.json`. Why must the API key not go in the file's `env` block?",
+      "question_fr": "Tu empaquettes un serveur MCP pour une flotte en deployant `managed-mcp.json`. Pourquoi la cle d'API ne doit-elle pas figurer dans le bloc `env` du fichier ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Env blocks are ignored for servers loaded from that file."
+        },
+        {
+          "key": "B",
+          "text_en": "Any user on the machine can read the file's contents."
+        },
+        {
+          "key": "C",
+          "text_en": "The value would be sent to the model with each request."
+        },
+        {
+          "key": "D",
+          "text_en": "Managed settings strip env blocks before the server starts."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "N'importe quel utilisateur de la machine peut lire `managed-mcp.json` : il ne faut donc pas y stocker de cle d'API ni d'autre secret dans les blocs `env`. Les voies documentees passent les identifiants par reference : expansion `${VAR}` pour lire le secret dans l'environnement de chaque utilisateur, OAuth ou en-tetes par utilisateur pour que chacun s'authentifie en son nom, ou `headersHelper` pour generer l'identifiant au moment de la connexion.",
+      "distractors_fr": {
+        "A": "Les blocs `env` sont bien pris en compte ; le probleme est leur lisibilite, pas leur inefficacite.",
+        "C": "Une variable d'environnement de serveur MCP ne part pas vers le modele.",
+        "D": "Rien ne retire ces blocs : la valeur reste dans le fichier telle qu'elle y a ete ecrite."
+      },
+      "principe_fr": "Un actif distribue porte des references d'identifiants, jamais leurs valeurs.",
+      "doc_ref": "https://code.claude.com/docs/en/managed-mcp"
+    },
+    {
+      "id": "PC-PKG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Dependance vers un autre marketplace : refus par defaut et allowlist non transitive",
+      "question_en": "A plugin in your marketplace declares a dependency living in another marketplace. Which TWO statements describe the documented behavior?",
+      "question_fr": "Un plugin de ton marketplace declare une dependance situee dans un autre marketplace. Quelles DEUX affirmations decrivent le comportement documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Auto-install is refused unless the root allowlist names it."
+        },
+        {
+          "key": "B",
+          "text_en": "Trust chains through every marketplace in the path."
+        },
+        {
+          "key": "C",
+          "text_en": "Installing the dependency by hand satisfies the constraint."
+        },
+        {
+          "key": "D",
+          "text_en": "The dependency loads, with a warning at each session start."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Par defaut, Claude Code refuse d'installer automatiquement une dependance hebergee dans un autre marketplace que celui du plugin qui la declare, pour eviter qu'un marketplace tire silencieusement des plugins d'une source non revue. Le mainteneur du marketplace racine doit nommer le marketplace cible dans `allowCrossMarketplaceDependenciesOn` ; seule l'allowlist de la racine est consultee, donc la confiance ne se chaine pas. Un utilisateur peut aussi installer la dependance a la main d'abord, ce qui satisfait la contrainte sans toucher l'allowlist.",
+      "distractors_fr": {
+        "B": "Seule l'allowlist du marketplace racine est consultee : la confiance ne se propage pas par chainage.",
+        "D": "Il n'y a pas de chargement avec avertissement : l'installation echoue avec une erreur `cross-marketplace`."
+      },
+      "principe_fr": "Une frontiere de confiance entre depots ne se traverse qu'explicitement, et jamais de proche en proche.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-dependencies"
+    },
+    {
+      "id": "PC-PKG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Une contrainte de version ne se resout que contre des tags de version",
+      "question_en": "A dependency's marketplace repository has releases but no tags. What happens to a plugin that declares a version range on it?",
+      "question_fr": "Le depot du marketplace d'une dependance a des livraisons mais aucun tag. Qu'advient-il d'un plugin qui declare une plage de versions sur elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The newest commit is used, since no range can be met."
+        },
+        {
+          "key": "B",
+          "text_en": "The range is ignored and the current contents are used."
+        },
+        {
+          "key": "C",
+          "text_en": "Install proceeds and the range is rechecked at each load."
+        },
+        {
+          "key": "D",
+          "text_en": "It is disabled, with an error listing available versions."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Les contraintes de version se resolvent contre les tags git du depot du marketplace. Chaque livraison doit etre taguee selon la convention `{nom-du-plugin}--v{version}`, et `claude plugin tag --push` derive le tag du manifeste apres avoir verifie que `plugin.json` et l'entree du marketplace s'accordent sur la version. Si aucun tag correspondant n'existe, le plugin dependant est desactive avec une erreur qui enumere les versions disponibles.",
+      "distractors_fr": {
+        "A": "Aucune resolution de repli sur le dernier commit n'est prevue pour une source git.",
+        "B": "C'est le comportement d'un marketplace ajoute comme dossier local qui n'est pas un depot git, pas celui d'un depot tague.",
+        "C": "Il n'y a pas d'installation optimiste : sans tag correspondant, le plugin dependant ne charge pas."
+      },
+      "principe_fr": "Une version n'est reutilisable que si elle est publiee comme repere stable, pas comme etat courant d'une branche.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-dependencies"
+    },
+    {
+      "id": "PC-PKG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Plages inconciliables sur une meme dependance : echec sans casse de l'existant",
+      "question_en": "Plugin A pins a shared dependency to `~2.1` and is installed. You now install plugin B, which requires `~3.0` of it. What is the documented outcome?",
+      "question_fr": "Le plugin A epingle une dependance partagee en `~2.1` et est installe. Tu installes maintenant le plugin B, qui en exige `~3.0`. Quel est le resultat documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both install; the dependency is fetched twice over."
+        },
+        {
+          "key": "B",
+          "text_en": "Plugin A is disabled so plugin B can install cleanly."
+        },
+        {
+          "key": "C",
+          "text_en": "Plugin B fails; A and the dependency are left as they were."
+        },
+        {
+          "key": "D",
+          "text_en": "The dependency moves to 3.x and plugin A keeps loading."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Quand plusieurs plugins installes contraignent la meme dependance, Claude Code intersecte leurs plages et resout vers la version la plus haute qui satisfait toutes les contraintes. Avec `~2.1` d'un cote et `~3.0` de l'autre, aucune version ne satisfait les deux : l'installation du plugin B echoue avec `range-conflict`, et le plugin A comme la dependance restent en l'etat. L'echec est explicite du cote du nouvel arrivant plutot que silencieux du cote de l'existant.",
+      "distractors_fr": {
+        "A": "Une seule installation de la dependance est resolue : les plages sont intersectees, pas dupliquees.",
+        "B": "Rien ne desactive le plugin deja installe pour faire place au nouveau.",
+        "D": "Ce serait precisement la casse que la contrainte existe pour empecher."
+      },
+      "principe_fr": "Une resolution de dependances bien faite fait echouer l'arrivant, pas l'installation qui marchait.",
+      "doc_ref": "https://code.claude.com/docs/en/plugin-dependencies"
+    },
+    {
+      "id": "PC-PKG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "weight": 3.4,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Empreinte SHA-256 d'un artefact MCPB : validee par les clients, pas par le registre",
+      "question_en": "You publish an asset as an MCPB artifact and must include `fileSha256`. Which TWO statements about that hash are correct, per the documented behavior?",
+      "question_fr": "Tu publies un actif comme artefact MCPB et dois inclure `fileSha256`. Quelles DEUX affirmations sur cette empreinte sont correctes, selon le comportement documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The registry rejects a package whose hash does not match."
+        },
+        {
+          "key": "B",
+          "text_en": "Clients validate it before installing the package."
+        },
+        {
+          "key": "C",
+          "text_en": "The registry itself performs no validation of it."
+        },
+        {
+          "key": "D",
+          "text_en": "It replaces the ownership check for the server name."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "Les metadonnees d'un paquet MCPB dans `server.json` doivent inclure `fileSha256`, l'empreinte SHA-256 de l'artefact. Le registre MCP ne valide pas cette empreinte ; en revanche les clients MCP la valident avant l'installation pour garantir l'integrite du fichier, et des registres en aval peuvent ajouter leur propre validation. Declarer l'empreinte est donc une obligation de publication dont le controle s'exerce chez celui qui installe.",
+      "distractors_fr": {
+        "A": "Le registre ne compare pas l'empreinte : il exige seulement qu'elle soit declaree.",
+        "D": "La verification de propriete reste distincte et propre au type de paquet : `mcpName` dans `package.json` pour npm, chaine `mcp-name:` dans le README pour PyPI et NuGet, annotation d'image pour OCI."
+      },
+      "principe_fr": "Sache qui verifie quoi dans une chaine de distribution : une obligation de declaration n'est pas un controle a la publication.",
+      "doc_ref": "https://modelcontextprotocol.io/registry/package-types"
+    }
+  ]
+}

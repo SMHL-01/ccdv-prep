@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 243,
+  "nbQuestions": 254,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -117,6 +117,11 @@
       "fichier": "m4-4.6-security.json",
       "subdomain": "AI Application Security",
       "nb": 14
+    },
+    {
+      "fichier": "m5-5.1-packaging.json",
+      "subdomain": "Understanding Requirements",
+      "nb": 11
     }
   ],
   "questions": [
@@ -2549,6 +2554,116 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m4-4.6-security.json"
+    },
+    {
+      "id": "PC-PKG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
+    },
+    {
+      "id": "PC-PKG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Understanding Requirements",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m5-5.1-packaging.json"
     }
   ]
 }

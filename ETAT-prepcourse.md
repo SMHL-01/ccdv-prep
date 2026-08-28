@@ -133,7 +133,7 @@ les topics au profil similaire (guardrails, security incidents, etc.).
 
 | | Topic | Ecrites | Qui |
 | --- | --- | ---: | --- |
-| `[ ]` | m5-5.1-packaging | 0 | Marie-Line (propose) |
+| `[x]` | m5-5.1-packaging | 11 | Marie-Line |
 | `[ ]` | m5-5.2-requirements | 0 | Marie-Line (propose) |
 | `[ ]` | m5-5.3-lifecycle | 0 | Marie-Line (propose) |
 | `[ ]` | m5-5.4-deployment | 0 | Marie-Line (propose) |

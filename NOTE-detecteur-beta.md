@@ -2,13 +2,22 @@
 
 > Ecrit le 2026-08-28, a la demande de Said (« notez la ligne de faux
 > positifs actuelle quelque part, pour qu'on voie ce que le changement a
-> libere »). **Conclusion : aucun correctif pousse. La mesure contredit
-> l'hypothese sur laquelle le correctif etait demande.** A arbitrer a
-> trois avant de toucher a `verifier-questions.js`.
+> libere »).
+>
+> **Etat : arbitre et applique le 2026-08-28 (commit `d56f667`).** La
+> mesure a contredit l'hypothese de depart -- le correctif demande a
+> l'origine n'a pas ete pousse, il aurait fait echouer `npm run livrer`
+> sur les deux banques. Said a retire son feu vert initial et valide a
+> la place la regle d'union decrite plus bas. C'est elle qui est en
+> vigueur dans `verifier-questions.js`.
+>
+> Ce fichier reste la trace de la ligne de base d'avant correctif, et de
+> ce qui a ete ecarte. Il n'y a plus rien a arbitrer ici, sauf le point
+> laisse ouvert en fin de document (marge nulle a 7 sur 8).
 
-## La regle actuelle
+## La regle d'avant correctif
 
-`verifier-questions.js:180`
+`verifier-questions.js`, ligne 180 a l'epoque :
 
 ```js
 if (/api\/beta|managed-agents/.test(q.doc_ref || '')) beta++;
@@ -95,13 +104,34 @@ Mesure de cette union sur les 690 questions :
 | **union** | **7** | **7** |
 
 Les deux restent sous 8, le point aveugle se ferme, et le gel n'est pas
-menace. Les deux questions ajoutees sont `CAD-029` cote doc et
-`PC-MSC-005` cote prepcourse.
+menace.
 
-Reserve honnete : a 7 sur 8, la marge disparait. Si on adopte cette
-regle, la prochaine question beta fait echouer `livrer`. Soit on
-rehausse le plafond en meme temps, sur mesure et non au jugement, soit
-on assume que la banque est fermee et que la marge n'a plus d'usage.
+**C'est cette regle qui a ete implementee** (`porteSurBeta()` dans
+`verifier-questions.js`, commit `d56f667`). `npm run livrer` apres
+correctif : « Tous les controles passent », et « Questions portant sur
+une API beta : 7 (plafond 8) » sur les deux banques.
+
+Les deux questions rendues visibles, verifiees une par une -- aucune
+n'est un faux positif, dans les deux cas le statut beta EST le fait
+teste :
+
+- **`CAD-029`** (banque doc) : sa bonne reponse A repose sur le fait que
+  le parametre `fallbacks` est en beta sur la Claude API. Page citee
+  `build-with-claude/refusals-and-fallback`, stable, donc invisible au
+  motif URL.
+- **`PC-MSC-005`** (banque prepcourse) : la question porte entierement
+  sur le nombre d'en-tetes beta requis par Skills sur la Messages API.
+  Page citee `agent-skills/overview`, stable elle aussi.
+
+## Le seul point encore ouvert : marge nulle a 7 sur 8
+
+A 7 sur 8, la prochaine question beta fait echouer `livrer`.
+
+Decision prise avec Said le 2026-08-28 : **on ne releve pas la
+constante.** Le plafond protege quelque chose de reel -- une banque qui
+teste du beta se perime a chaque changement d'API. A 7/8, la regle a
+fait son travail. La prochaine question beta doit etre un arbitrage
+explicite a trois, pas un ajustement de constante.
 
 ## Commandes pour rejouer la mesure
 

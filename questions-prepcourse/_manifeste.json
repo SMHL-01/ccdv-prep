@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 189,
+  "nbQuestions": 198,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -92,6 +92,11 @@
       "fichier": "m4-4.1-evals.json",
       "subdomain": "Eval, Testing and Debugging",
       "nb": 12
+    },
+    {
+      "fichier": "m4-4.2-testing-tracing.json",
+      "subdomain": "Eval, Testing and Debugging",
+      "nb": 9
     }
   ],
   "questions": [
@@ -1984,6 +1989,96 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-TTR-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TTR-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.2-testing-tracing.json"
     }
   ]
 }

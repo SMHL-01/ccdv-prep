@@ -1,0 +1,393 @@
+{
+  "topic": "m4-4.2-testing-tracing",
+  "source": "prepcourse",
+  "domain": "Eval, Testing and Debugging",
+  "subdomain": "Eval, Testing and Debugging",
+  "weight": 2.6,
+  "corpus_ref": "prepcourse-corpus/m4-4.2-testing-tracing.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/monitoring-usage",
+    "https://code.claude.com/docs/en/debug-your-config",
+    "https://modelcontextprotocol.io/docs/2026-07-28/tools/debugging"
+  ],
+  "questions": [
+    {
+      "id": "PC-TTR-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "le span claude_code.tool porte deux enfants, blocked_on_user et execution, qui separent l attente d une decision de permission du temps passe dans le corps de l outil",
+      "question_en": "A turn was slow. You need to know whether the time went to waiting on a permission decision or to running the tool body. What separates the two?",
+      "question_fr": "Un tour a ete lent. Vous voulez savoir si le temps est parti dans l attente d une decision de permission ou dans l execution de l outil. Qu est-ce qui separe les deux ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The duration_ms on the interaction span"
+        },
+        {
+          "key": "B",
+          "text_en": "The ttft_ms on the llm_request span"
+        },
+        {
+          "key": "C",
+          "text_en": "A tool.output event on the tool span"
+        },
+        {
+          "key": "D",
+          "text_en": "The two children of claude_code.tool"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Chaque prompt utilisateur ouvre un span racine claude_code.interaction ; les appels de modele, les appels d outil et les hooks sont enregistres comme ses enfants. Un span d outil porte lui-meme deux enfants : claude_code.tool.blocked_on_user, qui mesure l attente de la decision de permission et porte les attributs decision (accept ou reject) et source, et claude_code.tool.execution, qui mesure le temps du corps de l outil et porte success et error. Le duration_ms du span claude_code.tool parent couvre les deux ensemble : c est la hierarchie qui transforme « le tour a ete lent » en « l attente etait humaine ».",
+      "distractors_fr": {
+        "A": "Le span d interaction couvre le tour entier, prompt, appels de modele et outils confondus. Il donne la duree totale, jamais sa decomposition.",
+        "B": "Le temps jusqu au premier token mesure la reactivite d un appel de modele. Il ne dit rien de ce qui s est passe autour de l outil.",
+        "C": "L evenement de sortie d outil transporte les corps d entree et de sortie, et seulement si la porte de contenu est ouverte. C est du contenu, pas du temps."
+      },
+      "principe_fr": "Une duree agregee ne localise rien : ce sont les subdivisions du span qui designent l etape coupable.",
+      "doc_ref": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "PC-TTR-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "le tracage par spans est desactive par defaut et demande deux variables ensemble, la telemetrie generale et le drapeau beta de tracage",
+      "question_en": "Span tracing is off by default. Which TWO environment variables must be set to turn it on?",
+      "question_fr": "Le tracage par spans est desactive par defaut. Quelles DEUX variables d environnement faut-il poser pour l activer ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Set CLAUDE_CODE_ENABLE_TELEMETRY to 1"
+        },
+        {
+          "key": "B",
+          "text_en": "Set OTEL_LOG_TOOL_CONTENT and TOOL_DETAILS to 1"
+        },
+        {
+          "key": "C",
+          "text_en": "Set CLAUDE_CODE_ENHANCED_TELEMETRY_BETA to 1"
+        },
+        {
+          "key": "D",
+          "text_en": "Set CLAUDE_CODE_PROPAGATE_TRACEPARENT to 1"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Il faut les deux : CLAUDE_CODE_ENABLE_TELEMETRY=1 pour la telemetrie, et CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1 pour les spans (ENABLE_ENHANCED_TELEMETRY_BETA est aussi accepte). Il reste ensuite a choisir la destination avec OTEL_TRACES_EXPORTER, qui accepte console, otlp ou none. Les traces reutilisent la configuration OTLP commune pour l endpoint, le protocole, les en-tetes et le mTLS. Sur un poste sous reglages manages, Claude Code peut retirer au demarrage les variables OTEL_EXPORTER_OTLP_TRACES_ENDPOINT et OTEL_EXPORTER_OTLP_TRACES_PROTOCOL posees par le developpeur.",
+      "distractors_fr": {
+        "B": "Ces deux portes reintroduisent du contenu expurge dans des spans qui existent deja. Elles n en creent aucun.",
+        "D": "Cette variable sert a propager le contexte de trace derriere un proxy ANTHROPIC_BASE_URL personnalise. Elle suppose le tracage deja actif."
+      },
+      "principe_fr": "Une fonctionnalite en beta se garde derriere deux interrupteurs : celui de la famille, et le sien.",
+      "doc_ref": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "PC-TTR-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "les spans expurgent par defaut texte du prompt, detail des entrees d outil et contenu des outils ; trois variables les reintroduisent une par une",
+      "question_en": "Your spans arrive with the prompt text as <REDACTED> and no tool inputs. What is happening?",
+      "question_fr": "Vos spans arrivent avec le texte du prompt en <REDACTED> et sans les entrees d outil. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The exporter drops attributes over the size limit"
+        },
+        {
+          "key": "B",
+          "text_en": "Managed settings stripped your traces endpoint"
+        },
+        {
+          "key": "C",
+          "text_en": "That is the default, three gates opt content in"
+        },
+        {
+          "key": "D",
+          "text_en": "Detailed beta tracing was never switched on"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Les spans expurgent par defaut le texte du prompt utilisateur, le detail des entrees d outil et le contenu des outils. Trois variables les reintroduisent separement : OTEL_LOG_USER_PROMPTS, OTEL_LOG_TOOL_DETAILS, OTEL_LOG_TOOL_CONTENT. Sur l attribut user_prompt, la valeur reste litteralement <REDACTED> tant que la porte n est pas ouverte, tandis que user_prompt_length reste renseignee. Le defaut est un choix de confidentialite qui reste exploitable : la forme du trace suffit a designer l etape qui a echoue, le contenu ne devient necessaire que pour comprendre pourquoi.",
+      "distractors_fr": {
+        "A": "Une limite de contenu existe bien, 60 Ko par attribut par defaut, mais elle TRONQUE une valeur trop longue. Elle ne la remplace pas par <REDACTED>.",
+        "B": "Des reglages manages peuvent retirer les variables d endpoint et de protocole au demarrage. Cela empeche l export, cela n expurge pas le contenu de spans recus.",
+        "D": "Le tracage beta detaille ajoute le span claude_code.hook et des attributs porteurs de contenu supplementaires. Il ne commande pas l expurgation des trois categories citees."
+      },
+      "principe_fr": "Un trace utile par defaut expose la structure et cache le contenu : la localisation ne demande pas de lire les donnees.",
+      "doc_ref": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "PC-TTR-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Agent SDK et sessions -p lisent un TRACEPARENT entrant et s y rattachent ; les sessions interactives l ignorent deliberement pour ne pas heriter d un contexte ambiant",
+      "question_en": "Your CI wrapper exports TRACEPARENT. The -p runs nest under the caller's trace, but interactive sessions start their own. Why?",
+      "question_fr": "Votre enveloppe de CI exporte TRACEPARENT. Les executions -p s imbriquent sous le trace appelant, mais les sessions interactives demarrent le leur. Pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Interactive sessions ignore inbound TRACEPARENT"
+        },
+        {
+          "key": "B",
+          "text_en": "Interactive sessions export their spans on a delay"
+        },
+        {
+          "key": "C",
+          "text_en": "The wrapper has to export TRACESTATE as well"
+        },
+        {
+          "key": "D",
+          "text_en": "TRACEPARENT only ever reaches child subprocesses"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "En Agent SDK et en session non interactive lancee avec -p, Claude Code lit TRACEPARENT et TRACESTATE dans son propre environnement au demarrage de chaque span d interaction, et claude_code.interaction devient alors un enfant du span appelant. Les sessions interactives ignorent un TRACEPARENT entrant, pour eviter d heriter par accident d une valeur ambiante laissee par un environnement de CI ou de conteneur. Ce n est pas un defaut a corriger, c est la protection qui evite d accrocher toutes vos sessions locales a un trace etranger. Le contexte entrant vaut aussi pour les evenements : en SDK et en -p, chaque enregistrement OTLP porte trace_id et span_id, meme sans exporteur de traces configure.",
+      "distractors_fr": {
+        "B": "L intervalle d export par lot vaut 5 000 ms par defaut et se regle. Il change le moment ou les spans partent, pas le trace auquel ils se rattachent.",
+        "C": "TRACESTATE est bien lu en meme temps que TRACEPARENT, mais son absence n explique pas qu une session interactive refuse tout rattachement.",
+        "D": "La propagation vers les sous-processus Bash existe et va dans l autre sens : c est Claude Code qui pose TRACEPARENT pour ses enfants."
+      },
+      "principe_fr": "Un rattachement automatique de contexte se justifie quand un appelant vous a lance, pas quand un environnement traine une valeur.",
+      "doc_ref": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "PC-TTR-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "un serveur MCP affiche connecte avec zero outil a demarre mais ne renvoie pas de liste d outils : Reconnect depuis /mcp, puis claude --debug mcp pour lire sa sortie stderr",
+      "question_en": "/mcp shows your server as connected but listing zero tools. What does the documentation tell you to do?",
+      "question_fr": "/mcp affiche votre serveur comme connecte mais avec zero outil. Que dit la documentation de faire ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Approve the project server from /mcp"
+        },
+        {
+          "key": "B",
+          "text_en": "Replace relative paths in args with absolute"
+        },
+        {
+          "key": "C",
+          "text_en": "Move the definition out of settings.json"
+        },
+        {
+          "key": "D",
+          "text_en": "Reconnect, then claude --debug mcp for stderr"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Connecte avec zero outil veut dire que le processus a demarre et que la connexion a abouti, mais que le serveur ne renvoie pas de liste d outils. La documentation demande d abord Reconnect depuis /mcp ; si le compte reste a zero, `claude --debug mcp` expose la sortie stderr du serveur, ou l erreur reelle apparait. Chacune des autres causes courantes se distingue precisement par l etat affiche : non approuve, en echec, ou absent. L etat affiche est le premier element de localisation.",
+      "distractors_fr": {
+        "A": "Un serveur de portee projet en attente d approbation reste desactive. Il ne s afficherait pas comme connecte.",
+        "B": "Un chemin relatif dans command ou args fait echouer le demarrage, parce qu il se resout depuis le repertoire de lancement. Le serveur s afficherait en echec.",
+        "C": "settings.json ne lit aucune cle mcpServers, donc un serveur declare la n apparaitrait pas du tout, ni connecte ni en echec."
+      },
+      "principe_fr": "Lire l etat affiche avant de chercher une cause : chaque panne a sa signature dans l interface de diagnostic.",
+      "doc_ref": "https://code.claude.com/docs/en/debug-your-config"
+    },
+    {
+      "id": "PC-TTR-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "le bloc env de settings.json s applique a Claude Code et ne se propage pas aux processus enfants des serveurs MCP : l env doit etre defini par serveur dans .mcp.json",
+      "question_en": "Your MCP server starts, but cannot see the API token you added to the env block of settings.json. Why, and what fixes it?",
+      "question_fr": "Votre serveur MCP demarre, mais ne voit pas le jeton d API que vous avez ajoute au bloc env de settings.json. Pourquoi, et qu est-ce qui corrige cela ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The token needs the ${VAR} expansion syntax there"
+        },
+        {
+          "key": "B",
+          "text_en": "settings.json env skips MCP children, use .mcp.json"
+        },
+        {
+          "key": "C",
+          "text_en": "Managed settings stripped the variable at startup"
+        },
+        {
+          "key": "D",
+          "text_en": "Claude Code reads the env block only at launch"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le bloc env de settings.json s applique a Claude Code, pas aux processus enfants qu il lance pour les serveurs MCP. La variable existe donc bien dans la session et reste invisible du serveur. Le correctif documente est de definir env par serveur dans .mcp.json. Le symptome est trompeur parce que le serveur DEMARRE : rien n echoue au lancement, /mcp le montre connecte, et l erreur ne surgit qu au premier appel d outil qui a besoin du jeton. C est exactement le type de panne qui vit a la jonction entre deux composants qui vont bien chacun de leur cote.",
+      "distractors_fr": {
+        "A": "L expansion ${VAR} sert a lire une variable de VOTRE environnement depuis .mcp.json sans y ecrire de secret en clair. Elle ne fait pas voyager une valeur posee dans settings.json.",
+        "C": "Des reglages manages peuvent retirer certaines variables au demarrage, mais celles qui sont visees sont des variables d export OTLP nommees, pas le bloc env de vos serveurs.",
+        "D": "Le bloc env est relu comme le reste du fichier de reglages. Le probleme n est pas un moment de lecture, c est une frontiere de processus."
+      },
+      "principe_fr": "Une variable d environnement s arrete a la frontiere de processus : sa presence chez le parent ne prouve rien chez l enfant.",
+      "doc_ref": "https://code.claude.com/docs/en/debug-your-config"
+    },
+    {
+      "id": "PC-TTR-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "bissection par session propre : si le probleme disparait, la cause est dans vos fichiers et on les reintroduit un a un ; s il persiste, la cause est hors config utilisateur et projet",
+      "question_en": "The problem survives a clean session: CLAUDE_CONFIG_DIR points at an empty directory and you launched from a directory with no project files. What does that establish?",
+      "question_fr": "Le probleme survit a une session propre : CLAUDE_CONFIG_DIR pointe un repertoire vide et vous avez lance depuis un repertoire sans fichier de projet. Qu est-ce que cela etablit ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A project file is still being picked up somehow"
+        },
+        {
+          "key": "B",
+          "text_en": "The clean directory was not actually in effect"
+        },
+        {
+          "key": "C",
+          "text_en": "The cause sits outside user and project config"
+        },
+        {
+          "key": "D",
+          "text_en": "One of your hooks is registered as a managed hook"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La session propre est une bissection. Si le probleme DISPARAIT, la cause est dans vos vrais fichiers ~/.claude ou .claude de projet, et on les reintroduit un a un, en copiant les fichiers ou en relancant depuis le projet, pour trouver lequel. S il PERSISTE, la cause est ailleurs : les reglages manages continuent de s appliquer parce qu ils vivent a un chemin systeme hors de ~/.claude, et les variables d environnement forment une couche de surcharge supplementaire. L ordre documente est donc /status pour les reglages manages, puis les variables d environnement. `claude --safe-mode` est l etape plus legere en amont : il desactive les personnalisations sans changer de repertoire de configuration.",
+      "distractors_fr": {
+        "A": "Lancer depuis un repertoire sans .claude, sans .mcp.json et sans CLAUDE.md est precisement ce qui ecarte la configuration projet.",
+        "B": "Les ecrans de premiere execution, a commencer par le choix du theme, confirment que le repertoire de configuration propre est bien pris en compte.",
+        "D": "C est une des hypotheses restantes, pas la conclusion. La deduction s arrete plus haut, et /status dit ensuite s il y a des reglages manages en vigueur."
+      },
+      "principe_fr": "Une bissection ne vaut que si on sait lire ses deux issues : disparait, la cause est dedans ; persiste, elle est dehors.",
+      "doc_ref": "https://code.claude.com/docs/en/debug-your-config"
+    },
+    {
+      "id": "PC-TTR-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "le cycle de debogage MCP a deux etapes : developpement initial avec l Inspector, puis test d integration dans le client cible",
+      "question_en": "The documented MCP debugging cycle has two stages. Which TWO items belong to the integration testing stage?",
+      "question_fr": "Le cycle de debogage MCP documente compte deux etapes. Quels DEUX elements appartiennent a l etape de test d integration ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Implementing the core functionality"
+        },
+        {
+          "key": "B",
+          "text_en": "Testing in your target MCP client"
+        },
+        {
+          "key": "C",
+          "text_en": "Adding logging points to the server"
+        },
+        {
+          "key": "D",
+          "text_en": "Monitoring logs and error handling"
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Le cycle documente a deux etapes. Developpement initial : utiliser l Inspector pour les tests de base, implementer la fonctionnalite de fond, ajouter des points de journalisation. Test d integration : tester dans le client MCP cible, surveiller les journaux, verifier la gestion des erreurs. L Inspector est le premier arret et il est agnostique du transport, mais il ne remplace pas le client reel : ce qui reste a exercer, c est la jonction serveur / client. Pour tester un changement, un changement de configuration comme un changement de code serveur demande de relancer le client, et pour Claude Desktop il faut quitter completement l application, fermer la fenetre ne suffit pas.",
+      "distractors_fr": {
+        "A": "Implementer la fonctionnalite de fond appartient au developpement initial, avant tout test d integration.",
+        "C": "Les points de journalisation se posent au developpement initial. Ils servent ensuite pendant le test d integration, mais ils ne le constituent pas."
+      },
+      "principe_fr": "Un composant valide en isolation n a prouve que l isolation : la jonction avec son client reste a exercer.",
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/tools/debugging"
+    },
+    {
+      "id": "PC-TTR-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "sur le transport stdio local, stderr est capture par l hote et stdout porte le protocole : y ecrire un journal perturbe le fonctionnement",
+      "question_en": "Where must a local stdio MCP server send its log lines?",
+      "question_fr": "Ou un serveur MCP stdio local doit-il envoyer ses lignes de journal ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "To stdout, which the host captures"
+        },
+        {
+          "key": "B",
+          "text_en": "To stderr, which the host captures"
+        },
+        {
+          "key": "C",
+          "text_en": "To stdout, prefixed with a log level"
+        },
+        {
+          "key": "D",
+          "text_en": "To a file named in the client config"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Sur le transport stdio local, tous les messages ecrits sur stderr sont captures automatiquement par l application hote. Ecrire sur stdout est explicitement deconseille : stdout porte le protocole, et y meler des lignes de journal en perturbe le fonctionnement. Sur le transport Streamable HTTP, stderr n est PAS capture par le client : il faut alors une agregation de journaux cote serveur ou OpenTelemetry, et l outillage HTTP standard, curl ou le panneau reseau du navigateur, pour inspecter les requetes et les flux SSE. La journalisation par le protocole lui-meme (notifications/message) est depreciee depuis la version 2026-07-28.",
+      "distractors_fr": {
+        "A": "stdout porte les messages du protocole. Y ecrire un journal casse le canal, et c est l avertissement explicite de la documentation.",
+        "C": "Un prefixe de niveau ne change rien : le probleme est le canal employe, pas le format de la ligne ecrite dessus.",
+        "D": "Aucun fichier de journal du serveur n est prevu dans la configuration du client. Le client, lui, ecrit ses propres journaux de son cote."
+      },
+      "principe_fr": "Ne jamais partager un canal entre le protocole et le journal : l un des deux finit par corrompre l autre.",
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/tools/debugging"
+    }
+  ]
+}

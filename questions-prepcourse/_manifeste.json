@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 153,
+  "nbQuestions": 164,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -77,6 +77,11 @@
       "fichier": "m3-3.3-plugins.json",
       "subdomain": "Agentic Customization / Claude Code",
       "nb": 12
+    },
+    {
+      "fichier": "m3-3.4-rag.json",
+      "subdomain": "Claude Application Design",
+      "nb": 11
     }
   ],
   "questions": [
@@ -1609,6 +1614,116 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m3-3.3-plugins.json"
+    },
+    {
+      "id": "PC-RAG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-RAG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.4-rag.json"
     }
   ]
 }

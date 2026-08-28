@@ -1,0 +1,479 @@
+{
+  "topic": "m3-3.4-rag",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Claude Application Design",
+  "weight": 8.6,
+  "corpus_ref": "prepcourse-corpus/m3-3.4-rag.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/embeddings",
+    "https://platform.claude.com/docs/en/build-with-claude/search-results",
+    "https://code.claude.com/docs/en/large-codebases",
+    "https://code.claude.com/docs/en/mcp",
+    "https://code.claude.com/docs/en/permissions"
+  ],
+  "questions": [
+    {
+      "id": "PC-RAG-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Anthropic ne publie pas de modele d embedding : l etape d indexation d un RAG classique passe par un fournisseur tiers",
+      "question_en": "A team is building the indexing step of a classical RAG pipeline on the Claude API. Which embedding model do they call?",
+      "question_fr": "Une equipe construit l etape d indexation d un pipeline RAG classique sur la Claude API. Quel modele d embedding appelle-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The embedding endpoint of the Messages API"
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Haiku, run in an embedding-only mode"
+        },
+        {
+          "key": "C",
+          "text_en": "A third-party model: Anthropic ships none"
+        },
+        {
+          "key": "D",
+          "text_en": "Any Claude model, through the Files API"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation est explicite : Anthropic ne propose pas de modele d embedding. Le choix se porte sur un fournisseur tiers, evalue sur la taille et la specificite de son jeu d entrainement, sa latence d inference et ses possibilites de personnalisation ; Voyage AI est le fournisseur que la documentation detaille.",
+      "distractors_fr": {
+        "A": "La Messages API n expose pas d endpoint d embedding. Les vecteurs ne font pas partie de sa surface.",
+        "B": "Aucun modele Claude n a de mode embedding. Generer du texte et vectoriser du texte sont deux familles de modeles distinctes.",
+        "D": "La Files API stocke et reference des fichiers. Elle ne produit aucune representation vectorielle."
+      },
+      "principe_fr": "Verifier ce que la plateforme fournit reellement avant de dessiner un pipeline autour d elle.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/embeddings"
+    },
+    {
+      "id": "PC-RAG-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le champ source d un bloc search_result accepte tout identifiant stable, pas seulement une URL",
+      "question_en": "An internal knowledge base has no public URLs. Can its articles still be returned as `search_result` blocks with citations?",
+      "question_fr": "Une base de connaissances interne n a pas d URL publiques. Ses articles peuvent-ils quand meme etre renvoyes en blocs `search_result` avec citations ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Yes: any stable identifier works as `source`"
+        },
+        {
+          "key": "B",
+          "text_en": "No: `source` is validated as a reachable URL"
+        },
+        {
+          "key": "C",
+          "text_en": "Yes, but citations must then stay disabled"
+        },
+        {
+          "key": "D",
+          "text_en": "Yes, if each article is uploaded as a file first"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Les champs obligatoires d un bloc `search_result` sont `type`, `source`, `title` et `content`. La documentation precise que `source` accepte n importe quelle chaine stable : une URL, ou un identifiant interne du type `kb://article-1234`. Les citations renvoyees a l utilisateur reprennent la source et le titre fournis.",
+      "distractors_fr": {
+        "B": "Aucune resolution reseau n a lieu sur `source`. Le champ est une etiquette d attribution, pas une adresse que l API irait chercher.",
+        "C": "Rien ne lie la forme de `source` a l activation des citations. Les deux reglages sont independants.",
+        "D": "Le contenu du bloc `search_result` voyage dans la requete. Aucun televersement prealable n est requis."
+      },
+      "principe_fr": "Une attribution n a pas besoin d etre resoluble, elle a besoin d etre stable.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+    },
+    {
+      "id": "PC-RAG-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Les citations sur les blocs search_result sont desactivees par defaut et le reglage doit etre uniforme dans toute la requete",
+      "question_en": "Search results are returned correctly but no citation appears in the answer. What should be checked first?",
+      "question_fr": "Les resultats de recherche reviennent correctement mais aucune citation n apparait dans la reponse. Que faut-il verifier en premier ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "That the request carries the citations beta header"
+        },
+        {
+          "key": "B",
+          "text_en": "That each result's `content` holds a single block"
+        },
+        {
+          "key": "C",
+          "text_en": "That the model in use is not a Haiku generation"
+        },
+        {
+          "key": "D",
+          "text_en": "That `citations.enabled` is set on every result"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Les citations sont desactivees par defaut sur un bloc `search_result` : il faut poser explicitement `\"citations\": {\"enabled\": true}`. Le reglage est de plus tout-ou-rien a l echelle de la requete : melanger des resultats avec et sans citations produit une erreur.",
+      "distractors_fr": {
+        "A": "Aucun en-tete beta n est requis : les blocs `search_result` font partie de la Messages API standard.",
+        "B": "Le tableau `content` accepte plusieurs blocs de texte. Leur nombre n a aucun effet sur les citations.",
+        "C": "Seul Claude Haiku 3 fait exception. Toutes les autres generations actives supportent les citations sur les resultats de recherche."
+      },
+      "principe_fr": "Un comportement absent par defaut ne se diagnostique pas comme une panne.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+    },
+    {
+      "id": "PC-RAG-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Deux facons de fournir des blocs search_result : renvoyes par un outil custom, ou places directement en contenu de message utilisateur",
+      "question_en": "In how many ways can `search_result` blocks reach Claude? Name the TWO supported paths.",
+      "question_fr": "De combien de facons des blocs `search_result` peuvent-ils parvenir a Claude ? Citez les DEUX voies supportees.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Attached to the system prompt as a corpus"
+        },
+        {
+          "key": "B",
+          "text_en": "Returned by one of your own custom tools"
+        },
+        {
+          "key": "C",
+          "text_en": "Placed as content in a user message directly"
+        },
+        {
+          "key": "D",
+          "text_en": "Fetched by the API from a source URL given"
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "Deux voies sont documentees. Un outil que vous ecrivez renvoie des blocs `search_result` : c est le RAG dynamique, ou la recherche a lieu pendant le tour. Ou bien les blocs sont poses directement en contenu d un message utilisateur : c est le cas du contenu pre-recupere ou mis en cache. Dans les deux cas Claude cite automatiquement si les citations sont actives.",
+      "distractors_fr": {
+        "A": "Le prompt systeme ne recoit pas de blocs `search_result`. Ils voyagent dans les messages.",
+        "D": "L API ne va rien chercher : le champ `source` etiquette le contenu, il ne declenche aucune requete sortante."
+      },
+      "principe_fr": "La meme structure de donnees sert la recherche a la volee et le contenu deja rassemble.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+    },
+    {
+      "id": "PC-RAG-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le tableau content d un bloc search_result n accepte que des blocs de texte : ni image ni autre media",
+      "question_en": "A retrieval layer returns scanned invoice pages. What does the `content` array of a `search_result` block accept?",
+      "question_fr": "Une couche de recherche renvoie des pages de factures scannees. Qu accepte le tableau `content` d un bloc `search_result` ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Text blocks only; no image or other media"
+        },
+        {
+          "key": "B",
+          "text_en": "Text and image blocks, as a user message does"
+        },
+        {
+          "key": "C",
+          "text_en": "Any block type the Messages API defines today"
+        },
+        {
+          "key": "D",
+          "text_en": "Text, plus a document block per scanned page"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Chaque element de `content` doit etre un bloc de type `text` portant une chaine non vide. Les resultats de recherche ne transportent que du texte : images et autres medias ne sont pas supportes a l interieur du bloc. Des pages scannees doivent donc etre transcrites, ou passer par un autre mecanisme.",
+      "distractors_fr": {
+        "B": "C est justement la difference avec un message utilisateur ordinaire, qui accepte des blocs image.",
+        "C": "Le schema est restreint : chaque element de `content` doit etre un bloc `text` avec une chaine non vide.",
+        "D": "Aucun bloc `document` n est admis a l interieur d un resultat de recherche."
+      },
+      "principe_fr": "Le canal d attribution est textuel : ce qui doit etre cite doit d abord etre du texte.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+    },
+    {
+      "id": "PC-RAG-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Quand l organisation exploite deja un index de recherche de code, l exposer en outil MCP pour que Claude l interroge au lieu de lire les fichiers",
+      "question_en": "An organization already runs a code search index over its monorepo. How should Claude Code use it instead of reading files?",
+      "question_fr": "Une organisation exploite deja un index de recherche de code sur son monorepo. Comment Claude Code doit-il s en servir plutot que de lire les fichiers ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "By dumping the index summary into CLAUDE.md"
+        },
+        {
+          "key": "B",
+          "text_en": "By committing the index next to the source tree"
+        },
+        {
+          "key": "C",
+          "text_en": "By granting a Read rule over the index folder"
+        },
+        {
+          "key": "D",
+          "text_en": "By exposing the index as a tool on an MCP server"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La documentation sur les grands depots recommande de deplacer le contenu de reference hors du contexte toujours charge, vers des mecanismes qui se chargent a la demande. Pour un index de recherche de code ou un index RAG deja en place, la forme recommandee est un outil sur un serveur MCP : Claude interroge l index au lieu de lire les fichiers directement.",
+      "distractors_fr": {
+        "A": "CLAUDE.md est charge en permanence : y verser un resume d index gonfle chaque requete sans rendre l index interrogeable.",
+        "B": "Committer l index le rend lisible fichier par fichier, ce qui ramene exactement la lecture directe que l on cherche a eviter.",
+        "C": "Une regle de lecture ouvre un acces, elle ne fournit pas de requete. Claude parcourrait encore des fichiers."
+      },
+      "principe_fr": "Une capacite deja construite s expose, elle ne se recopie pas dans le contexte.",
+      "doc_ref": "https://code.claude.com/docs/en/large-codebases"
+    },
+    {
+      "id": "PC-RAG-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Precedence des portees MCP : local prime sur project qui prime sur user, et l entree retenue est prise entierement, sans fusion de champs",
+      "question_en": "The same server name exists in `.mcp.json` with three tools and in local scope with a different URL. What does Claude Code connect to?",
+      "question_fr": "Le meme nom de serveur figure dans `.mcp.json` avec trois outils et en portee locale avec une autre URL. A quoi Claude Code se connecte-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Both entries, listed under distinct names"
+        },
+        {
+          "key": "B",
+          "text_en": "The local entry only, taken as a whole"
+        },
+        {
+          "key": "C",
+          "text_en": "The project entry, shared setups winning"
+        },
+        {
+          "key": "D",
+          "text_en": "A merge: local URL, project tool list"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Quand un meme serveur est defini a plusieurs endroits, Claude Code s y connecte une seule fois en retenant la source la plus prioritaire : local, puis project, puis user, puis les serveurs fournis par un plugin, puis les connecteurs claude.ai. L entree retenue est utilisee integralement et les champs ne sont pas fusionnes entre portees.",
+      "distractors_fr": {
+        "A": "Les trois portees rapprochent les doublons par nom : un seul serveur est connecte, pas deux.",
+        "C": "La precedence va dans l autre sens. La portee locale est la plus prioritaire, precisement parce qu elle est la plus proche de l utilisateur.",
+        "D": "Aucune fusion n a lieu entre portees. C est le piege : on croit surcharger un champ, on remplace l entree entiere."
+      },
+      "principe_fr": "Une precedence qui remplace l entree entiere ne se raisonne pas comme une surcharge champ par champ.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "id": "PC-RAG-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Une variable d environnement absente et sans valeur par defaut dans .mcp.json ne bloque pas le chargement : le texte ${VAR} part tel quel",
+      "question_en": "A committed `.mcp.json` sends `Bearer ${API_KEY}`. On a machine where the variable is unset, what happens?",
+      "question_fr": "Un `.mcp.json` committe envoie `Bearer ${API_KEY}`. Sur un poste ou la variable n est pas definie, que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It loads and sends the raw `${API_KEY}` text"
+        },
+        {
+          "key": "B",
+          "text_en": "Claude Code refuses to load that server entry"
+        },
+        {
+          "key": "C",
+          "text_en": "The header is dropped and the call goes on"
+        },
+        {
+          "key": "D",
+          "text_en": "Startup halts until the variable is supplied"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "L expansion `${VAR}` fonctionne dans `command`, `args`, `env`, `url` et `headers`. Si la variable referencee n est pas definie et n a pas de valeur par defaut, la configuration se charge quand meme : Claude Code signale une variable manquante dans la sortie de `claude mcp list` et transmet le texte `${VAR}` non substitue. La parade est de definir la variable, ou d ecrire une valeur de repli `${VAR:-defaut}`.",
+      "distractors_fr": {
+        "B": "Le chargement n est pas bloque. C est ce qui rend le symptome deroutant : le serveur apparait, puis echoue a l authentification.",
+        "C": "L en-tete est bien envoye. Il porte simplement une valeur litterale qui n a aucun sens pour le serveur.",
+        "D": "Rien n arrete le demarrage. Un avertissement de variable manquante apparait dans `claude mcp list`, sans plus."
+      },
+      "principe_fr": "Un echec silencieux au demarrage se paie a la premiere requete, loin de sa cause.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "id": "PC-RAG-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un .mcp.json partageable ne contient jamais de secret en clair : l expansion couvre headers et url, et la syntaxe :- fournit un repli",
+      "question_en": "A team wants one `.mcp.json` committed for everyone, with no secret in the file. Which TWO facts make this possible?",
+      "question_fr": "Une equipe veut un seul `.mcp.json` committe pour tous, sans secret dans le fichier. Quels DEUX faits le rendent possible ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Claude Code encrypts committed header values"
+        },
+        {
+          "key": "B",
+          "text_en": "Secrets may be inlined if the repo is private"
+        },
+        {
+          "key": "C",
+          "text_en": "Expansion covers `url` and `headers`, not just `env`"
+        },
+        {
+          "key": "D",
+          "text_en": "`${VAR:-default}` falls back when the var is unset"
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "L expansion de variables d environnement s applique a `command`, `args`, `env`, `url` et `headers` : un en-tete d autorisation s ecrit donc `\"Bearer ${API_KEY}\"` et le fichier committe ne porte que l adresse du serveur. La syntaxe `${VAR:-defaut}` couvre en plus les differences de poste, ce qui evite les copies locales divergentes du fichier.",
+      "distractors_fr": {
+        "A": "Aucun chiffrement n intervient. Ce qui est ecrit dans le fichier est ce qui part sur le reseau.",
+        "B": "Un depot prive reste un depot : le secret entre dans l historique et se propage a chaque clone et a chaque runner de CI."
+      },
+      "principe_fr": "Le fichier de configuration porte l adresse, l environnement porte le secret.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "id": "PC-RAG-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Une regle allow sur un outil MCP doit etre ancree apres mcp__serveur__ : un glob non ancre est ignore avec un avertissement, alors qu il fonctionne en deny",
+      "question_en": "An allow rule `mcp__*` was added to cut prompts across every MCP server, and nothing changed. Why?",
+      "question_fr": "Une regle allow `mcp__*` a ete ajoutee pour reduire les invites sur tous les serveurs MCP, et rien n a change. Pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Allow rules never apply to MCP tools at all"
+        },
+        {
+          "key": "B",
+          "text_en": "An allow glob must name one literal server"
+        },
+        {
+          "key": "C",
+          "text_en": "A managed deny rule silently outranks it here"
+        },
+        {
+          "key": "D",
+          "text_en": "The pattern needs a trailing tool segment too"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les globs ne sont admis dans une regle allow qu apres un prefixe litteral `mcp__<serveur>__` : `mcp__puppeteer__*` et `mcp__github__get_*` fonctionnent, alors qu un glob non ancre comme `mcp__*` est ignore avec un avertissement et n auto-approuve rien. La dissymetrie est voulue : cote deny, `mcp__*` bloque bien tous les outils MCP de tous les serveurs.",
+      "distractors_fr": {
+        "A": "Les regles allow s appliquent bien aux outils MCP : `mcp__puppeteer__*` auto-approuve tous les outils de ce serveur.",
+        "C": "Rien dans l enonce n indique une regle deny. Et une regle deny active produirait des refus, pas l absence d effet decrite.",
+        "D": "Le segment d outil peut etre un glob. C est le segment de serveur qui doit etre litteral."
+      },
+      "principe_fr": "Une regle qui elargit doit designer sa cible ; une regle qui restreint peut ratisser large.",
+      "doc_ref": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "PC-RAG-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude Application Design",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Claude Code plafonne par defaut la sortie d un outil MCP a 25 000 tokens, avec avertissement au-dela de 10 000",
+      "question_en": "By default, Claude Code caps the output of a single MCP tool call at how many tokens?",
+      "question_fr": "Par defaut, Claude Code plafonne la sortie d un appel d outil MCP a combien de tokens ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "About 10,000 tokens, then it warns you"
+        },
+        {
+          "key": "B",
+          "text_en": "About 4,000 tokens, as for a text block"
+        },
+        {
+          "key": "C",
+          "text_en": "About 25,000 tokens, raisable by env var"
+        },
+        {
+          "key": "D",
+          "text_en": "No cap: only a warning is ever emitted"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Claude Code affiche un avertissement des que la sortie d un outil MCP depasse 10 000 tokens et la limite par defaut a 25 000 tokens. La variable d environnement `MAX_MCP_OUTPUT_TOKENS` releve le plafond ; le seuil d avertissement, lui, est fixe.",
+      "distractors_fr": {
+        "A": "10 000 tokens est le seuil de l avertissement, qui est fixe. Le plafond effectif est plus haut.",
+        "B": "Aucun plafond de cet ordre ne s applique aux sorties d outil. Ce chiffre ne correspond a rien dans ce mecanisme.",
+        "D": "La sortie est bel et bien tronquee, et pas seulement signalee."
+      },
+      "principe_fr": "Un outil MCP bavard est un poste de cout : le plafond est un garde-fou, pas une contrainte a contourner par reflexe.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    }
+  ]
+}

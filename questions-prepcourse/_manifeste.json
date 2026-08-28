@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 208,
+  "nbQuestions": 216,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -102,6 +102,11 @@
       "fichier": "m4-4.3-tool-errors.json",
       "subdomain": "Claude API Mechanics",
       "nb": 10
+    },
+    {
+      "fichier": "m4-4.4-model-selection.json",
+      "subdomain": "Model Selection and Tradeoffs",
+      "nb": 8
     }
   ],
   "questions": [
@@ -2184,6 +2189,86 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-MSL-001",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-004",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-006",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-007",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
+    },
+    {
+      "id": "PC-MSL-008",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Model Selection and Tradeoffs",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.4-model-selection.json"
     }
   ]
 }

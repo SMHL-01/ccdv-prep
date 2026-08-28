@@ -1,0 +1,437 @@
+{
+  "topic": "m4-4.3-tool-errors",
+  "source": "prepcourse",
+  "domain": "Applications and Integration",
+  "subdomain": "Claude API Mechanics",
+  "weight": 6.8,
+  "corpus_ref": "prepcourse-corpus/m4-4.3-tool-errors.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner",
+    "https://platform.claude.com/docs/en/api/errors",
+    "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+    "https://platform.claude.com/docs/en/api/rate-limits"
+  ],
+  "questions": [
+    {
+      "id": "PC-TER-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le contenu d un tool_result en erreur doit dire ce qui a echoue et quoi tenter ensuite, pas un marqueur generique",
+      "question_en": "A client tool fails and your code returns a tool_result with is_error set to true. What does the documentation advise about the message you place in content?",
+      "question_fr": "Un outil client echoue et votre code renvoie un tool_result avec is_error a true. Que conseille la documentation sur le message place dans content ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "State what went wrong and what Claude should try next"
+        },
+        {
+          "key": "B",
+          "text_en": "Send a generic marker such as failed and log the rest"
+        },
+        {
+          "key": "C",
+          "text_en": "Send the raw stack trace so Claude can locate the fault"
+        },
+        {
+          "key": "D",
+          "text_en": "Leave content empty since is_error already signals it"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La documentation demande d ecrire des messages d erreur instructifs : plutot que failed, indiquer ce qui s est passe et ce que Claude devrait tenter, par exemple Rate limit exceeded. Retry after 60 seconds. Claude dispose alors du contexte necessaire pour se rattraper ou changer d approche sans deviner.",
+      "distractors_fr": {
+        "B": "La documentation cite explicitement failed comme contre-exemple : un marqueur generique oblige Claude a deviner.",
+        "C": "La trace d appels n est pas ce que la documentation demande ; elle demande la cause et la suite a tenter.",
+        "D": "is_error signale qu il y a eu erreur, pas laquelle : sans contenu Claude n a rien pour s adapter."
+      },
+      "principe_fr": "Une erreur renvoyee au modele est une instruction de reprise : elle doit porter la cause et la suite.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+    },
+    {
+      "id": "PC-TER-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Les erreurs d outils serveur sont traitees par Claude : contrairement aux outils client, aucun is_error n est a renvoyer",
+      "question_en": "Your app uses a client tool and the web search server tool. The web search call fails. What does the documentation say you have to do?",
+      "question_fr": "Votre application utilise un outil client et l outil serveur de recherche web. L appel de recherche echoue. Que dit la documentation sur ce que vous devez faire ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Return a tool_result with is_error true for that tool"
+        },
+        {
+          "key": "B",
+          "text_en": "Resend the request with the server tool left out"
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing: Claude handles the error and adapts its reply"
+        },
+        {
+          "key": "D",
+          "text_en": "Read the error code and call a client tool instead"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Pour les outils serveur, la documentation indique que Claude gere les erreurs de maniere transparente et fournit une reponse alternative ou une explication. La phrase est explicite : contrairement aux outils client, vous n avez pas a traiter de resultats is_error pour les outils serveur.",
+      "distractors_fr": {
+        "A": "C est la conduite a tenir pour un outil client. La documentation precise qu elle n a pas lieu d etre pour les outils serveur.",
+        "B": "Retirer l outil du tableau tools n est pas la reponse documentee et casserait le cache de la tete du tableau.",
+        "D": "Les codes d erreur de recherche web servent au diagnostic, pas a declencher un basculement que vous coderiez."
+      },
+      "principe_fr": "Le partage de responsabilite suit qui execute : ce que Claude execute, Claude le rattrape.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+    },
+    {
+      "id": "PC-TER-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "ANTHROPIC_LOG a info ou debug active la journalisation du SDK (Python, TypeScript, Java)",
+      "question_en": "Which environment variable turns on the SDK's own logging of request and response detail?",
+      "question_fr": "Quelle variable d environnement active la journalisation du detail des requetes et reponses par le SDK ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "ANTHROPIC_DEBUG set to 1 or to true"
+        },
+        {
+          "key": "B",
+          "text_en": "ANTHROPIC_LOG set to info or to debug"
+        },
+        {
+          "key": "C",
+          "text_en": "ANTHROPIC_TRACE set to verbose"
+        },
+        {
+          "key": "D",
+          "text_en": "ANTHROPIC_SDK_LOG set to enabled"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation du tool runner indique que les SDK Python, TypeScript et Java lisent ANTHROPIC_LOG pour activer la journalisation du SDK, qui inclut le detail des requetes et des reponses : info pour le niveau courant, debug pour un niveau plus verbeux. Les SDK Go, Ruby, C# et PHP ne lisent pas cette variable.",
+      "distractors_fr": {
+        "A": "Nom plausible mais absent de la documentation : la variable lue est ANTHROPIC_LOG.",
+        "C": "Le tracage distribue passe par OpenTelemetry, pas par une variable ANTHROPIC_TRACE.",
+        "D": "Aucune variable de ce nom n est documentee pour les SDK."
+      },
+      "principe_fr": "Avant d instrumenter soi-meme, verifier ce que le SDK sait deja journaliser.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner"
+    },
+    {
+      "id": "PC-TER-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Sur un appel d outil invalide renvoye en erreur, Claude tente deux a trois corrections avant de s excuser aupres de l utilisateur",
+      "question_en": "Claude calls a tool without a required parameter and you answer with a tool_result flagged as an error. How many corrective attempts does the documentation say Claude makes before apologizing to the user?",
+      "question_fr": "Claude appelle un outil sans un parametre obligatoire et vous repondez par un tool_result marque en erreur. Combien de tentatives de correction la documentation prete-t-elle a Claude avant qu il ne s excuse aupres de l utilisateur ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "One more attempt, and then it apologizes"
+        },
+        {
+          "key": "B",
+          "text_en": "Two to three more attempts with corrections"
+        },
+        {
+          "key": "C",
+          "text_en": "Five more attempts, spaced out by backoff"
+        },
+        {
+          "key": "D",
+          "text_en": "It keeps retrying until the call validates"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation ecrit que si une demande d outil est invalide ou incomplete, Claude reessaiera deux a trois fois en se corrigeant avant de presenter des excuses a l utilisateur. Renvoyer un tool_result en erreur nommant le parametre manquant lui donne de quoi se corriger dans ces tentatives.",
+      "distractors_fr": {
+        "A": "Sous-estime la marge documentee : une seule reprise ne correspond pas au comportement decrit.",
+        "C": "Cinq tentatives espacees par backoff decrit la reprise HTTP du SDK, pas la correction d un appel d outil.",
+        "D": "Il n y a pas de boucle infinie : la documentation borne le comportement puis prevoit des excuses."
+      },
+      "principe_fr": "Connaitre la marge de correction du modele evite d ajouter une boucle de reprise par-dessus.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls"
+    },
+    {
+      "id": "PC-TER-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Le tool runner convertit l exception en tool_result is_error true portant le message de l exception, sans la trace d appels",
+      "question_en": "A tool raises an exception inside the tool runner. Select the TWO statements that describe the tool_result the runner sends to Claude.",
+      "question_fr": "Un outil leve une exception dans le tool runner. Choisissez les DEUX affirmations qui decrivent le tool_result envoye a Claude.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It is flagged with is_error set to true and passed on"
+        },
+        {
+          "key": "B",
+          "text_en": "It contains the full stack trace captured at raise time"
+        },
+        {
+          "key": "C",
+          "text_en": "It carries the exception message, in Python its type"
+        },
+        {
+          "key": "D",
+          "text_en": "It is dropped so the loop continues on clean data"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La documentation du tool runner dit que lorsqu un outil leve une exception, le runner l attrape et renvoie l erreur a Claude sous forme de tool_result avec is_error a true. Le resultat porte le message de l exception, et en Python son type en plus, mais pas la trace d appels complete.",
+      "distractors_fr": {
+        "B": "La documentation exclut explicitement la trace d appels du resultat d outil ; en Python elle part dans les journaux, pas vers Claude.",
+        "D": "C est le comportement a proscrire : un resultat vide est lu par le modele comme une donnee valide."
+      },
+      "principe_fr": "Ce qui remonte au modele est le message ; la trace reste un objet de journalisation.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner"
+    },
+    {
+      "id": "PC-TER-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Pour arreter la boucle des la premiere erreur d outil, inspecter le resultat via la methode de reponse d outil avant envoi",
+      "question_en": "You want the run to stop as soon as a tool fails rather than let Claude react to the error. What do the Python and TypeScript tool runners offer?",
+      "question_fr": "Vous voulez que l execution s arrete des qu un outil echoue, au lieu de laisser Claude reagir a l erreur. Que proposent les tool runners Python et TypeScript ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A max_tool_errors option on the runner constructor"
+        },
+        {
+          "key": "B",
+          "text_en": "A stop_on_error flag passed alongside the tools array"
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing: raise inside the tool body, which ends the run"
+        },
+        {
+          "key": "D",
+          "text_en": "The tool response method, to inspect results before send"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La documentation indique que par defaut les erreurs d outil repartent vers Claude, et que pour les traiter autrement les SDK Python et TypeScript exposent la methode de reponse d outil (generate_tool_call_response en Python, generateToolResponse en TypeScript) : elle donne acces au resultat avant envoi, ou l on peut lever pour arreter la boucle ou seulement journaliser. Les autres SDK n exposent pas ce point d accroche.",
+      "distractors_fr": {
+        "A": "Aucune option de ce nom n existe : le compte d erreurs tolerees n est pas un parametre du runner.",
+        "B": "Aucun drapeau de ce type n accompagne le tableau tools ; l interception se fait cote boucle.",
+        "C": "Lever depuis le corps de l outil produit justement un tool_result is_error qui repart vers Claude : la boucle continue."
+      },
+      "principe_fr": "Choisir qui reagit a l erreur, le modele ou la boucle, est une decision d architecture, pas un reglage.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner"
+    },
+    {
+      "id": "PC-TER-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Hors Python, aucun SDK ne journalise un outil en echec : le message part vers Claude et vos journaux restent muets",
+      "question_en": "Your Java tool runner works and Claude reports that a tool failed, yet your application logs say nothing about it. What explains this?",
+      "question_fr": "Votre tool runner Java fonctionne et Claude signale qu un outil a echoue, pourtant vos journaux applicatifs n en disent rien. Qu est-ce qui l explique ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The runner logs a failure only when ANTHROPIC_LOG is set"
+        },
+        {
+          "key": "B",
+          "text_en": "Only the Python SDK logs a failed tool; log it yourself"
+        },
+        {
+          "key": "C",
+          "text_en": "Tool errors are logged on the API side, not by the client"
+        },
+        {
+          "key": "D",
+          "text_en": "Java posts the failure to Claude before your handler runs"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation est explicite : hors Python, aucun SDK ne journalise un outil en echec. Le SDK Python trace l exception complete, trace d appels comprise, via le module logging standard. Ailleurs, l exception est convertie en tool_result is_error et part vers Claude sans laisser de trace locale : pour savoir pourquoi un outil a echoue, il faut l attraper et la journaliser dans la fonction d outil avant de la renvoyer ou de la relancer.",
+      "distractors_fr": {
+        "A": "ANTHROPIC_LOG couvre le detail des requetes et reponses du SDK, pas la journalisation d un outil en echec.",
+        "C": "Rien n indique que l API journalise a votre place le contenu d un resultat d outil.",
+        "D": "L exception est bien attrapee apres l execution de votre code d outil ; ce n est pas une question de sequence."
+      },
+      "principe_fr": "Une erreur visible du modele n est pas une erreur visible de l exploitant : les deux chemins se cablent separement.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner"
+    },
+    {
+      "id": "PC-TER-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Deux couches de reprise multiplient les tentatives : soit le SDK couvre le transitoire, soit on regle son option de tentatives et on prend la main",
+      "question_en": "Your wrapper retries every failed call five times while the official SDK retries underneath it. Select the TWO placements the documentation supports.",
+      "question_fr": "Votre enveloppe reessaie cinq fois chaque appel echoue pendant que le SDK officiel reessaie en dessous. Choisissez les DEUX placements que la documentation autorise.",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Let the SDK cover transient failures, you cover fallbacks"
+        },
+        {
+          "key": "B",
+          "text_en": "Keep both layers so a hard failure gets ten attempts"
+        },
+        {
+          "key": "C",
+          "text_en": "Retry in the wrapper only when retry-after is missing"
+        },
+        {
+          "key": "D",
+          "text_en": "Set the client maximum-retries option and own the path"
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "La documentation des erreurs indique que les SDK officiels reessaient automatiquement les echecs transitoires (erreurs de connexion, limites de debit, erreurs serveur 5xx) avec un backoff exponentiel, deux fois par defaut, en honorant l en-tete retry-after quand il est present, et que chaque client accepte une option de nombre maximal de tentatives pour regler ou desactiver ce comportement. Il y a donc deux placements coherents : laisser le SDK traiter le transitoire et reserver son propre code aux replis applicatifs, ou baisser les tentatives du SDK et assumer tout le chemin.",
+      "distractors_fr": {
+        "B": "C est exactement le defaut a eviter : les tentatives se multiplient contre la meme limite au lieu d etre plafonnees.",
+        "C": "Le SDK honore deja retry-after quand il est present ; conditionner sa propre boucle a son absence laisse les deux couches actives."
+      },
+      "principe_fr": "Une reprise doit avoir un seul proprietaire : deux couches qui s ignorent multiplient les tentatives.",
+      "doc_ref": "https://platform.claude.com/docs/en/api/errors"
+    },
+    {
+      "id": "PC-TER-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Un refus est renvoye en HTTP 200 : un classifieur d erreurs fonde sur le code de statut ne le voit jamais passer",
+      "question_en": "Your error handler classifies failures by HTTP status code. Which failure will it never see, and why?",
+      "question_fr": "Votre gestionnaire d erreurs classe les echecs par code de statut HTTP. Quel echec ne verra-t-il jamais passer, et pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A 529 overload, since the body carries no status field"
+        },
+        {
+          "key": "B",
+          "text_en": "A 504 timeout, since the client gives up before the reply"
+        },
+        {
+          "key": "C",
+          "text_en": "A refusal, since safety classifiers answer with a 200"
+        },
+        {
+          "key": "D",
+          "text_en": "A 413 too large, since Cloudflare answers before the API"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation des stop_reason ecrit que les classifieurs de securite renvoient le stop_reason refusal dans une reponse HTTP 200 normale, pas dans une erreur. Le refus n a donc pas de code d erreur a classer : il faut le lire sur stop_reason. Il est par ailleurs terminal, puisque le modele a pris une decision de contenu et non subi un incident transitoire : rejouer la requete identique ne change rien.",
+      "distractors_fr": {
+        "A": "Un 529 est bien un code de statut : le classifieur le voit et le range parmi les cas reessayables.",
+        "B": "Un abandon cote client remonte comme erreur de connexion ou de delai, que le SDK sait deja nommer.",
+        "D": "Le 413 reste un code de statut, meme rendu en amont : le classifieur le recoit comme les autres."
+      },
+      "principe_fr": "Tous les echecs ne sont pas des erreurs HTTP : certains arrivent dans une reponse reussie.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+    },
+    {
+      "id": "PC-TER-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 6.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "retry-after donne un nombre de secondes a attendre et toute reprise anticipee echouera",
+      "question_en": "A rate-limited response carries a retry-after header. What does the documentation say about it?",
+      "question_fr": "Une reponse limitee en debit porte un en-tete retry-after. Que dit la documentation a son sujet ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It gives an RFC 3339 timestamp for the limit reset"
+        },
+        {
+          "key": "B",
+          "text_en": "It is advisory, so jittered backoff may override it"
+        },
+        {
+          "key": "C",
+          "text_en": "It shows up only when a workspace limit is the binding one"
+        },
+        {
+          "key": "D",
+          "text_en": "It gives seconds to wait, and an earlier retry will fail"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le tableau des en-tetes de reponse decrit retry-after comme le nombre de secondes a attendre avant de pouvoir reessayer, en precisant que des reprises anticipees echoueront. C est ce qui en fait la valeur d attente faisant autorite quand elle est presente, le backoff exponentiel ne servant que de solution de repli en son absence.",
+      "distractors_fr": {
+        "A": "Le format RFC 3339 est celui des en-tetes de reinitialisation anthropic-ratelimit-*-reset, pas celui de retry-after.",
+        "B": "La documentation en fait une valeur a respecter, pas une indication : reessayer plus tot echoue.",
+        "C": "Aucune condition de ce type : l en-tete accompagne la reponse de limitation quelle que soit la limite atteinte."
+      },
+      "principe_fr": "Quand le service dit quand revenir, ce n est pas une estimation a corriger.",
+      "doc_ref": "https://platform.claude.com/docs/en/api/rate-limits"
+    }
+  ]
+}

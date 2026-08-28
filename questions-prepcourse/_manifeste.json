@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 198,
+  "nbQuestions": 208,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -97,6 +97,11 @@
       "fichier": "m4-4.2-testing-tracing.json",
       "subdomain": "Eval, Testing and Debugging",
       "nb": 9
+    },
+    {
+      "fichier": "m4-4.3-tool-errors.json",
+      "subdomain": "Claude API Mechanics",
+      "nb": 10
     }
   ],
   "questions": [
@@ -2079,6 +2084,106 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m4-4.2-testing-tracing.json"
+    },
+    {
+      "id": "PC-TER-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
+    },
+    {
+      "id": "PC-TER-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.3-tool-errors.json"
     }
   ]
 }

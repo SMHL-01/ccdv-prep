@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 177,
+  "nbQuestions": 189,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -87,6 +87,11 @@
       "fichier": "m3-3.5-enterprise.json",
       "subdomain": "Identity, Secrets and Key Management / AI Application Security",
       "nb": 13
+    },
+    {
+      "fichier": "m4-4.1-evals.json",
+      "subdomain": "Eval, Testing and Debugging",
+      "nb": 12
     }
   ],
   "questions": [
@@ -1859,6 +1864,126 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-EVL-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-010",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-011",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
+    },
+    {
+      "id": "PC-EVL-012",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m4-4.1-evals.json"
     }
   ]
 }

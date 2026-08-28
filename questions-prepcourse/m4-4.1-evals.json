@@ -1,0 +1,518 @@
+{
+  "topic": "m4-4.1-evals",
+  "source": "prepcourse",
+  "domain": "Eval, Testing and Debugging",
+  "subdomain": "Eval, Testing and Debugging",
+  "weight": 2.6,
+  "corpus_ref": "prepcourse-corpus/m4-4.1-evals.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+    "https://code.claude.com/docs/en/skills"
+  ],
+  "questions": [
+    {
+      "id": "PC-EVL-001",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "un critere de succes doit etre specifique et mesurable : meme la surete se quantifie, un objectif flou ne se verifie pas",
+      "question_en": "Your design document states that the feature must produce 'safe outputs'. Why is that unusable as a success criterion?",
+      "question_fr": "Votre document de conception dit que la fonctionnalite doit produire des « sorties sures ». Pourquoi ce critere est-il inutilisable ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It states no threshold anyone can measure"
+        },
+        {
+          "key": "B",
+          "text_en": "Safety cannot be an eval criterion at all"
+        },
+        {
+          "key": "C",
+          "text_en": "It needs a human grader, not a code check"
+        },
+        {
+          "key": "D",
+          "text_en": "Safety belongs in the trust boundary part"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Un bon critere de succes est specifique et mesurable : au lieu de « bonne performance », « classification de sentiment exacte », et au lieu de « sorties sures », une part maximale de sorties signalees par le filtre de contenu sur un nombre d essais defini. Les mesures qualitatives gardent leur valeur si elles sont appliquees de facon constante A COTE de mesures quantitatives. La plupart des cas d usage demandent d ailleurs une evaluation multidimensionnelle, sur plusieurs criteres a la fois.",
+      "distractors_fr": {
+        "B": "La documentation dit l inverse : meme des sujets flous comme l ethique et la surete se quantifient, et elle en donne un exemple chiffre.",
+        "C": "Le probleme n est pas le graduateur mais l enonce : aucun graduateur, humain ou non, ne peut verifier un critere qui ne dit pas ce qu il faut atteindre.",
+        "D": "La frontiere de confiance dit quelles entrees sont non fiables et quelles actions sont permises. Elle ne remplace pas un seuil de qualite mesurable."
+      },
+      "principe_fr": "Un critere qui ne porte pas de seuil verifiable n est pas un critere, c est une intention.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-002",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "principe de conception d eval : privilegier le volume sur la qualite de notation, plus de cas notes automatiquement valent mieux que peu de cas notes a la main",
+      "question_en": "You can hand-grade thirty cases or auto-grade three hundred slightly noisier ones. Which does the documented design principle favour?",
+      "question_fr": "Vous pouvez noter trente cas a la main ou trois cents cas legerement plus bruites automatiquement. Que privilegie le principe de conception documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The thirty, hand grading is the ground truth"
+        },
+        {
+          "key": "B",
+          "text_en": "The thirty, noise hides a real regression"
+        },
+        {
+          "key": "C",
+          "text_en": "The three hundred, volume beats grade quality"
+        },
+        {
+          "key": "D",
+          "text_en": "Neither, split the budget evenly in two"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le troisieme principe de conception est explicite : plus de questions notees automatiquement avec un signal legerement plus faible vaut mieux que moins de questions notees a la main avec un signal de haute qualite. Les deux autres principes vont dans le meme sens : concevoir des evals qui refletent la distribution reelle de la tache, bords compris, et structurer les questions pour permettre une notation automatique. C est la couverture qui attrape le cas limite.",
+      "distractors_fr": {
+        "A": "La notation humaine reste la plus fine, mais le principe documente la place derriere le volume : elle est lente et couteuse, donc a eviter quand on peut automatiser.",
+        "B": "Un peu de bruit se dilue sur un grand nombre de cas. Ce qui rend une regression invisible, c est l absence du cas qui l exerce, pas le bruit de notation.",
+        "D": "Repartir le budget ne repond pas a la question posee : le principe tranche, il ne partage pas."
+      },
+      "principe_fr": "La couverture attrape ce que la finesse ne voit pas : un jeu large et imparfait bat un jeu petit et parfait.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-003",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "hierarchie des methodes de notation : code d abord, juge LLM ensuite apres verification, notation humaine a eviter si possible",
+      "question_en": "The documentation ranks three grading methods. What does it say about human grading?",
+      "question_fr": "La documentation classe trois methodes de notation. Que dit-elle de la notation humaine ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Use it on every case a judge scores low"
+        },
+        {
+          "key": "B",
+          "text_en": "Most flexible but slow and costly, avoid it"
+        },
+        {
+          "key": "C",
+          "text_en": "It is the only method that scales past a few"
+        },
+        {
+          "key": "D",
+          "text_en": "Use it to write the rubric, never to grade"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La consigne est de choisir la methode la plus rapide, la plus fiable et la plus scalable. Notation par code : la plus rapide et la plus fiable, extremement scalable, mais sans nuance des qu il faut un jugement moins rigide. Notation humaine : la plus flexible et la plus fine, mais lente et couteuse, a eviter si possible. Notation par LLM : rapide, flexible, scalable et adaptee au jugement complexe, a condition d en verifier la fiabilite avant de la generaliser.",
+      "distractors_fr": {
+        "A": "La documentation ne definit aucun rattrapage humain declenche par le score du juge. Elle range les methodes par cout et passage a l echelle.",
+        "C": "C est exactement l inverse : la notation humaine est celle qui passe le moins a l echelle. Le code est extremement scalable, le juge LLM l est aussi.",
+        "D": "La redaction de la rubrique est bien un travail humain, mais la documentation ne l oppose pas a la notation : elle dit d eviter la notation humaine si possible."
+      },
+      "principe_fr": "Classer les methodes par cout et passage a l echelle avant de les classer par finesse : l humain est le plus fin et le premier a ne pas tenir.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-004",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "consignes documentees pour un prompt de juge LLM : faire raisonner d abord puis jeter le raisonnement, et contraindre la sortie a une forme empirique",
+      "question_en": "Which TWO instructions does the documentation give for an LLM grader prompt?",
+      "question_fr": "Quelles DEUX consignes la documentation donne-t-elle pour un prompt de juge LLM ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Have it reason first, then discard the reasoning"
+        },
+        {
+          "key": "B",
+          "text_en": "Ask for a free-form paragraph of evaluation"
+        },
+        {
+          "key": "C",
+          "text_en": "Let it invent its own rubric for each case"
+        },
+        {
+          "key": "D",
+          "text_en": "Constrain output to correct/incorrect or 1-5"
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "explanation_fr": "Trois conseils sont donnes. Rubriques detaillees et claires, du type « la reponse doit toujours mentionner Acme Inc. dans la premiere phrase, sinon elle est automatiquement incorrecte » ; un meme critere de succes peut demander plusieurs rubriques pour une evaluation complete. Sortie empirique ou specifique : demander seulement `correct` ou `incorrect`, ou une note sur une echelle de 1 a 5. Et encourager le raisonnement : faire reflechir le modele AVANT de decider la note, puis jeter ce raisonnement ; cela ameliore la performance d evaluation, surtout sur les jugements complexes.",
+      "distractors_fr": {
+        "B": "Une evaluation purement qualitative est justement ce que la documentation deconseille : elle est difficile a exploiter vite et a grande echelle.",
+        "C": "La rubrique est a vous : c est elle qui rend les scores comparables d une execution a l autre. La laisser au juge supprime cette comparabilite."
+      },
+      "principe_fr": "Un juge se contraint deux fois : sur la forme de sa sortie, et sur l ordre de son raisonnement.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-005",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "quand la sortie a une structure verifiable, un controle par code bat l exact-match sans payer un appel de modele par cas",
+      "question_en": "Your feature returns three capital cities as a JSON array, in a different order than your reference string, so exact match scores zero. What is the right fix?",
+      "question_fr": "Votre fonctionnalite renvoie trois capitales dans un tableau JSON, dans un ordre different de votre chaine de reference : l exact-match note zero. Quelle est la bonne correction ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Sort the model output before comparing text"
+        },
+        {
+          "key": "B",
+          "text_en": "Send the case to an LLM judge with a rubric"
+        },
+        {
+          "key": "C",
+          "text_en": "Loosen the reference to a substring match"
+        },
+        {
+          "key": "D",
+          "text_en": "Parse the JSON and check the three members"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Un controle par code convient des qu une fonction peut valider la sortie : JSON valide, code analysable, nombre dans un intervalle, champ requis present. La sortie n a pas besoin de coller a une chaine fixe, seulement de satisfaire une regle. Ici, analyser le tableau et verifier l appartenance des trois villes note le cas correctement la ou l exact-match echoue sur le seul ordre. Cette methode attrape une classe entiere d echecs de format, pour un cout local quasi nul, ce qui permet de la lancer a chaque commit.",
+      "distractors_fr": {
+        "A": "Trier repare ce cas precis. La prochaine difference acceptable, une espace, un champ en plus, une casse, casse a nouveau la comparaison de chaines.",
+        "B": "Un juge donnerait la bonne note, mais au prix d un appel de modele par cas, et avec du bruit, pour une regle que le code exprime exactement.",
+        "C": "Une sous-chaine reste une comparaison de caracteres : tout reformatage du tableau la fait echouer de la meme facon."
+      },
+      "principe_fr": "Entre l egalite de caracteres et le jugement d un modele, il y a la regle exprimable en code : c est souvent la bonne.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-006",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "un juge LLM ne devient exploitable qu apres verification de sa fiabilite contre des cas etiquetes, avant de le generaliser",
+      "question_en": "Your LLM judge returns confident scores across a thousand cases. What does the documentation require before you scale it?",
+      "question_fr": "Votre juge LLM rend des notes assurees sur un millier de cas. Qu exige la documentation avant de le generaliser ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Average two judge runs to cut the variance"
+        },
+        {
+          "key": "B",
+          "text_en": "Test its reliability, then scale it up"
+        },
+        {
+          "key": "C",
+          "text_en": "Move the judge to a larger model tier"
+        },
+        {
+          "key": "D",
+          "text_en": "Widen the score scale to one through ten"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation range la notation par LLM comme rapide, flexible, scalable et adaptee au jugement complexe, a une condition : en verifier la fiabilite d abord, puis passer a l echelle. La verification se fait contre des cas dont la reponse attendue est deja fixee par un humain : les jeux d eval documentes portent des etiquettes humaines et les exemples de notation comparent a une `golden_answer`. Un juge qui s ecarte souvent de ces etiquettes produit un nombre d apparence rigoureuse et sans contenu. Quand l accord est faible, c est la rubrique qu on corrige : preciser ce que vaut chaque note, ajouter un exemple bon et un exemple mauvais, remesurer.",
+      "distractors_fr": {
+        "A": "Moyenner deux executions reduit la dispersion autour de ce que le juge mesure. Cela ne dit toujours pas s il mesure la bonne chose.",
+        "C": "Un modele plus grand applique une rubrique vague avec le meme aplomb. La taille du juge ne remplace pas la verification.",
+        "D": "La granularite de l echelle est un choix de format. Elle ne produit aucune preuve que les notes correspondent au jugement attendu."
+      },
+      "principe_fr": "Un instrument de mesure se calibre contre une reference connue avant de servir de preuve.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-007",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "appariements documentes entre critere de succes et methode de notation : cosinus pour la coherence, ROUGE-L pour le resume, echelle de Likert LLM pour le ton",
+      "question_en": "Which TWO criterion-to-method pairings match the documentation's example evals?",
+      "question_fr": "Quels DEUX appariements critere / methode correspondent aux exemples d eval de la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Consistency graded by cosine similarity"
+        },
+        {
+          "key": "B",
+          "text_en": "Tone and style graded by exact match"
+        },
+        {
+          "key": "C",
+          "text_en": "Summarization coherence graded by ROUGE-L"
+        },
+        {
+          "key": "D",
+          "text_en": "Privacy preservation graded by string match"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Les appariements documentes sont : exact-match pour la fidelite a la tache sur une etiquette categorique ; similarite cosinus sur des plongements de phrases pour la coherence, ou les valeurs proches de 1 marquent une forte similarite, ce qui laisse passer les paraphrases ; ROUGE-L pour la pertinence et la coherence d un resume, en mesurant la plus longue sous-suite commune avec le resume de reference ; echelle de Likert LLM pour le ton et le style ; classification binaire par LLM pour la preservation de la vie privee ; echelle ordinale LLM pour l exploitation du contexte.",
+      "distractors_fr": {
+        "B": "Le ton est un attribut nuance : la documentation le note par une echelle de Likert LLM de 1 a 5, ce qu une egalite de caracteres ne peut pas exprimer.",
+        "D": "Les donnees de sante peuvent etre implicites ou contextuelles. C est pourquoi la documentation emploie une classification binaire par LLM plutot qu une regle textuelle."
+      },
+      "principe_fr": "La methode de notation se deduit de la forme de la sortie, pas de la difficulte ressentie du critere.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-008",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "la validation confirme la forme d une valeur, pas sa justesse : seul un cas note definissant la valeur attendue detecte une extraction plausible et fausse",
+      "question_en": "A field extractor passed a dozen manual checks, then took April 12 from 'ordered March 3, received April 12'. Every validation passed. What was missing?",
+      "question_fr": "Un extracteur de champs a passe une douzaine de verifications manuelles, puis a retenu le 12 avril dans « commande le 3 mars, recue le 12 avril ». Toutes les validations sont passees. Que manquait-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A stricter date format check on the field"
+        },
+        {
+          "key": "B",
+          "text_en": "A retry when two candidate values appear"
+        },
+        {
+          "key": "C",
+          "text_en": "A graded case naming the expected date"
+        },
+        {
+          "key": "D",
+          "text_en": "A judge scoring the extraction rationale"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La validation confirme qu une valeur a la bonne forme ; elle ne peut pas confirmer que c est la bonne valeur. Les deux dates etaient bien formees et le champ etait renseigne, donc tous les controles passaient. Le principe de conception saute est le premier : refleter la distribution reelle de la tache, cas limites compris. L eval ne corrige pas l extraction, c est un changement de prompt qui le fait ; l eval detecte l echec, consigne le comportement attendu comme un cas verifiable, et protege contre la meme regression a chaque changement suivant.",
+      "distractors_fr": {
+        "A": "Les deux dates sont parfaitement formees. Un controle de format plus strict les accepte toutes les deux et ne departage rien.",
+        "B": "Il n y a pas d erreur a reessayer : la fonctionnalite rend une reponse unique, bien formee, assuree, et fausse. Rien ne signale l ambiguite.",
+        "D": "Un juge sans valeur attendue n a pas plus de reference que le validateur : il peut trouver la justification convaincante pour la mauvaise date."
+      },
+      "principe_fr": "Bien forme n est pas juste : un controle de forme ne remplacera jamais une valeur attendue ecrite a l avance.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-009",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "un jeu d eval limite aux entrees bien formees rate les categories de cas limites documentees : entrees trop longues, cas ambigus meme pour un humain",
+      "question_en": "Your eval set holds only realistic, well-formed inputs. Which TWO categories does the documentation say to add?",
+      "question_fr": "Votre jeu d eval ne contient que des entrees realistes et bien formees. Quelles DEUX categories la documentation dit-elle d ajouter ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Inputs your model refused in production"
+        },
+        {
+          "key": "B",
+          "text_en": "Overly long input data or user input"
+        },
+        {
+          "key": "C",
+          "text_en": "Cases even humans would not agree on"
+        },
+        {
+          "key": "D",
+          "text_en": "Inputs captured before the last release"
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "explanation_fr": "La liste documentee des cas limites tient en quatre categories : donnees d entree hors sujet ou inexistantes ; donnees d entree ou saisie utilisateur excessivement longues ; pour les cas conversationnels, une saisie utilisateur mediocre, nuisible ou hors sujet ; et des cas ambigus ou meme des humains auraient du mal a trouver un consensus. Elles existent pour que l eval reflete la distribution reelle de la tache, et non les entrees que le concepteur avait en tete.",
+      "distractors_fr": {
+        "A": "Les refus sont un signal interessant en production, mais ils ne figurent pas dans la liste des categories de cas limites donnee ici.",
+        "D": "Dater les entrees ne dit rien de leur difficulte. Ce qui compte est la forme de l entree, pas le moment ou elle a ete collectee."
+      },
+      "principe_fr": "Un jeu de test construit sur les entrees qu on imagine ne teste que l imagination de celui qui l a construit.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    },
+    {
+      "id": "PC-EVL-010",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "evaluer un skill se fait par comparaison de reference, en session fraiche, une fois avec et une fois sans le skill, sur invocation et sur qualite separement",
+      "question_en": "You want to know whether your skill actually helps. What comparison does the documentation prescribe?",
+      "question_fr": "Vous voulez savoir si votre skill aide reellement. Quelle comparaison la documentation prescrit-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Read the transcript and check it triggered"
+        },
+        {
+          "key": "B",
+          "text_en": "Score the skill's output against a rubric"
+        },
+        {
+          "key": "C",
+          "text_en": "Rerun the same session with the skill off"
+        },
+        {
+          "key": "D",
+          "text_en": "Fresh sessions, once with and once without"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Voir un skill se declencher dit que Claude l a trouve, pas qu il a fait ce qui etait prevu. Deux choses se mesurent separement : est-ce que Claude l invoque sur les prompts ou il devrait, et est-ce que la sortie correspond a l attendu quand il le fait. Le controle des deux est une comparaison de reference : rassembler quelques prompts realistes, lancer chacun dans une session FRAICHE avec le skill disponible, puis a nouveau avec le skill desactive, et comparer. La fraicheur de la session compte, parce que le contexte residuel de l ecriture du skill masque les trous des instructions.",
+      "distractors_fr": {
+        "A": "Voir un skill se declencher dit que Claude l a trouve, pas qu il a fait ce que vous vouliez. Ce n est que la moitie de ce qu il faut mesurer.",
+        "B": "Une rubrique note la sortie mais ne dit pas si c est le skill qui a fait la difference : il manque le point de comparaison sans skill.",
+        "C": "Reutiliser la session traine le contexte d ecriture du skill, qui est precisement ce qui masque les manques des instructions ecrites."
+      },
+      "principe_fr": "Une mesure d effet exige un point de comparaison sans l effet, et un etat de depart propre des deux cotes.",
+      "doc_ref": "https://code.claude.com/docs/en/skills"
+    },
+    {
+      "id": "PC-EVL-011",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "benchmark.json de skill-creator agrege taux de reussite, temps et jetons avec et sans skill, pour peser le gain contre le surcout",
+      "question_en": "skill-creator writes benchmark.json after an eval run. Which decision is that file for?",
+      "question_fr": "skill-creator ecrit `benchmark.json` apres une passe d eval. A quelle decision ce fichier sert-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Is the pass-rate gain worth its token cost"
+        },
+        {
+          "key": "B",
+          "text_en": "Which test cases the grader marked failing"
+        },
+        {
+          "key": "C",
+          "text_en": "Whether the description fires on wrong prompts"
+        },
+        {
+          "key": "D",
+          "text_en": "Which of two skill versions won a blind A/B"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le plugin lance un sous-agent par cas de test, pour que chaque execution parte d un contexte propre, et enregistre le nombre de jetons et la duree. `benchmark.json` agrege ensuite taux de reussite, temps et jetons pour la variante avec skill et la variante sans, ce qui permet de peser l amelioration du taux de reussite contre le surcout en jetons et en temps. Les cas de test vivent dans `evals/evals.json` dans le repertoire du skill, la notation dans `grading.json`.",
+      "distractors_fr": {
+        "B": "C est `grading.json` : il porte le verdict reussite ou echec de chaque assertion, avec la preuve associee.",
+        "C": "C est le mode de reglage de la description : il genere des prompts qui devraient et ne devraient pas declencher, mesure le taux de succes et propose des retouches.",
+        "D": "C est le mode de comparaison de versions : un A/B en aveugle entre deux versions du skill, pour confirmer qu une retouche est une amelioration avant de la valider."
+      },
+      "principe_fr": "Un gain de qualite ne se lit pas seul : il se lit contre ce qu il coute en jetons et en temps.",
+      "doc_ref": "https://code.claude.com/docs/en/skills"
+    },
+    {
+      "id": "PC-EVL-012",
+      "domain": "Eval, Testing and Debugging",
+      "subdomain": "Eval, Testing and Debugging",
+      "weight": 2.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "le cycle documente place les cas de test AVANT le prompt preliminaire : on definit le succes avant d avoir une sortie a justifier",
+      "question_en": "Where does the documented prompt-engineering cycle place the test cases?",
+      "question_fr": "Ou le cycle de prompt engineering documente place-t-il les cas de test ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "After the first prompt, to grade its output"
+        },
+        {
+          "key": "B",
+          "text_en": "First, before the preliminary prompt exists"
+        },
+        {
+          "key": "C",
+          "text_en": "At final validation, just before shipping"
+        },
+        {
+          "key": "D",
+          "text_en": "Only once the prompt has stopped changing"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le cycle documente pour le prompt engineering va des cas de test au prompt preliminaire, puis aux tests et affinages iteratifs, a la validation finale, et enfin a la mise en production. Construire une application reussie commence par definir clairement les criteres de succes, puis concevoir les evaluations qui mesurent la performance contre ces criteres. Les criteres viennent donc en premier, et l iteration ensuite : c est ce qui empeche de definir le succes retrospectivement, autour de la sortie que le modele a produite.",
+      "distractors_fr": {
+        "A": "Le prompt preliminaire vient apres les cas de test dans le cycle. Ecrire les cas ensuite revient a definir le succes autour de ce qui est deja sorti.",
+        "C": "La validation finale est la derniere etape du cycle, apres les iterations. Les cas de test y servent, ils n y naissent pas.",
+        "D": "Attendre la stabilisation du prompt prive justement les iterations de l instrument qui dit si elles ameliorent quelque chose."
+      },
+      "principe_fr": "On ecrit la regle avant de voir le resultat, sinon la regle epouse le resultat.",
+      "doc_ref": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+    }
+  ]
+}

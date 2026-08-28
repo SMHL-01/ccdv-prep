@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 109,
+  "nbQuestions": 120,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -52,6 +52,11 @@
       "fichier": "m2-2.6-agent-loop.json",
       "subdomain": "Agent Construction with Claude",
       "nb": 13
+    },
+    {
+      "fichier": "m2-2.7-memory-scope.json",
+      "subdomain": "Agentic Customization",
+      "nb": 11
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -1059,6 +1064,116 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-MSC-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MSC-011",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.7-memory-scope.json"
     },
     {
       "id": "PC-PMS-001",

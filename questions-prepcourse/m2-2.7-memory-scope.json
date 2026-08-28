@@ -1,0 +1,522 @@
+{
+  "topic": "m2-2.7-memory-scope",
+  "source": "prepcourse",
+  "domain": "Agents and Workflows",
+  "subdomain": "Agentic Customization",
+  "weight": 4.1,
+  "corpus_ref": "prepcourse-corpus/m2-2.7-memory-scope.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool",
+    "https://code.claude.com/docs/en/agent-sdk/subagents"
+  ],
+  "questions": [
+    {
+      "id": "PC-MSC-001",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "weight": 3.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Quand l historique accumule remplit la fenetre avant le premier tour utile, le motif documente est de sortir l etat du contexte vif vers un stockage relu a la demande",
+      "question_en": "Production sessions are short, but their accumulated history now fills the window before the first useful turn. Which pattern do the docs give you?",
+      "question_fr": "En production les sessions sont courtes, mais leur historique accumule remplit desormais la fenetre avant le premier tour utile. Quel motif la documentation propose-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Raise max_tokens to leave room.",
+          "text_fr": "Augmenter max_tokens pour degager de la place."
+        },
+        {
+          "key": "B",
+          "text_en": "Send fewer tool schemas per request.",
+          "text_fr": "Envoyer moins de schemas d'outils par requete."
+        },
+        {
+          "key": "C",
+          "text_en": "Ask for shorter model replies.",
+          "text_fr": "Demander des reponses plus courtes au modele."
+        },
+        {
+          "key": "D",
+          "text_en": "Move history to a store read on demand.",
+          "text_fr": "Sortir l'historique vers un stockage relu a la demande."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La page de l'outil de memoire decrit exactement ce motif : « Memory supports just-in-time context retrieval. Rather than loading all relevant information up front, an agent records what it learns in memory files and reads them back on demand. This keeps the active context focused on the current task, which matters for long-running sessions that would otherwise overwhelm the context window. » L'etat vit alors dans un stockage que vous servez, pas dans le tableau de messages.",
+      "distractors_fr": {
+        "A": "max_tokens reserve de la place pour la sortie ; cela ne reduit pas l'entree qui occupe deja la fenetre.",
+        "B": "C'est un levier reel, et il en existe un documente pour cela, mais il ne touche pas a l'historique accumule, qui est la partie qui croit ici.",
+        "C": "La longueur de sortie n'est pas le probleme : l'historique est injecte avant que le modele n'ecrive le moindre token."
+      },
+      "principe_fr": "Un etat qui doit survivre a la session ne se garde pas dans la session.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+    },
+    {
+      "id": "PC-MSC-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Au demarrage, seuls le nom et la description de chaque Skill occupent le contexte ; le corps de SKILL.md n entre qu au declenchement et les fichiers joints qu a la lecture",
+      "question_en": "At startup, what part of each available Skill occupies the context window?",
+      "question_fr": "Au demarrage, quelle partie de chaque Skill disponible occupe la fenetre de contexte ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The whole SKILL.md body.",
+          "text_fr": "Tout le corps de SKILL.md."
+        },
+        {
+          "key": "B",
+          "text_en": "Its name and description only.",
+          "text_fr": "Son nom et sa description uniquement."
+        },
+        {
+          "key": "C",
+          "text_en": "Its bundled reference files too.",
+          "text_fr": "Ses fichiers de reference joints aussi."
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing until the first bash call.",
+          "text_fr": "Rien avant le premier appel bash."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La divulgation progressive se lit dans le tableau des niveaux : niveau 1, les metadonnees, « Always (at startup) », environ 100 tokens par Skill ; niveau 2, le corps de SKILL.md, au declenchement ; niveau 3, les fichiers joints, a la lecture. La page le resume : « until a Skill is triggered, only its name and description occupy context. »",
+      "distractors_fr": {
+        "A": "Le corps est le niveau 2 : il n'entre en contexte qu'a la correspondance avec la requete.",
+        "C": "Les fichiers joints sont le niveau 3 et ne coutent rien tant qu'ils ne sont pas lus.",
+        "D": "Les metadonnees sont dans le prompt systeme des le depart : c'est precisement ce qui rend la correspondance possible."
+      },
+      "principe_fr": "Une capacite disponible mais non declenchee doit couter le prix de son etiquette, pas celui de son contenu.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview"
+    },
+    {
+      "id": "PC-MSC-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un jeu d instructions qui ne sert qu a une fraction des taches se loge dans un Skill, charge a la correspondance, plutot que dans des instructions permanentes",
+      "question_en": "A review checklist applies to maybe one task in ten. Where do the docs put those instructions?",
+      "question_fr": "Une checklist de revue ne sert qu'a une tache sur dix environ. Ou la documentation loge-t-elle ces instructions ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In a Skill, loaded when it matches.",
+          "text_fr": "Dans un Skill, charge a la correspondance."
+        },
+        {
+          "key": "B",
+          "text_en": "In the project's always-on instructions.",
+          "text_fr": "Dans les instructions permanentes du projet."
+        },
+        {
+          "key": "C",
+          "text_en": "In the system prompt of every session.",
+          "text_fr": "Dans le prompt systeme de chaque session."
+        },
+        {
+          "key": "D",
+          "text_en": "In the first user message each time.",
+          "text_fr": "Dans le premier message utilisateur, chaque fois."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "C'est l'argument central de la page : « Skills load on demand, so you don't have to repeat the same guidance across conversations », et « This lightweight approach means you can install many Skills without context penalty. » Sur neuf sessions sur dix, la checklist ne coute que son nom et sa description.",
+      "distractors_fr": {
+        "B": "Des instructions permanentes se paient dans les neuf sessions sur dix qui n'ont pas besoin de la checklist.",
+        "C": "Meme probleme, formule au niveau de l'API : le cout est fixe et paye a chaque session, quelle que soit la tache.",
+        "D": "Recopier les instructions a la main a chaque fois est exactement la repetition que les Skills existent pour supprimer."
+      },
+      "principe_fr": "Le cout d'une instruction se mesure sur les sessions ou elle ne sert pas.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview"
+    },
+    {
+      "id": "PC-MSC-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un Skill qui ne se declenche pas se diagnostique sur sa description, seul champ de decouverte, qui doit dire ce que le Skill fait ET quand l utiliser, a la troisieme personne",
+      "question_en": "Your Skill never triggers, though its instructions are correct. What do the docs tell you to fix first?",
+      "question_fr": "Votre Skill ne se declenche jamais, alors que ses instructions sont correctes. Que faut-il corriger d'abord selon la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The name; make it more specific.",
+          "text_fr": "Le nom : le rendre plus specifique."
+        },
+        {
+          "key": "B",
+          "text_en": "The body; add worked examples.",
+          "text_fr": "Le corps : ajouter des exemples traites."
+        },
+        {
+          "key": "C",
+          "text_en": "The description: what it does and when.",
+          "text_fr": "La description : ce qu'il fait et quand l'utiliser."
+        },
+        {
+          "key": "D",
+          "text_en": "The directory; move it up a level.",
+          "text_fr": "Le repertoire : le remonter d'un niveau."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Les bonnes pratiques sont explicites : « The description field enables Skill discovery and should include both what the Skill does and when to use it », et « The description is critical for skill selection: Claude uses it to choose the right Skill from potentially 100+ available Skills. » La page ajoute une contrainte de forme souvent oubliee : « Always write in third person. The description is injected into the system prompt. »",
+      "distractors_fr": {
+        "A": "Le nom identifie le Skill et obeit a ses propres contraintes, mais la documentation designe la description comme le champ de decouverte.",
+        "B": "Le corps ne se charge qu'apres la correspondance : il ne peut donc pas influer sur le declenchement.",
+        "D": "L'emplacement decide si le Skill est decouvert ; ici il est bien decouvert et simplement pas selectionne."
+      },
+      "principe_fr": "Ce qui declenche une capacite et ce qui l'execute sont deux textes distincts, a corriger separement.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices"
+    },
+    {
+      "id": "PC-MSC-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Les Skills sur la Messages API demandent l outil d execution de code, dont le conteneur les heberge, et un seul en-tete beta ; un second en-tete ne sert que pour la Files API",
+      "question_en": "What does the Skills documentation currently require to use Skills on the Messages API?",
+      "question_fr": "Que demande aujourd'hui la documentation des Skills pour les utiliser sur la Messages API ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Two beta headers: code execution and skills.",
+          "text_fr": "Deux en-tetes beta : execution de code et skills."
+        },
+        {
+          "key": "B",
+          "text_en": "The code execution tool and one beta header.",
+          "text_fr": "L'outil d'execution de code et un seul en-tete beta."
+        },
+        {
+          "key": "C",
+          "text_en": "One beta header; no other tool is needed.",
+          "text_fr": "Un en-tete beta ; aucun autre outil n'est necessaire."
+        },
+        {
+          "key": "D",
+          "text_en": "No header; Skills reached general release.",
+          "text_fr": "Aucun en-tete : les Skills sont en disponibilite generale."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La page enonce les prerequis dans cet ordre : « Using Skills through the API requires the code execution tool, whose container Skills run in, and one beta header: `skills-2025-10-02`. » Un second en-tete, `files-api-2025-04-14`, ne s'ajoute que si vous passez par la Files API pour deposer ou recuperer des fichiers.",
+      "distractors_fr": {
+        "A": "C'est l'ancienne configuration a deux en-tetes. La page actuelle demande l'outil d'execution de code plus le seul en-tete `skills-2025-10-02`.",
+        "C": "Le conteneur dans lequel tourne le Skill vient de l'outil d'execution de code : sans lui, il n'y a pas d'endroit ou l'executer.",
+        "D": "La page documente toujours un en-tete beta, donc la fonctionnalite n'est pas en disponibilite generale par cette voie."
+      },
+      "principe_fr": "Un en-tete beta se relit dans la documentation courante, jamais dans un support de formation.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview"
+    },
+    {
+      "id": "PC-MSC-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Sur la Claude API, les Skills tournent dans un conteneur sans acces reseau et sans installation de paquets a l execution : seuls les paquets pre-installes sont disponibles",
+      "question_en": "A Skill on the Claude API must call an external pricing endpoint and pip-install a parser. Which TWO documented constraints block it?",
+      "question_fr": "Un Skill sur la Claude API doit appeler un endpoint de tarification externe et installer un parseur avec pip. Quelles DEUX contraintes documentees l'en empechent ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The API container has no network access.",
+          "text_fr": "Le conteneur de l'API n'a pas d'acces reseau."
+        },
+        {
+          "key": "B",
+          "text_en": "Skills cannot run shell commands at all.",
+          "text_fr": "Les Skills ne peuvent pas executer de commandes shell."
+        },
+        {
+          "key": "C",
+          "text_en": "No package installs at runtime; presets only.",
+          "text_fr": "Pas d'installation de paquets a l'execution : pre-installes seulement."
+        },
+        {
+          "key": "D",
+          "text_en": "Skills are read-only on the filesystem.",
+          "text_fr": "Les Skills sont en lecture seule sur le systeme de fichiers."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "La section des contraintes d'execution distingue les surfaces. Sur la Claude API : « No network access: Skills cannot make external API calls or access the internet » et « No runtime package installation: Only pre-installed packages are available. You cannot install new packages during execution. » Sur Claude Code, a l'inverse, les Skills ont le meme acces reseau que n'importe quel programme de la machine.",
+      "distractors_fr": {
+        "B": "Le shell est justement le mecanisme d'un Skill : Claude lit SKILL.md et lance les scripts joints via bash.",
+        "D": "Les Skills lisent et embarquent des fichiers, et sur Claude Code ils ont un acces reseau complet. La restriction porte sur le conteneur de l'API, pas sur un systeme de fichiers en lecture seule."
+      },
+      "principe_fr": "Les contraintes d'execution d'un Skill dependent de la surface, pas du Skill.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview"
+    },
+    {
+      "id": "PC-MSC-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agentic Customization",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Un sous-agent ne recoit pas le contenu de Skill preprocharge sauf s il est liste dans sa propre configuration ; seule la chaine de prompt de l outil Agent passe du parent a l enfant",
+      "question_en": "You delegate to a subagent whose task depends on a Skill the parent session used. What do the docs say to do?",
+      "question_fr": "Vous deleguez a un sous-agent dont la tache depend d'un Skill utilise par la session parente. Que dit la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing; Skills carry over on delegation.",
+          "text_fr": "Rien : les Skills se transmettent a la delegation."
+        },
+        {
+          "key": "B",
+          "text_en": "Repeat the Skill body in the Agent prompt.",
+          "text_fr": "Recopier le corps du Skill dans le prompt Agent."
+        },
+        {
+          "key": "C",
+          "text_en": "Set the same settingSources on the parent.",
+          "text_fr": "Poser les memes settingSources sur le parent."
+        },
+        {
+          "key": "D",
+          "text_en": "List the Skill in the subagent's config.",
+          "text_fr": "Lister le Skill dans la configuration du sous-agent."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le tableau d'heritage est net : le sous-agent ne recoit pas « Preloaded skill content, unless listed in `AgentDefinition.skills` ». La page precise aussi le canal disponible : « The only content you pass from parent to subagent is the Agent tool's prompt string, so include any file paths, error messages, or decisions the subagent needs directly in that prompt. »",
+      "distractors_fr": {
+        "A": "Le tableau d'heritage place le contenu de Skill precharge du cote « ne recoit pas ». Rien ne se transmet de soi-meme.",
+        "B": "Cela fonctionnerait au prix du corps entier paye dans le prompt a chaque delegation, et perdrait le chargement a la demande qui justifie le Skill. La documentation prevoit un champ pour cela.",
+        "C": "settingSources gouverne la decouverte du cote du parent ; cela n'injecte rien dans le contexte du sous-agent."
+      },
+      "principe_fr": "Ce qu'un sous-agent sait se declare, il ne se deduit pas de ce que savait son parent.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/subagents"
+    },
+    {
+      "id": "PC-MSC-008",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "weight": 3.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "L outil de memoire est cote client : Claude demande les operations de fichier, votre application les execute sur un stockage que vous controlez, le chemin /memories n etant qu un prefixe a mapper",
+      "question_en": "Where does the memory tool actually store its files?",
+      "question_fr": "Ou l'outil de memoire stocke-t-il reellement ses fichiers ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "In storage your application controls.",
+          "text_fr": "Dans un stockage que votre application controle."
+        },
+        {
+          "key": "B",
+          "text_en": "In an Anthropic-hosted directory.",
+          "text_fr": "Dans un repertoire heberge par Anthropic."
+        },
+        {
+          "key": "C",
+          "text_en": "In the request's own context window.",
+          "text_fr": "Dans la fenetre de contexte de la requete."
+        },
+        {
+          "key": "D",
+          "text_en": "In the code execution container.",
+          "text_fr": "Dans le conteneur d'execution de code."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page l'annonce d'entree : « The memory tool operates client-side: Claude requests file operations, and your application executes them. You control where and how the data is stored through your own infrastructure. » Et plus loin : « The `/memories` path is a prefix that your handler maps onto real storage, such as a per-user directory or keys in a database. »",
+      "distractors_fr": {
+        "B": "Rien n'est stocke cote Anthropic : l'outil n'emet que des demandes d'operations, que votre code execute.",
+        "C": "Tout l'interet de l'outil est de garder ces connaissances hors de la fenetre de contexte.",
+        "D": "C'est la ou tournent les Skills sur l'API : une autre fonctionnalite, un autre mecanisme."
+      },
+      "principe_fr": "Un outil fourni par l'API n'implique pas un stockage fourni par l'API.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+    },
+    {
+      "id": "PC-MSC-009",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "weight": 3.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Compaction et memoire se combinent : la compaction garde le contexte vif petit sans comptabilite cote client, la memoire conserve ce qui doit survivre au resume",
+      "question_en": "You already run server-side compaction. What do the docs say memory adds on top of it?",
+      "question_fr": "Vous utilisez deja la compaction serveur. Qu'ajoute la memoire par-dessus, selon la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It removes the need for compaction.",
+          "text_fr": "Elle rend la compaction inutile."
+        },
+        {
+          "key": "B",
+          "text_en": "It shortens each summary produced.",
+          "text_fr": "Elle raccourcit chaque resume produit."
+        },
+        {
+          "key": "C",
+          "text_en": "It keeps what must survive summarizing.",
+          "text_fr": "Elle conserve ce qui doit survivre au resume."
+        },
+        {
+          "key": "D",
+          "text_en": "It caches the summary between runs.",
+          "text_fr": "Elle met le resume en cache entre les runs."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La page pose les deux comme complementaires : « For long-running agents, consider using both: compaction keeps the active context small without client-side bookkeeping, and memory preserves the information that must survive summarization. » Le resume perd du detail par construction ; la memoire est l'endroit ou l'on met ce que ce detail ne doit pas emporter.",
+      "distractors_fr": {
+        "A": "La documentation recommande les deux ensemble, chacun couvrant ce que l'autre ne couvre pas.",
+        "B": "La memoire n'agit pas sur le resumeur : elle ne change ni la longueur ni le contenu du resume.",
+        "D": "Il n'y a pas de relation de cache entre les deux : la memoire contient ce que l'agent a note, pas le resume."
+      },
+      "principe_fr": "Reduire le contexte et conserver l'essentiel sont deux besoins distincts, avec deux mecanismes distincts.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+    },
+    {
+      "id": "PC-MSC-010",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "weight": 3.8,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Avec l outil de memoire, l API injecte d elle-meme le protocole de memoire dans le prompt systeme, et c est a votre gestionnaire de refuser tout chemin hors de /memories",
+      "question_en": "You wire up the memory tool. Which TWO statements does the documentation make?",
+      "question_fr": "Vous cablez l'outil de memoire. Quelles DEUX affirmations la documentation fait-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "You must send the memory protocol prompt.",
+          "text_fr": "Vous devez envoyer le prompt de protocole memoire."
+        },
+        {
+          "key": "B",
+          "text_en": "The API adds that protocol on its own.",
+          "text_fr": "L'API ajoute ce protocole d'elle-meme."
+        },
+        {
+          "key": "C",
+          "text_en": "A beta header enables the memory tool.",
+          "text_fr": "Un en-tete beta active l'outil de memoire."
+        },
+        {
+          "key": "D",
+          "text_en": "Your handler must reject paths outside /memories.",
+          "text_fr": "Votre gestionnaire doit refuser tout chemin hors de /memories."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Deux repartitions de responsabilite. Cote API : « When the memory tool is present in your request's `tools`, the API automatically adds this instruction to the system prompt. You don't need to send it yourself. » Cote vous : « Your handler must reject paths outside `/memories` », la page avertissant qu'un chemin comme `/memories/../../secrets.env` sort du repertoire.",
+      "distractors_fr": {
+        "A": "C'est l'inverse : l'API l'injecte, et la page precise explicitement que vous n'avez pas a l'envoyer.",
+        "C": "L'outil de memoire est en disponibilite generale sur la Messages API : « no beta header is required »."
+      },
+      "principe_fr": "Savoir qui fait quoi entre l'API et votre code est la premiere lecture d'une page d'outil.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+    },
+    {
+      "id": "PC-MSC-011",
+      "domain": "Prompt and Context Engineering",
+      "subdomain": "Context Engineering",
+      "weight": 3.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Le motif multisession met en place les fichiers de memoire deliberement avant tout travail de fond et les met a jour en fin de session, au lieu de les ecrire au fil de l eau",
+      "question_en": "Each new session re-explores the codebase before it can continue the work. What do the docs prescribe?",
+      "question_fr": "Chaque nouvelle session reexplore le code avant de pouvoir continuer le travail. Que prescrit la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Set up memory files, update them at end.",
+          "text_fr": "Poser les fichiers de memoire, les mettre a jour en fin."
+        },
+        {
+          "key": "B",
+          "text_en": "Grow the context window for the agent.",
+          "text_fr": "Elargir la fenetre de contexte de l'agent."
+        },
+        {
+          "key": "C",
+          "text_en": "Replay the full history at session start.",
+          "text_fr": "Rejouer tout l'historique au demarrage de session."
+        },
+        {
+          "key": "D",
+          "text_en": "Let the agent write memory as it goes.",
+          "text_fr": "Laisser l'agent ecrire sa memoire au fil de l'eau."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le motif multisession ouvre par une consigne precise : mettre en place les fichiers de memoire deliberement plutot que de les ecrire au fil de l'eau. Une session initiale pose le journal d'avancement et la liste des fonctionnalites avant tout travail de fond ; chaque session suivante commence par les lire, ce qui « restores the project state without re-exploring the code base or retracing earlier decisions » ; et chaque session met le journal a jour avant de se terminer, pour que la suivante parte d'un etat juste.",
+      "distractors_fr": {
+        "B": "Une fenetre plus large ne dit pas a la session suivante ce que la precedente a decide : le probleme est la transmission, pas la place.",
+        "C": "Rejouer tout l'historique est precisement ce que la memoire evite ; et ce qu'on veut restaurer est l'etat du projet, pas la transcription.",
+        "D": "L'ecriture au fil de l'eau est nommee dans la documentation comme la pratique a remplacer par une mise en place deliberee plus une mise a jour de fin de session."
+      },
+      "principe_fr": "Un etat qui se transmet entre sessions se concoit avant la premiere session, pas pendant la troisieme.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool"
+    }
+  ]
+}

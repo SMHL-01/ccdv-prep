@@ -67,42 +67,38 @@
       "nature": "factual_semantic",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "Le ResultMessage final d un run SDK porte le texte final, la consommation de tokens, le cout et l identifiant de session",
-      "question_en": "An Agent SDK run finishes. What does the final `ResultMessage` carry?",
-      "question_fr": "Un run de l'Agent SDK se termine. Que porte le `ResultMessage` final ?",
+      "concept": "Sur Managed Agents, c est l evenement session.status_idle qui dit que l agent n a plus rien a faire",
+      "question_en": "You moved your loop to Claude Managed Agents, so you no longer decide when the loop is done. Which event tells your application the agent has nothing more to do?",
+      "question_fr": "Vous avez porte votre boucle sur Claude Managed Agents, vous ne decidez donc plus quand la boucle est terminee. Quel evenement indique a votre application que l agent n a plus rien a faire ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Only the text of the last reply.",
-          "text_fr": "Uniquement le texte de la derniere reponse."
+          "text_en": "A `session.completed` event on close"
         },
         {
           "key": "B",
-          "text_en": "Final text, token usage, cost, session ID.",
-          "text_fr": "Texte final, tokens consommes, cout, identifiant de session."
+          "text_en": "A `session.status_idle` event"
         },
         {
           "key": "C",
-          "text_en": "The full transcript of every turn.",
-          "text_fr": "La transcription complete de tous les tours."
+          "text_en": "An empty `agent.text_delta` frame"
         },
         {
           "key": "D",
-          "text_en": "A diff of the files the tools touched.",
-          "text_fr": "Un diff des fichiers touches par les outils."
+          "text_en": "The HTTP stream closing itself"
         }
       ],
       "correct": [
         "B"
       ],
-      "explanation_fr": "L'etape 5 de la boucle le decrit ainsi : « The SDK yields a final AssistantMessage with the text response (no tool calls), followed by a ResultMessage with the final text, token usage, cost, and session ID. » C'est donc le seul endroit ou le cout d'un run se lit d'un coup, sans agreger soi-meme les tours.",
+      "explanation_fr": "Dans une boucle ecrite a la main, c est votre code qui decide que la boucle est terminee. Sur Managed Agents cette decision passe cote serveur : la session emet session.status_idle quand l agent n a plus rien a faire, et c est cet evenement que l application attend dans le flux server-sent events. C est le pendant, sur le chemin manage, de la reponse sans appel d outil qui termine une boucle en propre.",
       "distractors_fr": {
-        "A": "Le texte final y est, mais il n'y est pas seul, et le cout du run est justement ce qu'on vient chercher a la fin.",
-        "C": "Les messages vous sont livres au fil du run ; le ResultMessage est un recapitulatif de cloture, pas une archive.",
-        "D": "Rien dans la boucle ne suit les modifications de fichiers : c'est le role du checkpointing, une autre fonctionnalite."
+        "A": "Il n y a pas d evenement de ce nom : ce qui est emis est un changement de statut de session vers idle, pas une completion.",
+        "C": "Un delta de texte vide ne signifie rien de particulier : le flux peut contenir des trames sans contenu utile sans que l agent ait fini.",
+        "D": "La fermeture du flux est une consequence possible cote transport, pas le signal a attendre : on lit le statut de session, sinon une coupure reseau serait interpretee comme une fin de travail."
       },
-      "principe_fr": "La fin d'un run est aussi le seul endroit ou son cout est lisible d'un seul tenant.",
-      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+      "principe_fr": "Changer de chemin de cablage ne supprime pas la condition de sortie, il deplace le signal : d un test dans votre code vers un evenement du flux serveur.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/migration"
     },
     {
       "id": "PC-AGL-003",
@@ -343,42 +339,38 @@
       "nature": "factual_semantic",
       "difficulty": "difficile",
       "source": "prepcourse",
-      "concept": "La depense des sous-agents s impute au plafond total du parent : au plafond atteint, un nouveau sous-agent echoue et les sous-agents en cours sont arretes",
-      "question_en": "Your agent spawns subagents. How does their spend meet `max_budget_usd`?",
-      "question_fr": "Votre agent lance des sous-agents. Comment leur depense rencontre-t-elle `max_budget_usd` ?",
+      "concept": "Sur Managed Agents les outils pre-integres tournent dans le bac a sable, seuls les outils custom reviennent a l application",
+      "question_en": "Moving to Managed Agents, you stop owning the tool-execution runtime. Which tool calls does your own application still have to execute?",
+      "question_fr": "En passant a Managed Agents, vous cessez de posseder le moteur d execution des outils. Quels appels d outils votre application doit-elle encore executer elle-meme ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Each subagent gets its own budget.",
-          "text_fr": "Chaque sous-agent a son propre budget."
+          "text_en": "None at all; the sandbox runs every tool"
         },
         {
           "key": "B",
-          "text_en": "Subagent spend is excluded from it.",
-          "text_fr": "La depense des sous-agents en est exclue."
+          "text_en": "Only the MCP server tools you declared"
         },
         {
           "key": "C",
-          "text_en": "It counts toward the parent's total.",
-          "text_fr": "Elle s'impute au total du parent."
+          "text_en": "Only your custom tools, driven by events"
         },
         {
           "key": "D",
-          "text_en": "Only the last subagent's run counts.",
-          "text_fr": "Seul le run du dernier sous-agent compte."
+          "text_en": "Every tool listed in the agent definition"
         }
       ],
       "correct": [
         "C"
       ],
-      "explanation_fr": "La documentation est explicite : « The budget cap covers subagents: their spend counts toward the total. Once spend reaches the cap, spawning another subagent fails with `Budget limit reached`, and Claude Code stops any background subagents still running. » Ce comportement demande Claude Code v2.1.217 ou plus recent.",
+      "explanation_fr": "La migration retire de vos mains la boucle d iteration, le bac a sable, les reprises internes et le moteur d execution des outils : les outils pre-integres tournent automatiquement dans le bac a sable de la session. Une seule categorie continue de passer par vous, les outils custom, et elle passe desormais par des evenements agent.custom_tool_use auxquels votre client repond, au lieu d une execution en ligne dans votre boucle. La declaration en JSON Schema, elle, ne change pas.",
       "distractors_fr": {
-        "A": "Un budget par sous-agent rendrait le total non borne, ce que le plafond existe justement pour empecher.",
-        "B": "C'est l'inverse de ce qu'ecrit la documentation : la delegation est explicitement couverte par le plafond.",
-        "D": "Toutes les depenses de sous-agents s'additionnent au total, pas seulement la derniere."
+        "A": "C est l erreur que ce point precis corrige : le bac a sable execute les outils pre-integres, pas les votres. Un outil custom reste du code a vous, donc son execution reste chez vous.",
+        "B": "Les serveurs MCP declares sur l agent sont joints depuis l environnement manage ; ce ne sont pas eux qui reviennent a votre application.",
+        "D": "Si tout revenait a votre application, la migration ne vous enleverait rien du moteur d execution, ce qui est exactement le contraire de ce qu apporte ce chemin."
       },
-      "principe_fr": "Un plafond qui ne couvre pas la delegation ne plafonne rien.",
-      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+      "principe_fr": "Un transfert d infrastructure est presque jamais total : ce qui reste chez vous est ce dont le fournisseur ne peut pas avoir le code, ici vos outils custom.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/migration"
     },
     {
       "id": "PC-AGL-009",

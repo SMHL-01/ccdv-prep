@@ -19,7 +19,7 @@
     "m2-2.8-multimodal-batch": { "qui": "marie-line", "etat": "fait", "cible": 10 },
     "m3-3.1-permission": { "qui": "said", "etat": "fait", "cible": 9 },
     "m3-3.2-claudemd": { "qui": "marie-line", "etat": "fait", "cible": 11 },
-    "m3-3.3-plugins": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 12 },
+    "m3-3.3-plugins": { "qui": "marie-line", "etat": "reserve", "depuis": "2026-08-28", "cible": 12 },
     "m3-3.4-rag": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 11 },
     "m3-3.5-enterprise": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 13 },
     "m4-4.1-evals": { "qui": "marie-line", "etat": "propose", "depuis": "2026-08-13", "cible": 12 },

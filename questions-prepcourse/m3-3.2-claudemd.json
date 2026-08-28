@@ -1,0 +1,521 @@
+{
+  "topic": "m3-3.2-claudemd",
+  "source": "prepcourse",
+  "domain": "Applications and Integration / Claude Code",
+  "subdomain": "Configuration Management / Claude Code",
+  "weight": 7.2,
+  "corpus_ref": "prepcourse-corpus/m3-3.2-claudemd.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/memory",
+    "https://code.claude.com/docs/en/hooks",
+    "https://code.claude.com/docs/en/sub-agents"
+  ],
+  "questions": [
+    {
+      "id": "PC-CMD-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Chargement des CLAUDE.md : remontee de l arborescence et concatenation",
+      "question_en": "Claude Code is launched in foo/bar/, and CLAUDE.md files exist in foo/ and in foo/bar/. How are they loaded?",
+      "question_fr": "Claude Code est lance dans foo/bar/, et des fichiers CLAUDE.md existent dans foo/ et dans foo/bar/. Comment sont-ils charges ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only the nearest CLAUDE.md loads, closer files overriding the ones above",
+          "text_fr": "Seul le CLAUDE.md le plus proche se charge, les fichiers proches ecrasant ceux du dessus"
+        },
+        {
+          "key": "B",
+          "text_en": "All of them are concatenated, ordered from the root down to the working dir",
+          "text_fr": "Tous sont concatenes, dans l ordre de la racine vers le repertoire de travail"
+        },
+        {
+          "key": "C",
+          "text_en": "Only the project root file loads, and files in subdirectories are ignored",
+          "text_fr": "Seul le fichier de la racine du projet se charge, ceux des sous-repertoires sont ignores"
+        },
+        {
+          "key": "D",
+          "text_en": "They merge section by section, later headings replacing earlier headings",
+          "text_fr": "Ils fusionnent section par section, les titres tardifs remplacant les titres anterieurs"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Claude Code remonte l arborescence depuis le repertoire courant et lit chaque CLAUDE.md et CLAUDE.local.md rencontre. Tous les fichiers decouverts sont concatenes en contexte, pas substitues les uns aux autres : le contenu est ordonne de la racine du systeme de fichiers vers le repertoire de travail, donc foo/CLAUDE.md apparait avant foo/bar/CLAUDE.md. Dans chaque repertoire, CLAUDE.local.md est ajoute apres CLAUDE.md.",
+      "distractors_fr": {
+        "A": "Il n y a pas de substitution : les fichiers s ajoutent. La proximite ne fait que decider de la position dans le contexte, pas d un ecrasement.",
+        "C": "Les CLAUDE.md des sous-repertoires ne sont pas ignores : ils sont inclus quand Claude lit un fichier de ces sous-repertoires, au lieu d etre charges au lancement.",
+        "D": "Aucune fusion par titre n a lieu : le mecanisme est une concatenation de texte, pas une operation structuree sur le markdown."
+      },
+      "principe_fr": "Un mecanisme de memoire qui concatene, et n ecrase pas, transforme la duplication d instructions en contradiction silencieuse.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Taille cible d un CLAUDE.md : viser moins de 200 lignes",
+      "question_en": "What size does the documentation give as a target for a single CLAUDE.md file, and why?",
+      "question_fr": "Quelle taille la documentation donne-t-elle comme cible pour un fichier CLAUDE.md, et pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Under 50 lines, past which the file stops loading into the session",
+          "text_fr": "Moins de 50 lignes, au-dela desquelles le fichier cesse d etre charge"
+        },
+        {
+          "key": "B",
+          "text_en": "Under 100 lines, the hard ceiling enforced by Claude Code at launch",
+          "text_fr": "Moins de 100 lignes, plafond strict impose par Claude Code au lancement"
+        },
+        {
+          "key": "C",
+          "text_en": "Under 200 lines, longer files reducing adherence to each instruction",
+          "text_fr": "Moins de 200 lignes, un fichier plus long reduisant l adherence a chaque instruction"
+        },
+        {
+          "key": "D",
+          "text_en": "Under 1,000 lines, the point where the file is truncated on load",
+          "text_fr": "Moins de 1 000 lignes, seuil auquel le fichier est tronque au chargement"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation vise moins de 200 lignes par fichier CLAUDE.md : un fichier plus long consomme davantage de contexte et reduit l adherence. Ce n est pas un plafond technique mais une cible de conception. Au-dela, la recommandation est de basculer les instructions vers des regles portees par un motif de chemins, pour qu elles ne se chargent que sur les fichiers concernes.",
+      "distractors_fr": {
+        "A": "Aucun seuil ne fait cesser le chargement : le fichier se charge quelle que soit sa taille, c est justement le probleme.",
+        "B": "Il n y a pas de plafond strict impose au lancement. La contrainte est statistique, sur la probabilite que l instruction soit suivie.",
+        "D": "Le fichier n est pas tronque. Un CLAUDE.md de 847 lignes se charge entierement, en diluant chacune de ses lignes."
+      },
+      "principe_fr": "Une cible de taille n est pas une limite technique : c est l aveu qu au-dela, le mecanisme continue de fonctionner tout en cessant d etre efficace.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Remede a la dilution : repartir le contenu selon sa portee",
+      "question_en": "A CLAUDE.md has grown to 847 lines: framework preferences, style guide, path restrictions, a decisions log, archived notes. A path restriction inside it was ignored during a refactor. What is the documented remedy?",
+      "question_fr": "Un CLAUDE.md a atteint 847 lignes : preferences de framework, guide de style, restrictions de chemins, journal de decisions, notes archivees. Une restriction de chemin qu il contient a ete ignoree pendant un refactor. Quel est le remede documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Split it: path rules into .claude/rules, the history into a doc read on demand",
+          "text_fr": "Le decouper : les regles de chemin dans .claude/rules, l historique dans un document lu a la demande"
+        },
+        {
+          "key": "B",
+          "text_en": "Reorder the file so the path restriction sits in the first twenty lines",
+          "text_fr": "Reordonner le fichier pour que la restriction de chemin figure dans les vingt premieres lignes"
+        },
+        {
+          "key": "C",
+          "text_en": "Split it into @path imports, which load only when the agent needs them",
+          "text_fr": "Le decouper en imports @chemin, qui ne se chargent que quand l agent en a besoin"
+        },
+        {
+          "key": "D",
+          "text_en": "Restate the path restriction in every prompt that touches the auth module",
+          "text_fr": "Repeter la restriction de chemin dans chaque prompt touchant au module d authentification"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "L echec est une dilution : 846 autres lignes ont reduit le poids effectif de la seule instruction qui comptait. Le remede documente est de repartir le contenu selon sa portee. Ce qui est specifique a un chemin va dans un fichier de .claude/rules porte par un champ paths. Ce qui est du contexte historique va dans un document de reference que l agent lit a la demande. CLAUDE.md ne garde que les contraintes qui changent le comportement de chaque session.",
+      "distractors_fr": {
+        "B": "L ordre des lignes n est pas le levier documente. C est la proportion du contexte occupee par le reste qui reduit le poids de la regle.",
+        "C": "Les imports @chemin aident a l organisation mais ne reduisent pas le contexte : les fichiers importes se chargent au lancement, comme le reste.",
+        "D": "Repeter l instruction a chaque prompt annule l interet du fichier et reste une convention, sans garantie d application."
+      },
+      "principe_fr": "Repartir une instruction selon sa portee coute une heure ; la laisser diluer coute un incident dont la cause est invisible dans les traces.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Regle sans champ paths : chargement inconditionnel au lancement",
+      "question_en": "A team drops a rule at .claude/rules/database/schema.md with no YAML frontmatter, expecting it to load only when Claude works in the database module. What actually happens?",
+      "question_fr": "Une equipe place une regle dans .claude/rules/database/schema.md sans frontmatter YAML, en attendant qu elle ne se charge que lorsque Claude travaille dans le module base de donnees. Que se passe-t-il reellement ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The directory name scopes it, so it loads for files under database only",
+          "text_fr": "Le nom du repertoire la cadre, elle ne se charge que pour les fichiers sous database"
+        },
+        {
+          "key": "B",
+          "text_en": "With no paths field it loads at launch, like .claude/CLAUDE.md would",
+          "text_fr": "Sans champ paths elle se charge au lancement, comme le ferait .claude/CLAUDE.md"
+        },
+        {
+          "key": "C",
+          "text_en": "Nested rules are lazy, so it loads the first time any file is read",
+          "text_fr": "Les regles imbriquees sont paresseuses, elle se charge a la premiere lecture de fichier"
+        },
+        {
+          "key": "D",
+          "text_en": "It is ignored, because rules must sit at the root of .claude/rules",
+          "text_fr": "Elle est ignoree, les regles devant se trouver a la racine de .claude/rules"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Le cadrage vient du frontmatter, pas de l emplacement. Tous les fichiers .md de .claude/rules sont decouverts recursivement, et les sous-repertoires ne sont qu une commodite d organisation. Une regle sans champ paths se charge au lancement avec la meme priorite que .claude/CLAUDE.md : l equipe a donc ajoute du contexte permanent en croyant en ajouter du conditionnel.",
+      "distractors_fr": {
+        "A": "Le nom du sous-repertoire n a aucun effet fonctionnel. Il organise les fichiers pour les humains, il ne cadre rien.",
+        "C": "Il n y a pas de chargement paresseux par defaut : c est le champ paths qui rend une regle conditionnelle, rien d autre.",
+        "D": "Les fichiers sont decouverts recursivement, donc un sous-repertoire de .claude/rules est parfaitement pris en compte."
+      },
+      "principe_fr": "Quand une convention de nommage semble porter un comportement, il faut verifier ou le comportement est reellement declare.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Declenchement d une regle cadree : a la lecture d un fichier correspondant",
+      "question_en": "A rule scoped to \"src/db/**/*.sql\" is missing from context while Claude runs a migration through a Bash command. Why?",
+      "question_fr": "Une regle cadree sur \"src/db/**/*.sql\" est absente du contexte alors que Claude lance une migration via une commande Bash. Pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The paths patterns need a leading ./ to match anything in the project",
+          "text_fr": "Les motifs paths ont besoin d un ./ initial pour correspondre a quoi que ce soit"
+        },
+        {
+          "key": "B",
+          "text_en": "Rules load only at launch, so a match found mid-session never fires",
+          "text_fr": "Les regles ne se chargent qu au lancement, une correspondance en cours de session ne declenche rien"
+        },
+        {
+          "key": "C",
+          "text_en": "It enters context when a matching file is read, not on every tool use",
+          "text_fr": "Elle entre en contexte a la lecture d un fichier correspondant, pas a chaque appel d outil"
+        },
+        {
+          "key": "D",
+          "text_en": "The paths field matches on the tool name, not on the file being touched",
+          "text_fr": "Le champ paths correspond au nom de l outil, pas au fichier manipule"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Une regle cadree par paths se declenche quand Claude lit un fichier correspondant au motif, et non a chaque utilisation d outil. Une commande Bash qui execute une migration ne passe pas par une lecture de fichier .sql : la regle n entre donc pas en contexte. Si la contrainte doit s appliquer quoi qu il arrive, elle ne releve pas d une regle cadree mais d un mecanisme applique cote configuration.",
+      "distractors_fr": {
+        "A": "Aucun prefixe ./ n est requis : les motifs sont des globs relatifs au projet, du type src/api/**/*.ts.",
+        "B": "Les regles cadrees se chargent justement en cours de session, a la demande. Ce sont les regles sans paths qui se chargent au lancement.",
+        "D": "Le champ paths porte sur des chemins de fichiers, jamais sur des noms d outils."
+      },
+      "principe_fr": "Une garantie conditionnelle vaut ce que vaut sa condition de declenchement : il faut savoir exactement ce qui la declenche.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-006",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Codes de sortie d un hook : seul 2 bloque, 1 ne bloque pas",
+      "question_en": "A hook is written to enforce a policy in Claude Code. Which TWO statements about hook exit codes are correct? (Choose TWO)",
+      "question_fr": "Un hook est ecrit pour faire appliquer une politique dans Claude Code. Quelles DEUX affirmations sur les codes de sortie d un hook sont correctes ? (Choisissez DEUX reponses)",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Exit code 2 signals stop, and stderr goes back to Claude as feedback",
+          "text_fr": "Le code 2 signale l arret, et stderr revient a Claude comme retour"
+        },
+        {
+          "key": "B",
+          "text_en": "Any non-zero exit code blocks the action the hook is bound to",
+          "text_fr": "Tout code de sortie non nul bloque l action a laquelle le hook est lie"
+        },
+        {
+          "key": "C",
+          "text_en": "Exit code 1 counts as a non-blocking error, and the action proceeds",
+          "text_fr": "Le code 1 compte comme une erreur non bloquante, et l action se poursuit"
+        },
+        {
+          "key": "D",
+          "text_en": "Blocking needs JSON output, exit codes only ever write to the log",
+          "text_fr": "Bloquer exige une sortie JSON, les codes de sortie n ecrivent qu au journal"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Pour la plupart des evenements, seul le code de sortie 2 bloque l action : c est ainsi qu un hook signale arrete-toi, et son stderr est renvoye au modele comme retour. Le code 1 est traite comme une erreur non bloquante et Claude Code poursuit l action, alors que 1 est pourtant le code d echec conventionnel sous Unix. Un hook qui doit faire appliquer une politique doit donc utiliser exit 2.",
+      "distractors_fr": {
+        "B": "C est le piege exact que la documentation signale : 1 ne bloque pas. La seule exception ou tout code non nul avorte l action est WorktreeCreate.",
+        "D": "Les codes de sortie sont bien un canal de decision. La sortie JSON est une alternative plus expressive, pas la seule voie."
+      },
+      "principe_fr": "Une politique appliquee par un script depend d une convention de code de retour : la verifier fait partie de l ecriture du garde-fou.",
+      "doc_ref": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "id": "PC-CMD-007",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "PostToolUse ne peut rien bloquer : l outil a deja tourne",
+      "question_en": "A team wires a hook to PostToolUse so an edit that fails lint is rejected. The hook runs and reports, but no edit is ever rejected. What is going on?",
+      "question_fr": "Une equipe branche un hook sur PostToolUse pour que toute edition echouant au lint soit rejetee. Le hook s execute et rapporte, mais aucune edition n est jamais rejetee. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Raise the exit code above 2, so the block is treated as mandatory",
+          "text_fr": "Monter le code de sortie au-dela de 2, pour que le blocage devienne obligatoire"
+        },
+        {
+          "key": "B",
+          "text_en": "Add a matcher on Edit, so the hook fires on the right tool type",
+          "text_fr": "Ajouter un matcher sur Edit, pour que le hook se declenche sur le bon outil"
+        },
+        {
+          "key": "C",
+          "text_en": "Move the lint command into CLAUDE.md so the agent runs it itself",
+          "text_fr": "Deplacer la commande de lint dans CLAUDE.md pour que l agent la lance lui-meme"
+        },
+        {
+          "key": "D",
+          "text_en": "PostToolUse runs after the call, so nothing can be blocked there",
+          "text_fr": "PostToolUse s execute apres l appel, donc rien ne peut y etre bloque"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "PostToolUse s execute apres la fin de l appel d outil. L appel a deja eu lieu : un code de sortie 2 y affiche stderr a Claude sans rien empecher. C est justement pourquoi cet evenement est le bon endroit pour les effets de bord automatises, formateur de code, tests, journal d audit. Une interdiction doit se placer sur un evenement qui se declenche avant l appel.",
+      "distractors_fr": {
+        "A": "Il n existe pas de code de sortie plus fort que 2. La capacite de bloquer depend de l evenement, pas de l intensite du code.",
+        "B": "Le matcher choisit sur quels outils le hook se declenche. Il ne donne pas a PostToolUse un pouvoir de blocage qu il n a pas.",
+        "C": "Une instruction dans CLAUDE.md est une convention suivie la plupart du temps, l inverse du garde-fou recherche ici."
+      },
+      "principe_fr": "La position dans le cycle de vie determine ce qu un hook peut faire : detecter apres coup et empecher avant ne sont pas la meme garantie.",
+      "doc_ref": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "id": "PC-CMD-008",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "weight": 3.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Explore et Plan omettent CLAUDE.md et le statut git, sans reglage possible",
+      "question_en": "A planning task is delegated to the built-in Plan subagent, and the plan it returns ignores a convention written in the project CLAUDE.md. What is the documented explanation and fix?",
+      "question_fr": "Une tache de planification est deleguee au sous-agent integre Plan, et le plan rendu ignore une convention ecrite dans le CLAUDE.md du projet. Quelle est l explication documentee, et le correctif ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Move the constraint to .claude/rules with no paths, so every agent sees it",
+          "text_fr": "Deplacer la contrainte dans .claude/rules sans paths, pour que tout agent la voie"
+        },
+        {
+          "key": "B",
+          "text_en": "Explore and Plan skip it by design; delegate to general-purpose instead",
+          "text_fr": "Explore et Plan l omettent par conception ; deleguer plutot a general-purpose"
+        },
+        {
+          "key": "C",
+          "text_en": "List the constraint in the built-in agent skills field so it preloads",
+          "text_fr": "Lister la contrainte dans le champ skills de l agent integre pour la precharger"
+        },
+        {
+          "key": "D",
+          "text_en": "The subagent inherited the constraint and chose to override it anyway",
+          "text_fr": "Le sous-agent a herite de la contrainte et a choisi de passer outre"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Explore et Plan omettent les fichiers CLAUDE.md et le statut git du projet, pour garder la recherche rapide et peu couteuse. Tous les autres sous-agents integres et les sous-agents personnalises chargent les deux. La documentation precise qu aucun champ de frontmatter ni reglage par agent ne change quels agents les omettent : le correctif n est donc pas un reglage, c est le choix d un autre sous-agent, general-purpose ou un sous-agent personnalise chargeant explicitement ce dont il a besoin.",
+      "distractors_fr": {
+        "A": "Les regles de projet font partie de ce que Explore et Plan omettent, au meme titre que CLAUDE.md. Deplacer la contrainte ne la rend pas visible pour eux.",
+        "C": "Les agents integres ne prechargent aucun Skill, et leur configuration n est pas modifiable. La voie documentee est de creer un sous-agent personnalise.",
+        "D": "Un sous-agent part d un contexte propre : il n herite ni de l historique de conversation ni de l etat de session. La contrainte n etait pas la."
+      },
+      "principe_fr": "Un sous-agent optimise pour la vitesse l est en retirant du contexte : savoir ce qu il ne charge pas fait partie du choix de le lancer.",
+      "doc_ref": "https://code.claude.com/docs/en/sub-agents"
+    },
+    {
+      "id": "PC-CMD-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "CLAUDE.md est du contexte, pas de la configuration appliquee",
+      "question_en": "How is CLAUDE.md content delivered to the model, and what does that imply about compliance?",
+      "question_fr": "Comment le contenu d un CLAUDE.md parvient-il au modele, et qu est-ce que cela implique sur son respect ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It joins the system prompt, which is why compliance is enforced",
+          "text_fr": "Il rejoint le prompt systeme, d ou un respect garanti des instructions"
+        },
+        {
+          "key": "B",
+          "text_en": "It is compiled into the permission rules of the session at launch",
+          "text_fr": "Il est compile dans les regles de permission de la session au lancement"
+        },
+        {
+          "key": "C",
+          "text_en": "It is re-sent to the model before every single tool call in a turn",
+          "text_fr": "Il est renvoye au modele avant chaque appel d outil d un meme tour"
+        },
+        {
+          "key": "D",
+          "text_en": "It arrives as a user message, so it is context, not enforced config",
+          "text_fr": "Il arrive comme message utilisateur : c est du contexte, pas de la configuration"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Le contenu d un CLAUDE.md est livre comme un message utilisateur place apres le prompt systeme, et non comme une partie du prompt systeme. Claude le lit et essaie de le suivre, mais il n y a aucune garantie de conformite stricte, particulierement pour des instructions vagues ou contradictoires. C est du contexte, pas de la configuration appliquee : d ou l importance d instructions specifiques et verifiables.",
+      "distractors_fr": {
+        "A": "Ce n est justement pas le prompt systeme. Pour une instruction au niveau du prompt systeme, la documentation renvoie a --append-system-prompt.",
+        "B": "Les regles de permission sont un mecanisme distinct, declare dans les fichiers de settings. CLAUDE.md ne s y compile pas.",
+        "C": "Le contenu est injecte au demarrage de la session, pas repete avant chaque appel d outil."
+      },
+      "principe_fr": "Distinguer contexte et configuration appliquee, c est distinguer une instruction generalement suivie d une contrainte toujours respectee.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Compaction : la racine est reinjectee, les CLAUDE.md imbriques non",
+      "question_en": "After a /compact, a convention from a subdirectory CLAUDE.md stops being honoured while the project root instructions still hold. What explains the difference?",
+      "question_fr": "Apres un /compact, une convention issue d un CLAUDE.md de sous-repertoire cesse d etre respectee alors que les instructions de la racine du projet tiennent toujours. Qu est-ce qui explique la difference ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The root file is re-read from disk; nested files are not re-injected",
+          "text_fr": "Le fichier racine est relu depuis le disque ; les fichiers imbriques ne sont pas reinjectes"
+        },
+        {
+          "key": "B",
+          "text_en": "Nothing survives a compaction, so every memory file must be re-added",
+          "text_fr": "Rien ne survit a une compaction, chaque fichier de memoire doit etre rajoute"
+        },
+        {
+          "key": "C",
+          "text_en": "Both are re-injected, so the lost rule was only ever given in chat",
+          "text_fr": "Les deux sont reinjectes, donc la regle perdue n avait ete donnee qu en conversation"
+        },
+        {
+          "key": "D",
+          "text_en": "Compaction disables memory files until the session is restarted",
+          "text_fr": "La compaction desactive les fichiers de memoire jusqu au redemarrage de la session"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le CLAUDE.md de la racine du projet survit a la compaction : Claude le relit depuis le disque et le reinjecte dans la session. Les CLAUDE.md imbriques dans des sous-repertoires ne sont pas reinjectes automatiquement : ils se rechargent la prochaine fois que Claude lit un fichier de ce sous-repertoire. Une instruction disparue apres compaction vient donc soit de la conversation seule, soit d un fichier imbrique pas encore recharge.",
+      "distractors_fr": {
+        "B": "Le fichier de la racine survit precisement a la compaction. Affirmer que rien ne survit contredit le comportement documente.",
+        "C": "Les fichiers imbriques ne sont pas reinjectes : l hypothese de la regle donnee seulement en conversation n est pas necessaire ici.",
+        "D": "La compaction ne desactive rien. Elle resume la conversation, et le fichier racine est relu ensuite depuis le disque."
+      },
+      "principe_fr": "Ce qui survit a une compaction n est pas ce qui etait important, mais ce que le mecanisme sait aller rechercher tout seul.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "id": "PC-CMD-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "weight": 4.1,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Reduire le cout en contexte d un CLAUDE.md : deux leviers documentes",
+      "question_en": "A CLAUDE.md carries both behaviour rules and long maintainer notes. Which TWO documented moves actually reduce what it costs in every session? (Choose TWO)",
+      "question_fr": "Un CLAUDE.md porte a la fois des regles de comportement et de longues notes de maintenance. Quels DEUX gestes documentes reduisent reellement son cout dans chaque session ? (Choisissez DEUX reponses)",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Move the text into @path imports, which load only when they are needed",
+          "text_fr": "Deplacer le texte dans des imports @chemin, charges seulement en cas de besoin"
+        },
+        {
+          "key": "B",
+          "text_en": "Put maintainer notes in HTML comments, stripped before injection",
+          "text_fr": "Mettre les notes de maintenance en commentaires HTML, retires avant injection"
+        },
+        {
+          "key": "C",
+          "text_en": "Rely on nested CLAUDE.md files, which also load at session launch",
+          "text_fr": "S appuyer sur des CLAUDE.md imbriques, qui se chargent aussi au lancement"
+        },
+        {
+          "key": "D",
+          "text_en": "Move instructions into path-scoped rules, loaded on matching files",
+          "text_fr": "Deplacer les instructions dans des regles cadrees, chargees sur les fichiers concernes"
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Deux leviers reduisent effectivement le cout. Les commentaires HTML de niveau bloc dans un CLAUDE.md sont retires avant l injection en contexte : ils permettent de laisser des notes aux mainteneurs humains sans depenser de tokens. Et les regles cadrees par un champ paths ne se chargent que lorsque Claude travaille sur des fichiers correspondants, ce qui sort l instruction de chaque session.",
+      "distractors_fr": {
+        "A": "Les imports @chemin aident a l organisation mais ne reduisent pas le contexte : les fichiers importes se chargent au lancement.",
+        "C": "Les CLAUDE.md imbriques ne se chargent pas au lancement : ils sont inclus quand Claude lit un fichier du sous-repertoire. L affirmation est fausse telle qu elle est ecrite."
+      },
+      "principe_fr": "Reduire un cout en contexte suppose de savoir ce qui est reellement injecte, pas ce qui est reellement ecrit.",
+      "doc_ref": "https://code.claude.com/docs/en/memory"
+    }
+  ]
+}

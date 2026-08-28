@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 130,
+  "nbQuestions": 141,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -67,6 +67,11 @@
       "fichier": "m3-3.1-permission.json",
       "subdomain": "AI Application Security / Configuration Management",
       "nb": 9
+    },
+    {
+      "fichier": "m3-3.2-claudemd.json",
+      "subdomain": "Configuration Management / Claude Code",
+      "nb": 11
     }
   ],
   "questions": [
@@ -1369,6 +1374,116 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m3-3.1-permission.json"
+    },
+    {
+      "id": "PC-CMD-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-002",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-003",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-005",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-006",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-007",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-008",
+      "domain": "Claude Code",
+      "subdomain": "Claude Code",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
+    },
+    {
+      "id": "PC-CMD-011",
+      "domain": "Applications and Integration",
+      "subdomain": "Configuration Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.2-claudemd.json"
     }
   ]
 }

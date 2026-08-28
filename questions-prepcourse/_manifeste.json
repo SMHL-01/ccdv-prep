@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 96,
+  "nbQuestions": 109,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -47,6 +47,11 @@
       "fichier": "m2-2.5-model-budget.json",
       "subdomain": "Context Engineering",
       "nb": 12
+    },
+    {
+      "fichier": "m2-2.6-agent-loop.json",
+      "subdomain": "Agent Construction with Claude",
+      "nb": 13
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -924,6 +929,136 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.5-model-budget.json"
+    },
+    {
+      "id": "PC-AGL-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
+    },
+    {
+      "id": "PC-AGL-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.6-agent-loop.json"
     },
     {
       "id": "PC-PMS-001",

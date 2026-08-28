@@ -1,0 +1,614 @@
+{
+  "topic": "m2-2.6-agent-loop",
+  "source": "prepcourse",
+  "domain": "Agents and Workflows",
+  "subdomain": "Agent Construction with Claude",
+  "weight": 5.3,
+  "corpus_ref": "prepcourse-corpus/m2-2.6-agent-loop.md",
+  "sources_read": [
+    "https://code.claude.com/docs/en/agent-sdk/agent-loop",
+    "https://platform.claude.com/docs/en/managed-agents/overview",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+  ],
+  "questions": [
+    {
+      "id": "PC-AGL-001",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Une session Managed Agents se pilote en cours d execution : on lui envoie des evenements utilisateur supplementaires pour la reorienter ou l interrompre",
+      "question_en": "A Managed Agents session is twenty minutes into a task and heading the wrong way. What do the docs let you do?",
+      "question_fr": "Une session Managed Agents est a vingt minutes d'une tache et part dans la mauvaise direction. Que permet la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Nothing; wait for the session to end.",
+          "text_fr": "Rien : attendre la fin de la session."
+        },
+        {
+          "key": "B",
+          "text_en": "Kill it and restart from scratch.",
+          "text_fr": "La tuer et repartir de zero."
+        },
+        {
+          "key": "C",
+          "text_en": "Send more user events to steer it.",
+          "text_fr": "Envoyer d'autres evenements utilisateur pour la reorienter."
+        },
+        {
+          "key": "D",
+          "text_en": "Patch the agent config; it applies live.",
+          "text_fr": "Corriger la config de l'agent : elle s'applique a chaud."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La page d'ensemble de Managed Agents liste explicitement la capacite de « steer or interrupt mid-execution by sending additional user events ». Une session n'est pas un batch qu'on lance et qu'on subit : elle reste adressable pendant qu'elle tourne, et c'est precisement ce qui rend l'execution longue supportable.",
+      "distractors_fr": {
+        "A": "Ce serait vrai d'un job batch, pas d'une session Managed Agents, qui accepte de nouveaux evenements utilisateur pendant l'execution.",
+        "B": "Tuer la session jette le travail deja fait, alors que la documentation offre un levier moins couteux : reorienter en cours de route.",
+        "D": "Mettre a jour un agent genere une nouvelle version de la configuration ; cela ne se propage pas a une session deja en cours."
+      },
+      "principe_fr": "Une execution longue qui ne peut pas etre reorientee est une execution qu'on ne peut que subir.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/overview"
+    },
+    {
+      "id": "PC-AGL-002",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Le ResultMessage final d un run SDK porte le texte final, la consommation de tokens, le cout et l identifiant de session",
+      "question_en": "An Agent SDK run finishes. What does the final `ResultMessage` carry?",
+      "question_fr": "Un run de l'Agent SDK se termine. Que porte le `ResultMessage` final ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Only the text of the last reply.",
+          "text_fr": "Uniquement le texte de la derniere reponse."
+        },
+        {
+          "key": "B",
+          "text_en": "Final text, token usage, cost, session ID.",
+          "text_fr": "Texte final, tokens consommes, cout, identifiant de session."
+        },
+        {
+          "key": "C",
+          "text_en": "The full transcript of every turn.",
+          "text_fr": "La transcription complete de tous les tours."
+        },
+        {
+          "key": "D",
+          "text_en": "A diff of the files the tools touched.",
+          "text_fr": "Un diff des fichiers touches par les outils."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "L'etape 5 de la boucle le decrit ainsi : « The SDK yields a final AssistantMessage with the text response (no tool calls), followed by a ResultMessage with the final text, token usage, cost, and session ID. » C'est donc le seul endroit ou le cout d'un run se lit d'un coup, sans agreger soi-meme les tours.",
+      "distractors_fr": {
+        "A": "Le texte final y est, mais il n'y est pas seul, et le cout du run est justement ce qu'on vient chercher a la fin.",
+        "C": "Les messages vous sont livres au fil du run ; le ResultMessage est un recapitulatif de cloture, pas une archive.",
+        "D": "Rien dans la boucle ne suit les modifications de fichiers : c'est le role du checkpointing, une autre fonctionnalite."
+      },
+      "principe_fr": "La fin d'un run est aussi le seul endroit ou son cout est lisible d'un seul tenant.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-003",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Sans hook ni callback d approbation, le SDK ne rend pas la main a votre code entre les tours : il boucle jusqu a une reponse sans appel d outil",
+      "question_en": "With no hooks and no approval callback set, when does an Agent SDK turn hand control back to your code?",
+      "question_fr": "Sans hook ni callback d'approbation, a quel moment un tour de l'Agent SDK rend-il la main a votre code ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Not until Claude replies with no tool call.",
+          "text_fr": "Pas avant une reponse de Claude sans appel d'outil."
+        },
+        {
+          "key": "B",
+          "text_en": "After each tool result goes back to Claude.",
+          "text_fr": "Apres chaque resultat d'outil renvoye a Claude."
+        },
+        {
+          "key": "C",
+          "text_en": "Before every tool the SDK is about to run.",
+          "text_fr": "Avant chaque outil que le SDK va executer."
+        },
+        {
+          "key": "D",
+          "text_en": "As soon as the first assistant message lands.",
+          "text_fr": "Des l'arrivee du premier message assistant."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page sur la boucle est explicite sur ce point : « Claude produces output that includes tool calls, the SDK executes those tools, and the results feed back to Claude automatically. This happens without yielding control back to your code. Turns continue until Claude produces output with no tool calls. » Le corollaire pratique : le point d'insertion d'un controle humain n'existe pas par defaut, il se declare (hook ou callback).",
+      "distractors_fr": {
+        "B": "C'est exactement ce que le SDK fait de lui-meme, automatiquement, sans repasser par votre code.",
+        "C": "C'est ce qu'achete un hook PreToolUse, et l'enonce pose qu'il n'y en a aucun.",
+        "D": "Les messages assistant vous sont diffuses au fil du run, mais recevoir un message n'est pas reprendre le controle de la boucle."
+      },
+      "principe_fr": "Le point d'insertion d'un controle humain n'existe pas par defaut : il se declare.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-004",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Managed Agents n est eligible ni au Zero Data Retention ni a un BAA HIPAA parce que les sessions sont stateful et stockees cote serveur : PHI et ZDR repartent sur l Agent SDK ou une boucle brute",
+      "question_en": "A clinical product handles PHI under a HIPAA BAA. The team wants to build on Managed Agents. What is the verdict?",
+      "question_fr": "Un produit clinique traite des PHI sous BAA HIPAA. L'equipe veut construire sur Managed Agents. Quel est le verdict ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Fine once you pin a self-hosted sandbox.",
+          "text_fr": "Bon des lors qu'on impose un sandbox auto-heberge."
+        },
+        {
+          "key": "B",
+          "text_en": "Fine if each session is deleted after use.",
+          "text_fr": "Bon si chaque session est supprimee apres usage."
+        },
+        {
+          "key": "C",
+          "text_en": "Fine with a ZDR header on every call.",
+          "text_fr": "Bon avec un en-tete ZDR sur chaque appel."
+        },
+        {
+          "key": "D",
+          "text_en": "Not eligible; use the SDK or a raw loop.",
+          "text_fr": "Non eligible : passer par le SDK ou une boucle brute."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La page d'ensemble le tranche sans nuance : « Claude Managed Agents is stateful by design... Because of this, Managed Agents is not currently eligible for Zero Data Retention or HIPAA Business Associate Agreement (BAA) coverage. » Une charge PHI ou ZDR se recable donc sur l'Agent SDK ou sur une boucle brute posee sur une configuration couverte.",
+      "distractors_fr": {
+        "A": "Un sandbox auto-heberge deplace l'execution des outils, pas l'etat de session, et c'est l'etat de session qui bloque la couverture.",
+        "B": "Supprimer apres coup n'empeche pas le stockage d'avoir eu lieu ; l'eligibilite est une propriete du service, pas de votre menage.",
+        "C": "Aucun en-tete ne fait entrer un service stateful par conception dans le perimetre du Zero Data Retention."
+      },
+      "principe_fr": "La contrainte reglementaire choisit la voie technique avant que le confort ait son mot a dire.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/overview"
+    },
+    {
+      "id": "PC-AGL-005",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Managed Agents : sessions stateful stockees cote serveur, et en-tete beta requis sur tous les endpoints, la beta etant activee par defaut pour tous les comptes API",
+      "question_en": "Which TWO statements about Claude Managed Agents match the docs?",
+      "question_fr": "Quelles DEUX affirmations sur Claude Managed Agents correspondent a la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Sessions are stateful, stored server-side.",
+          "text_fr": "Les sessions sont stateful, stockees cote serveur."
+        },
+        {
+          "key": "B",
+          "text_en": "Sessions live only in your process memory.",
+          "text_fr": "Les sessions ne vivent que dans la memoire de votre processus."
+        },
+        {
+          "key": "C",
+          "text_en": "Every endpoint takes a beta header.",
+          "text_fr": "Chaque endpoint prend un en-tete beta."
+        },
+        {
+          "key": "D",
+          "text_en": "The beta is opt-in, account by account.",
+          "text_fr": "La beta s'active compte par compte."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Deux faits distincts de la meme page. L'etat d'abord : « Claude Managed Agents is stateful by design », les sessions etant conservees cote serveur. L'acces ensuite : l'en-tete beta `managed-agents-2026-04-01` est requis sur tous les endpoints, le SDK le posant automatiquement pour vous.",
+      "distractors_fr": {
+        "B": "C'est le modele de l'Agent SDK, ou la boucle tourne dans votre processus. Managed Agents fait exactement l'inverse.",
+        "D": "La beta est activee par defaut pour tous les comptes API : il n'y a rien a demander. Seuls les tunnels MCP et le dreaming relevent d'un acces plus restreint."
+      },
+      "principe_fr": "Deux proprietes d'un service manage decident de son usage : ou vit l'etat, et quel en-tete l'autorise.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/overview"
+    },
+    {
+      "id": "PC-AGL-006",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "max_turns ne compte que les tours contenant un usage d outil, et vaut aucune limite par defaut",
+      "question_en": "In the Agent SDK, what does `max_turns` actually count?",
+      "question_fr": "Dans l'Agent SDK, que compte reellement `max_turns` ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Every message exchanged in the session.",
+          "text_fr": "Tous les messages echanges dans la session."
+        },
+        {
+          "key": "B",
+          "text_en": "Only turns that include tool use.",
+          "text_fr": "Uniquement les tours comportant un usage d'outil."
+        },
+        {
+          "key": "C",
+          "text_en": "Tool calls, counted one per turn.",
+          "text_fr": "Les appels d'outils, un par tour."
+        },
+        {
+          "key": "D",
+          "text_en": "Assistant replies, with tools or not.",
+          "text_fr": "Les reponses assistant, avec outils ou non."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La documentation le precise a cote de l'option : `max_turns` compte les tours d'usage d'outil uniquement, et sa valeur par defaut est « No limit ». Quand le plafond est atteint, le run rend un `ResultMessage` de sous-type `error_max_turns`, ce qui rend la coupure lisible dans votre code.",
+      "distractors_fr": {
+        "A": "Les echanges purement textuels ne consomment pas ce plafond ; seuls les tours avec outil sont comptes.",
+        "C": "Un meme tour peut porter plusieurs appels d'outils et ne compte qu'une fois : l'unite est le tour, pas l'appel.",
+        "D": "Une reponse sans appel d'outil termine la boucle de toute facon ; ce n'est pas ce que le plafond surveille."
+      },
+      "principe_fr": "Un plafond ne protege que si l'on sait ce qu'il compte.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-007",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Une boucle qui derape se borne par deux plafonds explicites, nombre de tours et depense en dollars, chacun renvoyant un ResultMessage d erreur dedie",
+      "question_en": "An agent keeps looping on an ambiguous task and won't stop. Which TWO ceilings do the docs give you?",
+      "question_fr": "Un agent boucle sans fin sur une tache ambigue. Quels DEUX plafonds la documentation fournit-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A lower effort level for the run.",
+          "text_fr": "Un niveau d'effort plus bas pour le run."
+        },
+        {
+          "key": "B",
+          "text_en": "A ceiling on the number of turns.",
+          "text_fr": "Un plafond sur le nombre de tours."
+        },
+        {
+          "key": "C",
+          "text_en": "A tighter, shorter system prompt.",
+          "text_fr": "Un prompt systeme plus court et plus serre."
+        },
+        {
+          "key": "D",
+          "text_en": "A ceiling on spend in US dollars.",
+          "text_fr": "Un plafond de depense en dollars."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Les deux options sont documentees cote a cote : `max_turns` borne le nombre de tours d'usage d'outil et rend un `ResultMessage` de sous-type `error_max_turns` ; `max_budget_usd` borne la depense et rend `error_max_budget_usd`. Ce sont les deux seules bornes dures : les autres leviers reduisent une probabilite, ils ne bornent rien.",
+      "distractors_fr": {
+        "A": "L'effort change l'intensite de travail dans un tour, pas le nombre de tours. Il peut meme allonger la boucle plutot que la couper.",
+        "C": "Un prompt mieux cadre reduit le risque de derive sans le borner : quand le cadrage est faux, rien n'arrete la boucle."
+      },
+      "principe_fr": "Reduire la probabilite d'une derive n'est pas la borner.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-008",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "La depense des sous-agents s impute au plafond total du parent : au plafond atteint, un nouveau sous-agent echoue et les sous-agents en cours sont arretes",
+      "question_en": "Your agent spawns subagents. How does their spend meet `max_budget_usd`?",
+      "question_fr": "Votre agent lance des sous-agents. Comment leur depense rencontre-t-elle `max_budget_usd` ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Each subagent gets its own budget.",
+          "text_fr": "Chaque sous-agent a son propre budget."
+        },
+        {
+          "key": "B",
+          "text_en": "Subagent spend is excluded from it.",
+          "text_fr": "La depense des sous-agents en est exclue."
+        },
+        {
+          "key": "C",
+          "text_en": "It counts toward the parent's total.",
+          "text_fr": "Elle s'impute au total du parent."
+        },
+        {
+          "key": "D",
+          "text_en": "Only the last subagent's run counts.",
+          "text_fr": "Seul le run du dernier sous-agent compte."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "La documentation est explicite : « The budget cap covers subagents: their spend counts toward the total. Once spend reaches the cap, spawning another subagent fails with `Budget limit reached`, and Claude Code stops any background subagents still running. » Ce comportement demande Claude Code v2.1.217 ou plus recent.",
+      "distractors_fr": {
+        "A": "Un budget par sous-agent rendrait le total non borne, ce que le plafond existe justement pour empecher.",
+        "B": "C'est l'inverse de ce qu'ecrit la documentation : la delegation est explicitement couverte par le plafond.",
+        "D": "Toutes les depenses de sous-agents s'additionnent au total, pas seulement la derniere."
+      },
+      "principe_fr": "Un plafond qui ne couvre pas la delegation ne plafonne rien.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-009",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Architecture",
+      "weight": 4.5,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Managed Agents vise l execution longue de plusieurs minutes a plusieurs heures, avec sessions stateful et execution planifiee, sans infrastructure a tenir",
+      "question_en": "A nightly job runs an agent unattended for two hours per task. Which surface do the docs point to?",
+      "question_fr": "Un job nocturne fait tourner un agent sans surveillance deux heures par tache. Vers quelle surface la documentation pointe-t-elle ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A raw Messages API loop you host.",
+          "text_fr": "Une boucle brute sur la Messages API, hebergee par vous."
+        },
+        {
+          "key": "B",
+          "text_en": "The Agent SDK in a request handler.",
+          "text_fr": "L'Agent SDK dans un handler de requete."
+        },
+        {
+          "key": "C",
+          "text_en": "Batch requests over the Messages API.",
+          "text_fr": "Des requetes batch sur la Messages API."
+        },
+        {
+          "key": "D",
+          "text_en": "Managed Agents, built for long runs.",
+          "text_fr": "Managed Agents, concu pour les runs longs."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La liste « best for » de la page d'ensemble nomme exactement ce cas : execution longue de l'ordre de la minute a l'heure, sessions stateful, execution planifiee de type cron, et infrastructure minimale a tenir. La duree d'execution est ici le critere de choix, pas un detail d'hebergement.",
+      "distractors_fr": {
+        "A": "Techniquement possible, mais vous heritez alors de la supervision du processus, des reprises et de l'etat pendant deux heures par tache : c'est precisement le travail que la surface managee retire.",
+        "B": "Un handler de requete est le mauvais hote pour un run de deux heures : la requete HTTP ne survit pas a l'execution.",
+        "C": "Le batch traite un grand nombre de requetes independantes en un coup, pas une seule boucle agentique longue."
+      },
+      "principe_fr": "La duree d'execution est un critere de choix de surface, pas un detail d'hebergement.",
+      "doc_ref": "https://platform.claude.com/docs/en/managed-agents/overview"
+    },
+    {
+      "id": "PC-AGL-010",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Consolider les operations proches dans moins d outils plus capables reduit l ambiguite de selection ; le sur-outillage est le probleme courant, pas le sous-outillage",
+      "question_en": "Routing gets erratic after you add `create_pr`, `review_pr`, `merge_pr` and six more. What do the docs advise?",
+      "question_fr": "Le routage devient erratique apres l'ajout de `create_pr`, `review_pr`, `merge_pr` et six autres. Que conseille la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Group related operations into fewer tools.",
+          "text_fr": "Regrouper les operations proches dans moins d'outils."
+        },
+        {
+          "key": "B",
+          "text_en": "Add examples to every tool description.",
+          "text_fr": "Ajouter des exemples a chaque description d'outil."
+        },
+        {
+          "key": "C",
+          "text_en": "Register them all and raise the model tier.",
+          "text_fr": "Tous les enregistrer et monter de gamme de modele."
+        },
+        {
+          "key": "D",
+          "text_en": "Split each tool further, by parameter.",
+          "text_fr": "Decouper encore chaque outil, par parametre."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page sur la definition des outils le formule directement : « Consolidate related operations into fewer tools... Fewer, more capable tools reduce selection ambiguity and make your tool surface easier for Claude to navigate. » Le probleme decrit ici n'est pas un manque de capacite du modele, c'est une surface d'outils ambigue.",
+      "distractors_fr": {
+        "B": "Des exemples aident a bien utiliser un outil une fois choisi ; ils ne reduisent pas le nombre de candidats quasi identiques.",
+        "C": "Un modele plus fort sur une surface ambigue devine encore : l'ambiguite est dans votre surface, pas dans le modele.",
+        "D": "Decouper multiplie les candidats, ce qui est exactement la cause du symptome decrit."
+      },
+      "principe_fr": "Une surface d'outils se concoit pour etre navigable, pas pour etre exhaustive.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools"
+    },
+    {
+      "id": "PC-AGL-011",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "La recherche d outils devient pertinente quand le jeu d outils depasse environ vingt outils ; en dessous, le cache de prompt suffit",
+      "question_en": "Past roughly what toolset size do the docs suggest adding tool search?",
+      "question_fr": "A partir de quelle taille de jeu d'outils, approximativement, la documentation conseille-t-elle d'ajouter la recherche d'outils ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Around 5 tools.",
+          "text_fr": "Environ 5 outils."
+        },
+        {
+          "key": "B",
+          "text_en": "Around 10 tools.",
+          "text_fr": "Environ 10 outils."
+        },
+        {
+          "key": "C",
+          "text_en": "Around 20 tools.",
+          "text_fr": "Environ 20 outils."
+        },
+        {
+          "key": "D",
+          "text_en": "Around 100 tools.",
+          "text_fr": "Environ 100 outils."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "L'echelle de demarrage de la page sur la gestion du contexte d'outils est chiffree : le cache de prompt des le premier jour, puis la recherche d'outils « once your toolset grows past roughly 20 tools », l'edition de contexte quand les conversations s'allongent, et l'appel d'outils programmatique pour les chaines repetitives.",
+      "distractors_fr": {
+        "A": "En dessous du seuil, les definitions chargees en amont et mises en cache coutent peu : ajouter la recherche trop tot achete de la latence pour rien.",
+        "B": "Meme raisonnement : la documentation place le seuil plus haut, autour de vingt outils.",
+        "D": "Attendre une centaine d'outils signifie avoir laisse le routage se degrader longtemps avant d'agir."
+      },
+      "principe_fr": "Un seuil chiffre de la documentation evite d'arbitrer au ressenti.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context"
+    },
+    {
+      "id": "PC-AGL-012",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Un hook PreToolUse s execute avant l outil, son rejet empeche l execution et Claude recoit le message de rejet ; les hooks tournent dans votre processus et ne consomment pas de contexte",
+      "question_en": "You need a human gate before any destructive tool call. Which TWO are true of a `PreToolUse` hook?",
+      "question_fr": "Il faut une validation humaine avant tout appel d'outil destructeur. Quelles DEUX affirmations sur un hook `PreToolUse` sont vraies ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It fires once the tool has returned.",
+          "text_fr": "Il se declenche une fois l'outil revenu."
+        },
+        {
+          "key": "B",
+          "text_en": "Rejecting in it stops the call running.",
+          "text_fr": "Un rejet dedans empeche l'appel de s'executer."
+        },
+        {
+          "key": "C",
+          "text_en": "Its logic sits in the context window.",
+          "text_fr": "Sa logique occupe la fenetre de contexte."
+        },
+        {
+          "key": "D",
+          "text_en": "It runs in your process, not in context.",
+          "text_fr": "Il tourne dans votre processus, pas dans le contexte."
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Deux proprietes complementaires. L'effet : un hook `PreToolUse` s'execute avant l'outil, et un rejet empeche l'execution, Claude recevant le message de rejet. Le cout : « Hooks run in your application process, not inside the agent's context window, so they don't consume context. » Un garde-fou gratuit en contexte et bloquant en effet.",
+      "distractors_fr": {
+        "A": "C'est `PostToolUse`. Apres coup est trop tard pour un appel destructeur : l'effet a deja eu lieu.",
+        "C": "Les hooks tournent dans votre processus applicatif, donc ils ne coutent aucun token de contexte."
+      },
+      "principe_fr": "Le seul endroit ou un garde-fou tient est avant l'effet, pas apres.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    },
+    {
+      "id": "PC-AGL-013",
+      "domain": "Agents and Workflows",
+      "subdomain": "Agent Construction with Claude",
+      "weight": 5.3,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Une condition de sortie cadree sur le fichier et non sur l effet laisse passer un changement valide et destructeur : le point manquant est le palier entre changement propose et changement ecrit",
+      "question_en": "An agent wrote a schema-valid config that broke the customer's app. `validate_config` passed and the loop exited. What was missing?",
+      "question_fr": "Un agent a ecrit une config valide au schema qui a casse l'application du client. `validate_config` est passe et la boucle est sortie. Que manquait-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A gate between proposed and committed.",
+          "text_fr": "Un palier entre changement propose et changement ecrit."
+        },
+        {
+          "key": "B",
+          "text_en": "A higher cap on loop iterations.",
+          "text_fr": "Un plafond d'iterations plus haut."
+        },
+        {
+          "key": "C",
+          "text_en": "A retry when validation fails twice.",
+          "text_fr": "Une reprise quand la validation echoue deux fois."
+        },
+        {
+          "key": "D",
+          "text_en": "A stricter schema in `validate_config`.",
+          "text_fr": "Un schema plus strict dans `validate_config`."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Le postmortem est net : la boucle a fait ce qu'on lui demandait, `validate_config` a valide la plage du schema, et la sortie s'est produite apres une seule iteration. La condition de sortie etait cadree sur le fichier, pas sur l'effet dans le systeme, et il n'existait aucun point d'arret entre « changement pret » et « changement ecrit ». Le mecanisme qui fournit ce palier est un hook avant l'appel d'outil : il s'execute avant l'ecriture et son rejet empeche l'execution.",
+      "distractors_fr": {
+        "B": "Le plafond n'a jamais ete atteint : la boucle est sortie apres une iteration. Le relever ne change rien au scenario.",
+        "C": "La validation n'a jamais echoue. Une reprise n'aurait rien eu a reprendre.",
+        "D": "Un schema plus strict aurait peut-etre attrape cette valeur, mais le prochain changement cassant sera valide au schema lui aussi : l'ecart est structurel."
+      },
+      "principe_fr": "Une condition de sortie se cadre sur l'effet dans le systeme, pas sur l'objet qu'on vient d'ecrire.",
+      "doc_ref": "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+    }
+  ]
+}

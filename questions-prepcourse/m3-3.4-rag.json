@@ -148,38 +148,38 @@
       "nature": "factual_semantic",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "Deux facons de fournir des blocs search_result : renvoyes par un outil custom, ou places directement en contenu de message utilisateur",
-      "question_en": "In how many ways can `search_result` blocks reach Claude? Name the TWO supported paths.",
-      "question_fr": "De combien de facons des blocs `search_result` peuvent-ils parvenir a Claude ? Citez les DEUX voies supportees.",
+      "concept": "Portee reelle de l exclusion de lecture : gitignore couvre les recherches, une regle deny couvre l ouverture",
+      "question_en": "Which TWO statements about keeping generated and vendored code out of what Claude reads are correct?",
+      "question_fr": "Lesquelles de ces DEUX affirmations sur l exclusion du code genere et du code vendorise de ce que Claude lit sont exactes ?",
       "options": [
         {
           "key": "A",
-          "text_en": "Attached to the system prompt as a corpus"
+          "text_en": "A Read deny rule filters search output"
         },
         {
           "key": "B",
-          "text_en": "Returned by one of your own custom tools"
+          "text_en": "Gitignored paths stay out of searches"
         },
         {
           "key": "C",
-          "text_en": "Placed as content in a user message directly"
+          "text_en": "Deny rules cover cat, head and grep too"
         },
         {
           "key": "D",
-          "text_en": "Fetched by the API from a source URL given"
+          "text_en": "Checked-in vendored code is excluded too"
         }
       ],
       "correct": [
         "B",
         "C"
       ],
-      "explanation_fr": "Deux voies sont documentees. Un outil que vous ecrivez renvoie des blocs `search_result` : c est le RAG dynamique, ou la recherche a lieu pendant le tour. Ou bien les blocs sont poses directement en contenu d un message utilisateur : c est le cas du contenu pre-recupere ou mis en cache. Dans les deux cas Claude cite automatiquement si les citations sont actives.",
+      "explanation_fr": "Deux mecanismes distincts, deux portees distinctes. Les recherches de contenu respectent le .gitignore par defaut, donc node_modules, dist et build restent hors des resultats sans rien configurer. Pour ce qui est commite, une regle Read dans permissions.deny bloque l ouverture, y compris via les commandes Bash reconnues comme cat, head, grep et find quand le chemin interdit est passe en argument ; en revanche elle ne filtre pas la sortie d une recherche recursive et ne couvre pas un sous-processus arbitraire.",
       "distractors_fr": {
-        "A": "Le prompt systeme ne recoit pas de blocs `search_result`. Ils voyagent dans les messages.",
-        "D": "L API ne va rien chercher : le champ `source` etiquette le contenu, il ne declenche aucune requete sortante."
+        "A": "Une regle deny empeche d ouvrir le fichier, elle ne retire pas le chemin du resultat d une recherche recursive : le chemin peut apparaitre, la lecture echouera.",
+        "D": "Seuls les chemins deja dans le .gitignore sortent tout seuls. Un SDK vendorise commite reste visible : il faut une regle deny explicite."
       },
-      "principe_fr": "La meme structure de donnees sert la recherche a la volee et le contenu deja rassemble.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/search-results"
+      "principe_fr": "Avant de compter sur une exclusion, demandez-vous si elle agit sur la recherche ou sur l ouverture : ce n est pas la meme garantie.",
+      "doc_ref": "https://code.claude.com/docs/en/large-codebases"
     },
     {
       "id": "PC-RAG-005",

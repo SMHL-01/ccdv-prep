@@ -166,6 +166,43 @@ function ligneRepartition(libelle, n, total, cible) {
   return `    ${libelle.padEnd(20)} ${String(n).padStart(3)}  ${p.toFixed(1).padStart(5)} %${ecart}`;
 }
 
+// Une question "porte sur une API beta" de deux facons, et le plafond doit
+// voir les deux.
+//
+// 1. Par l'URL citee. Toute page api/beta ou managed-agents/* documente une
+//    surface gatee par en-tete beta : managed-agents/overview dit textuellement
+//    "Claude Managed Agents is in beta. All Managed Agents endpoints require
+//    the managed-agents-2026-04-01 beta header". Motif grossier -- il teste un
+//    emplacement pour deduire un statut -- mais zero faux positif mesure sur
+//    les 690 questions des deux banques.
+//
+// 2. Par le mecanisme que la question exige de connaitre. Une fonction beta
+//    documentee sur une page stable etait invisible : 10 questions prepcourse
+//    citent un en-tete ou un statut beta dans leur propre texte, une seule
+//    etait vue par le motif URL.
+//
+// Le test de contenu s'applique a l'ENONCE et a la BONNE REPONSE seulement, et
+// c'est la restriction qui rend la regle juste. Une mention beta dans
+// explanation_fr ou dans un distracteur est du contexte ; ce qui doit compter,
+// c'est ce qu'il faut savoir pour repondre juste.
+//
+// Ne pas remonter ce test au niveau de la page : mesure a 50 pages sur 479,
+// soit 70 questions contre un plafond de 8, et faux en plus d'etre inutilisable
+// (context-windows porte 12 questions et n'est pas une page beta, elle cite des
+// sous-fonctions beta en passant). Voir NOTE-detecteur-beta.md.
+
+const MOTIF_BETA_URL = /api\/beta|managed-agents/;
+const MOTIF_BETA_MECANISME = /anthropic-beta|\bbetas\b|beta header|\(beta\)|\bin beta\b/i;
+
+function porteSurBeta(q) {
+  if (MOTIF_BETA_URL.test(q.doc_ref || '')) return true;
+  const correctes = new Set(q.correct || []);
+  const texte = [q.question_en || '', q.question_fr || '']
+    .concat((q.options || []).filter((o) => correctes.has(o.key)).map((o) => o.text_en || ''))
+    .join(' ');
+  return MOTIF_BETA_MECANISME.test(texte);
+}
+
 function analyser(questions) {
   const parNature = {};
   const parDifficulte = {};
@@ -177,7 +214,7 @@ function analyser(questions) {
     parDifficulte[q.difficulty] = (parDifficulte[q.difficulty] || 0) + 1;
     for (const c of q.correct || []) parCle[c] = (parCle[c] || 0) + 1;
     if (q.type === 'multi') multi++;
-    if (/api\/beta|managed-agents/.test(q.doc_ref || '')) beta++;
+    if (porteSurBeta(q)) beta++;
   }
   return { parNature, parDifficulte, parCle, multi, beta };
 }

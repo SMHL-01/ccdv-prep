@@ -1,0 +1,476 @@
+{
+  "topic": "m2-2.8-multimodal-batch",
+  "source": "prepcourse",
+  "domain": "Applications and Integration / Model Selection and Optimization",
+  "subdomain": "Claude API Mechanics / Cost and Token Management",
+  "weight": 11.4,
+  "corpus_ref": "prepcourse-corpus/m2-2.8-multimodal-batch.md",
+  "sources_read": [
+    "https://platform.claude.com/docs/en/build-with-claude/vision",
+    "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+    "https://platform.claude.com/docs/en/build-with-claude/files",
+    "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+  ],
+  "questions": [
+    {
+      "id": "PC-MMB-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Files API : uploader une fois, referencer par file_id",
+      "question_en": "A catalogue tool sends forty product photos in a single Messages request and the call fails on the request size limit. The images are reused across many later requests. What is the documented fix?",
+      "question_fr": "Un outil de catalogue envoie quarante photos produit dans une seule requete Messages et l appel echoue sur la limite de taille de requete. Les images sont reutilisees dans de nombreuses requetes ensuite. Quel est le correctif documente ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Upload each image with the Files API and reference it by file_id to shrink the payload",
+          "text_fr": "Uploader chaque image via la Files API et la referencer par file_id pour reduire la charge utile"
+        },
+        {
+          "key": "B",
+          "text_en": "Re-encode the images with a denser base64 variant so the payload fits the limit",
+          "text_fr": "Re-encoder les images avec une variante base64 plus dense pour tenir sous la limite"
+        },
+        {
+          "key": "C",
+          "text_en": "Turn on prompt caching so the images travel only with the very first request",
+          "text_fr": "Activer le prompt caching pour que les images ne voyagent qu avec la premiere requete"
+        },
+        {
+          "key": "D",
+          "text_en": "Move the job to the Message Batches API, which lifts the per-request size limit",
+          "text_fr": "Basculer le traitement sur la Message Batches API, qui leve la limite de taille par requete"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La page Vision est explicite : pour beaucoup d images, il faut uploader via la Files API et referencer par file_id afin de garder les charges utiles petites. La Files API est faite pour cela : on uploade une fois, on reference plusieurs fois. La limite de 32 Mo porte sur la requete entiere, y compris tout le reste du contenu envoye a cote.",
+      "distractors_fr": {
+        "B": "L encodage base64 a un surcout fixe d environ un tiers, il n existe pas de variante plus dense a choisir.",
+        "C": "Le prompt caching evite de re-traiter le contenu cote serveur, il ne dispense pas de le transmettre : la charge utile envoyee reste la meme.",
+        "D": "Le mode batch change le modele de soumission et le cout par token, pas les limites de taille d une requete individuelle."
+      },
+      "principe_fr": "Quand la charge utile est le probleme, la reponse est de ne plus transporter le contenu : on l uploade une fois et on envoie une reference.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    },
+    {
+      "id": "PC-MMB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_magnitude",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Cout en tokens visuels : formule des patches 28x28",
+      "question_en": "A team wants to budget context for a 1,000 by 1,000 pixel screenshot before sending it. Roughly what does that image cost?",
+      "question_fr": "Une equipe veut budgeter le contexte d une capture d ecran de 1 000 sur 1 000 pixels avant de l envoyer. Combien coute a peu pres cette image ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Roughly 340 visual tokens, since Claude samples the image down to a fixed grid",
+          "text_fr": "Environ 340 tokens visuels, Claude reechantillonnant l image sur une grille fixe"
+        },
+        {
+          "key": "B",
+          "text_en": "Roughly 780 visual tokens, one per 36-pixel square of the original image",
+          "text_fr": "Environ 780 tokens visuels, un par carre de 36 pixels de l image d origine"
+        },
+        {
+          "key": "C",
+          "text_en": "Roughly 1,300 visual tokens, about 36 by 36 patches of 28 by 28 pixels each",
+          "text_fr": "Environ 1 300 tokens visuels, soit 36 sur 36 patches de 28 sur 28 pixels chacun"
+        },
+        {
+          "key": "D",
+          "text_en": "Roughly 3,600 visual tokens, one per row of pixels along the image long edge",
+          "text_fr": "Environ 3 600 tokens visuels, un par ligne de pixels sur le grand cote de l image"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Claude lit les images par patches et non par pixels : chaque bloc de 28 sur 28 pixels est un token visuel, donc le cout vaut plafond(largeur / 28) multiplie par plafond(hauteur / 28). Ici plafond(1000 / 28) vaut 36, et 36 fois 36 donne 1 296 tokens visuels. L ordre de grandeur a retenir : une capture pleine page coute autant qu un prompt systeme detaille.",
+      "distractors_fr": {
+        "A": "Il n y a pas de grille fixe : le nombre de patches depend directement des dimensions de l image.",
+        "B": "Le patch mesure 28 pixels de cote, pas 36. Le 36 du calcul est le nombre de patches par cote, pas leur taille.",
+        "D": "Le cout n est pas lineaire en une seule dimension : il est le produit du nombre de patches en largeur et en hauteur."
+      },
+      "principe_fr": "Un cout en tokens visuels se calcule avant l envoi, a partir des seules dimensions de l image.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    },
+    {
+      "id": "PC-MMB-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Palier haute resolution : automatique, sans opt-in",
+      "question_en": "The newest models accept larger images than the standard tier. How does an application get that higher resolution tier, and what does it cost?",
+      "question_fr": "Les modeles les plus recents acceptent des images plus grandes que le palier standard. Comment une application obtient-elle ce palier de resolution superieur, et qu est-ce que cela coute ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "You must send a beta header before the larger resolution tier becomes active",
+          "text_fr": "Il faut envoyer un en-tete beta pour que le palier de resolution superieur s active"
+        },
+        {
+          "key": "B",
+          "text_en": "It is automatic on those models, and the same image can cost about three times more",
+          "text_fr": "C est automatique sur ces modeles, et une meme image peut couter environ trois fois plus"
+        },
+        {
+          "key": "C",
+          "text_en": "It is enabled per API key from the Console, one workspace setting at a time",
+          "text_fr": "Il s active par cle API depuis la Console, un reglage d espace de travail a la fois"
+        },
+        {
+          "key": "D",
+          "text_en": "It applies only to images passed as a file_id through the Files API, not base64",
+          "text_fr": "Il ne s applique qu aux images passees par file_id via la Files API, pas en base64"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "La page Vision indique que la prise en charge haute resolution est automatique sur les modeles concernes et ne demande ni en-tete beta ni opt-in cote client. La consequence est budgetaire : une meme image peut consommer jusqu a environ trois fois plus de tokens visuels que sur un modele du palier standard, parce qu elle n est plus reduite avant traitement.",
+      "distractors_fr": {
+        "A": "Aucun en-tete beta n intervient ici. La documentation le dit explicitement : ni en-tete beta ni opt-in cote client.",
+        "C": "Ce n est pas un reglage de compte ni d espace de travail : le palier depend du modele appele.",
+        "D": "Le mode de transport de l image, base64 ou file_id, n a aucun effet sur le palier de resolution."
+      },
+      "principe_fr": "Une capacite activee par defaut est une capacite dont il faut budgeter le cout, pas une capacite gratuite.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    },
+    {
+      "id": "PC-MMB-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Reduction automatique au-dela des limites de resolution",
+      "question_en": "A team sends 3840 by 2160 screenshots to a standard-tier model and finds the billed visual tokens far below what the patch formula predicted. What happened?",
+      "question_fr": "Une equipe envoie des captures de 3840 sur 2160 a un modele du palier standard et constate un nombre de tokens visuels bien inferieur a ce que predisait la formule des patches. Que s est-il passe ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The request is rejected, because the image is above the model resolution limit",
+          "text_fr": "La requete est rejetee, l image depassant la limite de resolution du modele"
+        },
+        {
+          "key": "B",
+          "text_en": "The extra pixels are cropped from the edges, keeping the centre at full detail",
+          "text_fr": "Les pixels en trop sont recadres sur les bords, le centre restant en pleine finesse"
+        },
+        {
+          "key": "C",
+          "text_en": "The image is split into tiles, and every tile is billed as a separate image",
+          "text_fr": "L image est decoupee en tuiles, et chaque tuile est facturee comme une image a part"
+        },
+        {
+          "key": "D",
+          "text_en": "The image is downscaled first, so the patch formula runs on the scaled size",
+          "text_fr": "L image est d abord reduite, donc la formule s applique aux dimensions reduites"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "Au-dela de la limite de grand cote ou de la limite de tokens visuels du modele, l image est reduite avant traitement, en preservant le rapport d aspect. La formule des patches s applique alors aux dimensions reduites, ce qui plafonne le cout. Sur le palier standard, une image 3840 sur 2160 devient 1456 sur 819 et coute environ 1 560 tokens visuels au lieu du calcul brut.",
+      "distractors_fr": {
+        "A": "Le rejet ne survient pas pour un depassement du palier : il concerne les dimensions extremes ou les requetes a tres nombreuses images.",
+        "B": "Aucun recadrage n a lieu : la reduction preserve le cadre complet et le rapport d aspect.",
+        "C": "Il n y a pas de decoupage en tuiles facturees separement : l image reste une image, simplement redimensionnee."
+      },
+      "principe_fr": "Le cout d une image est plafonne par le modele, mais ce plafond s obtient en perdant de la finesse : c est un arbitrage, pas un cadeau.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    },
+    {
+      "id": "PC-MMB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "weight": 2.8,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Cout PDF : image de page plus texte extrait, par page",
+      "question_en": "A team replaces page screenshots with the source PDF, expecting a cheaper request because a PDF is text. The token count barely moves. Why?",
+      "question_fr": "Une equipe remplace des captures de pages par le PDF source, en attendant une requete moins chere puisqu un PDF est du texte. Le nombre de tokens bouge a peine. Pourquoi ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Each page arrives as a page image plus its extracted text, so pages carry image cost",
+          "text_fr": "Chaque page arrive en image de page plus son texte extrait, donc chaque page porte un cout image"
+        },
+        {
+          "key": "B",
+          "text_en": "Only the extracted text is sent, unless you ask explicitly for visual analysis",
+          "text_fr": "Seul le texte extrait est transmis, sauf si l on demande explicitement une analyse visuelle"
+        },
+        {
+          "key": "C",
+          "text_en": "The PDF is forwarded as a binary blob, and Claude parses the file format itself",
+          "text_fr": "Le PDF est transmis comme un bloc binaire, et Claude analyse lui-meme le format de fichier"
+        },
+        {
+          "key": "D",
+          "text_en": "Pages become images only when the text layer of the document is missing or broken",
+          "text_fr": "Les pages ne deviennent des images que si la couche texte du document manque ou est corrompue"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "La prise en charge des PDF convertit chaque page en image et en extrait le texte, puis fournit les deux a Claude. C est ce qui permet d interroger un graphique ou un schema, et c est aussi ce qui explique le cout : le cout image s applique a chaque page, en plus du texte extrait. Un PDF n est donc pas une version economique des captures d ecran des memes pages.",
+      "distractors_fr": {
+        "B": "Les deux representations sont fournies systematiquement, sans avoir a demander l analyse visuelle.",
+        "C": "Claude ne recoit pas le binaire a analyser : la conversion en image de page et l extraction du texte ont lieu en amont.",
+        "D": "La conversion en image ne depend pas de la qualite de la couche texte : elle a lieu pour chaque page."
+      },
+      "principe_fr": "Une capacite qui fournit deux representations du meme contenu se paie deux fois : le confort d usage a un prix en contexte.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/pdf-support"
+    },
+    {
+      "id": "PC-MMB-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Bloc document pour les PDF, trois types de source",
+      "question_en": "How is a PDF placed in the content of a Messages request?",
+      "question_fr": "Comment un PDF se place-t-il dans le contenu d une requete Messages ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A block of type image, with a media_type of application/pdf on its source",
+          "text_fr": "Un bloc de type image, avec un media_type application/pdf sur sa source"
+        },
+        {
+          "key": "B",
+          "text_en": "A block of type document, whose source can be base64, a url, or a file_id",
+          "text_fr": "Un bloc de type document, dont la source peut etre base64, une url ou un file_id"
+        },
+        {
+          "key": "C",
+          "text_en": "A block of type file, which requires a name field alongside the source data",
+          "text_fr": "Un bloc de type file, qui exige un champ name a cote des donnees de la source"
+        },
+        {
+          "key": "D",
+          "text_en": "A block of type text, filled with the text you extracted on the client side",
+          "text_fr": "Un bloc de type text, rempli avec le texte que l on a extrait cote client"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Un PDF se transmet dans un bloc de type document, pas image. Sa source accepte trois formes : base64, une url, ou un file_id obtenu de la Files API. Les champs title et context sont optionnels, et aucun champ name n est requis.",
+      "distractors_fr": {
+        "A": "Le type image sert aux images. Un PDF a son propre type de bloc, document, meme si chaque page finit par etre traitee comme une image.",
+        "C": "Il n existe pas de type file dans le contenu d un message, et aucun champ name n est requis sur un bloc document.",
+        "D": "Extraire le texte cote client fait perdre exactement ce que la prise en charge des PDF apporte : les graphiques et les schemas."
+      },
+      "principe_fr": "Le type de bloc encode la nature du contenu ; c est lui qui declenche le bon pipeline de traitement cote API.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/pdf-support"
+    },
+    {
+      "id": "PC-MMB-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Structure de requete multimodale : ordre et etiquetage",
+      "question_en": "A request compares three interface screenshots. Which two documented practices improve the result? (Choose TWO)",
+      "question_fr": "Une requete compare trois captures d interface. Quelles deux pratiques documentees ameliorent le resultat ? (Choisissez DEUX reponses)",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Place the image blocks before the text blocks inside the message",
+          "text_fr": "Placer les blocs image avant les blocs texte dans le message"
+        },
+        {
+          "key": "B",
+          "text_en": "Send one image per request, so each answer covers a single picture",
+          "text_fr": "Envoyer une image par requete, pour que chaque reponse porte sur une seule image"
+        },
+        {
+          "key": "C",
+          "text_en": "Label each image in text (Image 1:, Image 2:) so the prompt can name them",
+          "text_fr": "Etiqueter chaque image en texte (Image 1:, Image 2:) pour pouvoir les nommer"
+        },
+        {
+          "key": "D",
+          "text_en": "Ask Claude to read the image metadata to establish capture order",
+          "text_fr": "Demander a Claude de lire les metadonnees des images pour etablir l ordre de capture"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Deux consignes documentees s appliquent. D abord l ordre : Claude fonctionne mieux quand les images precedent le texte, comme pour les longs documents ; une structure image puis texte est a preferer quand l usage le permet. Ensuite l etiquetage : en envoyant plusieurs images, il faut introduire chacune par une courte etiquette texte, Image 1:, Image 2:, pour pouvoir s y referer par son nom dans le prompt et dans les tours suivants.",
+      "distractors_fr": {
+        "B": "Une requete accepte plusieurs images et Claude les analyse conjointement : c est justement ce qui permet la comparaison.",
+        "D": "Claude ne recoit ni n analyse aucune metadonnee d image. L ordre doit etre porte par le texte de la requete."
+      },
+      "principe_fr": "Une requete multimodale se structure : l ordre des blocs et le nommage des elements font partie du prompt, pas de l habillage.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    },
+    {
+      "id": "PC-MMB-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Batching : modele de soumission, pas taille de lot",
+      "question_en": "To process fifty thousand inputs, a script slices them into chunks of a hundred and loops over the synchronous Messages API. The team calls this batching. What is the reality?",
+      "question_fr": "Pour traiter cinquante mille entrees, un script les decoupe en lots de cent et boucle sur l API Messages synchrone. L equipe appelle cela du batching. Quelle est la realite ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Cut the chunk size to twenty-five inputs, staying further under the rate limit",
+          "text_fr": "Reduire le lot a vingt-cinq entrees, pour rester plus loin de la limite de debit"
+        },
+        {
+          "key": "B",
+          "text_en": "Pack a hundred inputs into one Messages request as a hundred content blocks",
+          "text_fr": "Empaqueter cent entrees dans une requete Messages sous forme de cent blocs de contenu"
+        },
+        {
+          "key": "C",
+          "text_en": "Nothing changed: the call count and limits are the same, batching is another path",
+          "text_fr": "Rien n a change : autant d appels et memes limites, le batch est une autre voie"
+        },
+        {
+          "key": "D",
+          "text_en": "Nothing is wrong, the batch discount applies to any loop over grouped inputs",
+          "text_fr": "Rien a corriger, la remise batch s applique a toute boucle sur des entrees groupees"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Decouper une liste et boucler sur l API synchrone n est pas du batching : le nombre d appels est identique, les limites de debit sont les memes, et rien n est asynchrone. La Message Batches API est un autre modele de soumission, pas une taille de lot plus petite : on soumet un lot, on recoit un identifiant, on interroge l etat, puis on telecharge les resultats.",
+      "distractors_fr": {
+        "A": "Changer la taille du lot ne change pas la nature du traitement : c est toujours une suite d appels synchrones.",
+        "B": "Entasser cent entrees dans une requete unique melange des travaux independants dans un seul contexte, et ne donne ni le tarif ni le modele asynchrone du batch.",
+        "D": "La remise sur le cout par token vient de l API Batches, pas d une boucle cote client, quelle que soit la facon de grouper les entrees."
+      },
+      "principe_fr": "Un gain d architecture vient du modele de soumission choisi, jamais du regroupement cosmetique des appels.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "PC-MMB-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "Batches : appariement par custom_id et plafonds du lot",
+      "question_en": "A nightly job submits a large Message Batch. Which two statements about the batch are correct? (Choose TWO)",
+      "question_fr": "Un traitement nocturne soumet un gros Message Batch. Quelles deux affirmations sur ce lot sont correctes ? (Choisissez DEUX reponses)",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The .jsonl results come back in the order the requests were submitted",
+          "text_fr": "Les resultats .jsonl reviennent dans l ordre de soumission des requetes"
+        },
+        {
+          "key": "B",
+          "text_en": "Results can arrive in any order, so match them back by their custom_id",
+          "text_fr": "Les resultats peuvent arriver dans n importe quel ordre : on les apparie par custom_id"
+        },
+        {
+          "key": "C",
+          "text_en": "Each request needs an index parameter for the API to keep them ordered",
+          "text_fr": "Chaque requete a besoin d un parametre index pour que l API garde l ordre"
+        },
+        {
+          "key": "D",
+          "text_en": "One batch holds at most 100,000 requests or 256 MB, whichever comes first",
+          "text_fr": "Un lot contient au plus 100 000 requetes ou 256 Mo, selon ce qui est atteint d abord"
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "Deux faits sont documentes. D abord l ordre : les resultats d un lot peuvent revenir dans n importe quel ordre, sans correspondre a l ordre de creation ; pour les apparier correctement il faut toujours utiliser le champ custom_id, unique, de 1 a 64 caracteres alphanumeriques, tirets et soulignes. Ensuite les plafonds : un Message Batch est limite a 100 000 requetes ou 256 Mo, selon la limite atteinte en premier.",
+      "distractors_fr": {
+        "A": "L ordre de soumission n est pas conserve. La documentation donne un exemple ou le resultat de la deuxieme requete precede celui de la premiere.",
+        "C": "Il n existe pas de parametre index. L appariement repose entierement sur le custom_id que l on fournit soi-meme."
+      },
+      "principe_fr": "Un traitement asynchrone ne garantit pas l ordre : l identite de chaque unite de travail doit etre portee par la donnee elle-meme.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+    },
+    {
+      "id": "PC-MMB-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "weight": 8.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "Limites documentees de la vision : provenance et metadonnees",
+      "question_en": "A moderation pipeline must flag uploads produced by an image generator. The team plans to send each upload to Claude and ask. What does the documentation say about this plan?",
+      "question_fr": "Un pipeline de moderation doit signaler les uploads produits par un generateur d images. L equipe compte envoyer chaque upload a Claude et poser la question. Que dit la documentation de ce plan ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Enable the high-resolution tier, so generation artefacts become visible",
+          "text_fr": "Activer le palier haute resolution, pour que les artefacts de generation soient visibles"
+        },
+        {
+          "key": "B",
+          "text_en": "Have Claude read the image metadata, where generator tags are recorded",
+          "text_fr": "Faire lire a Claude les metadonnees de l image, ou les marqueurs de generateur figurent"
+        },
+        {
+          "key": "C",
+          "text_en": "Turn on extended thinking, so Claude can reason about image provenance",
+          "text_fr": "Activer l extended thinking, pour que Claude raisonne sur la provenance de l image"
+        },
+        {
+          "key": "D",
+          "text_en": "Claude cannot judge that, so the check has to come from somewhere else",
+          "text_fr": "Claude ne peut pas en juger : le controle doit venir d ailleurs"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "La page Vision liste cette limite explicitement : Claude ne peut pas determiner si une image a ete generee par une intelligence artificielle. Le plan est donc a abandonner au profit d un autre mecanisme. La meme section precise que Claude n analyse ni ne recoit aucune metadonnee d image.",
+      "distractors_fr": {
+        "A": "Une resolution superieure ne cree pas une capacite que le modele n a pas : la limite est sur le jugement de provenance, pas sur la finesse.",
+        "B": "Claude ne recoit aucune metadonnee d image : cette piste est fermee par la documentation elle-meme.",
+        "C": "L extended thinking allonge le raisonnement sur ce que Claude percoit, il n ajoute pas une capacite de detection de provenance."
+      },
+      "principe_fr": "Choisir un modele suppose de connaitre ses limites documentees : ce qu il ne peut pas faire cadre l architecture autant que ce qu il sait faire.",
+      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/vision"
+    }
+  ]
+}

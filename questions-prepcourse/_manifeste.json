@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 120,
+  "nbQuestions": 130,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -57,6 +57,11 @@
       "fichier": "m2-2.7-memory-scope.json",
       "subdomain": "Agentic Customization",
       "nb": 11
+    },
+    {
+      "fichier": "m2-2.8-multimodal-batch.json",
+      "subdomain": "Claude API Mechanics / Cost and Token Management",
+      "nb": 10
     },
     {
       "fichier": "m3-3.1-permission.json",
@@ -1174,6 +1179,106 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m2-2.7-memory-scope.json"
+    },
+    {
+      "id": "PC-MMB-001",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-002",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_magnitude",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-003",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-004",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-005",
+      "domain": "Model Selection and Optimization",
+      "subdomain": "Cost and Token Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-006",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-007",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-008",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-009",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "moyen",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
+    },
+    {
+      "id": "PC-MMB-010",
+      "domain": "Applications and Integration",
+      "subdomain": "Claude API Mechanics",
+      "difficulty": "facile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m2-2.8-multimodal-batch.json"
     },
     {
       "id": "PC-PMS-001",

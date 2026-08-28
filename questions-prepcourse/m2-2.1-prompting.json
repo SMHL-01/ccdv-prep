@@ -113,42 +113,38 @@
       "nature": "factual_semantic",
       "difficulty": "facile",
       "source": "prepcourse",
-      "concept": "Les balises XML delimitent les exemples pour que Claude ne les lise pas comme des instructions",
-      "question_en": "In a few-shot prompt, what job do the XML tags wrapped around each example do?",
-      "question_fr": "Dans un prompt few-shot, à quoi servent les balises XML qui entourent chaque exemple ?",
+      "concept": "strict est une propriete de premier niveau de la definition d outil, pas un attribut du schema",
+      "question_en": "You are turning on strict tool use for one of your tools. Where does the `strict` flag belong in the tool definition?",
+      "question_fr": "Vous activez le strict tool use sur un de vos outils. Ou se place le drapeau `strict` dans la definition d outil ?",
       "options": [
         {
           "key": "A",
-          "text_en": "They tell the API to validate the output schema.",
-          "text_fr": "Elles demandent à l'API de valider le schéma de sortie."
+          "text_en": "Inside `input_schema`, next to `required`"
         },
         {
           "key": "B",
-          "text_en": "They mark examples off from the instructions.",
-          "text_fr": "Elles séparent les exemples des instructions."
+          "text_en": "At the top level of the tool definition"
         },
         {
           "key": "C",
-          "text_en": "They cache the examples across later requests.",
-          "text_fr": "Elles mettent les exemples en cache pour les appels suivants."
+          "text_en": "In `output_config`, on the request body"
         },
         {
           "key": "D",
-          "text_en": "They raise the weight Claude gives each example.",
-          "text_fr": "Elles augmentent le poids que Claude accorde à chaque exemple."
+          "text_en": "On each property you want validated"
         }
       ],
       "correct": [
         "B"
       ],
-      "explanation_fr": "La doc demande d'envelopper les exemples dans des balises `<example>` « so Claude can distinguish them from instructions », et la section sur les balises XML précise qu'elles aident Claude à analyser un prompte mêlant instructions, contexte, exemples et entrées variables sans confusion. Leur rôle est une frontière de lecture, rien de plus.",
+      "explanation_fr": "strict se met au meme niveau que name, description et input_schema, comme propriete de premier niveau de la definition d outil. Une fois pose, l echantillonnage du modele est contraint par la grammaire compilee depuis le schema, et le bloc tool_use recu respecte ce schema.",
       "distractors_fr": {
-        "A": "La validation d'un schéma se demande à l'API via `output_config.format` ou `strict: true`, pas avec des balises dans le texte du prompt. Une balise XML n'engage aucune contrainte côté API.",
-        "C": "Le cache de prompt se pilote par des points de césure explicites, indépendamment du balisage XML : mettre un exemple entre balises ne le met pas en cache.",
-        "D": "Aucun mécanisme de pondération n'est attaché aux balises. Elles délimitent, elles ne hiérarchisent pas."
+        "A": "Le schema decrit les parametres, il ne porte pas le mode de contrainte. Place a l interieur, la cle serait lue comme un mot-cle JSON Schema inconnu.",
+        "C": "output_config sert a contraindre la reponse finale du modele, pas les entrees d outils : c est l autre moitie des sorties structurees, avec sa propre place dans le corps de requete.",
+        "D": "La contrainte s applique au schema entier d un coup ; il n y a pas de strict par propriete a activer champ par champ."
       },
-      "principe_fr": "Une balise XML est une frontière de lecture pour le modèle, pas une instruction adressée à l'API.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      "principe_fr": "Un drapeau qui gouverne la facon dont un schema est applique vit a cote du schema, pas dedans.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use"
     },
     {
       "id": "PC-PMT-004",
@@ -297,42 +293,38 @@
       "nature": "factual_semantic",
       "difficulty": "difficile",
       "source": "prepcourse",
-      "concept": "Structured outputs ne garantissent pas la casse des valeurs enum et la reponse se termine sans stop_reason particulier",
-      "question_en": "Your schema pins a label set with `enum`, yet a response comes back with a differently capitalized value, no error and no unusual stop reason. What does the documentation say about this case?",
-      "question_fr": "Votre schéma fixe un jeu de libellés avec `enum`, et pourtant une réponse revient avec une valeur dont la casse diffère, sans erreur ni stop reason particulier. Que dit la documentation de ce cas ?",
+      "concept": "Le strict tool use est eligible HIPAA mais aucune donnee de sante ne doit figurer dans le schema d outil",
+      "question_en": "Strict tool use is HIPAA eligible. What does the documentation nonetheless forbid placing anywhere inside a tool's `input_schema`?",
+      "question_fr": "Le strict tool use est eligible HIPAA. Que la documentation interdit-elle malgre tout de placer dans le `input_schema` d un outil ?",
       "options": [
         {
           "key": "A",
-          "text_en": "It is a refusal, so check `stop_reason` first.",
-          "text_fr": "C'est un refus : il faut d'abord regarder `stop_reason`."
+          "text_en": "Any field the schema marks as required"
         },
         {
           "key": "B",
-          "text_en": "It means the grammar cache went stale mid-run.",
-          "text_fr": "Cela signifie que le cache de grammaire s'est périmé en cours."
+          "text_en": "Enum values, though property names are fine"
         },
         {
           "key": "C",
-          "text_en": "It only happens once `max_tokens` is reached.",
-          "text_fr": "Cela n'arrive qu'une fois `max_tokens` atteint."
+          "text_en": "Nothing: the schema has the same protections"
         },
         {
           "key": "D",
-          "text_en": "Enum casing is not guaranteed by the feature.",
-          "text_fr": "La casse des valeurs enum n'est pas garantie par la fonctionnalité."
+          "text_en": "Protected health information, in any form"
         }
       ],
       "correct": [
         "D"
       ],
-      "explanation_fr": "La section « Invalid outputs » liste ce cas à part des deux autres : les structured outputs ne garantissent pas la capitalisation des valeurs `enum` et `const`, la divergence porte typiquement sur la première lettre d'un mot après une espace, et « the response completes normally, with no error and no special `stop_reason` ». La consigne qui suit est d'y répondre côté code : comparer les valeurs d'enum sans tenir compte de la casse, et éviter des valeurs qui ne diffèrent que par la capitalisation.",
+      "explanation_fr": "Le strict tool use compile input_schema en grammaire par le meme pipeline que les sorties structurees, et ces schemas compiles sont caches jusqu a 24 h depuis le dernier usage, dans un espace distinct du contenu des messages. Cet espace n herite pas des protections HIPAA appliquees aux prompts et aux reponses. La consequence est nette : aucune donnee de sante dans les noms de proprietes, les valeurs enum, les valeurs const ni les patterns. Les donnees de sante n ont leur place que dans le contenu des messages.",
       "distractors_fr": {
-        "A": "Un refus se signale par `stop_reason: \"refusal\"` avec un code 200 ; ici la doc précise justement qu'il n'y a aucun `stop_reason` particulier.",
-        "B": "Un cache de grammaire périmé se traduit par une recompilation, donc par de la latence sur le premier appel — pas par une valeur d'enum mal capitalisée.",
-        "C": "Une troncature à `max_tokens` produit une sortie incomplète, coupée en pleine structure ; la réponse décrite ici se termine normalement."
+        "A": "Rien n interdit de rendre un champ obligatoire : c est meme necessaire pour que la contrainte serve a quelque chose.",
+        "B": "L interdiction ne distingue pas : elle couvre les noms de proprietes, les valeurs enum, les valeurs const et les expressions regulieres de pattern.",
+        "C": "C est justement le piege. Les schemas compiles sont mis en cache separement du contenu des messages et ne recoivent pas les memes protections que les prompts et les reponses."
       },
-      "principe_fr": "Une garantie de schéma porte sur la structure, pas sur la casse : les comparaisons de libellés restent à faire sans tenir compte de la capitalisation.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      "principe_fr": "Une eligibilite de conformite porte sur un perimetre precis : ici le contenu des messages, pas les metadonnees de schema mises en cache a cote.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use"
     },
     {
       "id": "PC-PMT-008",
@@ -343,42 +335,38 @@
       "nature": "judgment",
       "difficulty": "difficile",
       "source": "prepcourse",
-      "concept": "Deux stop_reason signalent une sortie structuree qui peut ne pas respecter le schema : refusal et max_tokens",
-      "question_en": "Which TWO `stop_reason` values tell your code that a structured-output response may not match the schema you supplied?",
-      "question_fr": "Quelles DEUX (TWO) valeurs de `stop_reason` indiquent à votre code qu'une réponse en structured output peut ne pas respecter le schéma fourni ?",
+      "concept": "Les deux garanties du strict tool use : entrees conformes au schema et nom d outil toujours valide",
+      "question_en": "Your agent has crashed twice: once on a tool argument typed as a string instead of an integer, once on a tool name your code does not implement. You set `strict: true` on every tool. Which TWO of these problems does that actually fix?",
+      "question_fr": "Votre agent a plante deux fois : une fois sur un argument d outil recu en chaine au lieu d un entier, une fois sur un nom d outil que votre code n implemente pas. Vous passez `strict: true` sur tous les outils. Lesquels de ces DEUX problemes cela corrige-t-il reellement ?",
       "options": [
         {
           "key": "A",
-          "text_en": "`end_turn`, when the model finishes early.",
-          "text_fr": "`end_turn`, quand le modèle termine tôt."
+          "text_en": "Your handler no longer needs a try/except"
         },
         {
           "key": "B",
-          "text_en": "`refusal`, returned with a 200 status code.",
-          "text_fr": "`refusal`, renvoyé avec un code de statut 200."
+          "text_en": "Tool inputs always conform to your schema"
         },
         {
           "key": "C",
-          "text_en": "`max_tokens`, when the reply is truncated.",
-          "text_fr": "`max_tokens`, quand la réponse est tronquée."
+          "text_en": "The tool name is always one you provided"
         },
         {
           "key": "D",
-          "text_en": "`invalid_schema`, raised by the validator.",
-          "text_fr": "`invalid_schema`, levé par le validateur."
+          "text_en": "The tool is only called when truly needed"
         }
       ],
       "correct": [
         "B",
         "C"
       ],
-      "explanation_fr": "La doc nomme deux scénarios où la sortie peut ne pas correspondre au schéma malgré la contrainte. Le refus : `stop_reason: \"refusal\"`, code 200, tokens facturés, et un message de refus qui prend le pas sur la contrainte de schéma. La troncature : `stop_reason: \"max_tokens\"`, sortie incomplète, à réessayer avec un `max_tokens` plus élevé. C'est ce qui justifie de tester `stop_reason` plutôt que de supposer que toute réponse se parse.",
+      "explanation_fr": "Le strict tool use annonce exactement deux garanties : le champ input du bloc tool_use suit strictement input_schema, et le nom d outil est toujours valide, pris dans les outils fournis ou les outils serveur. Les deux pannes decrites tombent donc, sans code de validation ni reprise cote appelant. Ce qui ne tombe pas, c est tout ce qui concerne l opportunite de l appel et l execution elle-meme.",
       "distractors_fr": {
-        "A": "`end_turn` est la fin normale d'une réponse : c'est précisément le cas où la garantie de schéma tient.",
-        "D": "Aucun `stop_reason` de ce nom n'existe côté API. Un schéma invalide est rejeté à la requête, pas signalé par un stop reason — la convention vient d'autres écosystèmes."
+        "A": "Le typage des arguments est garanti, pas l execution : votre fonction peut encore echouer sur un service indisponible, un droit manquant ou une donnee absente. La gestion d erreur reste necessaire.",
+        "D": "La pertinence de l appel releve du routage, donc de la description des outils et du prompt systeme. Contraindre la forme des entrees ne dit rien du bon moment pour appeler."
       },
-      "principe_fr": "Une garantie de schéma n'exonère pas de lire `stop_reason` : deux terminaisons documentées la contournent légitimement.",
-      "doc_ref": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      "principe_fr": "Lire une garantie a la lettre : elle couvre la forme de ce que le modele emet, jamais la pertinence de la decision ni la fiabilite de ce qui est appele.",
+      "doc_ref": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use"
     },
     {
       "id": "PC-PMT-009",

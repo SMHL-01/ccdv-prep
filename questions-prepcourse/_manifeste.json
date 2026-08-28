@@ -1,7 +1,7 @@
 {
   "commentaire": "Genere par generer-manifeste.js. Metadonnees uniquement : les enonces, options et explications sont charges a la demande, fichier par fichier, au lancement d une serie.",
   "genere": "2026-08-28",
-  "nbQuestions": 164,
+  "nbQuestions": 177,
   "fichiers": [
     {
       "fichier": "m1-1.1-llm-behavior.json",
@@ -82,6 +82,11 @@
       "fichier": "m3-3.4-rag.json",
       "subdomain": "Claude Application Design",
       "nb": 11
+    },
+    {
+      "fichier": "m3-3.5-enterprise.json",
+      "subdomain": "Identity, Secrets and Key Management / AI Application Security",
+      "nb": 13
     }
   ],
   "questions": [
@@ -1724,6 +1729,136 @@
       "type": "single",
       "source": "prepcourse",
       "fichier": "m3-3.4-rag.json"
+    },
+    {
+      "id": "PC-ENT-001",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-002",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-003",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-004",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-005",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "difficile",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "multi",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "facile",
+      "nature": "factual_semantic",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
+    },
+    {
+      "id": "PC-ENT-013",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "difficulty": "moyen",
+      "nature": "judgment",
+      "type": "single",
+      "source": "prepcourse",
+      "fichier": "m3-3.5-enterprise.json"
     }
   ]
 }

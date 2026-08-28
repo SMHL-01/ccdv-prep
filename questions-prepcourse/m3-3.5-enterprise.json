@@ -1,0 +1,566 @@
+{
+  "topic": "m3-3.5-enterprise",
+  "source": "prepcourse",
+  "domain": "Security and Safety",
+  "subdomain": "Identity, Secrets and Key Management / AI Application Security",
+  "weight": 4.8,
+  "corpus_ref": "prepcourse-corpus/m3-3.5-enterprise.md",
+  "sources_read": [
+    "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices",
+    "https://code.claude.com/docs/en/mcp",
+    "https://platform.claude.com/docs/en/manage-claude/authentication",
+    "https://code.claude.com/docs/en/authentication",
+    "https://code.claude.com/docs/en/server-managed-settings",
+    "https://code.claude.com/docs/en/hooks",
+    "https://code.claude.com/docs/en/admin-setup",
+    "https://code.claude.com/docs/en/data-usage"
+  ],
+  "questions": [
+    {
+      "id": "PC-ENT-001",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "weight": 1.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "un serveur OAuth valide le redirect_uri par egalite exacte avec l URI enregistre : une URI de staging ne couvre pas la production",
+      "question_en": "Your MCP server's OAuth sign-in works against staging.mycompany.com. In production the callback is rejected and the user lands back on the sign-in page. What is the most likely cause?",
+      "question_fr": "La connexion OAuth de votre serveur MCP fonctionne sur staging.mycompany.com. En production, le callback est rejete et l utilisateur revient sur la page de connexion. Quelle est la cause la plus probable ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The production access token expired too early"
+        },
+        {
+          "key": "B",
+          "text_en": "Production traffic is blocked by the egress proxy"
+        },
+        {
+          "key": "C",
+          "text_en": "The production redirect URI was never registered"
+        },
+        {
+          "key": "D",
+          "text_en": "The client secret differs between environments"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Le serveur d autorisation doit valider que le `redirect_uri` de la requete correspond EXACTEMENT a l URI enregistre, par comparaison de chaines, sans motif ni joker, et rejeter la requete si l URI a change sans nouvel enregistrement. Une URI enregistree pour le seul hote de staging ne couvre donc pas l hote de production : il faut enregistrer aussi l URI de production.",
+      "distractors_fr": {
+        "A": "Un jeton expire echoue a l usage, avec une erreur d authentification. Ici rien n est encore emis : le rejet survient au callback, avant toute delivrance de jeton.",
+        "B": "Un blocage en sortie ferait echouer la requete elle-meme, avec une erreur reseau. Le navigateur ne serait pas renvoye proprement sur la page de connexion.",
+        "D": "Un mauvais secret client echoue a l echange du code contre un jeton, avec une erreur explicite du serveur d autorisation, pas par un renvoi vers la connexion."
+      },
+      "principe_fr": "Une URL d environnement n est jamais couverte par celle d un autre : l enregistrement OAuth se fait par egalite exacte, donc par environnement.",
+      "doc_ref": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices"
+    },
+    {
+      "id": "PC-ENT-002",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "weight": 1.6,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "--callback-port fixe le port du callback OAuth pour coller a un redirect_uri http://localhost:PORT/callback deja enregistre",
+      "question_en": "An MCP server only accepts the redirect URI it has on file, http://localhost:8080/callback. How do you make Claude Code use that port?",
+      "question_fr": "Un serveur MCP n accepte que l URI de redirection qu il a enregistree, http://localhost:8080/callback. Comment faire utiliser ce port a Claude Code ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Pass --callback-port 8080 when adding the server"
+        },
+        {
+          "key": "B",
+          "text_en": "Set a PORT variable in the server's env block"
+        },
+        {
+          "key": "C",
+          "text_en": "Add the URI to the permissions allow list"
+        },
+        {
+          "key": "D",
+          "text_en": "Run claude mcp login with the --no-browser flag"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Par defaut Claude Code prend un port libre au hasard pour le callback OAuth. `--callback-port` le fige pour qu il corresponde a une URI de redirection pre-enregistree de la forme `http://localhost:PORT/callback`. Le drapeau s utilise seul, avec l enregistrement dynamique de client, ou avec `--client-id` quand le serveur exige des identifiants pre-configures.",
+      "distractors_fr": {
+        "B": "Le bloc `env` transmet des variables au processus du serveur. Il ne pilote pas le port sur lequel le client Claude Code ecoute le retour du navigateur.",
+        "C": "Les regles de permission autorisent des outils, pas des URL de callback. Le serveur d autorisation ne consulte jamais ces reglages.",
+        "D": "`--no-browser` fait afficher l URL d autorisation au lieu d ouvrir un navigateur, utile en SSH. Le port du callback reste choisi au hasard."
+      },
+      "principe_fr": "Quand l autre partie exige une valeur exacte, on fige la sienne au lieu de la laisser tirer au sort.",
+      "doc_ref": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "id": "PC-ENT-003",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "weight": 1.6,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "l expiration d une cle API se choisit a la creation et ne se modifie plus ensuite ; Never vise les cles tenues dans un gestionnaire de secrets",
+      "question_en": "Your team mints Claude API keys from the Console. Which TWO statements about key expiration are correct?",
+      "question_fr": "Votre equipe cree des cles API Claude depuis la Console. Quelles DEUX affirmations sur leur expiration sont exactes ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "An existing key's expiration can be extended later"
+        },
+        {
+          "key": "B",
+          "text_en": "Expiration is chosen at creation and is then fixed"
+        },
+        {
+          "key": "C",
+          "text_en": "An expiration date is mandatory for every new key"
+        },
+        {
+          "key": "D",
+          "text_en": "Never suits keys a secrets manager rotates for you"
+        }
+      ],
+      "correct": [
+        "B",
+        "D"
+      ],
+      "explanation_fr": "L expiration se fixe a la creation : un preset, une duree personnalisee, ou `Never`. Elle ne peut pas etre modifiee ensuite, et les cles existantes gardent leur comportement. `Never` existe pour les cles que vous rangez dans un gestionnaire de secrets et faites tourner vous-meme. Si l organisation impose un maximum, la Console borne les presets et retire `Never`.",
+      "distractors_fr": {
+        "A": "L expiration ne se change plus apres coup. Pour raccourcir la duree de vie d une cle, on en cree une autre et on revoque l ancienne.",
+        "C": "`Never` reste un choix valide. Il ne disparait que si votre organisation applique une politique d expiration maximale."
+      },
+      "principe_fr": "Une duree de vie est un engagement pris a la creation : ce qui se pilote apres coup, c est la rotation, pas l echeance.",
+      "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+    },
+    {
+      "id": "PC-ENT-004",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "weight": 1.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "Workload Identity Federation supprime la cle API : le workload echange un JWT d IdP contre un jeton court, il n y a plus rien a distribuer ni a faire tourner",
+      "question_en": "A workload runs in Kubernetes and your policy forbids any long-lived API key on disk. Which approach removes the key entirely?",
+      "question_fr": "Un workload tourne dans Kubernetes et votre politique interdit toute cle API longue duree sur disque. Quelle approche supprime la cle purement et simplement ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Workload Identity Federation with your OIDC issuer"
+        },
+        {
+          "key": "B",
+          "text_en": "An apiKeyHelper script reading a mounted secret"
+        },
+        {
+          "key": "C",
+          "text_en": "A short-lived key renewed by a nightly job"
+        },
+        {
+          "key": "D",
+          "text_en": "An admin API key scoped to that workload only"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Avec la federation d identite de charge de travail, le workload s authentifie avec un jeton d identite court emis par un fournisseur que vous utilisez deja (IAM AWS, Google Cloud, ou tout emetteur OIDC conforme comme GitHub Actions, un compte de service Kubernetes, SPIFFE, Entra ID, Okta). Il echange son JWT sur `POST /v1/oauth/token` contre un jeton d acces Claude de courte duree, que le SDK renouvelle automatiquement. Il n y a aucune chaine `sk-ant-api...` a emettre, a distribuer ni a faire tourner.",
+      "distractors_fr": {
+        "B": "Le helper deplace la cle, il ne la supprime pas : il faut toujours qu une cle existe quelque part et soit montee dans le pod.",
+        "C": "Raccourcir la duree de vie reduit la fenetre d exposition mais une cle est toujours emise, distribuee et posee sur disque a chaque renouvellement.",
+        "D": "Restreindre la portee limite les degats d une fuite, ce n est pas la meme chose que ne pas avoir de cle. Les cles Admin servent d ailleurs a l administration de l organisation."
+      },
+      "principe_fr": "La meilleure rotation de secret est celle qu on n a pas a faire : supprimer le secret vaut mieux que raccourcir sa duree de vie.",
+      "doc_ref": "https://platform.claude.com/docs/en/manage-claude/authentication"
+    },
+    {
+      "id": "PC-ENT-005",
+      "domain": "Security and Safety",
+      "subdomain": "Identity, Secrets and Key Management",
+      "weight": 1.6,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "apiKeyHelper couvre les identifiants dynamiques ou tournants : Claude Code rappelle le script pour rafraichir, aucune valeur statique ne reste sur disque",
+      "question_en": "Your vault issues short-lived Claude API tokens. How should a Claude Code session obtain one?",
+      "question_fr": "Votre coffre emet des jetons Claude API de courte duree. Comment une session Claude Code doit-elle en obtenir un ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Write the token into the managed env block"
+        },
+        {
+          "key": "B",
+          "text_en": "Export ANTHROPIC_API_KEY from the shell profile"
+        },
+        {
+          "key": "C",
+          "text_en": "Store the token in the project settings file"
+        },
+        {
+          "key": "D",
+          "text_en": "Point apiKeyHelper at a script that fetches it"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "`apiKeyHelper` designe un script shell qui rend une cle API. Claude Code le rappelle apres son intervalle de rafraichissement ou sur une reponse HTTP 401, ce qui convient exactement aux identifiants dynamiques ou tournants comme les jetons courts tires d un coffre : aucune valeur statique n est posee sur disque. Il occupe le rang 4 de la precedence d authentification, sous `ANTHROPIC_API_KEY`.",
+      "distractors_fr": {
+        "A": "Le bloc `env` manage delivre une valeur figee a toute l organisation. C est justement la categorie de variables que le cache des reglages serveur retient tant que le serveur n a pas confirme la charge utile.",
+        "B": "Un export statique dans le profil de shell ne suit pas un jeton qui expire : la session continue d envoyer une valeur perimee jusqu au prochain shell.",
+        "C": "Un fichier de reglages projet est versionne. Un jeton ecrit la entre dans l historique du depot, ou l ecraser ensuite ne le retire pas."
+      },
+      "principe_fr": "Separer la reference de la valeur : la configuration dit ou chercher le secret, elle ne le contient pas.",
+      "doc_ref": "https://code.claude.com/docs/en/authentication"
+    },
+    {
+      "id": "PC-ENT-006",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "reglages manages serveur et poste occupent le meme rang mais ne fusionnent pas : la premiere source non vide gagne, et le serveur est consulte en premier",
+      "question_en": "Your org already ships permission rules through an MDM managed settings file. An Owner then saves a hooks-only payload in server-managed settings. What happens?",
+      "question_fr": "Votre organisation deploie deja des regles de permission par un fichier de reglages manages MDM. Un Owner enregistre ensuite une charge utile contenant seulement des hooks en reglages manages serveur. Que se passe-t-il ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "The two managed sources merge, hooks included"
+        },
+        {
+          "key": "B",
+          "text_en": "Only the server payload applies, MDM is ignored"
+        },
+        {
+          "key": "C",
+          "text_en": "MDM wins because it is enforced at OS level"
+        },
+        {
+          "key": "D",
+          "text_en": "The hooks apply and MDM rules stay in force"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Reglages manages serveur et reglages manages poste occupent tous deux le rang le plus haut, qu aucun autre niveau ne peut ecraser, pas meme la ligne de commande. Mais ils ne fusionnent pas : Claude Code retient la premiere source qui delivre une configuration non vide, et le serveur est consulte avant le poste. Une charge serveur qui ne contient que des hooks fait donc tomber les regles MDM. Il faut delivrer l ensemble dans une seule charge. Deux exceptions : un `policyHelper` configure prend le pas sur toute autre source manage, et `forceRemoteSettingsRefresh` est honore depuis n importe quelle source manage administree.",
+      "distractors_fr": {
+        "A": "Les sources ne fusionnent pas. La fusion existe entre niveaux de reglages ordinaires, pas a l interieur du rang manage.",
+        "C": "Le poste offre de meilleures garanties contre la modification par l utilisateur, mais ce n est pas lui qui est consulte en premier : le serveur l est.",
+        "D": "C est le resultat attendu par intuition, et c est precisement le piege : les regles MDM disparaissent des que la charge serveur porte la moindre cle."
+      },
+      "principe_fr": "Deux sources au meme rang ne s additionnent pas : l une remplace l autre, et il faut savoir laquelle est lue en premier.",
+      "doc_ref": "https://code.claude.com/docs/en/server-managed-settings"
+    },
+    {
+      "id": "PC-ENT-007",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "deux limites des reglages manages serveur : managed-mcp.json ne s y distribue pas, et les reglages reserves aux politiques OS n y sont pas honores",
+      "question_en": "You are moving your whole Claude Code policy to server-managed settings. Which TWO items will NOT arrive that way?",
+      "question_fr": "Vous basculez toute votre politique Claude Code en reglages manages serveur. Quels DEUX elements n arriveront PAS par ce canal ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A managed-mcp.json file listing allowed servers"
+        },
+        {
+          "key": "B",
+          "text_en": "A PostToolUse hook running an audit script"
+        },
+        {
+          "key": "C",
+          "text_en": "policyHelper, which needs an OS policy source"
+        },
+        {
+          "key": "D",
+          "text_en": "A deny list plus disableBypassPermissionsMode"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation_fr": "Un fichier `managed-mcp.json` ne se distribue pas par les reglages manages serveur : on y met a la place les cles de politique `allowedMcpServers` et `deniedMcpServers`. Et les reglages reserves aux sources de politique OS, `policyHelper` et `wslInheritsWindowsSettings`, ne sont pas honores : ils passent par MDM ou par un `managed-settings.json` systeme. Troisieme limite a garder en tete : la configuration s applique uniformement a toute l organisation, sans configuration par groupe.",
+      "distractors_fr": {
+        "B": "Les hooks sont pris en charge et s ecrivent au meme format que dans `settings.json`. Ils declenchent seulement un dialogue d approbation cote utilisateur.",
+        "D": "C est exactement l exemple documente : une liste `deny`, `disableBypassPermissionsMode`, et `allowManagedPermissionRulesOnly`."
+      },
+      "principe_fr": "Un canal de distribution centralise ne transporte pas tout : verifier la liste des exclusions avant de demonter l ancien.",
+      "doc_ref": "https://code.claude.com/docs/en/server-managed-settings"
+    },
+    {
+      "id": "PC-ENT-008",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "forceRemoteSettingsRefresh rend le demarrage fail-closed : le CLI bloque jusqu a une recuperation fraiche et sort si elle echoue",
+      "question_en": "What does forceRemoteSettingsRefresh: true change at Claude Code startup?",
+      "question_fr": "Que change `forceRemoteSettingsRefresh: true` au demarrage de Claude Code ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "It re-fetches settings hourly instead of once"
+        },
+        {
+          "key": "B",
+          "text_en": "It clears the local settings cache at launch"
+        },
+        {
+          "key": "C",
+          "text_en": "It exits rather than start without fresh settings"
+        },
+        {
+          "key": "D",
+          "text_en": "It applies cached settings before any fetch runs"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "explanation_fr": "Par defaut, si la recuperation des reglages distants echoue au demarrage, le CLI continue sans reglages manages : il existe une breve fenetre non appliquee. Avec cette cle, le CLI bloque au demarrage jusqu a une recuperation fraiche et sort si elle echoue. Le reglage se perpetue : une fois delivre, il est aussi mis en cache localement. Consequence a verifier avant de l activer : si `api.anthropic.com` est injoignable, plus personne ne demarre Claude Code. Les sous-commandes `claude auth` sont exemptees, pour permettre de se reauthentifier quand c est justement l expiration des identifiants qui bloque.",
+      "distractors_fr": {
+        "A": "La scrutation horaire pendant les sessions actives a lieu de toute facon. Ce reglage porte sur le demarrage, pas sur la frequence.",
+        "B": "Le cache est au contraire conserve : c est lui qui fait que le comportement se perpetue aux demarrages suivants.",
+        "D": "C est le comportement par defaut que ce reglage remplace justement."
+      },
+      "principe_fr": "Fail-closed veut dire refuser de demarrer sans politique : c est un choix de securite qui se paie en disponibilite.",
+      "doc_ref": "https://code.claude.com/docs/en/server-managed-settings"
+    },
+    {
+      "id": "PC-ENT-009",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "un hook ConfigChange se declenche aussi sur policy_settings mais sa decision de blocage y est ignoree : les reglages manages s appliquent toujours",
+      "question_en": "You add a ConfigChange hook to block configuration edits during a session. Which change will it never stop?",
+      "question_fr": "Vous ajoutez un hook ConfigChange pour bloquer les modifications de configuration en cours de session. Quel changement ne bloquera-t-il jamais ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A teammate editing the project settings file"
+        },
+        {
+          "key": "B",
+          "text_en": "A skill file rewritten by another process"
+        },
+        {
+          "key": "C",
+          "text_en": "A local settings file changed mid-session"
+        },
+        {
+          "key": "D",
+          "text_en": "A policy_settings change from managed settings"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "explanation_fr": "ConfigChange se declenche pour `user_settings`, `project_settings`, `local_settings`, `policy_settings` et `skills`, et peut empecher un changement de prendre effet par un code de sortie 2 ou `{\"decision\": \"block\"}`. Sur `policy_settings`, le hook se declenche toujours, ce qui le rend utilisable pour la journalisation d audit, mais toute decision de blocage est ignoree : c est ce qui garantit que les reglages manages par l entreprise s appliquent en toutes circonstances.",
+      "distractors_fr": {
+        "A": "`project_settings` fait partie des sources filtrees par le matcher et le blocage y fonctionne normalement.",
+        "B": "`skills` est une source reconnue par ConfigChange, et une reecriture externe declenche bien l evenement, blocage compris.",
+        "C": "`local_settings` est egalement bloquable : le hook empeche l application des nouveaux reglages a la session en cours."
+      },
+      "principe_fr": "Un mecanisme de controle local ne peut pas neutraliser la politique de l entreprise : l observer, oui, la refuser, non.",
+      "doc_ref": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "id": "PC-ENT-010",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "difficile",
+      "source": "prepcourse",
+      "concept": "un hook d audit PostToolUse sur Edit|Write manque les fichiers ecrits via Bash : couvrir par un hook Stop qui balaie l arbre de travail",
+      "question_en": "Your audit hook is PostToolUse with matcher Edit|Write. Compliance finds changed files with no audit line. Why, and what fixes it?",
+      "question_fr": "Votre hook d audit est un PostToolUse avec le matcher Edit|Write. La conformite trouve des fichiers modifies sans ligne d audit. Pourquoi, et comment corriger ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Subagent edits skip hooks, so match SubagentStop"
+        },
+        {
+          "key": "B",
+          "text_en": "Bash writes files too, so add a Stop hook sweep"
+        },
+        {
+          "key": "C",
+          "text_en": "The matcher is a literal, so write Edit,Write"
+        },
+        {
+          "key": "D",
+          "text_en": "Hooks never fire in -p sessions, so avoid them"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Claude peut creer ou modifier des fichiers en lancant des commandes shell par l outil `Bash`, que le matcher `Edit|Write` ne voit jamais. Pour une couverture complete, ajouter un hook `Stop` qui balaie l arbre de travail une fois par tour. Pour une couverture appel par appel, matcher aussi `Bash` et faire lister au script les fichiers modifies et non suivis avec `git status --porcelain`.",
+      "distractors_fr": {
+        "A": "Les appels d outils d un sous-agent declenchent les hooks comme les autres. Le trou vient de l outil employe, pas de l acteur qui l emploie.",
+        "C": "`Edit|Write` est deja la forme documentee : le matcher est une expression reguliere, pas une liste separee par des virgules.",
+        "D": "Les hooks se declenchent aussi en mode `-p`. C est la verification de confiance qui y est desactivee, pas l execution des hooks."
+      },
+      "principe_fr": "Un audit se dimensionne sur les chemins d ecriture reels, pas sur les outils auxquels on pense en premier.",
+      "doc_ref": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "id": "PC-ENT-011",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "multi",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "certains reglages manages delivres exigent une approbation de securite de l utilisateur : toute definition de hook et un claudeMd manage en font partie",
+      "question_en": "Which TWO server-managed settings make users see a security approval dialog before they apply?",
+      "question_fr": "Quels DEUX reglages manages serveur declenchent un dialogue d approbation de securite avant d etre appliques ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A permission deny list for reading .env files"
+        },
+        {
+          "key": "B",
+          "text_en": "An autoMode environment description of the org"
+        },
+        {
+          "key": "C",
+          "text_en": "A hook definition running a shell command"
+        },
+        {
+          "key": "D",
+          "text_en": "A claudeMd value delivered by managed settings"
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "explanation_fr": "Quatre categories declenchent le dialogue : les reglages qui executent des commandes shell, les variables `env` delivrees qui requierent une approbation comme les variables de proxy et d URL de base, toute definition de hook, et un contenu `claudeMd` delivre par les reglages manages. L utilisateur doit approuver ; s il refuse, Claude Code sort. Si la session ne peut pas afficher le dialogue, les reglages delivres ne sont pas appliques et les derniers approuves sont conserves.",
+      "distractors_fr": {
+        "A": "Une liste `deny` s applique silencieusement : elle restreint, elle n execute rien et n injecte aucune instruction.",
+        "B": "Les entrees `autoMode` renseignent le classifieur sur ce que l organisation considere comme fiable. Elles ne sont pas executees comme des commandes."
+      },
+      "principe_fr": "Ce qui execute du code ou dicte des instructions ne s impose pas en silence, meme depuis un canal administre.",
+      "doc_ref": "https://code.claude.com/docs/en/server-managed-settings"
+    },
+    {
+      "id": "PC-ENT-012",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "factual_semantic",
+      "difficulty": "facile",
+      "source": "prepcourse",
+      "concept": "pour un journal d audit par requete lie a l identite IdP, on interpose une passerelle auto-hebergee entre les developpeurs et le fournisseur",
+      "question_en": "Compliance wants a per-request audit log tying each API call to an IdP identity. What does the documentation point to?",
+      "question_fr": "La conformite veut un journal d audit par requete reliant chaque appel API a une identite IdP. Vers quoi renvoie la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "A self-hosted Claude apps gateway in the path"
+        },
+        {
+          "key": "B",
+          "text_en": "OpenTelemetry metrics exported per session"
+        },
+        {
+          "key": "C",
+          "text_en": "A PostToolUse hook writing to an audit store"
+        },
+        {
+          "key": "D",
+          "text_en": "Cloud session logging on Claude Code on the web"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "explanation_fr": "Pour de la journalisation d audit au niveau requete, ou pour router le trafic selon la sensibilite des donnees, la documentation renvoie a une passerelle placee entre les developpeurs et le fournisseur : une passerelle Claude apps auto-hebergee enregistre un journal d audit par requete portant l identite IdP. Une autre passerelle LLM peut jouer le meme role.",
+      "distractors_fr": {
+        "B": "La telemetrie couvre les sessions, les outils et les jetons. C est une mesure d usage, pas une trace par requete rattachee a une identite.",
+        "C": "Un hook enregistre des appels d outils sur le poste du developpeur. Il ne voit pas les requetes API, et un poste hors du perimetre manage n en produit aucune.",
+        "D": "Les sessions cloud journalisent bien leurs operations, mais seulement pour le travail execute sur l infrastructure Anthropic."
+      },
+      "principe_fr": "Une trace fiable se prend sur un point de passage obligatoire du trafic, pas sur le poste de celui qu on audite.",
+      "doc_ref": "https://code.claude.com/docs/en/admin-setup"
+    },
+    {
+      "id": "PC-ENT-013",
+      "domain": "Security and Safety",
+      "subdomain": "AI Application Security",
+      "weight": 3.2,
+      "type": "single",
+      "nature": "judgment",
+      "difficulty": "moyen",
+      "source": "prepcourse",
+      "concept": "les transcriptions de session sont mises en cache localement en clair sous ~/.claude/projects/, duree ajustable par cleanupPeriodDays",
+      "question_en": "A regulated team assumes no session content is ever written to their laptops. What does the documentation actually say?",
+      "question_fr": "Une equipe en environnement regule suppose qu aucun contenu de session n atterrit sur les postes. Que dit reellement la documentation ?",
+      "options": [
+        {
+          "key": "A",
+          "text_en": "Transcripts stay in memory for the session only"
+        },
+        {
+          "key": "B",
+          "text_en": "Transcripts are cached locally in plaintext"
+        },
+        {
+          "key": "C",
+          "text_en": "Transcripts are encrypted with the login key"
+        },
+        {
+          "key": "D",
+          "text_en": "Transcripts land on disk only when ZDR is off"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation_fr": "Les clients Claude Code stockent les transcriptions de session localement, en clair, sous `~/.claude/projects/`, pendant trente jours par defaut, pour permettre la reprise de session. La periode s ajuste avec `cleanupPeriodDays`. La retention cote serveur est une question distincte de ce cache local : une equipe qui a negocie ses garanties de retention n a rien regle sur les postes.",
+      "distractors_fr": {
+        "A": "La reprise de session exige au contraire que la transcription survive a la fin du processus, donc qu elle soit sur disque.",
+        "C": "Le cache local n est pas chiffre par Claude Code. Le chiffrement du disque releve du systeme, pas du produit.",
+        "D": "La retention zero porte sur la persistance cote serveur. Elle ne dit rien du cache local, qui existe independamment."
+      },
+      "principe_fr": "Une garantie de retention cote fournisseur ne dit rien de ce que le client ecrit sur le poste : les deux se traitent separement.",
+      "doc_ref": "https://code.claude.com/docs/en/data-usage"
+    }
+  ]
+}
